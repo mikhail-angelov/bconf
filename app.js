@@ -25,7 +25,8 @@ app.configure(function () {
     app.use(express.cookieParser());
     app.use(passport.initialize());
     app.use(app.router);
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static(__dirname + '/app'));
+    app.use('/bower_components',express.static(__dirname + '/bower_components'));
 });
 
 var allowCrossDomain = function (req, res, next) {
