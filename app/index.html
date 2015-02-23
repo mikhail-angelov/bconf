@@ -30,7 +30,7 @@
         <h3 class="text-muted">bconf</h3>
       </div>
 
-      <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+      <div ng-include="'components/main/main.html'" ng-controller="MainCtrl"></div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
@@ -65,8 +65,8 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
+        <script src="components/app.js"></script>
+        <script src="components/main/main.js"></script>
         <!-- endbuild -->
 </body>
 </html>
