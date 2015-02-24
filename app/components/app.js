@@ -11,5 +11,7 @@
 angular
   .module('bconfApp', [
     'ngAnimate',
-    'ngTouch'
+    'ngTouch',
+    'ui.router',
+    'ngMaterial'
   ]);
