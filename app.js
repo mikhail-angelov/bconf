@@ -2,6 +2,7 @@ var express = require('express')
   , config = require('./config')
   , routes = require('./routes')
   , AuthHandler = require('./handlers/AuthHandler')
+  , UserHandler = require('./handlers/UserHandler')
   , passport = require('passport')
   , refresh = require('passport-oauth2-refresh')
   , mongoose = require('mongoose')
@@ -45,10 +46,8 @@ app.configure('development', function () {
 });
 
 
-mongoose.connect('mongodb://localhost:27017/db');
-
+mongoose.connect(config.MONGO_DB);
 var db = mongoose.connection;
-
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
   console.log("Connected to db");
@@ -62,7 +61,8 @@ refresh.use(strategy.googlePlus);
 
 
 var handlers = {
-  auth: new AuthHandler()
+  auth: new AuthHandler(),
+  user: new UserHandler()
 };
 
 routes.setup(app, handlers);

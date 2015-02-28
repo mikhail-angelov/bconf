@@ -8,6 +8,9 @@ var schema =  new mongoose.Schema(
 		,first_name: {type: String, required: true}
 		,email: {type: String, required: true}
     ,avatar: {type: String, required: false}
+    ,display_name: {type: String, required: false}
+    ,gender: {type: String, required: false}
+    ,birthday: {type: String, required: false}
     ,data: {type: String, required: false}
     ,provider: {type: String, required: true}
     ,provider_token: {type: String, required: false}

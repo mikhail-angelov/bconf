@@ -1,4 +1,4 @@
-var UserDB = require('../models/user');
+var User = require('../models/user');
 var Session = require('../models/session');
 
 var AuthHandler = function () {
@@ -18,7 +18,7 @@ function login(req, res, next) {
 
   Session.findOne({token: token}, function (err, session) {
     var now = new Date().getTime();
-    if(session && session.token_expires > now){
+    if (session && session.token_expires > now) {
       res.status(200);
     } else {
       res.status(401);
@@ -48,7 +48,7 @@ function googleSignInCallback(req, res, next) {
     if (!user) {
       return res.redirect('http://localhost:8000');
     }
-    UserDB.findOne({email: user._json.email}, function (err, usr) {
+    User.findOne({email: user._json.email}, function (err, usr) {
       res.writeHead(302, {
         'Location': 'http://localhost:8000/#/index?token=' + usr.token + '&user=' + usr.email
       });
@@ -74,7 +74,7 @@ function facebookSignInCallback(req, res, next) {
     if (!user) {
       return res.redirect('http://localhost:8001');
     }
-    UserDB.findOne({email: user.id}, function (err, usr) {
+    User.findOne({email: user.id}, function (err, usr) {
       res.writeHead(302, {
         'Location': 'http://localhost:8001/#/index?token=' + usr.token + '&user=' + usr.email
       });
@@ -97,14 +97,29 @@ function yandexSignInCallback(req, res, next) {
       return next(err);
     }
     if (!user) {
-      return res.redirect('http://localhost:8002');
+      return res.redirect('http://localhost:3000/#/error?redirect=yandex');
     }
-    UserDB.findOne({email: user.id}, function (err, usr) {
-      res.writeHead(302, {
-        'Location': 'http://localhost:8001/#/index?token=' + usr.token + '&user=' + usr.email
-      });
-      res.end();
+    User.findOne({id: user.id, provider: 'yandex'}, function (err, usr) {
+      if (usr) {
+        Session.findOne({user_id: usr._id}, function (err, session) {
+
+          if (!session) {
+            new Session().createSession(usr._id).then(function (session) {
+              redirect(res, session.token, usr.id);
+            })
+          } else {
+            redirect(res, session.token, usr.id);
+          }
+        });
+      }
     });
   })(req, res, next);
 }
+function redirect(res, token, userId) {
+  res.writeHead(302, {
+    'Location': 'http://localhost:3000/#/redirect?token=' + token + '&user=' + userId
+  });
+  res.end();
+}
+
 module.exports = AuthHandler;

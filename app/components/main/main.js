@@ -1,13 +1,21 @@
 'use strict';
 
 angular.module('bconfApp')
-  .controller('MainController', function ($scope, $location) {
-    $scope.authProviders = [
-      {redirect: '/auth/facebook', icon: 'styles/icons/set/facebook fb social social media.svg', color: 'color:#00f;'},
-      {redirect: '/auth/google', icon: 'styles/icons/set/google plus.svg', color: 'color:#f00;'},
-      {redirect: '/auth/yandex', icon: 'styles/icons/set/yandex.svg', color: 'color:#fd2;'}
-    ];
-    $scope.login = function (index) {
-      $location.path($scope.authProviders[index].redirect);
-    };
+  .controller('MainController', function ($scope, $state, $stateParams, Auth, User) {
+
+
+    if ($stateParams && $stateParams.token) {
+      Auth.setToken($stateParams.token);
+      loadUser();
+    } else if (Auth.getToken()) {
+      loadUser();
+    } else {
+      $state.go('welcome');
+    }
+
+    function loadUser() {
+      User.query($stateParams.user).then(function () {
+        $scope.user = User.get();
+      });
+    }
   });

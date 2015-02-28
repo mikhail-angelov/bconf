@@ -1,12 +1,10 @@
 var config = require('../config')
-  ,FacebookStrategy = require('passport-facebook').Strategy
+  , FacebookStrategy = require('passport-facebook').Strategy
   , YandexStrategy = require('passport-yandex').Strategy
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
   , User = require('../models/user')
   , Session = require('../models/session')
-  , uuid = require('node-uuid');
-
-
+  , Q = require('q');
 
 
 var googlePlus = new GoogleStrategy({
@@ -69,28 +67,52 @@ var facebook = new FacebookStrategy({
 var yandex = new YandexStrategy({
     clientID: config.YANDEX_CLIENT_ID,
     clientSecret: config.YANDEX_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/yandex/callback"
+    callbackURL: config.YANDEX_CB
   },
   function (accessToken, refreshToken, profile, done) {
-    User.findOrCreate({yandexId: profile.id}, function (err, user) {
-      return done(err, user);
+    console.log(JSON.stringify(profile));
+    User.findOne({id: profile.id, provider: 'yandex'}, function (err, user) {
+      if (!user) {
+        createUser({
+            last_name: profile.name.familyName,
+            first_name: profile.name.givenName,
+            gender: profile.gender,
+            id: profile.id,
+            email: profile.emails[0].value,
+            provider: profile.provider,
+            display_name: profile.displayName,
+            provider_token: accessToken,
+            provider_refresh_token: refreshToken,
+            birthday: profile._json.birthday
+          }).then(function (newUser) {
+            createSession(newUser._id);
+          });
+      }
+      process.nextTick(function () {
+        return done(null, profile);
+      });
     });
   }
 );
 
 function createUser(user) {
-  user.id = uuid.v1();
+  var deferred = Q.defer();
   var newUser = new User(user);
-  newUser.save(function (err, usr, num) {
+  newUser.save(function (err, u, num) {
     if (err) {
-      console.log('error saving token');
+      console.log('error saving user');
     }
+    deferred.resolve(u);
   });
+  return deferred.promise;
+}
+function createSession(userId) {
+  var newSession = new Session().createSession(userId);
 }
 
 var Strategy = {
-  googlePlus : googlePlus,
-  facebook : facebook,
-  yandex : yandex
+  googlePlus: googlePlus,
+  facebook: facebook,
+  yandex: yandex
 };
 module.exports = Strategy;
