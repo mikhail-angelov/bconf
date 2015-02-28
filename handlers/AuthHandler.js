@@ -1,6 +1,8 @@
-var UserDB = require('../models/user')
+var UserDB = require('../models/user');
+var Session = require('../models/session');
 
 var AuthHandler = function () {
+  this.login = login;
   this.googleSignIn = googleSignIn;
   this.googleSignInCallback = googleSignInCallback;
   this.facebookSignIn = facebookSignIn;
@@ -8,6 +10,22 @@ var AuthHandler = function () {
   this.yandexSignIn = yandexSignIn;
   this.yandexSignInCallback = yandexSignInCallback;
 };
+
+function login(req, res, next) {
+  var name = req.body.name;
+  var token = req.body.token;
+  console.log(req.body.token);
+
+  Session.findOne({token: token}, function (err, session) {
+    var now = new Date().getTime();
+    if(session && session.token_expires > now){
+      res.status(200);
+    } else {
+      res.status(401);
+    }
+    res.end();
+  });
+}
 
 function googleSignIn(req, res, next) {
   passport = req._passport.instance;

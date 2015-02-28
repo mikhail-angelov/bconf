@@ -4,14 +4,10 @@ var express = require('express')
   , AuthHandler = require('./handlers/AuthHandler')
   , passport = require('passport')
   , refresh = require('passport-oauth2-refresh')
-  , FacebookStrategy = require('passport-facebook').Strategy
-  , YandexStrategy = require('passport-yandex').Strategy
   , mongoose = require('mongoose')
-  , UserDB = require('./models/user');
+  , strategy = require('./auth/strategy');
 
 var app = express();
-
-var google_strategy = require('passport-google-oauth').OAuth2Strategy;
 
 app.configure(function () {
 
@@ -59,79 +55,10 @@ db.once('open', function callback() {
 });
 
 
-var strategy = new google_strategy({
-    clientID: config.GOOGLE_CLIENT_ID,
-    clientSecret: config.GOOGLE_SECRET,
-    callbackURL: 'http://localhost:3000/auth/google/callback'
-  },
-  function (accessToken, refreshToken, profile, done) {
-    console.log('accessToken ' + accessToken);
-    console.log('refreshToken ' + refreshToken);
-    UserDB.findOne({email: profile._json.email}, function (err, usr) {
-      console.log(JSON.stringify(profile));
-      if (!usr) {
-        usr = new UserDB({
-          last_name: profile._json.family_name,
-          first_name: profile._json.given_name,
-          email: profile._json.email
-        })
-      }
-      usr.token = accessToken;
-      usr.save(function (err, usr, num) {
-        if (err) {
-          console.log('error saving token');
-        }
-      });
-      process.nextTick(function () {
-        return done(null, profile);
-      });
-    });
-  }
-);
-
-var fbStrategy = new FacebookStrategy({
-    clientID: config.FB_CLIENT_ID,
-    clientSecret: config.FB_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
-  },
-  function (accessToken, refreshToken, profile, done) {
-    console.log('accessToken ' + accessToken);
-    console.log('refreshToken ' + refreshToken);
-    console.log(JSON.stringify(profile));
-    UserDB.findOne({email: profile.id}, function (err, usr) {
-      console.log(JSON.stringify(profile));
-      if (!usr) {
-        usr = new UserDB({last_name: profile.name.familyName, first_name: profile.name.givenName, email: profile.id})
-      }
-      usr.token = accessToken;
-      usr.save(function (err, usr, num) {
-        if (err) {
-          console.log('error saving token');
-        }
-      });
-      process.nextTick(function () {
-        return done(null, profile);
-      });
-    });
-  }
-);
-
-var yandexStrategy = new YandexStrategy({
-    clientID: config.YANDEX_CLIENT_ID,
-    clientSecret: config.YANDEX_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/yandex/callback"
-  },
-  function (accessToken, refreshToken, profile, done) {
-    UserDB.findOrCreate({yandexId: profile.id}, function (err, user) {
-      return done(err, user);
-    });
-  }
-);
-
-passport.use(yandexStrategy);
-passport.use(fbStrategy);
-passport.use(strategy);
-refresh.use(strategy);
+passport.use(strategy.yandex);
+passport.use(strategy.facebook);
+passport.use(strategy.googlePlus);
+refresh.use(strategy.googlePlus);
 
 
 var handlers = {
