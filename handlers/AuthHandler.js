@@ -104,7 +104,7 @@ function yandexSignInCallback(req, res, next) {
         Session.findOne({user_id: usr._id}, function (err, session) {
 
           if (!session) {
-            new Session().createSession(usr._id).then(function (session) {
+            Session.createSession(usr._id).then(function (session) {
               redirect(res, session.token, usr.id);
             })
           } else {

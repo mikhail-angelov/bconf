@@ -6,7 +6,7 @@ function setup(app, handlers) {
   app.get('/auth/yandex', handlers.auth.yandexSignIn);
   app.get('/auth/yandex/callback', handlers.auth.yandexSignInCallback);
   app.post('/login', handlers.auth.login);
-  app.get('/user', handlers.user.get);
+  app.get('/user/:userId', handlers.user.get);
   console.log("Successfully set up routes");
 }
 

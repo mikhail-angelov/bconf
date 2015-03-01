@@ -6,12 +6,12 @@ var UserHandler = function () {
 };
 
 function get(req, res, next) {
-  var userId = req.params.id;
+  var userId = req.param('userId');
 
-  console.log(JSON.stringify(req));
+  console.log(JSON.stringify(req.params));
 
   User.findOne({id: userId}, function (err, user) {
-    if(user){
+    if (user) {
       res.send(user);
     } else {
       res.status(404);

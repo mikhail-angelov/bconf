@@ -1,17 +1,19 @@
-angular.module('bconfApp').factory('User', function($q,$http){
-  var user ={};
-  return{
-    get: function(){
+angular.module('bconfApp').factory('User', function ($q, $http) {
+  var user = {};
+  return {
+    get: function () {
       return user;
     },
-    set: function(newUser){
+    set: function (newUser) {
       user = newUser;
     },
-    query: function(userId){
+    query: function (userId) {
       var deferred = $q.defer();
-      $http.get('user',{id:userId}, function(newUser){
+      $http.get('user/' + userId).success(function (newUser) {
         user = newUser;
         deferred.resolve(user);
+      }).error(function () {
+        deferred.reject();
       });
       return deferred.promise;
     }

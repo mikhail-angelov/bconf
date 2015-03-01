@@ -74,19 +74,19 @@ var yandex = new YandexStrategy({
     User.findOne({id: profile.id, provider: 'yandex'}, function (err, user) {
       if (!user) {
         createUser({
-            last_name: profile.name.familyName,
-            first_name: profile.name.givenName,
-            gender: profile.gender,
-            id: profile.id,
-            email: profile.emails[0].value,
-            provider: profile.provider,
-            display_name: profile.displayName,
-            provider_token: accessToken,
-            provider_refresh_token: refreshToken,
-            birthday: profile._json.birthday
-          }).then(function (newUser) {
-            createSession(newUser._id);
-          });
+          last_name: profile.name.familyName,
+          first_name: profile.name.givenName,
+          gender: profile.gender,
+          id: profile.id,
+          email: profile.emails[0].value,
+          provider: profile.provider,
+          display_name: profile.displayName,
+          provider_token: accessToken,
+          provider_refresh_token: refreshToken,
+          birthday: profile._json.birthday
+        }).then(function (newUser) {
+          createSession(newUser._id);
+        });
       }
       process.nextTick(function () {
         return done(null, profile);
@@ -107,7 +107,7 @@ function createUser(user) {
   return deferred.promise;
 }
 function createSession(userId) {
-  var newSession = new Session().createSession(userId);
+  Session.createSession(userId);
 }
 
 var Strategy = {

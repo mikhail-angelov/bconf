@@ -13,10 +13,9 @@ angular.module('bconfApp').config(function ($stateProvider, $urlRouterProvider) 
       controller: 'MainController'
     })
     .state('redirect', {
-      url: "/redirect",
+      url: "/redirect?token&user",
       templateUrl: "components/main/main.html",
-      controller: 'MainController',
-      params:{token:null,user:null}
+      controller: 'MainController'
     });
 
 });
