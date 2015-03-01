@@ -16,6 +16,12 @@ angular.module('bconfApp').factory('User', function ($q, $http) {
         deferred.reject();
       });
       return deferred.promise;
+    },
+    storeUserId: function(userId){
+      localStorage.setItem('userId', userId);
+    },
+    getUserId: function(){
+      return localStorage.getItem('userId');
     }
   };
 });

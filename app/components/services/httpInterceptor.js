@@ -1,7 +1,10 @@
-angular.module('bconfApp').factory('HttpInterceptor', function ($q, Auth) {
+angular.module('bconfApp').factory('HttpInterceptor', function ($q) {
   return {
     'request': function (config) {
-      config.headers['token'] = Auth.getToken();
+      var token = localStorage.getItem('token');
+      if(token) {
+        config.headers['token'] = token;
+      }
       return config;
     },
 

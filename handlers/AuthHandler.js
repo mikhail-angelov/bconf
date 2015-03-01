@@ -3,6 +3,7 @@ var Session = require('../models/session');
 
 var AuthHandler = function () {
   this.login = login;
+  this.logout = logout;
   this.googleSignIn = googleSignIn;
   this.googleSignInCallback = googleSignInCallback;
   this.facebookSignIn = facebookSignIn;
@@ -23,6 +24,16 @@ function login(req, res, next) {
     } else {
       res.status(401);
     }
+    res.end();
+  });
+}
+
+function logout(req, res, next) {
+  var token = req.headers.token;
+  console.log('remove token - ' + token);
+
+  Session.findOneAndRemove({token: token}, function (err, session) {
+    res.status(204);
     res.end();
   });
 }

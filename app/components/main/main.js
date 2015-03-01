@@ -6,6 +6,7 @@ angular.module('bconfApp')
 
     if ($stateParams && $stateParams.token) {
       Auth.setToken($stateParams.token);
+      User.storeUserId($stateParams.user);
       loadUser();
     } else if (Auth.getToken()) {
       loadUser();
@@ -14,8 +15,14 @@ angular.module('bconfApp')
     }
 
     function loadUser() {
-      User.query($stateParams.user).then(function () {
+      var userId = User.getUserId();
+      User.query(userId).then(function () {
         $scope.user = User.get();
       });
     }
+
+    $scope.onLogout = function(){
+      Auth.logout();
+      $state.go('welcome');
+    };
   });

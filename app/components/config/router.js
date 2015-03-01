@@ -4,7 +4,6 @@ angular.module('bconfApp').config(function ($stateProvider, $urlRouterProvider) 
 
   $stateProvider
     .state('welcome', {
-      url: "/",
       templateUrl: "components/welcome/welcome.html",
       controller: 'WelcomeController'
     })
@@ -16,6 +15,16 @@ angular.module('bconfApp').config(function ($stateProvider, $urlRouterProvider) 
       url: "/redirect?token&user",
       templateUrl: "components/main/main.html",
       controller: 'MainController'
+    })
+    .state('default', {
+      url: "/",
+      controller: function($state, Auth){
+        if(Auth.getToken()){
+          $state.go('main');
+        }else{
+          $state.go('welcome')
+        }
+      }
     });
 
 });
