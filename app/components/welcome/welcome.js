@@ -8,8 +8,8 @@ angular.module('bconfApp')
       {redirect: '/auth/yandex', icon: 'styles/icons/set/yandex.svg', class: 'yellow'}
     ];
 
-    $scope.onLogin = function(index){
-      //$location.path( $scope.authProviders[index].redirect)
-console.log(index);
+    $scope.onLogin = function (index) {
+      console.log(index);
+      $scope.showProcess = true;
     }
   });

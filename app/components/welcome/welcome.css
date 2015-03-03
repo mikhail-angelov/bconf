@@ -7,3 +7,29 @@
 .red{
   color: red;
 }
+
+.sample-show-hide {
+  padding:10px;
+  border:1px solid black;
+  background:white;
+}
+
+.sample-show-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.sample-show-hide.ng-hide {
+  opacity:0;
+}
+
+.socialIcon {
+  width: 68px;
+  height: 68px;
+  margin: 10px;
+  color: #00f;
+}
+
+.rotate {
+  transform: rotate(360deg);
+}

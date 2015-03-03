@@ -6,7 +6,8 @@ var express = require('express')
   , passport = require('passport')
   , refresh = require('passport-oauth2-refresh')
   , mongoose = require('mongoose')
-  , strategy = require('./auth/strategy');
+  , strategy = require('./auth/strategy')
+  , ExpressPeerServer = require('peer').ExpressPeerServer;
 
 var app = express();
 
@@ -67,7 +68,20 @@ var handlers = {
 
 routes.setup(app, handlers);
 
-app.listen(3000);
+var server = app.listen(3000);
 console.log('Listening on port 3000');
 
+//add peer2peer
+var options = {
+  debug: true,
+  key:'bconf.com'
+};
+
+app.use('/api', ExpressPeerServer(server, options));
+server.on('connection', function (id) {
+  console.log('peer connection - ' + id);
+});
+server.on('disconnect', function (id) {
+  console.log('peer disconnect - ' + id);
+});
 
