@@ -36,8 +36,8 @@
           <md-item ng-repeat="item in chat.messages">
             <md-divider ng-if="!$first"></md-divider>
             <md-item-content>
-              <div class="md-tile-content">
-                {{item}}
+              <div class="md-tile-content" ng-class="item.type=='in'?'md-warn':''">
+                {{item.msg}}
               </div>
             </md-item-content>
           </md-item>
@@ -64,7 +64,7 @@
         <md-item ng-repeat="item in chats">
           <md-item-content>
             <div class="md-tile-content">
-              <md-button ng-click="onChat($index)">{{item.name}}</md-button>
+              <md-button ng-dblclick="onSelectChat($index)">{{item}}</md-button>
             </div>
           </md-item-content>
           <md-divider ng-if="!$last"></md-divider>
@@ -87,7 +87,7 @@
         <input ng-model="searchContact" >
       </md-input-container>
       <md-list>
-        <md-item ng-repeat="item in friends">
+        <md-item ng-repeat="item in user.friends">
           <md-item-content ng-click="onContact($index)">
             <div class="md-tile-left">
               <img ng-src="{{item.avatar}}" class="contact-face" alt="{{item.name}}">

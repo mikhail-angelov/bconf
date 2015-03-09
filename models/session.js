@@ -26,7 +26,7 @@ Session.createSession = function (userId) {
   var newSession = new Session(session);
   newSession.save(function (err, s, num) {
     if (err) {
-      console.log('error saving token');
+      console.log('error saving session');
     }
     deferred.resolve(newSession);
   });

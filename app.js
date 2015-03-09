@@ -7,7 +7,7 @@ var express = require('express')
   , refresh = require('passport-oauth2-refresh')
   , mongoose = require('mongoose')
   , strategy = require('./auth/strategy')
-  , ExpressPeerServer = require('peer').ExpressPeerServer;
+  , ExpressPeerServer = require('./peerjs/index').ExpressPeerServer;
 
 var app = express();
 
@@ -54,12 +54,10 @@ db.once('open', function callback() {
   console.log("Connected to db");
 });
 
-
 passport.use(strategy.yandex);
 passport.use(strategy.facebook);
 passport.use(strategy.googlePlus);
 refresh.use(strategy.googlePlus);
-
 
 var handlers = {
   auth: new AuthHandler(),
@@ -74,14 +72,10 @@ console.log('Listening on port 3000');
 //add peer2peer
 var options = {
   debug: true,
-  key:'bconf.com'
+  key:'bconf',
+  allow_discovery:true
 };
 
-app.use('/api', ExpressPeerServer(server, options));
-server.on('connection', function (id) {
-  console.log('peer connection - ' + id);
-});
-server.on('disconnect', function (id) {
-  console.log('peer disconnect - ' + id);
-});
+app.use('/peer', ExpressPeerServer(server, options));
+
 

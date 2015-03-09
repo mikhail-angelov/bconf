@@ -98,11 +98,17 @@ function yandexSignIn(req, res, next) {
   passport = req._passport.instance;
 
   passport.authenticate('yandex', function (err, user, info) {
+    console.log(user);
   })(req, res, next);
 }
 
 function yandexSignInCallback(req, res, next) {
   passport = req._passport.instance;
+  if(passport.ykey == req.query.code){
+    return;
+  }else{
+    passport.ykey = req.query.code;
+  }
   passport.authenticate('yandex', function (err, user, info) {
     if (err) {
       return next(err);
@@ -110,12 +116,12 @@ function yandexSignInCallback(req, res, next) {
     if (!user) {
       return res.redirect('http://localhost:3000/#/error?redirect=yandex');
     }
-    User.findOne({id: user.id, provider: 'yandex'}, function (err, usr) {
+    User.findOne({provider_id: user.id, provider: 'yandex'}, function (err, usr) {
       if (usr) {
-        Session.findOne({user_id: usr._id}, function (err, session) {
+        Session.findOne({user_id: usr.id}, function (err, session) {
 
           if (!session) {
-            Session.createSession(usr._id).then(function (session) {
+            Session.createSession(usr.id).then(function (session) {
               redirect(res, session.token, usr.id);
             })
           } else {

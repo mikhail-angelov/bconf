@@ -4,7 +4,8 @@ var config = require('../config')
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
   , User = require('../models/user')
   , Session = require('../models/session')
-  , Q = require('q');
+  , Q = require('q')
+  , uuid = require('node-uuid');
 
 
 var googlePlus = new GoogleStrategy({
@@ -71,13 +72,14 @@ var yandex = new YandexStrategy({
   },
   function (accessToken, refreshToken, profile, done) {
     console.log(JSON.stringify(profile));
-    User.findOne({id: profile.id, provider: 'yandex'}, function (err, user) {
+    User.findOne({provider_id: profile.id, provider: 'yandex'}, function (err, user) {
       if (!user) {
         createUser({
+          id: uuid.v1(),
           last_name: profile.name.familyName,
           first_name: profile.name.givenName,
           gender: profile.gender,
-          id: profile.id,
+          provider_id: profile.id,
           email: profile.emails[0].value,
           provider: profile.provider,
           display_name: profile.displayName,
@@ -85,7 +87,7 @@ var yandex = new YandexStrategy({
           provider_refresh_token: refreshToken,
           birthday: profile._json.birthday
         }).then(function (newUser) {
-          createSession(newUser._id);
+          createSession(newUser.id);
         });
       }
       process.nextTick(function () {
@@ -98,11 +100,11 @@ var yandex = new YandexStrategy({
 function createUser(user) {
   var deferred = Q.defer();
   var newUser = new User(user);
-  newUser.save(function (err, u, num) {
+  newUser.save(function (err, newUser, num) {
     if (err) {
       console.log('error saving user');
     }
-    deferred.resolve(u);
+    deferred.resolve(newUser  );
   });
   return deferred.promise;
 }
