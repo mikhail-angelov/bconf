@@ -7,7 +7,8 @@ var express = require('express')
   , refresh = require('passport-oauth2-refresh')
   , mongoose = require('mongoose')
   , strategy = require('./auth/strategy')
-  , ExpressPeerServer = require('./peerjs/index').ExpressPeerServer;
+  ,connectionManager = require('./peerjs/connectionManager');
+//  , ExpressPeerServer = require('./peerjs/index').ExpressPeerServer;
 
 var app = express();
 
@@ -76,6 +77,7 @@ var options = {
   allow_discovery:true
 };
 
-app.use('/peer', ExpressPeerServer(server, options));
+//app.use('/peer', ExpressPeerServer(server, options));
+app.use(connectionManager.init(server));
 
 

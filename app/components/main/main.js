@@ -4,7 +4,7 @@ angular.module('bconfApp')
   .controller('MainController', function ($scope, $state,  Auth, User, Peer, $mdSidenav, $rootScope) {
 
 
-    if (Auth.getToken()) { 
+    if (Auth.getToken()) {
       loadUser();
     } else  {
       $state.go('welcome');

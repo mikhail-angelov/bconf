@@ -85,7 +85,10 @@ var yandex = new YandexStrategy({
           display_name: profile.displayName,
           provider_token: accessToken,
           provider_refresh_token: refreshToken,
-          birthday: profile._json.birthday
+          birthday: profile._json.birthday,
+          shared_token: uuid.v1(),
+          access_token: uuid.v1(),
+          refresh_token: uuid.v1()
         }).then(function (newUser) {
           createSession(newUser.id);
         });

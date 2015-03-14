@@ -16,7 +16,13 @@ var schema = new mongoose.Schema(
     , provider_id: {type: String, required: true}
     , provider_token: {type: String, required: false}
     , provider_refresh_token: {type: String, required: false}
-    , friends: {type: String, required: false}
+    , shared_token: {type: String, required: true}
+    , access_token: {type: String, required: true}
+    , refresh_token: {type: String, required: true}
+    , friends: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User'
+      }]
   }
 );
 var User = mongoose.model('User', schema);
