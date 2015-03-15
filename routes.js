@@ -8,6 +8,8 @@ function setup(app, handlers) {
   app.post('/login', handlers.auth.login);
   app.post('/logout', handlers.auth.logout);
   app.get('/user/:userId', handlers.user.get);
+  app.get('/user/:userId/friends', handlers.user.getFriends);
+  app.post('/user/createGuest', handlers.user.createGuest);
   console.log("Successfully set up routes");
 }
 

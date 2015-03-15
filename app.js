@@ -7,18 +7,24 @@ var express = require('express')
   , refresh = require('passport-oauth2-refresh')
   , mongoose = require('mongoose')
   , strategy = require('./auth/strategy')
-  ,connectionManager = require('./peerjs/connectionManager');
+  ,connectionManager = require('./peerjs/connectionManager')
+  ,logger = require('./logger');
 //  , ExpressPeerServer = require('./peerjs/index').ExpressPeerServer;
 
 var app = express();
 
 app.configure(function () {
+  var loggerStream = {
+    write: function(message, encoding){
+      logger.info(message);
+    }
+  };
 
   app.set('client-url', 'http://localhost:8000');
   app.set('client-google-signin', '/google?action=signin');
   app.disable('x-powered-by');
 
-  app.use(express.logger('dev'));
+  app.use(express.logger({stream:loggerStream}));
   app.use(express.json());
   app.use(express.urlencoded());
   app.use(express.methodOverride());

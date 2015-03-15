@@ -7,8 +7,11 @@
     "body-parser": "^1.12.0",
     "cors": "^2.5.3",
     "express": "3.4.0",
+    "lodash-node": "^3.5.0",
+    "mocha": "^2.2.1",
     "mongoose": "3.6.19",
     "mongoosemask": "0.0.6",
+    "node-mongoose-fixtures": "^0.2.3",
     "node-uuid": "^1.4.2",
     "passport": "0.1.17",
     "passport-facebook": "^1.0.3",
@@ -16,7 +19,11 @@
     "passport-oauth2": "^1.1.2",
     "passport-oauth2-refresh": "^0.3.0",
     "peer": "^0.2.8",
+    "promise": "^6.1.0",
     "q": "^1.2.0",
+    "should": "^5.2.0",
+    "supertest": "^0.15.0",
+    "winston": "^0.9.0",
     "ws": "^0.7.1"
   },
   "devDependencies": {
