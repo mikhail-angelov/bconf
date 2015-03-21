@@ -1,6 +1,7 @@
 var User = require('../models/user');
 var Session = require('../models/session');
 var mongooseMask = require('mongoosemask');
+var connectionManager = require('../peerjs/connectionManager')
 var _ = require('lodash-node');
 
 var UserHandler = function () {
@@ -46,6 +47,13 @@ function getFriends(req, res) {
   User.getFriends(userId).then(function (friends) {
     var dto = _.map(friends, function (value) {
       return toDTO(value);
+    });
+    //set status
+    dto.forEach(function(client){
+      client.status = 'offline';
+      if(connectionManager.getClient(client.id)){
+        client.status = 'online';
+      }
     });
     res.send(dto);
     res.end();

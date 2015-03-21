@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $interval, Audio) {
+angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $rootScope, Audio) {
   var peer;
   var peerId;
   var list = [];
@@ -26,6 +26,9 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       peer.on('message', function (msg) {
         console.log('on peer message ' + msg);
       });
+      peer.on('presence', function(presence){
+        $rootScope.$broadcast('presence', presence);
+      })
     },
     originateCall: function (peerId) {
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -64,21 +67,6 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       conn.on('close', function (data) {
         onClose();
       });
-    },
-    getList: function () {
-      var deferred = $q.defer();
-      peer.listAllPeers(function (response) {
-        list = response;
-        deferred.resolve(list);
-      });
-      return deferred.promise;
-    },
-    poolList: function (cb) {
-      $interval(function () {
-        service.getList().then(function (data) {
-          cb(data);
-        })
-      }, constant.CHAT_POOLING_INTERVAL);
     }
   };
   return service;

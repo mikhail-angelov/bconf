@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var logger = require('../logger');
+var _ = require('lodash-node');
 var connectionManager = null;
 
 function init(cm) {
@@ -8,13 +9,13 @@ function init(cm) {
 
 function peerConnected(clientId) {
   logger.info('client ' + clientId + ' is online');
-  var message = {type: 'PRESENCE', src: clientId, status: 'online'};
+  var message = {type: 'PRESENCE', payload: {userId: clientId, status: 'online'}};
   _broadcastPresence(clientId, message);
 }
 
 function peerDisconnected(clientId) {
   logger.info('client ' + clientId + ' is offline');
-  var message = {type: 'PRESENCE', src: clientId, status: 'offline'};
+  var message = {type: 'PRESENCE', payload: {userId: clientId, status: 'offline'}};
   _broadcastPresence(clientId, message);
 }
 

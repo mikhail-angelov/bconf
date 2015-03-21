@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('bconfApp')
-  .controller('MainController', function ($scope, $state, Auth, User, $mdSidenav, $rootScope, ChatModel) {
+  .controller('MainController', function ($scope, $state, Auth, User, $mdSidenav, $rootScope, ChatModel, ContactsModel) {
 
     $scope.user = {};
     $scope.friends = [];
     $scope.chat = ChatModel;
+    $scope.contacts = ContactsModel;
 
     if (Auth.getToken()) {
       loadUser();
@@ -24,9 +25,7 @@ angular.module('bconfApp')
         $scope.linkToShare = User.getLinkToShare();
 
         //load friends
-        User.getFriends($scope.user.id).then(function (friends) {
-          $scope.friends = friends;
-        });
+        ContactsModel.loadFriendsList($scope.user.id);
       }, function () {
         console.log('user is not loaded, can not show main view, go to welcome');
         $state.go('welcome');
@@ -69,12 +68,20 @@ angular.module('bconfApp')
     };
 
     $scope.onContact = function (index) {
-      var guest = $scope.friends[index];
-      ChatModel.startChat(guest.id);
-      $scope.session = {
-        id: guest.id,
-        user: guest,
-        chat: ChatModel.getActiveChat()
+      var contacts = _.reduce($scope.contacts.list, function (o, c) {
+        if (c.status == 'online') {
+          o.push(c);
+        }
+        return o;
+      },[]);
+      var contact = contacts[index];
+      if (contact.status == 'online') {
+        ChatModel.startChat(contact.id);
+        $scope.session = {
+          id: contact.id,
+          user: contact,
+          chat: ChatModel.getActiveChat()
+        }
       }
     };
 

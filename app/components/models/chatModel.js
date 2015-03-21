@@ -22,6 +22,7 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
       console.log('close chat ' + chatId);
       chat[chatId].status = 'offline';
       //todo implement this
+      // delete chat[chatId];
     },
     selectChat: function (chatId) {
       activeChat = chatId;
@@ -40,8 +41,6 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
         }
       }
     }
-
-
   };
   $rootScope.$on('startChat', function (scope, data) {
     var chatId = data.conn.peer;

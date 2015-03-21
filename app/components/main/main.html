@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="components/main/main.css"/>
-<md-content layout="column" layout-fill>
+<md-content layout="column" layout-fill class="main md-padding">
   <md-toolbar class="md-theme-light">
     <md-item-content>
       <div class="md-tile-left">
@@ -16,7 +16,7 @@
       </div>
     </md-item-content>
   </md-toolbar>
-  <md-content layout="row" layout-fill flex class="md-padding">
+  <md-content layout="row" layout-fill flex class="main md-padding">
     <div flex layout="column" layout-fill>
 
       <md-whiteframe class="">
@@ -90,7 +90,7 @@
       </md-list>
     </div>
 
-    <div flex="25">
+    <div flex="25" layout="row">
       <!--<md-toolbar class="md-theme-light">-->
       <!--<h1 class="md-toolbar-tools">Contacts</h1>-->
       <!--</md-toolbar>-->
@@ -102,8 +102,9 @@
           <label>Search</label>
           <input ng-model="searchContact">
         </md-input-container>
+        <section class="onlineLabel">on-line</section>
         <md-list>
-          <md-item ng-repeat="item in friends">
+          <md-item ng-repeat="item in contacts.list | filter: {status:'online'}">
             <md-item-content ng-click="onContact($index)">
               <div class="md-tile-left">
                 <img ng-src="{{item.avatar}}" class="contact-face" alt="{{item.displayName}}">
@@ -116,8 +117,18 @@
             <md-divider ng-if="!$last"></md-divider>
           </md-item>
         </md-list>
+        <section class="offlineLabel">off-line</section>
+        <md-list>
+          <md-item ng-repeat="item in contacts.list | filter: {status:'offline'}">
+            <md-item-content>
+              <div class="md-tile-content offlineLabel">
+                <h3>{{item.displayName}} : {{item.id}}</h3>
+              </div>
+            </md-item-content>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-item>
+        </md-list>
       </md-content>
-      </md-sidenav>
     </div>
 
   </md-content>
