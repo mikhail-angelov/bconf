@@ -1,27 +1,32 @@
 'use strict';
 
 angular.module('bconfApp')
-  .controller('MainController', function ($scope, $state,  Auth, User, Peer, $mdSidenav, $rootScope) {
+  .controller('MainController', function ($scope, $state, Auth, User, $mdSidenav, $rootScope, ChatModel) {
 
+    $scope.user = {};
+    $scope.friends = [];
+    $scope.chat = ChatModel;
 
     if (Auth.getToken()) {
       loadUser();
-    } else  {
+    } else {
       $state.go('welcome');
     }
 
     function loadUser() {
-      var userId = User.getUserId() || 0;
-      User.query(userId).then(function () {
+      var userId = Auth.getUserId() || 0;
+      User.getUserInfo(userId).then(function () {
         $scope.user = User.get();
 
-        $scope.user.id = util.randomToken(); //temp
+        // $scope.user.id = util.randomToken(); //temp
 
-        Peer.init($scope.user.id);
-        $scope.linkToShare = Peer.getLinkToShare();
-        //Peer.poolList(function(chats){
-        //  $scope.chats = chats;
-        //});
+        ChatModel.init($scope.user.id);
+        $scope.linkToShare = User.getLinkToShare();
+
+        //load friends
+        User.getFriends($scope.user.id).then(function (friends) {
+          $scope.friends = friends;
+        });
       }, function () {
         console.log('user is not loaded, can not show main view, go to welcome');
         $state.go('welcome');
@@ -33,80 +38,44 @@ angular.module('bconfApp')
       $state.go('welcome');
     };
 
-    $scope.toggleContacts = function () {
-      $mdSidenav('contacts').toggle()
-        .then(function () {
-          console.log("toggle RIGHT is done");
-        });
-    };
-
-    $scope.onSelectChat=function(index){
-      var chatId = $scope.chats[index];
-      $scope.startChat(chatId);
-    };
-    $scope.startChat = function(chatId){
-      if(chatId != $scope.chat.id){
-        $scope.conn = Peer.startChat(chatId);
-        Peer.subscribe($scope.conn,onOpen, onMessage, onClose);
-      }
-    };
-    $rootScope.$on('startChat', function(scope, data){
-      $scope.conn = data.conn;
-      Peer.subscribe($scope.conn,onOpen, onMessage, onClose);
-      $scope.chat.id = $scope.conn.peer;
-    });
-
-    function onOpen (){
-      console.log('open');
-      $scope.chat.messages.push({type:'in',msg:'connection is opened with '+$scope.chat.id});
-    }
-    function onMessage(msg){
-      $scope.$apply(function() {
-        $scope.chat.messages.push({type: 'in', msg: msg});
-      });
-    }
-    function onClose(){
-      console.log('closed');
-      $scope.chat.messages.push({type:'in',msg:'connection is closed with '+$scope.chat.id});
-      $scope.chat.id = 0;
-      $scope.conn = null;
-    }
-    $scope.conn = null;
-    $scope.onSend = function () {
-      var message = $scope.newMessage;
-      if (message) {
-        $scope.chat.messages.push({type:'out',msg:message});
-        if ($scope.conn == null) {
-          console.log('connection is closed');
-          $scope.startChat(message);
-        }else if(message == 'close'){
-          $scope.conn.close();
-          $scope.conn = null;
-        }else{
-          $scope.conn.send(message);
-        }
-      }
-      $scope.newMessage ='';
-    };
-    //$scope.user = {
-    //  display_name:'John Smith',
-    //  provider:'yandex',
-    //  avatar: '/images/john.png',
-    //  friends :[
-    //    {name:'vasy pupkin', provider:'facebook', avatar:'/images/yeoman.png'},
-    //    {name:'vasilisa pupkina', provider:'facebook', avatar:'/images/yeoman.png'}
-    //  ]
+    //$scope.toggleContacts = function () {
+    //  $mdSidenav('contacts').toggle()
+    //    .then(function () {
+    //      console.log("toggle RIGHT is done");
+    //    });
     //};
-    //$scope.linkToShare = 'http://localhost:3000/redirect?user=1234567890';
 
+    $scope.activeChatMenu = function (selectedKey) {
+      angular.forEach($scope.chat.list, function (value, key) {
+        if (key != selectedKey) value.menuActive = false;
+      });
+      $scope.chat.list[selectedKey].menuActive = !$scope.chat.list[selectedKey].menuActive;
+    };
+    $scope.onSelectChat = function (key) {
+      ChatModel.selectChat(key);
+      $scope.session = {
+        id: key,
+        user: {},//todo
+        chat: ChatModel.getActiveChat()
+      }
+    };
+    $scope.closeChat = function (key) {
+      ChatModel.closeChat(key);
+    };
 
-    //$scope.chats = [
-    //  'chat 1', 'looooooooooong chat name'
-    //];
+    $scope.onSend = function () {
+      ChatModel.sendMessage($scope.newMessage);
+      $scope.newMessage = '';
+    };
 
-    $scope.chat = {
-      id: null,
-      user: {name: 'vasy pupkin', provider: 'facebook', avatar: '/images/anonymous.png'},
-      messages: []
-    }
+    $scope.onContact = function (index) {
+      var guest = $scope.friends[index];
+      ChatModel.startChat(guest.id);
+      $scope.session = {
+        id: guest.id,
+        user: guest,
+        chat: ChatModel.getActiveChat()
+      }
+    };
+
   });

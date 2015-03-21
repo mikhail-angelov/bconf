@@ -1,5 +1,6 @@
-angular.module('bconfApp').factory('User', function ($q, $http) {
+angular.module('bconfApp').factory('User', function ($q, $http, constant) {
   var user = {};
+  var friends = [];
   return {
     get: function () {
       return user;
@@ -7,7 +8,7 @@ angular.module('bconfApp').factory('User', function ($q, $http) {
     set: function (newUser) {
       user = newUser;
     },
-    query: function (userId) {
+    getUserInfo: function (userId) {
       var deferred = $q.defer();
       $http.get('user/' + userId).success(function (newUser) {
         user = newUser;
@@ -17,11 +18,27 @@ angular.module('bconfApp').factory('User', function ($q, $http) {
       });
       return deferred.promise;
     },
-    storeUserId: function(userId){
-      localStorage.setItem('userId', userId);
+
+    getFriends: function (userId) {
+      var deferred = $q.defer();
+      if (_.isEmpty(friends)) {
+        $http.get('user/' + userId + '/friends').success(function (friendsList) {
+          friends = friendsList;
+          deferred.resolve(friends);
+        }).error(function () {
+          deferred.reject();
+        });
+      } else {
+        deferred.resolve(friends);
+      }
+      return deferred.promise;
     },
-    getUserId: function(){
-      return localStorage.getItem('userId');
+    getLinkToShare: function () {
+      if (user && user.sharedToken) {
+        return constant.URL_TO_SHARE({refer: user.id, sharedToken: user.sharedToken});
+      } else {
+        return '';
+      }
     }
   };
 });

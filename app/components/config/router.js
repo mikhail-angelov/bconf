@@ -12,15 +12,19 @@ angular.module('bconfApp').config(function ($stateProvider, $urlRouterProvider) 
       controller: 'MainController'
     })
     .state('redirect', {
-      url: "/redirect?token&user",
+      url: "/bconf?refer&sharedToken",
       controller: 'RedirectController'
+    })
+    .state('authRedirect', {
+      url: "/redirect?token&user",
+      controller: 'AuthRedirectController'
     })
     .state('default', {
       url: "/",
-      controller: function($state, Auth){
-        if(Auth.getToken()){
+      controller: function ($state, Auth) {
+        if (Auth.getToken()) {
           $state.go('main');
-        }else{
+        } else {
           $state.go('welcome')
         }
       }

@@ -9,9 +9,22 @@
   border-radius: 20px;
   border: 1px solid #ddd;
   width: 48px;
-  margin: 16px;
+  height: 48px;
+  margin: 6px;
 }
 
-.shift-20-down{
+.shift-20-down {
   margin-top: 20px;
+}
+
+h3 {
+  white-space: nowrap;
+}
+
+.tag {
+  border-radius: 10px;
+  min-width: 20px;
+  border: 1px solid #ddd;
+  background-color: #ffff00;
+  text-align: center;
 }

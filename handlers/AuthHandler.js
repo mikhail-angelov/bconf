@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Session = require('../models/session');
+var logger = require('../logger');
 
 var AuthHandler = function () {
   this.login = login;
@@ -104,9 +105,9 @@ function yandexSignIn(req, res, next) {
 
 function yandexSignInCallback(req, res, next) {
   passport = req._passport.instance;
-  if(passport.ykey == req.query.code){
+  if (passport.ykey == req.query.code) {
     return;
-  }else{
+  } else {
     passport.ykey = req.query.code;
   }
   passport.authenticate('yandex', function (err, user, info) {
@@ -116,23 +117,27 @@ function yandexSignInCallback(req, res, next) {
     if (!user) {
       return res.redirect('http://localhost:3000/#/error?redirect=yandex');
     }
-    User.findOne({provider_id: user.id, provider: 'yandex'}, function (err, usr) {
+    User.findOne({providerId: user.id, provider: 'yandex'}, function (err, usr) {
       if (usr) {
-        Session.findOne({user_id: usr.id}, function (err, session) {
-
-          if (!session) {
-            Session.createSession(usr.id).then(function (session) {
-              redirect(res, session.token, usr.id);
-            })
-          } else {
-            redirect(res, session.token, usr.id);
-          }
-        });
+        //Session.findOne({user_id: usr.id}, function (err, session) {
+        //
+        //  if (!session) {
+        //    Session.createSession(usr.id).then(function (session) {
+        //      redirect(res, session.token, usr.id);
+        //    })
+        //  } else {
+        //    redirect(res, session.token, usr.id);
+        //  }
+        //});
+        redirect(res, usr.token, usr.id);
+      } else {
+        logger.error('auth with internal error ' + err);
       }
     });
   })(req, res, next);
 }
 function redirect(res, token, userId) {
+  logger.info('auth success, redirect - ' + userId);
   res.writeHead(302, {
     'Location': 'http://localhost:3000/#/redirect?token=' + token + '&user=' + userId
   });

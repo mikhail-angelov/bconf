@@ -1,14 +1,18 @@
-var express = require('express');
 var util = require('./util');
 var WebSocketServer = require('ws').Server;
 var url = require('url');
 var clientFactory = require('./client');
+var presenceManager = require('./presenceManager');
+var express = require('express');
+var app = express();
+var logger = require('../logger');
+
+var _clients = {};
 
 function init(server) {
   var self = this;
 
-  var app = express();
-  app._clients = {};
+  presenceManager.init(this);
 
   var path = '/peer/peerjs';
 
@@ -28,7 +32,7 @@ function init(server) {
       return;
     }
 
-    if (app._clients[id]) {
+    if (_clients[id]) {
       // ID-taken, invalid token
       socket.send(JSON.stringify({type: 'ID-TAKEN', payload: {msg: 'ID is taken'}}));
       socket.close();
@@ -42,7 +46,7 @@ function init(server) {
         var dst = message.dst;
         var data = JSON.stringify(message);
 
-        var destination = app._clients[dst];
+        var destination = _clients[dst];
 
         // User is connected!
         if (destination) {
@@ -59,7 +63,7 @@ function init(server) {
             // This happens when a peer disconnects without closing connections and
             // the associated WebSocket has not closed.
             // Tell other side to stop trying.
-            console.log('peer is disconnected do something')
+            console.log('peer is disconnected do something');
             //this._removePeer(key, dst);
             //this._handleTransmission(key, {
             //  type: 'LEAVE',
@@ -71,7 +75,7 @@ function init(server) {
           // Wait for this client to connect/reconnect (XHR) for important
           // messages.
           if (type !== 'LEAVE' && type !== 'EXPIRE' && dst) {
-            console.log('peer is absent do something')
+            console.log('peer is absent do something');
             //var self = this;
             //if (!this._outstanding[key][dst]) {
             //  this._outstanding[key][dst] = [];
@@ -79,8 +83,9 @@ function init(server) {
             //this._outstanding[key][dst].push(message);
           } else if (type === 'LEAVE' && !dst) {
             //this._removePeer(key, src);
-            console.log('clean up list')
-            delete app._clients[src];
+            console.log('clean up list');
+            presenceManager.peerDisconnected(src);
+            delete _clients[src];
           } else {
             // Unavailable destination specified with message LEAVE or EXPIRE
             // Ignore
@@ -88,19 +93,30 @@ function init(server) {
         }
       }, function (client) {
         console.log('Socket closed:', client.id);
-        delete app._clients[client.id];
+        presenceManager.peerDisconnected(client.id);
+        delete _clients[client.id];
       }, function (err) {
         socket.send(JSON.stringify({type: 'ERROR', payload: {msg: err}}));
       });
 
     if (client) {
-      app._clients[id] = client;
+      logger.info('new client ' + id + ' is created');
+      _clients[id] = client;
+      presenceManager.peerConnected(id);
     }
   });
   return app;
 }
 
+function getClient(clientId) {
+  if (_clients[clientId]) {
+    return _clients[clientId];
+  } else {
+    return null;
+  }
+}
 
 module.exports = {
-  init: init
+  init: init,
+  getClient: getClient
 };

@@ -5,7 +5,7 @@ var config = require('../config')
   , User = require('../models/user')
   , Session = require('../models/session')
   , Q = require('q')
-  , uuid = require('node-uuid');
+  , logger = require('../logger');
 
 
 var googlePlus = new GoogleStrategy({
@@ -71,7 +71,7 @@ var yandex = new YandexStrategy({
     callbackURL: config.YANDEX_CB
   },
   function (accessToken, refreshToken, profile, done) {
-    console.log(JSON.stringify(profile));
+    logger.info(JSON.stringify(profile));
     User.findOne({provider_id: profile.id, provider: 'yandex'}, function (err, user) {
       if (!user) {
         User.createUser({
