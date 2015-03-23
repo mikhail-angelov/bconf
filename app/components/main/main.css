@@ -34,6 +34,11 @@ h3 {
 .onlineLabel{
   color: green;
 }
+.onlineItem{
+  overflow: hidden;
+}
 .offlineLabel{
   color: #808080;
+
+  overflow: hidden;
 }

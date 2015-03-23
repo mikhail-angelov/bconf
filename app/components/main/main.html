@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="components/main/main.css"/>
-<md-content layout="column" layout-fill class="main md-padding">
+<md-content layout="column">
   <md-toolbar class="md-theme-light">
     <md-item-content>
       <div class="md-tile-left">
@@ -43,16 +43,17 @@
           </md-item>
         </md-list>
       </md-content>
-      <div layout layout-sm="column">
-        <md-input-container style="width:80%">
-          <label>new message</label>
-          <input ng-model="newMessage">
-        </md-input-container>
-        <md-input-container flex>
-          <md-button class="md-raised" ng-click="onSend()">Send</md-button>
-        </md-input-container>
-      </div>
-
+      <form ng-submit="onSend()">
+        <div layout layout-sm="column">
+          <md-input-container style="width:80%">
+            <label>new message</label>
+            <input ng-model="newMessage">
+          </md-input-container>
+          <md-input-container flex>
+            <md-button class="md-raised" ng-click="onSend()">Send</md-button>
+          </md-input-container>
+        </div>
+      </form>
     </div>
 
     <div flex="25">
@@ -109,7 +110,7 @@
               <div class="md-tile-left">
                 <img ng-src="{{item.avatar}}" class="contact-face" alt="{{item.displayName}}">
               </div>
-              <div class="md-tile-content">
+              <div class="md-tile-content onlineItem">
                 <h3>{{item.displayName}} : {{item.id}}</h3>
                 <h4>{{item.provider}}</h4>
               </div>
