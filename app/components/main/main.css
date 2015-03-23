@@ -31,6 +31,10 @@ h3 {
   background-color: #ffff00;
   text-align: center;
 }
+.md-button.closeChatButton{
+  width: 25px;
+  height: 25px;
+}
 .onlineLabel{
   color: green;
 }

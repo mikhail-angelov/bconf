@@ -20,9 +20,9 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
     },
     closeChat: function (chatId) {
       console.log('close chat ' + chatId);
-      chat[chatId].status = 'offline';
+      chat[chatId].conn.close();
       //todo implement this
-      // delete chat[chatId];
+      delete chat[chatId];
     },
     selectChat: function (chatId) {
       activeChat = chatId;
@@ -76,10 +76,7 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
 
   function onClose(chatId) {
     return withApply(function () {
-      console.log('closed');
-      chat[chatId].messages.push({type: 'in', msg: 'connection is closed with ' + chatId});
-      chat[chatId].status = 'offline';
-      chat[chatId].conn = null;
+      console.log('closed '+chatId);
     });
   }
 

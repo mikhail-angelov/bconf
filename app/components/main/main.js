@@ -25,7 +25,7 @@ angular.module('bconfApp')
         $scope.linkToShare = User.getLinkToShare();
 
         //load friends
-        ContactsModel.loadFriendsList($scope.user.id);
+        ContactsModel.loadContactsList($scope.user.id);
       }, function () {
         console.log('user is not loaded, can not show main view, go to welcome');
         $state.go('welcome');
@@ -44,22 +44,23 @@ angular.module('bconfApp')
     //    });
     //};
 
-    $scope.activeChatMenu = function (selectedKey) {
-      angular.forEach($scope.chat.list, function (value, key) {
-        if (key != selectedKey) value.menuActive = false;
-      });
-      $scope.chat.list[selectedKey].menuActive = !$scope.chat.list[selectedKey].menuActive;
-    };
     $scope.onSelectChat = function (key) {
       ChatModel.selectChat(key);
       $scope.session = {
         id: key,
-        user: {},//todo
+        user: ContactsModel.getContact(key),
         chat: ChatModel.getActiveChat()
-      }
+      };
+
+      angular.forEach($scope.chat.list, function (value, k) {
+        if (key != k) value.menuActive = false;
+      });
+      $scope.chat.list[key].menuActive = true;
+
     };
     $scope.closeChat = function (key) {
       ChatModel.closeChat(key);
+      $scope.session = {};
     };
 
     $scope.onSend = function () {
@@ -77,11 +78,7 @@ angular.module('bconfApp')
       var contact = contacts[index];
       if (contact.status == 'online') {
         ChatModel.startChat(contact.id);
-        $scope.session = {
-          id: contact.id,
-          user: contact,
-          chat: ChatModel.getActiveChat()
-        }
+        $scope.onSelectChat(contact.id);
       }
     };
 

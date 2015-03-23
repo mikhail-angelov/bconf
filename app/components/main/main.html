@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="components/main/main.css"/>
-<md-content layout="column">
+<md-content layout="column" layout-fill>
   <md-toolbar class="md-theme-light">
     <md-item-content>
       <div class="md-tile-left">
@@ -36,7 +36,7 @@
           <md-item ng-repeat="item in session.chat.messages">
             <md-divider ng-if="!$first"></md-divider>
             <md-item-content>
-              <div class="md-tile-content" ng-class="item.type=='in'?'md-warn':''">
+              <div class="md-tile-content" ng-class="{'md-warn':item.type=='in'}">
                 {{item.msg}}
               </div>
             </md-item-content>
@@ -50,7 +50,7 @@
             <input ng-model="newMessage">
           </md-input-container>
           <md-input-container flex>
-            <md-button class="md-raised" ng-click="onSend()">Send</md-button>
+            <md-button class="md-raised">Send</md-button>
           </md-input-container>
         </div>
       </form>
@@ -62,27 +62,24 @@
         <input ng-model="searchChat">
       </md-input-container>
       <md-list>
-        <md-item ng-repeat="(key, item) in chat.list">
-          <md-item-content ng-click="onChat(key)">
+        <md-item ng-repeat="(key, item) in chat.list" ng-click="onSelectChat(key)">
+          <md-item-content>
             <div class="md-tile-left" layout="row">
+              <md-icon md-svg-icon="announcement"></md-icon>
+              <span class="tag">{{item.messages.length}}</span>
+            </div>
 
+            <div class="md-tile-content">
+              <h3>{{item.displayName}} : {{key}}</h3>
+              <h4>{{item.provider}}</h4>
+            </div>
 
-              <md-icon md-svg-icon="announcement" ng-click="activeChatMenu(key)"></md-icon>
+            <div class="md-tile-right" layout="row">
               <div ng-show="item.menuActive">
-                <md-button class="md-fab " aria-label="close" ng-click="closeChat(key)">-
-                  <!--<md-icon md-svg-icon="arrow-drop-down-circle"></md-icon>-->
-                </md-button>
-                <md-button class="md-fab md-primary" aria-label="close" ng-click="onSelectChat(key)">+
+                <md-button class="md-fab closeChatButton" aria-label="close" ng-click="closeChat(key)">-
                   <!--<md-icon md-svg-icon="arrow-drop-down-circle"></md-icon>-->
                 </md-button>
               </div>
-            </div>
-            <span class="tag">{{item.messages.length}}</span>
-
-            <div class="md-tile-content">
-
-              <h3>{{item.displayName}} : {{key}}</h3>
-              <h4>{{item.provider}}</h4>
             </div>
 
           </md-item-content>
@@ -131,8 +128,5 @@
         </md-list>
       </md-content>
     </div>
-
   </md-content>
-
-
 </md-content>

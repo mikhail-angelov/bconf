@@ -2,10 +2,18 @@ angular.module('bconfApp').factory('ContactsModel', function (User, $rootScope, 
 
   var model = {
     list: [],
-    loadFriendsList: function (userId) {
+    loadContactsList: function (userId) {
       return User.getFriends(userId).then(function(friends){
         model.list = friends;
       })
+    },
+    getContact: function(contactId){
+      angular.forEach(model.list, function(contact){
+        if(contact.id == contactId){
+          return contact;
+        }
+      });
+      return {};
     }
   };
 
