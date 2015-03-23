@@ -1,7 +1,7 @@
 angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $rootScope, Audio) {
   var peer;
   var peerId;
-  var list = [];
+  var call;
 
   var service = {
     init: function (myPeerId) {
@@ -26,33 +26,50 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       peer.on('message', function (msg) {
         console.log('on peer message ' + msg);
       });
-      peer.on('presence', function(presence){
+      peer.on('presence', function (presence) {
         $rootScope.$broadcast('presence', presence);
-      })
+      });
+      peer.on('call', function (call) {
+        $rootScope.$broadcast('incomingCall', call);
+      });
     },
     originateCall: function (peerId) {
+      var deferred = $q.defer();
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
       navigator.getUserMedia({video: false, audio: true}, function (stream) {
-        var call = peer.call(peerId, stream);
+        call = peer.call(peerId, stream);
         call.on('stream', function (remoteStream) {
+          deferred.resolve();
+          Audio.play(remoteStream);
           // Show stream in some <video> element.
         });
       }, function (err) {
         console.log('Failed to get local stream', err);
+        deferred.reject();
       });
+      return deferred.promise;
     },
-    answerCall: function () {
+    answerCall: function (callData) {
+      call = callData;
+      var deferred = $q.defer();
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-      peer.on('call', function (call) {
-        navigator.getUserMedia({video: false, audio: true}, function (stream) {
-          call.answer(stream); // Answer the call with an A/V stream.
-          call.on('stream', function (remoteStream) {
-            // Show stream in some <video> element.
-          });
-        }, function (err) {
-          console.log('Failed to get local stream', err);
+      navigator.getUserMedia({video: false, audio: true}, function (stream) {
+        call.answer(stream); // Answer the call with an A/V stream.
+        call.on('stream', function (remoteStream) {
+          deferred.resolve();
+          Audio.play(remoteStream);
+          // Show stream in some <video> element.
         });
+      }, function (err) {
+        console.log('Failed to get local stream', err);
+        deferred.reject();
       });
+      return deferred.promise;
+    },
+    hangUp: function () {
+      console.log('hang up');
+      call.close();
+      Audio.stop();
     },
     startChat: function (peerId) {
       return peer.connect(peerId);

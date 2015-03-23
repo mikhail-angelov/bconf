@@ -35,6 +35,11 @@ h3 {
   width: 25px;
   height: 25px;
 }
+.md-button.md-default-theme.md-raised.callButton{
+  background-color: greenyellow;
+  width: 120px;
+  height: 60px;
+}
 .onlineLabel{
   color: green;
 }

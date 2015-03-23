@@ -1,12 +1,23 @@
 'use strict';
 
 angular.module('bconfApp')
-  .controller('MainController', function ($scope, $state, Auth, User, $mdSidenav, $rootScope, ChatModel, ContactsModel) {
+  .controller('MainController', function ($scope, $state, Auth, User, $mdSidenav, $rootScope, ChatModel, ContactsModel,$mdDialog) {
 
     $scope.user = {};
     $scope.friends = [];
     $scope.chat = ChatModel;
     $scope.contacts = ContactsModel;
+
+    var incomingCallDialog = $mdDialog.confirm()
+      .title('calling...')
+      .content('will you answer it?')
+      .ariaLabel('Lucky day')
+      .ok('Answer')
+      .cancel('Cancel');
+    var inCallDialog= $mdDialog.confirm()
+      .title('call ()')
+      .content('call dialog')
+      .ok('Disconnect');
 
     if (Auth.getToken()) {
       loadUser();
@@ -31,6 +42,19 @@ angular.module('bconfApp')
         $state.go('welcome');
       });
     }
+    $rootScope.$on('incomingCall', function (scope, call) {
+
+      $mdDialog.show(incomingCallDialog).then(function() {
+        ChatModel.answerCall(call).then(function(){
+          $mdDialog.show(inCallDialog).then(function(){
+            console.log('disconnect it');
+            ChatModel.hangUp();
+          })
+        });
+      }, function() {
+        console.log('ignore + ' + JSON.stringify(call));
+      });
+    });
 
     $scope.onLogout = function () {
       Auth.logout();
@@ -81,5 +105,12 @@ angular.module('bconfApp')
         $scope.onSelectChat(contact.id);
       }
     };
+    $scope.onCall = function(){
+      ChatModel.startCall($scope.session.id).then(function(){
+        console.log('connected');
+      }, function(){
+        console.log('error');
+      });
+    }
 
   });

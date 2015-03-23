@@ -8,12 +8,13 @@ angular.module('bconfApp').factory('ContactsModel', function (User, $rootScope, 
       })
     },
     getContact: function(contactId){
+      var result = {};
       angular.forEach(model.list, function(contact){
         if(contact.id == contactId){
-          return contact;
+          result = contact;
         }
       });
-      return {};
+      return result;
     }
   };
 

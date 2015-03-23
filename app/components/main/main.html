@@ -28,6 +28,9 @@
             <h3>{{session.user.displayName}}</h3>
             <h4>{{session.user.provider}}</h4>
           </div>
+          <div class="md-tile-right" ng-show="session.user">
+            <md-button class="md-raised callButton" ng-click="onCall()">Call</md-button>
+          </div>
         </md-item-content>
       </md-whiteframe>
       <md-content flex class="md-padding">
@@ -57,10 +60,10 @@
     </div>
 
     <div flex="25">
-      <md-input-container style="width:80%">
-        <label>Search</label>
-        <input ng-model="searchChat">
-      </md-input-container>
+      <!--<md-input-container style="width:80%">-->
+        <!--<label>Search</label>-->
+        <!--<input ng-model="searchChat">-->
+      <!--</md-input-container>-->
       <md-list>
         <md-item ng-repeat="(key, item) in chat.list" ng-click="onSelectChat(key)">
           <md-item-content>

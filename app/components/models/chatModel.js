@@ -40,6 +40,15 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
           currentChat.conn.send(message);
         }
       }
+    },
+    startCall: function(chatId){
+      return Peer.originateCall(chatId);
+    },
+    answerCall: function(call){
+      return Peer.answerCall(call);
+    },
+    hangUp:function(){
+return Peer.hangUp();
     }
   };
   $rootScope.$on('startChat', function (scope, data) {
