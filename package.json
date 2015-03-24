@@ -18,6 +18,7 @@
     "passport-google-oauth": "0.1.5",
     "passport-oauth2": "^1.1.2",
     "passport-oauth2-refresh": "^0.3.0",
+    "passport-yandex": "0.0.3",
     "peer": "^0.2.8",
     "promise": "^6.1.0",
     "q": "^1.2.0",

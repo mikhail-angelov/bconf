@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $rootScope, Audio) {
+angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $rootScope, Audio, $location) {
   var peer;
   var peerId;
   var call;
@@ -8,8 +8,8 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       peerId = myPeerId;
       var key = 'bconf';
       peer = new Peer(myPeerId, {
-        host: constant.HOST,
-        port: constant.PORT,
+        host: $location.host(),
+        port: $location.port(),
         path: constant.PEER_PATH,
         key: key,
         debug: true
