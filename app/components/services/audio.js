@@ -9,6 +9,10 @@ angular.module('bconfApp').factory('Audio', function($document) {
       audioElement.src = filename;
       audioElement.play();
     },
+    playStream:function(stream){
+      var src = (URL || webkitURL || mozURL).createObjectURL(stream);
+      this.play(src);
+    },
     resume: function() {
       audioElement.play();
     },

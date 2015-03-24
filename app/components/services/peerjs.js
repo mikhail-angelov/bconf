@@ -38,11 +38,8 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
       navigator.getUserMedia({video: false, audio: true}, function (stream) {
         call = peer.call(peerId, stream);
-        call.on('stream', function (remoteStream) {
-          deferred.resolve();
-          Audio.play(remoteStream);
-          // Show stream in some <video> element.
-        });
+        service.subscribeCall(call);
+        deferred.resolve();
       }, function (err) {
         console.log('Failed to get local stream', err);
         deferred.reject();
@@ -55,11 +52,8 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
       navigator.getUserMedia({video: false, audio: true}, function (stream) {
         call.answer(stream); // Answer the call with an A/V stream.
-        call.on('stream', function (remoteStream) {
-          deferred.resolve();
-          Audio.play(remoteStream);
-          // Show stream in some <video> element.
-        });
+        service.subscribeCall(call);
+        deferred.resolve();
       }, function (err) {
         console.log('Failed to get local stream', err);
         deferred.reject();
@@ -83,6 +77,19 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       });
       conn.on('close', function (data) {
         onClose();
+      });
+    },
+    subscribeCall: function (call) {
+      call.on('error', function (err) {
+        console.log('call error ' + err);
+      });
+      call.on('close', function () {
+        console.log('call is closed ');
+      });
+      call.on('stream', function (remoteStream) {
+        console.log('call stream ' + JSON.stringify(remoteStream));
+        Audio.playStream(remoteStream);
+        // Show stream in some <video> element.
       });
     }
   };
