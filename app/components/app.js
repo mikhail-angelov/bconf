@@ -13,6 +13,5 @@ angular
     'ngAnimate',
     'ngTouch',
     'ui.router',
-    'ngMaterial',
-    'ng-mfb'
+    'ngMaterial'
   ]);

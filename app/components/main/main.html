@@ -1,135 +1,102 @@
 <link rel="stylesheet" href="components/main/main.css"/>
 <md-content layout="column" layout-fill>
-  <md-toolbar class="md-theme-light">
-    <md-item-content>
-      <div class="md-tile-left">
-        <img ng-src="{{user.avatar || 'images/anonymous.png'}}" class="face" alt="{{user.displayName}}">
-      </div>
-      <div class="md-tile-content">
-        <div>{{user.displayName}} ({{user.provider}})</div>
-        <h4><input ng-model="linkToShare" style="width:440px;"></h4>
-      </div>
-      <div class=" md-tile-right">
-
-        <md-button class="" ng-click="onLogout()">Logout</md-button>
-        <md-button class="md-raised" ng-click="toggleContacts()">Contacts</md-button>
-      </div>
-    </md-item-content>
-  </md-toolbar>
-  <md-content layout="row" layout-fill flex class="main md-padding">
-    <div flex layout="column" layout-fill>
-
-      <md-whiteframe class="">
+    <!--header-->
+    <md-toolbar class="md-theme-light">
         <md-item-content>
-          <div class="md-tile-left">
-            <img ng-src="{{session.user.avatar}}" class="contact-face" alt="{{session.user.displayName}}">
-          </div>
-          <div class="md-tile-content">
-            <h3>{{session.user.displayName}}</h3>
-            <h4>{{session.user.provider}}</h4>
-          </div>
-          <div class="md-tile-right" ng-show="session.user">
-            <md-button class="md-raised callButton" ng-click="onCall()">Call</md-button>
-          </div>
-        </md-item-content>
-      </md-whiteframe>
-      <md-content flex class="md-padding">
-
-        <md-list>
-          <md-item ng-repeat="item in session.chat.messages">
-            <md-divider ng-if="!$first"></md-divider>
-            <md-item-content>
-              <div class="md-tile-content" ng-class="{'md-warn':item.type=='in'}">
-                {{item.msg}}
-              </div>
-            </md-item-content>
-          </md-item>
-        </md-list>
-      </md-content>
-      <form ng-submit="onSend()">
-        <div layout layout-sm="column">
-          <md-input-container style="width:80%">
-            <label>new message</label>
-            <input ng-model="newMessage">
-          </md-input-container>
-          <md-input-container flex>
-            <md-button class="md-raised">Send</md-button>
-          </md-input-container>
-        </div>
-      </form>
-    </div>
-
-    <div flex="25">
-      <!--<md-input-container style="width:80%">-->
-        <!--<label>Search</label>-->
-        <!--<input ng-model="searchChat">-->
-      <!--</md-input-container>-->
-      <md-list>
-        <md-item ng-repeat="(key, item) in chat.list" ng-click="onSelectChat(key)">
-          <md-item-content>
-            <div class="md-tile-left" layout="row">
-              <md-icon md-svg-icon="announcement"></md-icon>
-              <span class="tag">{{item.messages.length}}</span>
+            <div class="md-tile-left">
+                <img ng-src="{{user.avatar || 'images/anonymous.png'}}" class="face" alt="{{user.displayName}}">
             </div>
-
             <div class="md-tile-content">
-              <h3>{{item.displayName}} : {{key}}</h3>
-              <h4>{{item.provider}}</h4>
+                <div>{{user.displayName}} ({{user.provider}}) <md-button ng-click="onLogout()">Logout</md-button></div>
+                <h4><input ng-model="linkToShare" style="width:440px;"></h4>
             </div>
+            <div class=" md-tile-right">
 
-            <div class="md-tile-right" layout="row">
-              <div ng-show="item.menuActive">
-                <md-button class="md-fab closeChatButton" aria-label="close" ng-click="closeChat(key)">-
-                  <!--<md-icon md-svg-icon="arrow-drop-down-circle"></md-icon>-->
-                </md-button>
-              </div>
+                *
             </div>
+        </md-item-content>
+    </md-toolbar>
+    <md-content layout="row" layout-fill flex class="main md-padding">
+        <!--contacts-->
+        <div flex="20" layout="row" class="border">
+            <md-content class="md-padding" layout-fill>
+                <h2>Contacts</h2>
+                <md-input-container style="width:80%">
+                    <label>Search</label>
+                    <input ng-model="searchContact">
+                </md-input-container>
+                <section class="onlineLabel">on-line</section>
+                <md-list>
+                    <md-item ng-repeat="item in contacts.list | filter: {status:'online'}">
+                        <md-item-content ng-click="onContact($index)">
+                            <div class="md-tile-left">
+                                <img ng-src="{{item.avatar}}" class="contact-face" alt="{{item.displayName}}">
+                            </div>
+                            <div class="md-tile-content onlineItem">
+                                <h3>{{item.displayName}}</h3>
+                                <h4>({{item.provider}})</h4>
+                            </div>
+                        </md-item-content>
+                        <md-divider ng-if="!$last"></md-divider>
+                    </md-item>
+                </md-list>
 
-          </md-item-content>
-          <md-divider ng-if="!$last"></md-divider>
-        </md-item>
-      </md-list>
-    </div>
+                <section class="offlineLabel">off-line</section>
+                <md-list>
+                    <md-item ng-repeat="item in contacts.list | filter: {status:'offline'}">
+                        <md-item-content>
+                            <div class="md-tile-content offlineLabel">
+                                <h3>{{item.displayName}}</h3>
+                            </div>
+                        </md-item-content>
+                        <md-divider ng-if="!$last"></md-divider>
+                    </md-item>
+                </md-list>
+            </md-content>
+        </div>
 
-    <div flex="25" layout="row">
-      <!--<md-toolbar class="md-theme-light">-->
-      <!--<h1 class="md-toolbar-tools">Contacts</h1>-->
-      <!--</md-toolbar>-->
-      <md-content class="md-padding">
-        <!--<md-button ng-click="toggleContacts()" class="md-primary">-->
-        <!--Close-->
-        <!--</md-button>-->
-        <md-input-container style="width:80%">
-          <label>Search</label>
-          <input ng-model="searchContact">
-        </md-input-container>
-        <section class="onlineLabel">on-line</section>
-        <md-list>
-          <md-item ng-repeat="item in contacts.list | filter: {status:'online'}">
-            <md-item-content ng-click="onContact($index)">
-              <div class="md-tile-left">
-                <img ng-src="{{item.avatar}}" class="contact-face" alt="{{item.displayName}}">
-              </div>
-              <div class="md-tile-content onlineItem">
-                <h3>{{item.displayName}} : {{item.id}}</h3>
-                <h4>{{item.provider}}</h4>
-              </div>
-            </md-item-content>
-            <md-divider ng-if="!$last"></md-divider>
-          </md-item>
-        </md-list>
-        <section class="offlineLabel">off-line</section>
-        <md-list>
-          <md-item ng-repeat="item in contacts.list | filter: {status:'offline'}">
-            <md-item-content>
-              <div class="md-tile-content offlineLabel">
-                <h3>{{item.displayName}} : {{item.id}}</h3>
-              </div>
-            </md-item-content>
-            <md-divider ng-if="!$last"></md-divider>
-          </md-item>
-        </md-list>
-      </md-content>
-    </div>
-  </md-content>
+        <div flex layout="column" layout-fill>
+
+            <md-whiteframe class="border">
+                <md-item-content>
+                    <div class="md-tile-left">
+                        <img ng-src="{{session.user.avatar}}" class="contact-face" alt="{{session.user.displayName}}">
+                    </div>
+                    <div class="md-tile-content">
+                        <h3>{{session.user.displayName}}</h3>
+                        <h4>{{session.user.provider}}</h4>
+                    </div>
+                    <div class="md-tile-right" ng-show="session.user">
+                        <md-button class="md-raised callButton" ng-click="onCall()">Call</md-button>
+                    </div>
+                </md-item-content>
+            </md-whiteframe>
+            <md-content flex class="md-padding" id="messageList">
+
+                <md-list>
+                    <md-item ng-repeat="item in session.chat.messages">
+                        <md-divider ng-if="!$first"></md-divider>
+                        <md-item-content>
+                            <div class="md-tile-content">
+                                {{item.date | date:'hh:mm'}} {{item.type}} : {{item.msg}}
+                            </div>
+                        </md-item-content>
+                    </md-item>
+                </md-list>
+            </md-content>
+            <form ng-submit="onSend()">
+                <div layout layout-sm="column">
+                    <md-input-container style="width:80%">
+                        <label>new message</label>
+                        <input ng-model="newMessage">
+                    </md-input-container>
+                    <md-input-container flex>
+                        <md-button class="md-raised">Send</md-button>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+
+
+    </md-content>
 </md-content>
