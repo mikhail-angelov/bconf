@@ -32,13 +32,6 @@ angular.module('bconfApp').factory('User', function ($q, $http, constant) {
         deferred.resolve(friends);
       }
       return deferred.promise;
-    },
-    getLinkToShare: function () {
-      if (user && user.sharedToken) {
-        return constant.URL_TO_SHARE({refer: user.id, sharedToken: user.sharedToken});
-      } else {
-        return '';
-      }
     }
   };
 });

@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $rootScope, Audio, $location) {
+angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, Audio, Property) {
   var peer;
   var peerId;
   var call;
@@ -8,8 +8,8 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
       peerId = myPeerId;
       var key = 'bconf';
       peer = new Peer(myPeerId, {
-        host: $location.host(),
-        port: $location.port(),
+        host: Property.getHost(),
+        port: Property.getPort(),
         path: constant.PEER_PATH,
         key: key,
         debug: true
@@ -82,14 +82,17 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, $
     subscribeCall: function (call) {
       call.on('error', function (err) {
         console.log('call error ' + err);
+          $rootScope.$broadcast('errorCall', err);
       });
       call.on('close', function () {
         console.log('call is closed ');
+          $rootScope.$broadcast('closedCall');
       });
       call.on('stream', function (remoteStream) {
         console.log('call stream ' + JSON.stringify(remoteStream));
         Audio.playStream(remoteStream);
         // Show stream in some <video> element.
+          $rootScope.$broadcast('connectedCall');
       });
     }
   };
