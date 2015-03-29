@@ -131,7 +131,7 @@ function yandexSignInCallback(req, res, next) {
 function redirect(res, token, userId) {
   logger.info('auth success, redirect - ' + userId);
   res.writeHead(302, {
-    'Location': 'http://localhost:3000/#/redirect?token=' + token + '&user=' + userId
+    'Location': '/#/redirect?token=' + token + '&user=' + userId
   });
   res.end();
 }
