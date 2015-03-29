@@ -41,7 +41,7 @@ angular.module('bconfApp')
       });
     }
 
-    $scope.openCall = function (callInfo) {
+    $scope.openCallDialog = function (callInfo) {
       $scope.callInfo = callInfo;
     };
     $scope.connectedCall = function(){
@@ -54,7 +54,7 @@ angular.module('bconfApp')
       console.log('on incoming call');
       var contactId = call.peer;
       $scope.$apply(function(){
-        $scope.openCall( {
+        $scope.openCallDialog( {
           state: constant.CALL_STATE.INCOMING,
           incomingCall: call,
           contact: User.getContact(contactId)
@@ -82,10 +82,15 @@ angular.module('bconfApp')
       });
     });
     $scope.onCall = function () {
-      $scope.openCall( {
-        state: constant.CALL_STATE.DIALLING,
-        incomingCall: {},
-        contact: User.getContact($scope.session.id)
+      ChatModel.startCall($scope.session.id).then(function () {
+        console.log('connecting...');
+        $scope.openCallDialog( {
+          state: constant.CALL_STATE.DIALLING,
+          incomingCall: {},
+          contact: User.getContact($scope.session.id)
+        });
+      }, function () {
+        console.log('error');
       });
     };
 

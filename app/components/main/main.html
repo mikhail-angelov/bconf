@@ -79,10 +79,11 @@
 
         </md-item-content>
       </md-whiteframe>
-      <md-content flex class="md-padding" id="messageList">
-        <div ng-if="callInfo">
-          <div ng-include="'components/voiceCall/voiceCall.html'" ng-controller="VoiceCall"></div>
-        </div>
+      <div ng-if="callInfo">
+        <div ng-include="'components/voiceCall/voiceCall.html'" ng-controller="VoiceCall"></div>
+      </div>
+      <md-content flex class="md-padding" id="messageList" >
+
 
         <md-list>
           <md-item ng-repeat="item in session.chat.messages">
@@ -95,7 +96,7 @@
           </md-item>
         </md-list>
       </md-content>
-      <form ng-submit="onSend()">
+      <form ng-submit="onSend()" ng-show="session.user">
         <div layout layout-sm="column">
           <md-input-container style="width:80%">
             <label>new message</label>

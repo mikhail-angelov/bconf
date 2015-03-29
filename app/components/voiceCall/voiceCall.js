@@ -5,7 +5,6 @@ angular.module('bconfApp')
 
     switch ($scope.callInfo.state) {
       case constant.CALL_STATE.DIALLING:
-        startCall($scope.callInfo.contact.id);
         //play tone
         break;
       case constant.CALL_STATE.INCOMING:
@@ -13,14 +12,6 @@ angular.module('bconfApp')
         break;
       default:
         console.log('some error');
-    }
-
-    function startCall(id) {
-      ChatModel.startCall(id).then(function () {
-        console.log('connecting...');
-      }, function () {
-        console.log('error');
-      });
     }
 
     $scope.handUp = function () {
