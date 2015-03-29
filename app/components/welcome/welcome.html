@@ -4,8 +4,8 @@
     <h1>BCONF.COM</h1>
 
     <p>
-      <md-button ng-repeat="p in authProviders"  ng-click="onLogin($index)" aria-label="p.redirect" ng-href="{{p.redirect}} ">
-         <md-icon md-svg-icon="{{p.icon}}" class="socialIcon" alt="{{p.icon}}" ng-class="{{p.class}}"></md-icon>
+      <md-button ng-repeat="p in authProviders"  ng-click="onLogin($index)" aria-label="p.redirect" ng-href="{{p.redirect}}">
+         <md-icon md-svg-icon="{{p.icon}}" class="socialIcon" alt="{{p.icon}}" ng-class="[p.class]"></md-icon>
       </md-button>
     </p>
     <span ng-show="showProcess" class="sample-show-hide">request is in progress...</span>

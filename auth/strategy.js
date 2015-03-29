@@ -16,21 +16,37 @@ var googlePlus = new GoogleStrategy({
   function (accessToken, refreshToken, profile, done) {
     console.log('accessToken ' + accessToken);
     console.log('refreshToken ' + refreshToken);
-    User.findOne({email: profile._json.email}, function (err, usr) {
+    User.findOne({provider_id: profile.id, provider: 'google'}, function (err, user) {
       console.log(JSON.stringify(profile));
-      if (!usr) {
-        usr = new User({
-          last_name: profile._json.family_name,
-          first_name: profile._json.given_name,
-          email: profile._json.email
-        })
+      if (!user) {
+        User.createUser({
+          lastName: profile.name.familyName,
+          firstName: profile.name.givenName,
+          gender: profile.gender,
+          providerId: profile.id,
+          email: profile._json.email,
+          provider: profile.provider,
+          displayName: profile.displayName,
+          providerToken: accessToken,
+          providerRefreshToken: refreshToken,
+          birthday: profile._json.birthday
+        }).then(function (newUser) {
+          createSession(newUser.id);
+        });
       }
-      usr.token = accessToken;
-      usr.save(function (err, usr, num) {
-        if (err) {
-          console.log('error saving token');
-        }
-      });
+      //if (!usr) {
+      //  usr = new User({
+      //    last_name: profile._json.family_name,
+      //    first_name: profile._json.given_name,
+      //    email: profile._json.email
+      //  })
+      //}
+      //usr.token = accessToken;
+      //usr.save(function (err, usr, num) {
+      //  if (err) {
+      //    console.log('error saving token');
+      //  }
+      //});
       process.nextTick(function () {
         return done(null, profile);
       });
@@ -47,17 +63,25 @@ var facebook = new FacebookStrategy({
     console.log('accessToken ' + accessToken);
     console.log('refreshToken ' + refreshToken);
     console.log(JSON.stringify(profile));
-    User.findOne({email: profile.id}, function (err, usr) {
+    User.findOne({provider_id: profile.id, provider: 'facebook'}, function (err, user) {
       console.log(JSON.stringify(profile));
-      if (!usr) {
-        usr = new User({last_name: profile.name.familyName, first_name: profile.name.givenName, email: profile.id})
+      if (!user) {
+        User.createUser({
+          lastName: profile.name.familyName,
+          firstName: profile.name.givenName,
+          gender: profile.gender,
+          providerId: profile.id,
+          email: profile.id,
+          provider: profile.provider,
+          displayName: profile.displayName,
+          providerToken: accessToken,
+          providerRefreshToken: refreshToken,
+          birthday: profile._json.birthday
+        }).then(function (newUser) {
+          createSession(newUser.id);
+        });
       }
-      usr.token = accessToken;
-      usr.save(function (err, usr, num) {
-        if (err) {
-          console.log('error saving token');
-        }
-      });
+
       process.nextTick(function () {
         return done(null, profile);
       });

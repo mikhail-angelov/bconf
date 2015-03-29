@@ -60,11 +60,12 @@ function googleSignInCallback(req, res, next) {
     if (!user) {
       return res.redirect('http://localhost:8000');
     }
-    User.findOne({email: user._json.email}, function (err, usr) {
-      res.writeHead(302, {
-        'Location': 'http://localhost:8000/#/index?token=' + usr.token + '&user=' + usr.email
-      });
-      res.end();
+    User.findOne({providerId: user.id, provider: 'google'}, function (err, usr) {
+      if (usr) {
+        redirect(res, usr.token, usr.id);
+      } else {
+        logger.error('auth with internal error ' + err);
+      }
     });
   })(req, res, next);
 }
@@ -86,11 +87,12 @@ function facebookSignInCallback(req, res, next) {
     if (!user) {
       return res.redirect('http://localhost:8001');
     }
-    User.findOne({email: user.id}, function (err, usr) {
-      res.writeHead(302, {
-        'Location': 'http://localhost:8001/#/index?token=' + usr.token + '&user=' + usr.email
-      });
-      res.end();
+    User.findOne({providerId: user.id, provider: 'facebook'}, function (err, usr) {
+      if (usr) {
+        redirect(res, usr.token, usr.id);
+      } else {
+        logger.error('auth with internal error ' + err);
+      }
     });
   })(req, res, next);
 }
@@ -119,16 +121,6 @@ function yandexSignInCallback(req, res, next) {
     }
     User.findOne({providerId: user.id, provider: 'yandex'}, function (err, usr) {
       if (usr) {
-        //Session.findOne({user_id: usr.id}, function (err, session) {
-        //
-        //  if (!session) {
-        //    Session.createSession(usr.id).then(function (session) {
-        //      redirect(res, session.token, usr.id);
-        //    })
-        //  } else {
-        //    redirect(res, session.token, usr.id);
-        //  }
-        //});
         redirect(res, usr.token, usr.id);
       } else {
         logger.error('auth with internal error ' + err);
