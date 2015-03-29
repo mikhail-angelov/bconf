@@ -15,6 +15,18 @@ angular.module('bconfApp').factory('ContactsModel', function (User, $rootScope, 
         }
       });
       return result;
+    },
+    incrementMessageCount: function(contactId){
+      var contact = model.getContact(contactId);
+      if(contact){
+        contact.newMessageCount = contact.newMessageCount?contact.newMessageCount+1:1;
+      }
+    },
+    resetMessageCount: function(contactId){
+      var contact = model.getContact(contactId);
+      if(contact){
+        contact.newMessageCount = 0;
+      }
     }
   };
 

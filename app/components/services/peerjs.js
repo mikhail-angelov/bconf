@@ -17,8 +17,8 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, A
       peer.on('connection', function (conn) {
         $rootScope.$broadcast('startChat', {conn: conn});
       });
-      peer.on('error', function () {
-        console.log('on peer error');
+      peer.on('error', function (err) {
+        console.log('on peer error ' + err);
       });
       peer.on('disconnected', function () {
         console.log('on peer disconnected');
@@ -29,7 +29,8 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, A
       peer.on('presence', function (presence) {
         $rootScope.$broadcast('presence', presence);
       });
-      peer.on('call', function (call) {
+      peer.on('call', function (incomingCall) {
+        call = incomingCall;
         $rootScope.$broadcast('incomingCall', call);
       });
     },
@@ -62,7 +63,9 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, A
     },
     hangUp: function () {
       console.log('hang up');
-      call.close();
+      if(call){
+        call.close();
+      }
       Audio.stop();
     },
     startChat: function (peerId) {
@@ -91,6 +94,15 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, A
       call.on('stream', function (remoteStream) {
         console.log('call stream ' + JSON.stringify(remoteStream));
         Audio.playStream(remoteStream);
+        remoteStream.onended = function(){
+          console.log('ma: stream ended');
+        }
+        remoteStream.onaddtrack= function(){
+          console.log('ma: stream onaddtrack');
+        }
+        remoteStream.onremovetrack= function(){
+          console.log('ma: stream onremovetrack');
+        }
         // Show stream in some <video> element.
           $rootScope.$broadcast('connectedCall');
       });

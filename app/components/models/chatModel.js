@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $timeout) {
+angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $timeout, ContactsModel) {
   var chat = {};
   var activeChat = '';
 
@@ -26,6 +26,7 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
     },
     selectChat: function (chatId) {
       activeChat = chatId;
+      ContactsModel.resetMessageCount(chatId);
     },
     getActiveChat: function () {
       return chat[activeChat];
@@ -41,14 +42,14 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
         }
       }
     },
-    startCall: function(chatId){
+    startCall: function (chatId) {
       return Peer.originateCall(chatId);
     },
-    answerCall: function(call){
+    answerCall: function (call) {
       return Peer.answerCall(call);
     },
-    hangUp:function(){
-return Peer.hangUp();
+    hangUp: function () {
+      return Peer.hangUp();
     }
   };
   $rootScope.$on('startChat', function (scope, data) {
@@ -64,6 +65,7 @@ return Peer.hangUp();
     if (_.isEmpty(activeChat)) {
       activeChat = chatId;
     }
+    ContactsModel.incrementMessageCount(chatId);
   });
 
   function subscribe(conn, chatId) {
@@ -80,12 +82,15 @@ return Peer.hangUp();
   function onMessage(chatId) {
     return withApply(function (msg) {
       chat[chatId].messages.push({type: 'in', msg: msg});
+      if(chatId != activeChat){
+        ContactsModel.incrementMessageCount(chatId);
+      }
     });
   }
 
   function onClose(chatId) {
     return withApply(function () {
-      console.log('closed '+chatId);
+      console.log('closed ' + chatId);
     });
   }
 

@@ -32,6 +32,15 @@ angular.module('bconfApp').factory('User', function ($q, $http, constant) {
         deferred.resolve(friends);
       }
       return deferred.promise;
+    },
+    getContact: function(contactId){
+      var result = {};
+      friends.forEach(function(friend){
+        if(friend.id == contactId){
+          result = friend;
+        }
+      });
+        return result;
     }
   };
 });

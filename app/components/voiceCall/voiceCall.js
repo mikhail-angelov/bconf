@@ -1,52 +1,46 @@
 'use strict';
 
 angular.module('bconfApp')
-    .controller('VoiceCall', function ($scope, $mdToast, constant, state, contactId, incomingCall, ChatModel) {
-        $scope.state = state;
+  .controller('VoiceCall', function ($scope, constant, ChatModel) {
 
-        switch (state){
-           case constant.CALL_STATE.DIALLING:
-               startCall(contactId);
-               //play tone
-                break;
-            case constant.CALL_STATE.INCOMING:
-                //play alert
-                break;
-            default:
-                console.log('some error');
-                $mdToast.hide();
-        }
+    switch ($scope.callInfo.state) {
+      case constant.CALL_STATE.DIALLING:
+        startCall($scope.callInfo.contact.id);
+        //play tone
+        break;
+      case constant.CALL_STATE.INCOMING:
+        //play alert
+        break;
+      default:
+        console.log('some error');
+    }
 
-        $scope.$on('closedCall', function(){
-            $scope.state = constant.CALL_STATE.NONE;
-            $mdToast.hide();
-        });
-        $scope.$on('connectedCall', function(){
-            $scope.state = constant.CALL_STATE.CONNECTED;
-        });
+    function startCall(id) {
+      ChatModel.startCall(id).then(function () {
+        console.log('connecting...');
+      }, function () {
+        console.log('error');
+      });
+    }
 
-        function connected(){
-            $scope.state = constant.CALL_STATE.CONNECTED;
-        }
+    $scope.handUp = function () {
+      ChatModel.hangUp();
+      $scope.closeCall();
+    };
 
-        function startCall(id){
-            ChatModel.startCall(id).then(function () {
-                console.log('connecting...');
-            }, function () {
-                console.log('error');
-            });
-        }
+    $scope.answerCall = function () {
+      ChatModel.answerCall($scope.callInfo.incomingCall);
+      $scope.connectedCall();
+    };
 
-        $scope.handUp = function () {
-            ChatModel.hangUp();
-            $mdToast.hide();
-        };
-
-        $scope.answerCall = function(){
-            ChatModel.answerCall(incomingCall);
-            //connected();
-        };
-
-
-    });
+    $scope.isIncoming = function(){
+      return $scope.callInfo.state == constant.CALL_STATE.INCOMING;
+    };
+    $scope.isDialing = function(){
+      return $scope.callInfo.state == constant.CALL_STATE.DIALLING;
+    };
+    $scope.isConnected = function(){
+      return $scope.callInfo.state == constant.CALL_STATE.CONNECTED;
+    };
+  });
 

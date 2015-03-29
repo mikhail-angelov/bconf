@@ -532,9 +532,11 @@ Negotiator._setupListeners = function(connection, pc, pc_id) {
   };
 
   pc.oniceconnectionstatechange = function() {
+    console.log('ma: oniceconnectionstatechange: '+ pc.iceConnectionState);
     switch (pc.iceConnectionState) {
       case 'disconnected':
       case 'failed':
+      case 'closed':
         util.log('iceConnectionState is disconnected, closing connections to ' + peerId);
         connection.close();
         break;
@@ -584,6 +586,12 @@ Negotiator._setupListeners = function(connection, pc, pc_id) {
       connection.addStream(stream);
     }
   };
+  pc.onremovestream = function(){
+    console.log('ma: remove stream');
+  }
+  pc.onsignalingstatechange= function(){
+    console.log('ma: onsignalingstatechange');
+  }
 }
 
 Negotiator.cleanup = function(connection) {
