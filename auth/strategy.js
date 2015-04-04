@@ -29,7 +29,9 @@ var googlePlus = new GoogleStrategy({
           displayName: profile.displayName,
           providerToken: accessToken,
           providerRefreshToken: refreshToken,
-          birthday: profile._json.birthday
+          birthday: profile._json.birthday,
+          avatar: profile._json.picture,
+          link: profile._json.link
         }).then(function (newUser) {
           createSession(newUser.id);
         });
@@ -76,7 +78,8 @@ var facebook = new FacebookStrategy({
           displayName: profile.displayName,
           providerToken: accessToken,
           providerRefreshToken: refreshToken,
-          birthday: profile._json.birthday
+          birthday: profile._json.birthday,
+          link: profile.profileUrl
         }).then(function (newUser) {
           createSession(newUser.id);
         });

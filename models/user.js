@@ -11,6 +11,7 @@ var schema = new mongoose.Schema(
     , firstName: {type: String, required: false}
     , email: {type: String, required: false}
     , avatar: {type: String, required: false}
+    , link: {type: String, required: false}
     , displayName: {type: String, required: true}
     , gender: {type: String, required: false}
     , birthday: {type: String, required: false}
