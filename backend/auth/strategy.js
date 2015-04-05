@@ -1,4 +1,4 @@
-var config = require('../config')
+var config = require('../../config')
   , FacebookStrategy = require('passport-facebook').Strategy
   , YandexStrategy = require('passport-yandex').Strategy
   , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy

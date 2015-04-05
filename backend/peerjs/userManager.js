@@ -1,4 +1,4 @@
-var User = require('../models/user')
+var User = require('./user')
 var Promise = require('promise');
 var _ = require('lodash_node');
 

@@ -3,7 +3,7 @@ var assert = require('assert');
 var request = require('supertest');
 var mongoose = require('mongoose');
 var config = require('../config');
-var User = require('../models/user');
+var User = require('./user');
 
 describe('Routing', function () {
   var url = 'http://localhost:3000';

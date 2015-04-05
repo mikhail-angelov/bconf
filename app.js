@@ -1,14 +1,14 @@
 var express = require('express')
   , config = require('./config')
-  , routes = require('./routes')
-  , AuthHandler = require('./handlers/AuthHandler')
-  , UserHandler = require('./handlers/UserHandler')
+  , routes = require('./backend/routes')
+  , AuthHandler = require('./backend/handlers/AuthHandler')
+  , UserHandler = require('./backend/handlers/UserHandler')
   , passport = require('passport')
   , refresh = require('passport-oauth2-refresh')
   , mongoose = require('mongoose')
-  , strategy = require('./auth/strategy')
-  ,connectionManager = require('./peerjs/connectionManager')
-  ,logger = require('./logger');
+  , strategy = require('./backend/auth/strategy')
+  ,connectionManager = require('./backend/peerjs/connectionManager')
+  ,logger = require('./backend/logger');
 //  , ExpressPeerServer = require('./peerjs/index').ExpressPeerServer;
 
 var app = express();
@@ -20,8 +20,8 @@ app.configure(function () {
     }
   };
 
-  app.set('client-url', 'http://localhost:8000');
-  app.set('client-google-signin', '/google?action=signin');
+  //app.set('client-url', 'http://localhost:8000');
+  //app.set('client-google-signin', '/google?action=signin');
   app.disable('x-powered-by');
 
   app.use(express.logger({stream:loggerStream}));
@@ -31,8 +31,8 @@ app.configure(function () {
   app.use(express.cookieParser());
   app.use(passport.initialize());
   app.use(app.router);
-  app.use(express.static(__dirname + '/app'));
-  app.use('/bower_components', express.static(__dirname + '/bower_components'));
+  app.use(express.static(__dirname + '/frontend'));
+  app.use('/frontend/bower_components', express.static(__dirname + '/frontend/bower_components'));
 });
 
 var allowCrossDomain = function (req, res, next) {
