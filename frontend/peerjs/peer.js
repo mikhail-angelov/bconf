@@ -1278,7 +1278,7 @@
       this._httpUrl += '/' + id + '/' + token;
       this._wsUrl += '&id=' + id + '&token=' + token;
 
-      this._startXhrStream();
+      //this._startXhrStream();
       this._startWebSocket();
     }
 

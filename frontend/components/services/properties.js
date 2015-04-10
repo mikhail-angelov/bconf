@@ -1,6 +1,6 @@
 angular.module('bconfApp').factory('Property', function($location, constant) {
     var host = $location.host();
-    var port = $location.port();
+    var port = 3000; //$location.port();
 
     return {
         getHost: function(){
