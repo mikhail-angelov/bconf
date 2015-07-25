@@ -31,7 +31,7 @@ node_modules
 config.js
 
 .idea/**
-
+.settings
 
 node_modules
 dist

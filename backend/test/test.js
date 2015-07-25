@@ -2,8 +2,8 @@ var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
 var mongoose = require('mongoose');
-var config = require('../config');
-var User = require('./user');
+var config = require('../../config');
+var User = require('../models/user');
 
 describe('Routing', function () {
   var url = 'http://localhost:3000';

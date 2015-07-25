@@ -20,7 +20,7 @@ app.configure(function () {
     }
   };
 
-  app.set('client-url', 'http://localhost:3000');
+  //app.set('client-url', 'http://localhost:3000');
   //app.set('client-google-signin', '/google?action=signin');
   app.disable('x-powered-by');
 
