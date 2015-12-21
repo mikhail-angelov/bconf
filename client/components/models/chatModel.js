@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $timeout, ContactsModel) {
+export default function (Peer, $rootScope, $timeout, ContactsModel) {
   var chat = {};
   var activeChat = '';
 
@@ -104,4 +104,4 @@ angular.module('bconfApp').factory('ChatModel', function (Peer, $rootScope, $tim
   }
 
   return model;
-});
+};

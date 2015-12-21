@@ -16,16 +16,15 @@ export default function ($scope, $state, Auth, User, $rootScope, ChatModel, Cont
       parent: angular.element(document.querySelector('#messageList'))
     };
 
-    if (Auth.getToken()) {
+    //if (Auth.getToken()) {
       loadUser();
-    } else {
-      $state.go('welcome');
-    }
+    //} else {
+    //  $state.go('redirect');
+    //}
 
     function loadUser() {
-      var userId = Auth.getUserId() || 0;
-      User.getUserInfo(userId).then(function () {
-        $scope.user = User.get();
+      Auth.getCurrentUser().then(user=>{
+        $scope.user = user;
 
         // $scope.user.id = util.randomToken(); //temp
 
@@ -34,9 +33,6 @@ export default function ($scope, $state, Auth, User, $rootScope, ChatModel, Cont
 
         //load friends
         ContactsModel.loadContactsList($scope.user.id);
-      }, function () {
-        console.log('user is not loaded, can not show main view, go to welcome');
-        $state.go('welcome');
       });
     }
 
@@ -95,7 +91,7 @@ export default function ($scope, $state, Auth, User, $rootScope, ChatModel, Cont
 
     $scope.onLogout = function () {
       Auth.logout();
-      $state.go('welcome');
+      //$state.go('redirect');
     };
 
     $scope.onSelectChat = function (key) {

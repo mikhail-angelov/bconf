@@ -31,8 +31,8 @@ angular.module('bconfApp.account', [])
         controller: 'SignupController',
         controllerAs: 'vm'
       })
-      .state('settings', {
-        url: '/settings',
+      .state('changePassword', {
+        url: '/change-password',
         templateUrl: 'app/account/settings/settings.html',
         controller: 'SettingsController',
         controllerAs: 'vm',

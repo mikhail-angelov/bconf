@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('Audio', function($document) {
+export default function($document) {
   var audioElement = $document[0].getElementById('audio');
   audioElement.autoPlay = true; // as per your requirement
 
@@ -41,4 +41,4 @@ angular.module('bconfApp').factory('Audio', function($document) {
       };
     },
   }
-});
+};

@@ -8,9 +8,9 @@ class LoginController {
   constructor(Auth, $state) {
     this.Auth = Auth;
     this.$state = $state;
-      this.user = {};
-  this.errors = {};
-  this.submitted = false;
+    this.user = {};
+    this.errors = {};
+    this.submitted = false;
   }
 
   login(form) {
@@ -22,13 +22,13 @@ class LoginController {
         email: this.user.email,
         password: this.user.password
       })
-      .then(() => {
-        // Logged in, redirect to home
-        this.$state.go('main');
-      })
-      .catch(err => {
-        this.errors = err.message;
-      });
+        .then(() => {
+          // Logged in, redirect to home
+          this.$state.go('redirect');
+        })
+        .catch(err => {
+          this.errors = err.message;
+        });
     }
   }
 }

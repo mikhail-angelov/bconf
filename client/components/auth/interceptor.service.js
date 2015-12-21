@@ -2,14 +2,15 @@
 
 
 
-export default function authInterceptor($rootScope, $q, $cookies, $injector, Util) {
+export default function authInterceptor($rootScope, $q, $injector, Util) {
   var state;
   return {
     // Add authorization token to headers
     request: function(config) {
       config.headers = config.headers || {};
-      if ($cookies.get('token') && Util.isSameOrigin(config.url)) {
-        config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+      var token = localStorage.getItem('token');
+      if (token && Util.isSameOrigin(config.url)) {
+        config.headers.Authorization = 'Bearer ' + token;
       }
       return config;
     },
@@ -19,7 +20,7 @@ export default function authInterceptor($rootScope, $q, $cookies, $injector, Uti
       if (response.status === 401) {
         (state || (state = $injector.get('$state'))).go('login');
         // remove any stale tokens
-        $cookies.remove('token');
+        localStorage.setItem('token', null);
       }
       return $q.reject(response);
     }

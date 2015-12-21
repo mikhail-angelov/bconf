@@ -2,18 +2,22 @@
 
 import  _util from '../components/util/util.module.js'
 import _auth from '../components/auth/auth.module.js'
+import _constatnts from './app.constant.js'
+import _account from './account/account.js'
 
-import _constatnt from './test.js'
-
-import  _constatnts from './app.constant.js'
-import  _account from './account/account.js'
-
+import constant from '../components/common/constants.js'
 import MainController from './main/main.controller.js'
 import oauthButtons from '../components/oauth-buttons/oauth-buttons.directive.js'
 import VoiceCallController from './voiceCall/voiceCall.js'
 import ChatController from './chat/chatController.js'
+import RedirectController from '../components/redirect/redirect.js'
+import ChatModel from '../components/models/chatModel.js'
+import ContactsModel from '../components/models/contactsModel.js'
+import Peer from '../components/services/peerjs.js'
+import Audio from '../components/services/audio.js'
+import HttpInterceptor from '../components/services/httpInterceptor.js'
+import Property from '../components/services/properties.js'
 
-console.log(_constatnt);
 
 angular.module('bconfApp', [
   'bconfApp.util',
@@ -27,18 +31,31 @@ angular.module('bconfApp', [
   'validation.match',
   'ngMaterial'
 ])
+  .constant('constant', constant)
   .controller('MainController', MainController)
-  .controller('VoiceCallController',VoiceCallController)
+  .controller('VoiceCallController', VoiceCallController)
   .controller('ChatController', ChatController)
-  .directive('oauthButtons',oauthButtons)
+  .controller('RedirectController', RedirectController)
+  .directive('oauthButtons', oauthButtons)
+  .factory('ChatModel', ChatModel)
+  .factory('ContactsModel', ContactsModel)
+  .factory('Peer', Peer)
+  .factory('Audio', Audio)
+  .factory('HttpInterceptor', HttpInterceptor)
+  .factory('Property', Property)
 
-  .config(function($urlRouterProvider, $locationProvider,$stateProvider, $mdThemingProvider) {
+
+  .config(function ($urlRouterProvider, $locationProvider, $stateProvider, $mdThemingProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
 
     $stateProvider
+      .state('redirect', {
+        template: '<div></div>',
+        controller: 'RedirectController'
+      })
       .state('main', {
         url: '/',
         templateUrl: 'app/main/main.html',
@@ -49,13 +66,15 @@ angular.module('bconfApp', [
         url: '/chat',
         templateUrl: 'app/chat/chat.html',
         controller: 'ChatController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        authenticate: true
       })
       .state('voiceCall', {
         url: '/voice-cal',
         templateUrl: 'app/voiceCall/voiceCall.html',
         controller: 'VoiceCallController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        authenticate: true
       });
 
     $mdThemingProvider.theme('default')

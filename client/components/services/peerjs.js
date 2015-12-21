@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, Audio, Property) {
+export default function ($q, $rootScope, constant, Audio, Property) {
   var peer;
   var peerId;
   var call;
@@ -111,4 +111,4 @@ angular.module('bconfApp').factory('Peer', function ($q, $rootScope, constant, A
   return service;
 
 
-});
+};

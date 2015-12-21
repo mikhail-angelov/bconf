@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('ContactsModel', function (User, $rootScope, $timeout) {
+export default function (User, $rootScope, $timeout) {
 
   var model = {
     list: [],
@@ -46,4 +46,4 @@ angular.module('bconfApp').factory('ContactsModel', function (User, $rootScope, 
     });
   });
   return model;
-});
+};

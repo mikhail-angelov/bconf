@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('Property', function($location, constant) {
+export default function($location, constant) {
     var host = $location.host();
     var port = 3000; //$location.port();
 
@@ -17,4 +17,4 @@ angular.module('bconfApp').factory('Property', function($location, constant) {
             }
         }
     }
-});
+};

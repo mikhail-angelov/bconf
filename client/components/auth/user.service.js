@@ -1,23 +1,18 @@
 'use strict';
 
 
-export default function UserResource($resource) {
-  return $resource('/api/users/:id/:controller', {
-    id: '@_id'
-  },
-  {
-    changePassword: {
+export default function UserResource($http) {
+  return {
+    changePassword: (id, data) => $http({
       method: 'PUT',
-      params: {
-        controller:'password'
-      }
-    },
-    get: {
+      url: '/api/users/' + id + 'password',
+      data: data
+    })
+    ,
+    get: (id, data) => $http({
       method: 'GET',
-      params: {
-        id:'me'
-      }
-    }
-  });
+      url: '/api/users/me'
+    })
+  }
 }
 

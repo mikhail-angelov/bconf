@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('HttpInterceptor', function ($q) {
+export default function ($q) {
   return {
     'request': function (config) {
       var token = localStorage.getItem('token');
@@ -23,4 +23,4 @@ angular.module('bconfApp').factory('HttpInterceptor', function ($q) {
       return $q.reject(rejection);
     }
   };
-});
+};

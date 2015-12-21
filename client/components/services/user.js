@@ -1,4 +1,4 @@
-angular.module('bconfApp').factory('User', function ($q, $http, constant) {
+export default function ($q, $http) {
   var user = {};
   var friends = [];
   return {
@@ -43,4 +43,4 @@ angular.module('bconfApp').factory('User', function ($q, $http, constant) {
         return result;
     }
   };
-});
+};

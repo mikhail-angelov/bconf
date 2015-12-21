@@ -5,9 +5,6 @@ import AuthService from './auth.service.js'
 import UserResource from './user.service.js'
 
 angular.module('bconfApp.auth', [
-  //'bconfApp.constants',
-  //'bconfApp.util',
-  'ngCookies',
   'ui.router'
 ])
   .config(function($httpProvider) {
@@ -20,20 +17,9 @@ angular.module('bconfApp.auth', [
   .run(function($rootScope, $state, Auth) {
     // Redirect to login if route requires auth and the user is not logged in, or doesn't have required role
     $rootScope.$on('$stateChangeStart', function(event, next) {
-      if(!next.authenticate) {
-        return;
+      if(next.authenticate && !Auth.isLoggedIn()) {
+        $state.go('login')
       }
-
-      let query = typeof next.authenticate === 'string' ? Auth.hasRole : Auth.isLoggedIn;
-
-      query(1,2).then(good => {
-        if(!good) {
-          event.preventDefault();
-          Auth.isLoggedIn().then(is => {
-            $state.go(is ? 'main' : 'login');
-          });
-        }
-      });
     });
   });
 
