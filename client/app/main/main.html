@@ -1,0 +1,73 @@
+<section layout="row"  layout-align="center center" style="background-color: #2196f3; height: 100vh">
+  <div style="width:200px;" layout="row"  layout-align="center center">
+    <md-button class="md-raised md-warn" ng-click="vm.onLogin()">New</md-button>
+  </div>
+  <div style="width:200px;" layout="row"  layout-align="center center">
+    <md-button class="md-raised md-warn" ng-hide="vm.showJoin" ng-click="vm.onShowJoin()">Join</md-button>
+    <md-input-container ng-show="vm.showJoin" >
+      <input name="charNumber" ng-model="vm.charNumber" required>
+
+    </md-input-container>
+  </div>
+</section>
+
+<section layout="column"  layout-align="center center" style="background-color:  #fff9c4; height: 100vh">
+  <div style="font-size:80px;">Subscription plan</div>
+  <div style="">Pick your plan to subscibe</div>
+  <div layout="row"layout-align="center center">
+    <md-whiteframe class="md-whiteframe-1dp" style="width: 200px; height: 400px; margin:20px; background-color: #fff" layout="column" layout-align="center center">
+      <h2>Free</h2>
+      <div>Unlimited chats,</div>
+      <div>one to one voice calls</div>
+      <h3>Free</h3>
+      <md-button class="md-raised md-warn">Join</md-button>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="width: 200px; height: 400px; margin:20px;  background-color: #fff" layout="column" layout-align="center center">
+      <h2>Pro</h2>
+      <div>Unlimited chats,</div>
+      <div>one to one voice calls</div>
+      <div>conference calls</div>
+      <h3>$5 per month</h3>
+      <md-button class="md-raised md-warn">Buy now</md-button>
+    </md-whiteframe>
+    <md-whiteframe class="md-whiteframe-1dp" style="width: 200px; height: 400px; margin:20px;  background-color: #fff" layout="column" layout-align="center center">
+      <h2>Enterprise</h2>
+      <div>Unlimited chats,</div>
+      <div>one to one voice calls</div>
+      <div>conference calls</div>
+      <div>personal support</div>
+      <h3>$25 per month</h3>
+      <md-button class="md-raised md-warn">Buy now</md-button>
+    </md-whiteframe>
+  </div>
+</section>
+
+<section layout="row"  layout-align="center center" style="background-color: #ffab91; height: 100vh">
+  <div style="width:200px;" layout="row"  layout-align="center center">
+    feature list
+  </div>
+
+</section>
+
+<footer></footer>
+
+<md-fab-speed-dial md-open="false" md-direction="up"
+                  class="md-fling" style="position: fixed; bottom: 100px; right: 100px">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-warn">+
+      <!--<md-icon md-svg-src="img/icons/menu.svg"></md-icon>-->
+    </md-button>
+  </md-fab-trigger>
+  <md-fab-actions>
+    <md-button aria-label="Twitter" class="md-fab md-raised md-mini">
+      1
+    </md-button>
+    <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+      2
+    </md-button>
+    <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+      3
+    </md-button>
+  </md-fab-actions>
+</md-fab-speed-dial>
+
