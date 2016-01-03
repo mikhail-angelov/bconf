@@ -14,6 +14,7 @@ import nodemon from 'nodemon';
 import runSequence from 'run-sequence';
 import webpack  from 'webpack-stream';
 import env  from 'gulp-env';
+var Karma = require('karma').Server;
 
 var plugins = gulpLoadPlugins({
   //DEBUG: true, // when set to true, the plugin will log info to console. Useful for bug reporting and issue debugging
@@ -56,7 +57,7 @@ const paths = {
       'server/**/*.integration.js'
     ]
   },
-  karma: 'karma.conf.js',
+  karma: __dirname + '/karma.conf.js',
   dist: 'dist'
 };
 
@@ -373,13 +374,11 @@ gulp.task('mocha:unit', () => {
     });
 });
 
-gulp.task('test:client', () => {
-  let testFiles = _.union(paths.client.testRequire, paths.client.test);
-  return gulp.src(testFiles)
-    .pipe(plugins.karma({
-      configFile: paths.karma,
-      action: 'watch'
-    }));
+gulp.task('test:client', ['transpile:client'],(done) => {
+  return new Karma({
+    configFile: paths.karma,
+    singleRun: true
+  }, done).start();
 });
 
 // inject bower components

@@ -4,7 +4,8 @@ describe('Controller: MainController', function() {
 
   // load the controller's module
   beforeEach(module('bconfApp'));
-  beforeEach(module('stateMock'));
+  beforeEach(module('app/main/main.html'));
+  //beforeEach(module('stateMock'));
 
   var scope;
   var MainController;
@@ -23,7 +24,7 @@ describe('Controller: MainController', function() {
   }));
 
   it('should attach a list of things to the controller', function() {
-    $httpBackend.flush();
+    //$httpBackend.flush();
     expect(MainController.showJoin).toBe(false);
   });
 });
