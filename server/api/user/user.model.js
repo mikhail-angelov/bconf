@@ -274,7 +274,17 @@ UserSchema.methods = {
     }
 };
 
+UserSchema.statics.addContact = function(id, contactId){
+    return this.findOneAsync({_id: id})
+        .then(user=> {
+            if (user.contacts.indexOf(contactId) < 0) {
+                user.contacts.push(contactId);
+            }
+            return user.saveAsync();
+        });
+}
+
 //module.exports = mongoose.model('User', UserSchema);
 
-export let User = mongoose.model('User', UserSchema)
+export var User = mongoose.model('User', UserSchema)
 export default User

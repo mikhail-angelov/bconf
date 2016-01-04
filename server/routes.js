@@ -4,7 +4,7 @@
 
 'use strict';
 
-import errors from './components/errors';
+import errors from './components/errors/index';
 import path from 'path';
 
 module.exports = function(app) {
@@ -12,6 +12,7 @@ module.exports = function(app) {
   // Insert routes below
   app.use('/api/users', require('./api/user'));
   app.use('/api/contacts', require('./api/contact'));
+  app.use('/api/chats', require('./api/chat'));
 
   app.use('/auth', require('./auth'));
 

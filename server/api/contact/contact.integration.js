@@ -1,37 +1,27 @@
 'use strict';
 
-import app from '../..';
+import app from '../../index';
 import User from '../user/user.model';
 import request from 'supertest';
+import testDb from '../../test/testDb.js'
 
 describe('Contact API:', function () {
-    var user;
-    var otherUser;
 
     // Clear users before testing
     before(function () {
-        return User.removeAsync().then(function () {
-            user = new User({
-                name: 'Fake User',
-                email: 'test@example.com',
-                password: 'password'
-            });
-            otherUser = new User({
-                provider: 'local',
-                name: 'Other User',
-                email: 'other@example.com',
-                password: 'password'
+        return testDb.init()
+                .then(()=>User.addContact(testDb.user._id, testDb.otherUser._id))
+            .then(()=>{
+                console.log('users are added')
+                return User.findOneAsync({email: 'test@example.com'})
+                    .then(user=>console.log('user',user))
             });
 
-            return user.saveAsync()
-                .then(()=>otherUser.saveAsync())
-                .then(()=>user.addContact(user._id, otherUser._id));
-        });
     });
 
     // Clear users after testing
     after(function () {
-        return User.removeAsync();
+        return testDb.reset();
     });
 
     describe('GET /api/contacts', function () {
@@ -59,10 +49,9 @@ describe('Contact API:', function () {
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end(function (err, res) {
-                    console.log('---', res.body);
                     var contacts = res.body;
                     contacts.length.should.be.equal(1);
-                    contacts[0]._id.toString().should.be.equal(otherUser._id.toString());
+                    contacts[0]._id.toString().should.be.equal(testDb.otherUser._id.toString());
                     done();
                 });
         });
