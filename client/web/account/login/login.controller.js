@@ -31,6 +31,14 @@ class LoginController {
         });
     }
   }
+
+  forgotPassword(){
+    alert('not implemented yet')
+  }
+
+  signUp(){
+    alert('not implemented yet')
+  }
 }
 
 export default LoginController;

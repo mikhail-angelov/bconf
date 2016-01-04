@@ -1,6 +1,6 @@
 
 var url = require('url');
-import app from '../..';
+//import app from '../..';
 
 
 class ConnectionManager {

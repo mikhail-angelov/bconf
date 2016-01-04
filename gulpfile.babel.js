@@ -33,7 +33,7 @@ const paths = {
       '!client/bower_components/**/*.js'
     ],
     styles: ['client/{web,components}/**/*.less'],
-    mainStyle: 'client/web/web.less',
+    mainStyle: 'client/web/app.less',
     views: 'client/{web,components}/**/*.html',
     mainView: 'client/index.html',
     test: ['client/**/*.spec.js'],
@@ -204,7 +204,7 @@ gulp.task('inject:less', () => {
 gulp.task('styles', () => {
   return gulp.src(paths.client.mainStyle)
     .pipe(styles())
-    .pipe(gulp.dest('.tmp/app'));
+    .pipe(gulp.dest('.tmp/web'));
 });
 
 

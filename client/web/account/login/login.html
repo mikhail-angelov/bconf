@@ -1,34 +1,49 @@
-<section layout="row"  layout-align="center center" style="background-color: #2196f3; height: 100vh">
-  <md-whiteframe class="md-whiteframe-1dp" style="width: 400px; height: 400px; margin:20px;  background-color: #fff" layout="column" layout-align="center center">
-    <form name="loginForm">
-      <md-input-container class="md-block">
-        <label>Email</label>
-        <input required type="email" name="clientEmail" ng-model="vm.user.email"
-               minlength="1" maxlength="255" ng-pattern="/^.+@.+\..+$/" />
-        <div ng-messages="loginForm.clientEmail.$error" role="alert">
-          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-            Your email must be between 3 and 255 characters long and look like an e-mail address.
-          </div>
-        </div>
-      </md-input-container>
-      <md-input-container class="md-block">
-      <label>Password</label>
-      <input required type="password" name="password" ng-model="vm.user.password" />
-      </md-input-container>
+<section layout="row" layout-align="center center" class="page">
+    <md-whiteframe class="md-whiteframe-1dp login-panel" layout="column" layout-align="center center">
 
-      <md-button class="md-raised md-primary" ng-click="vm.login(loginForm)">Submit</md-button>
+        <section layout="row" layout-fit layout-align="center center">
+            <div layout="column" flex>
+                <md-button class="md-raised md-primary login-social-button" ng-click="vm.loginSocial('facebook')">Facebook</md-button>
+                <md-button class="md-raised md-warn login-social-button" ng-click="vm.loginSocial('twitter')">Twitter</md-button>
+                <md-button class="md-raised md-danger login-social-button" ng-click="vm.loginSocial('google')">Google</md-button>
+            </div>
+            <div class="login-delimiter"></div>
+            <div layout="column" flex layout-align="center center" class="login-left">
+                <div class="login-title">Sign in manually</div>
+                <form name="loginForm">
 
-      <md-input-container class="md-block" ng-show="vm.errors">
-        <div ng-messages="vm.errors" role="alert">
-          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-           {{vm.errors}}
-          </div>
-        </div>
-      </md-input-container>
+                    <input required type="email" name="clientEmail" ng-model="vm.user.email" class="login-input"
+                           minlength="1" maxlength="255" ng-pattern="/^.+@.+\..+$/"/>
 
-      <a href="signup">Sign up</a>
 
-    </form>
-  </md-whiteframe>
+                    <input required type="password" name="password" ng-model="vm.user.password" class="login-input"/>
+
+
+                    <div layout="row" layout-align="center center">
+
+                        <input required type="checkbox" ng-model="vm.user.remember" />
+                        <label>remember me</label>
+
+                        <md-button class="md-raised md-primary" ng-click="vm.login(loginForm)">Sign in</md-button>
+                    </div>
+
+                    <!--<md-input-container class="md-block" ng-show="vm.errors">-->
+                        <!--<div ng-messages="vm.errors" role="alert">-->
+                            <!--<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">-->
+                                <!--{{vm.errors}}-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</md-input-container>-->
+
+                    <div layout="row" class="login-footer">
+                        <a href="" ng-click="vm.signUp()">Sign up</a>
+                        <a href="" ng-click="vm.forgotPassword()">Forgot your password?</a>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+    </md-whiteframe>
 </section>
 

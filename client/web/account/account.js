@@ -9,7 +9,7 @@ angular.module('bconfApp.account', [])
     $stateProvider
       .state('login', {
         url: '/login',
-        templateUrl: 'app/account/login/login.html',
+        templateUrl: 'web/account/login/login.html',
         controller: 'LoginController',
         controllerAs: 'vm'
       })
@@ -27,13 +27,13 @@ angular.module('bconfApp.account', [])
       })
       .state('signup', {
         url: '/signup',
-        templateUrl: 'app/account/signup/signup.html',
+        templateUrl: 'web/account/signup/signup.html',
         controller: 'SignupController',
         controllerAs: 'vm'
       })
       .state('changePassword', {
         url: '/change-password',
-        templateUrl: 'app/account/settings/settings.html',
+        templateUrl: 'web/account/settings/settings.html',
         controller: 'SettingsController',
         controllerAs: 'vm',
         authenticate: true

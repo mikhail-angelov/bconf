@@ -2,7 +2,7 @@
 
 //import app from '../..';
 import managerFactory  from './index';
-import eventBusFactory  from '../eventBus';
+import eventBusFactory  from '../eventBus/index.js';
 
 describe('ConnectionManager', function () {
 
