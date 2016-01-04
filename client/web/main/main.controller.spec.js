@@ -4,7 +4,7 @@ describe('Controller: MainController', function() {
 
   // load the controller's module
   beforeEach(module('bconfApp'));
-  beforeEach(module('app/main/main.html'));
+  beforeEach(module('web/main/main.html'));
   //beforeEach(module('stateMock'));
 
   var scope;

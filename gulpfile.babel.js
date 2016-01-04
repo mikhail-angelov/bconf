@@ -32,9 +32,9 @@ const paths = {
       'client/**/*.js',
       '!client/bower_components/**/*.js'
     ],
-    styles: ['client/{app,components}/**/*.less'],
-    mainStyle: 'client/app/app.less',
-    views: 'client/{app,components}/**/*.html',
+    styles: ['client/{web,components}/**/*.less'],
+    mainStyle: 'client/web/web.less',
+    views: 'client/{web,components}/**/*.html',
     mainView: 'client/index.html',
     test: ['client/**/*.spec.js'],
     testRequire: [
@@ -182,7 +182,7 @@ gulp.task('inject:css', () => {
 });
 
 gulp.task('inject:less', () => {
-  return gulp.src('client/app/app.less')
+  return gulp.src('client/web/app.less')
     .pipe(plugins.inject(
       gulp.src(_.union(paths.client.styles, ['!' + paths.client.mainStyle]), {read: false})
         .pipe(plugins.sort()),
@@ -191,14 +191,14 @@ gulp.task('inject:less', () => {
         endtag: '// endinjector',
         transform: (filepath) => {
           let newPath = filepath
-            .replace('/client/app/', '')
+            .replace('/client/web/', '')
             .replace('/client/components/', '../components/')
             .replace(/_(.*).less/, (match, p1, offset, string) => p1)
             .replace('.less', '');
           return '@import \'' + newPath + '\';';
         }
       }))
-    .pipe(gulp.dest('client/app'));
+    .pipe(gulp.dest('client/web'));
 });
 
 gulp.task('styles', () => {
@@ -246,12 +246,12 @@ function webpackWrapper(watch, test, callback) {
   };
 
   if (watch) {
-    return gulp.src('client/app/app.js')
+    return gulp.src('client/web/app.js')
       .pipe(webpack(webpackOptions, null, webpackChangeHandler))
       .pipe(gulp.dest('.tmp'))
       .pipe(plugins.livereload());
   } else {
-    return gulp.src('client/app/app.js')
+    return gulp.src('client/web/app.js')
       .pipe(webpack(webpackOptions, null, webpackChangeHandler))
       .pipe(gulp.dest('.tmp'));
   }
@@ -314,7 +314,7 @@ gulp.task('watch', () => {
     gulp.src(paths.client.mainStyle)
       .pipe(plugins.plumber())
       .pipe(styles())
-      .pipe(gulp.dest('.tmp/app'))
+      .pipe(gulp.dest('.tmp/web'))
       .pipe(plugins.livereload());
   });
 
@@ -449,7 +449,7 @@ gulp.task('build:client', ['transpile:client', 'styles', 'html'], () => {
     .pipe(assets)
     .pipe(appFilter)
     .pipe(plugins.addSrc.append('.tmp/templates.js'))
-    .pipe(plugins.concat('app/app.js'))
+    .pipe(plugins.concat('web/app.js'))
     .pipe(appFilter.restore())
     .pipe(jsFilter)
     .pipe(plugins.ngAnnotate())
@@ -469,7 +469,7 @@ gulp.task('build:client', ['transpile:client', 'styles', 'html'], () => {
 });
 
 gulp.task('html', function () {
-  return gulp.src('client/{app,components}/**/*.html')
+  return gulp.src('client/{web,components}/**/*.html')
     .pipe(plugins.angularTemplatecache({
       module: 'bconfApp'
     }))
@@ -488,7 +488,7 @@ gulp.task('constant', function () {
     .pipe(plugins.rename({
       basename: 'app.constant'
     }))
-    .pipe(gulp.dest('client/app/'))
+    .pipe(gulp.dest('client/components/'))
 })
 
 gulp.task('build:images', () => {

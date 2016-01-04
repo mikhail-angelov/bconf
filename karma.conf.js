@@ -28,8 +28,8 @@ module.exports = function (config) {
             "client/bower_components/angular-mocks/angular-mocks.js",
             '.tmp/index.module.js',
             //'client/{app,components}/**/*.module.js',
-            'client/{app,components}/**/*.spec.js',
-            'client/{app,components}/**/*.html'
+            'client/{web,components}/**/*.spec.js',
+            'client/{web,components}/**/*.html'
         ],
 
         preprocessors: {

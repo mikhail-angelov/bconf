@@ -113,7 +113,6 @@ exports.changePassword = function(req, res, next) {
  */
 exports.me = function(req, res, next) {
   var userId = req.user._id;
-console.log('yyyyyy')
   User.findOneAsync({ _id: userId }, '-salt -hashedPassword')
     .then(function(user) { // don't ever give out the password or salt
       if (!user) {

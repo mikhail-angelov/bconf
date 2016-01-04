@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('bconfApp.util', []);
+angular.module('util.module', [])
+    .factory('Util', UtilService);
 
 function UtilService($window) {
 
@@ -53,5 +54,4 @@ function UtilService($window) {
   return Util;
 }
 
-angular.module('bconfApp.util')
-  .factory('Util', UtilService);
+

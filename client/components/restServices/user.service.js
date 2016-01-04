@@ -1,7 +1,7 @@
 'use strict';
 
 
-export default function UserResource($http) {
+export default function ($http) {
   return {
     changePassword: (id, data) => $http({
       method: 'PUT',

@@ -3,6 +3,7 @@
 import app from '../..';
 import { User}  from './user.model';
 var user;
+var otherUser;
 var genUser = function () {
   user = new User({
       provider: 'local',
@@ -12,6 +13,16 @@ var genUser = function () {
     });
 
   return user;
+};
+var genOtherUser = function () {
+  otherUser = new User({
+    provider: 'local',
+    name: 'Other User',
+    email: 'other@example.com',
+    password: 'password'
+  });
+
+  return otherUser;
 };
 
 describe('User Model', function () {
@@ -68,6 +79,53 @@ describe('User Model', function () {
           return u.authenticate('password');
         }).should.eventually.be.true;
     });
+  });
+
+  describe('contacts', function () {
+    beforeEach(function () {
+      genOtherUser();
+      return user.saveAsync().then(()=>{
+        return otherUser.saveAsync();
+      });
+    });
+
+    it('should add contact', function () {
+      return user.addContact(user.id, otherUser.id)
+          .then(function (u) {
+            return user.getContacts(user.id);
+          })
+          .then(function(contacts){
+            var contact = contacts[0];
+            contact.name.should.be.equal('Other User');
+            expect(contact.password).to.be(undefined);
+            return contacts.length === 1;
+          })
+          .should.eventually.be.true;
+    });
+
+    it('should remove contact', function () {
+      return user.addContact(user.id, otherUser.id)
+          .then(function (u) {
+            return user.getContacts(user.id);
+          })
+          .then(function(contacts){
+            expect(contacts.length).to.be(1);
+            return contacts;
+          })
+          .then(function(){
+            return user.removeContact(user.id, otherUser.id);
+          })
+          .then(function (u) {
+            return user.getContacts(user.id);
+          })
+          .then(function(contacts){
+            expect(contacts.length).to.be(0);
+            return contacts.length == 0;
+          })
+          .should.eventually.be.true;
+    });
+
+
   });
 
 });
