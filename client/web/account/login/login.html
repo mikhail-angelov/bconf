@@ -1,43 +1,71 @@
 <section layout="row" layout-align="center center" class="page">
     <md-whiteframe class="md-whiteframe-1dp login-panel" layout="column" layout-align="center center">
 
-        <section layout="row" layout-fit layout-align="center center">
+        <section layout="row" layout-fit layout-align="center center" class="login-container">
             <div layout="column" flex>
-                <md-button class="md-raised md-primary login-social-button" ng-click="vm.loginSocial('facebook')">Facebook</md-button>
-                <md-button class="md-raised md-warn login-social-button" ng-click="vm.loginSocial('twitter')">Twitter</md-button>
-                <md-button class="md-raised md-danger login-social-button" ng-click="vm.loginSocial('google')">Google</md-button>
+                <md-button class="md-raised md-primary" ng-href="{{vm.facebookLink}}">Facebook</md-button>
+                <md-button class="md-raised md-warn" ng-click="vm.loginSocial('twitter')">Twitter</md-button>
+                <md-button class="md-raised md-danger" ng-click="vm.loginSocial('google')">Google</md-button>
             </div>
             <div class="login-delimiter"></div>
             <div layout="column" flex layout-align="center center" class="login-left">
-                <div class="login-title">Sign in manually</div>
+
+
                 <form name="loginForm">
+                    <div ng-show="vm.isViewType('login')">
+                        <div class="login-title">Sign in manually</div>
 
-                    <input required type="email" name="clientEmail" ng-model="vm.user.email" class="login-input"
-                           minlength="1" maxlength="255" ng-pattern="/^.+@.+\..+$/"/>
+                        <input required type="email" name="clientEmail" ng-model="vm.user.email" class="login-input"
+                               minlength="1" maxlength="255" ng-pattern="/^.+@.+\..+$/" placeholder="email"/>
 
 
-                    <input required type="password" name="password" ng-model="vm.user.password" class="login-input"/>
+                        <input required type="password" name="password" ng-model="vm.user.password"
+                               class="login-input" placeholder="password"/>
 
 
-                    <div layout="row" layout-align="center center">
+                        <div layout="row" layout-align="center center">
 
-                        <input required type="checkbox" ng-model="vm.user.remember" />
-                        <label>remember me</label>
+                            <input required type="checkbox" ng-model="vm.user.remember"/>
+                            <label>remember me</label>
 
-                        <md-button class="md-raised md-primary" ng-click="vm.login(loginForm)">Sign in</md-button>
+                            <md-button class="md-raised md-primary" ng-click="vm.login(loginForm)">Sign in</md-button>
+                        </div>
+                    </div>
+                    <div ng-show="vm.isViewType('signUp')">
+
+                        <input required type="email" name="clientEmail" ng-model="vm.user.email" class="login-input"
+                               minlength="1" maxlength="255" ng-pattern="/^.+@.+\..+$/" placeholder="email"/>
+
+
+                        <input required type="password" name="password" ng-model="vm.user.password"
+                               class="login-input" placeholder="password"/>
+                        <input required type="password" name="password2" ng-model="vm.user.password2"
+                               class="login-input" placeholder="repeat password"/>
+
+
+                        <div layout="row" layout-align="center center">
+
+                            <md-button class="md-raised md-primary" ng-click="vm.register(loginForm)">Sign up</md-button>
+                        </div>
+                    </div>
+                    <div ng-show="vm.isViewType('forgotPassword')">
+                        <div class="login-title">Reset password</div>
+
+                        <input required type="email" name="clientEmail" ng-model="vm.user.email" class="login-input"
+                               minlength="1" maxlength="255" ng-pattern="/^.+@.+\..+$/" placeholder="email"/>
+
+
+                        <div layout="row" layout-align="center center">
+
+                            <md-button class="md-raised md-primary" ng-click="vm.resetPassword(loginForm)">Reset password</md-button>
+                        </div>
                     </div>
 
-                    <!--<md-input-container class="md-block" ng-show="vm.errors">-->
-                        <!--<div ng-messages="vm.errors" role="alert">-->
-                            <!--<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">-->
-                                <!--{{vm.errors}}-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</md-input-container>-->
 
                     <div layout="row" class="login-footer">
-                        <a href="" ng-click="vm.signUp()">Sign up</a>
-                        <a href="" ng-click="vm.forgotPassword()">Forgot your password?</a>
+                        <a href="" ng-click="vm.setViewType('login')" ng-show="!vm.isViewType('login')">Login</a>
+                        <a href="" ng-click="vm.setViewType('signUp')" ng-show="!vm.isViewType('signUp')">Sign up</a>
+                        <a href="" ng-click="vm.setViewType('forgotPassword')" ng-show="!vm.isViewType('forgotPassword')">Forgot your password?</a>
                     </div>
 
                 </form>
