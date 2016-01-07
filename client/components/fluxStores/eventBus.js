@@ -7,13 +7,17 @@ class EventBus {
                 LOAD: 'loadProfile'
             },
             contacts:{
-                LOAD_ALL:'loadAllContacts'
+                LOAD_ALL:'loadAllContacts',
+                ADD: 'addContact',
+                REMOVE: 'removeContact'
             },
             chats:{
-                LOAD_ALL:'loadAllChats'
+                LOAD_ALL:'loadAllChats',
+                SELECT_CHAT: 'selectCurrentChat'
             },
             messages:{
-                ADD_MESSAGE:'addMessage'
+                ADD:'addMessage',
+                LOAD_ALL:'loadAllChatMessages'
             }
         });
     }

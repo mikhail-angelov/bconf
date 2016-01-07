@@ -4,7 +4,7 @@ class ProfileStore extends BaseStore{
 
     constructor(EventBus){
         super(EventBus);
-        this.id = 'OrderStore';
+        this.id = 'ProfileStore';
 
         this.data = {
             profile: {}

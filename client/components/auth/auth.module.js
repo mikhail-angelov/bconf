@@ -22,6 +22,10 @@ angular.module('auth.module', [
                 $state.go('login')
             }
         });
+
+        //redirect to auth state
+        Auth.validateAuthState()
+            .then(()=>$state.go('redirect'));
     });
 
 

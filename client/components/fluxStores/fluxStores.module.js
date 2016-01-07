@@ -1,5 +1,3 @@
-
-
 import eventBus from './eventBus.js'
 import chatsStore from './chatsStore.js'
 import profileStore from './profileStore.js'
@@ -11,4 +9,6 @@ angular.module('fluxStores.module', [])
     .service('ChatsStore', chatsStore)
     .service('ProfileStore', profileStore)
     .service('ContactsStore', contactsStore)
-    .service('MessagesStore', messagesStore);
+    .service('MessagesStore', messagesStore)
+    .run((ProfileStore, ChatsStore, ContactsStore, MessagesStore)=> {
+    });

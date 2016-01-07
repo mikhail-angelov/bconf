@@ -6,7 +6,7 @@ class LoginController {
         this.Auth = Auth;
         this.$state = $state;
         this.user = {};
-        this.errors = {};
+        this.errors = null;
         this.submitted = false;
         this.type = 'login';
 
@@ -16,6 +16,7 @@ class LoginController {
     login(form) {
         console.log('login')
         this.submitted = true;
+        this.errors = null;
 
         if (form.$valid) {
             this.Auth.login({
@@ -27,13 +28,14 @@ class LoginController {
                     this.$state.go('redirect');
                 })
                 .catch(err => {
-                    this.errors = err.message;
+                    this.errors = err.data.message;
                 });
         }
     }
 
     register(form) {
         this.submitted = true;
+        this.errors = null;
         console.log('register')
 
         if (form.$valid) {
@@ -43,8 +45,7 @@ class LoginController {
                 password: this.user.password
             })
                 .then(() => {
-                    // Account created, redirect to home
-                    this.$state.go('main');
+                    this.$state.go('redirect');
                 })
                 .catch(err => {
                     err = err.data;
@@ -60,11 +61,12 @@ class LoginController {
     }
 
     resetPassword(form) {
-
+        this.errors = null;
         alert('not implemented')
     }
 
     setViewType(type) {
+        this.errors = null;
         this.type = type;
     }
 

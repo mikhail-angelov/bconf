@@ -6,7 +6,6 @@ angular.module('bconfApp.account', [])
   .config(function ($stateProvider) {
     $stateProvider
       .state('login', {
-        url: '/login',
         templateUrl: 'web/account/login/login.html',
         controller: 'LoginController',
         controllerAs: 'vm'
