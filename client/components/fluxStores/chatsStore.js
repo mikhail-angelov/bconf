@@ -24,6 +24,10 @@ class ChatsStore extends BaseStore{
     getCurrentChat(){
         return this.data.chats[this.data.index];
     }
+
+    getCurrentChatIndex(){
+        return this.data.index;
+    }
 }
 
 export default ChatsStore;

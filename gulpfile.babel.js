@@ -374,7 +374,7 @@ gulp.task('mocha:unit', () => {
     });
 });
 
-gulp.task('test:client', ['transpile:client'],(done) => {
+gulp.task('test:client', ['start:server','transpile:client'],(done) => {
   return new Karma({
     configFile: paths.karma,
     singleRun: true

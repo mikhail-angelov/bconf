@@ -7,8 +7,11 @@ import _restServices from './restServices/restServices.module.js'
 
 import constant from './common/constants.js'
 import RedirectController from './redirect/redirect.js'
+
 import ChatModel from './models/chatModel.js'
 import ContactsModel from './models/contactsModel.js'
+
+import ChatService from './services/chatService.js'
 import Peer from './services/peerjs.js'
 import Audio from './services/audio.js'
 import Property from './services/properties.js'
@@ -28,7 +31,8 @@ angular.module('components.module', [
     .controller('RedirectController', RedirectController)
     .factory('ChatModel', ChatModel)
     .factory('ContactsModel', ContactsModel)
-    .factory('Peer', Peer)
+    .service('Peer', Peer)
+    .service('ChatService', ChatService)
     .factory('Audio', Audio)
     .factory('Property', Property)
 
@@ -45,5 +49,8 @@ angular.module('components.module', [
                 controller: 'RedirectController'
             })
         ;
+
+    })
+    .run((ChatService)=> {
 
     });

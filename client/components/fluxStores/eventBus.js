@@ -18,6 +18,15 @@ class EventBus {
             messages:{
                 ADD:'addMessage',
                 LOAD_ALL:'loadAllChatMessages'
+            },
+            peer:{
+                INIT: 'initPeer',
+                START_CHAT: 'startChat',
+                PRESENCE: 'peerPresence',
+                INCOMING_CALL: 'incomingCall',
+                ERROR_CALL:'errorCall',
+                CLOSE_CALL:'closedCall',
+                CONNECTED_CALL:'connectedCall'
             }
         });
     }

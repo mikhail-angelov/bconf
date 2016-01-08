@@ -1,6 +1,6 @@
 export default function($location, constant) {
-    var host = $location.host();
-    var port = 3000; //$location.port();
+    var host = 'localhost'; // $location.host();
+    var port = 9000; //$location.port();
 
     return {
         getHost: function(){

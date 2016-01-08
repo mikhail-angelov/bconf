@@ -23,7 +23,7 @@ module.exports = function (config) {
             "client/bower_components/angular-animate/angular-animate.js",
             "client/bower_components/angular-aria/angular-aria.js",
             "client/bower_components/angular-material/angular-material.js",
-            "client/bower_components/peerjs/peer.js",
+            //"client/bower_components/peerjs/peer.js",
             "client/bower_components/lodash/lodash.js",
             "client/bower_components/angular-mocks/angular-mocks.js",
             '.tmp/index.module.js',

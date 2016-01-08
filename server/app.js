@@ -9,11 +9,11 @@ import mongoose from 'mongoose';
 import http from 'http';
 import WebSocket from 'ws';
 
-import config from './config/environment';
-import connectionManager from './components/connectionManager';
-import eventBusFactory from './components/eventBus'
+import config from './config/environment/index.js';
+import connectionManager from './components/connectionManager/index.js';
+import eventBusFactory from './components/eventBus/index.js'
 import session  from './components/store/session';
-import peerjsFactory from './components/peerjs'
+import peerjsFactory from './components/peerjs/index.js'
 import User from './api/user/user.model';
 
 const webSocketPath = '/peer/peerjs'; //to config

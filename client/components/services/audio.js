@@ -1,6 +1,8 @@
 export default function($document) {
   var audioElement = $document[0].getElementById('audio');
-  audioElement.autoPlay = true; // as per your requirement
+  if(audioElement) {
+    audioElement.autoPlay = true; // as per your requirement
+  }
 
   return {
     audioElement: audioElement,

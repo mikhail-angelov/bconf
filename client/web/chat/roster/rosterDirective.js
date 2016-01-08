@@ -47,7 +47,7 @@ class RosterController {
 
     }
 
-    onSelectChat(key) {
+    onSelect(index) {
         //ChatModel.selectChat(key);
         //$scope.session = {
         //    id: key,

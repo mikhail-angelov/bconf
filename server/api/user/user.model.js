@@ -237,52 +237,44 @@ UserSchema.methods = {
             return callback(null, key.toString('base64'));
         });
     },
-    validateUser: function (id, token) {
-        //todo: check user credentials
-        return true;
-    },
-    isConnectionAllowed(src, dest) {
-        //todo: do proper validation
-        return true;
-    },
     getContacts(id) {
         return this.constructor
             .findOneAsync({_id: id})
             .then(user=> this.constructor.where('_id').in(user.contacts))
             .then(contacts=> _.map(contacts, contact=>contact.contactInfo));
-    },
-    addContact(id, contactId) {
-        return this.constructor
-            .findOneAsync({_id: id})
-            .then(user=> {
-                if (user.contacts.indexOf(contactId) < 0) {
-                    user.contacts.push(contactId);
-                }
-                return user.saveAsync();
-            });
-    },
-    removeContact(id, contactId) {
-        return this.constructor
-            .findOneAsync({_id: id})
-            .then(user=> {
-                let index = user.contacts.indexOf(contactId);
-                if (index >= 0) {
-                    user.contacts.splice(index,1);
-                }
-                return user.saveAsync();
-            });
     }
+
 };
 
-UserSchema.statics.addContact = function(id, contactId){
+UserSchema.statics.addContact = function (id, contactId) {
     return this.findOneAsync({_id: id})
-        .then(user=> {
+        .then(user => {
             if (user.contacts.indexOf(contactId) < 0) {
                 user.contacts.push(contactId);
             }
             return user.saveAsync();
         });
 }
+UserSchema.statics.removeContact = function (id, contactId) {
+    return this.findOneAsync({_id: id})
+        .then(user => {
+            let index = user.contacts.indexOf(contactId);
+            if (index >= 0) {
+                user.contacts.splice(index, 1);
+            }
+            return user.saveAsync();
+        });
+}
+
+UserSchema.statics.validateUser = function (id, token) {
+    //todo: check user credentials
+    return true;
+}
+UserSchema.statics.isConnectionAllowed = function (src, dest) {
+    //todo: do proper validation
+    return true;
+}
+
 
 //module.exports = mongoose.model('User', UserSchema);
 

@@ -1,46 +1,27 @@
-<div>
-    <md-whiteframe class="border">
-        <md-item-content>
-            <div class="md-tile-left" ng-show="session.user">
-                <md-button class="md-raised callButton" ng-click="onCall()">Call</md-button>
-            </div>
-            <div class="md-tile-content" ng-show="session.user" layout="row">
-                <img ng-src="{{session.user.avatar}}" class="contact-face" alt="{{session.user.displayName}}">
+<section layout-fill layout="column" flex>
 
-                <div>
-                    <h3>{{session.user.displayName}}</h3>
-                    <h4>{{session.user.provider}}</h4>
+    <div flex></div>
+    <md-content layout-fill>
+        <md-list-item ng-repeat="item in vm.messages">
+            <md-divider ng-if="!$first"></md-divider>
+            <md-item-content>
+                <div class="md-tile-content">
+                    {{item.date | date:'hh:mm'}} {{item.type}} : {{item.msg}}
                 </div>
-            </div>
-
-        </md-item-content>
-    </md-whiteframe>
-    <div ng-if="callInfo">
-        <div ng-include="'components/voiceCall/voiceCall.html'" ng-controller="VoiceCall"></div>
-    </div>
-    <md-content flex class="md-padding" id="messageList" >
-
-
-        <md-list>
-            <md-item ng-repeat="item in session.chat.messages">
-                <md-divider ng-if="!$first"></md-divider>
-                <md-item-content>
-                    <div class="md-tile-content">
-                        {{item.date | date:'hh:mm'}} {{item.type}} : {{item.msg}}
-                    </div>
-                </md-item-content>
-            </md-item>
-        </md-list>
+            </md-item-content>
+        </md-list-item>
     </md-content>
-    <form ng-submit="onSend()" ng-show="session.user">
-        <div layout layout-sm="column">
-            <md-input-container style="width:80%">
+
+    <section layout="row" layout-fill>
+        <form>
+            <md-input-container>
                 <label>new message</label>
-                <input ng-model="newMessage">
+                <input ng-model="vm.newMessage">
             </md-input-container>
             <md-input-container flex>
-                <md-button class="md-raised">Send</md-button>
+                <md-button class="md-raised" ng-click="vm.onSend()">Send</md-button>
             </md-input-container>
-        </div>
-    </form>
-</div>
+        </form>
+    </section>
+</section>
+

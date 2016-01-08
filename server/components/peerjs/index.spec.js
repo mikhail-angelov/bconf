@@ -2,7 +2,7 @@
 
 //import app from '../..';
 import peerjsFactory  from './index';
-import eventBusFactory  from '../eventBus';
+import eventBusFactory  from '../eventBus/index.js';
 import session from '../store/session.js'
 
 describe('Peerjs', function () {
