@@ -90,9 +90,9 @@ describe('User Model', function () {
     });
 
     it('should add contact', function () {
-      return user.addContact(user.id, otherUser.id)
+      return User.addContact(user.id, otherUser.id)
           .then(function (u) {
-            return user.getContacts(user.id);
+            return User.getContacts(user.id);
           })
           .then(function(contacts){
             var contact = contacts[0];
@@ -104,19 +104,19 @@ describe('User Model', function () {
     });
 
     it('should remove contact', function () {
-      return user.addContact(user.id, otherUser.id)
+      return User.addContact(user.id, otherUser.id)
           .then(function (u) {
-            return user.getContacts(user.id);
+            return User.getContacts(user.id);
           })
           .then(function(contacts){
             expect(contacts.length).to.be(1);
             return contacts;
           })
           .then(function(){
-            return user.removeContact(user.id, otherUser.id);
+            return User.removeContact(user.id, otherUser.id);
           })
           .then(function (u) {
-            return user.getContacts(user.id);
+            return User.getContacts(user.id);
           })
           .then(function(contacts){
             expect(contacts.length).to.be(0);

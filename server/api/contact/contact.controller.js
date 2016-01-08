@@ -16,12 +16,9 @@ function getCurrentUser(userId) {
 
 exports.index = function (req, res) {
     var userId = req.user._id;
-    getCurrentUser(userId)
-        .then(user => {
-            user.getContacts(userId)
-                .then(function (contacts) {
-                    res.json(contacts);
-                });
+    User.getContacts(userId)
+        .then(function (contacts) {
+            res.json(contacts);
         });
 };
 

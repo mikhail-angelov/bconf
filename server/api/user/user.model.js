@@ -236,14 +236,7 @@ UserSchema.methods = {
             }
             return callback(null, key.toString('base64'));
         });
-    },
-    getContacts(id) {
-        return this.constructor
-            .findOneAsync({_id: id})
-            .then(user=> this.constructor.where('_id').in(user.contacts))
-            .then(contacts=> _.map(contacts, contact=>contact.contactInfo));
     }
-
 };
 
 UserSchema.statics.addContact = function (id, contactId) {
@@ -254,7 +247,7 @@ UserSchema.statics.addContact = function (id, contactId) {
             }
             return user.saveAsync();
         });
-}
+};
 UserSchema.statics.removeContact = function (id, contactId) {
     return this.findOneAsync({_id: id})
         .then(user => {
@@ -264,7 +257,13 @@ UserSchema.statics.removeContact = function (id, contactId) {
             }
             return user.saveAsync();
         });
-}
+};
+
+UserSchema.statics.getContacts = function(id) {
+    return this.findOneAsync({_id: id})
+        .then(user=> this.where('_id').in(user.contacts))
+        .then(contacts=> _.map(contacts, contact=>contact.contactInfo));
+};
 
 UserSchema.statics.validateUser = function (id, token) {
     //todo: check user credentials
