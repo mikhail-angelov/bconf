@@ -1,5 +1,6 @@
 <section layout="row" layout-align="center center" class="page">
-    <md-whiteframe class="md-whiteframe-1dp login-panel" layout="column" layout-align="center center">
+    <md-whiteframe id="login-panel" class="md-whiteframe-1dp login-panel" layout="column" layout-align="center center"
+                   ng-class="{'animated shake': !!vm.errors}">
 
         <section layout="row" layout-fit layout-align="center center" class="login-container">
             <div layout="column" flex>

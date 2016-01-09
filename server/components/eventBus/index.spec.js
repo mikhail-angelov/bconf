@@ -1,6 +1,6 @@
 'use strict';
 
-import eventBusFactory  from '../eventBus';
+import eventBusFactory  from '../eventBus/index.js';
 
 describe('EventBus', function () {
 

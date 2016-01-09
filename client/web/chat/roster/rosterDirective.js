@@ -1,3 +1,5 @@
+"use strict"
+
 export default function () {
     return {
         restrict: 'EA',
@@ -6,11 +8,11 @@ export default function () {
         templateUrl: 'web/chat/roster/roster.html',
         scope: {},
         bindToController: true
-    };
+    }
 };
 
 class RosterController {
-    constructor(Auth) {
+    constructor() {
 
         this.contacts = [
             //{displayName:'test',provider:'local'},
@@ -48,6 +50,7 @@ class RosterController {
     }
 
     onSelect(index) {
+        console.log(index)
         //ChatModel.selectChat(key);
         //$scope.session = {
         //    id: key,
@@ -63,6 +66,7 @@ class RosterController {
     }
 
     onContact(index) {
+        console.log(index)
         //var contacts = _.reduce($scope.contacts.list, function (o, c) {
         //    if (c.status == 'online') {
         //        o.push(c);

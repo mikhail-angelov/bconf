@@ -33,6 +33,7 @@ class LoginController {
         }
     }
 
+
     register(form) {
         this.submitted = true;
         this.errors = null;
