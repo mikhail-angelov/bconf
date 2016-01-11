@@ -3,10 +3,9 @@ import BaseBot from './baseBot.js'
 class Echo extends BaseBot{
 
     constructor(RobotManager){
-        this.id ='echo';
+        super(RobotManager, 'echo');
         this.name = 'Echo';
         this.avatar = 'assets/material/share-arrow.svg';
-        super(RobotManager);
     }
 
     dispatch(client, message){

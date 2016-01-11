@@ -12,10 +12,10 @@ class RobotManager{
     }
 
     dispatch(client, message){
-        if(client.type === 'bot') {
-            let bot = this.bots[client.id];
+        if(message && message.bot) {
+            let bot = this.bots[message.bot];
             if (bot) {
-                bot.dispatch(message);
+                bot.dispatch(client, message);
             }
         }
     }
