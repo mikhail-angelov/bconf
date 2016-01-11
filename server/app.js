@@ -15,6 +15,8 @@ import eventBusFactory from './components/eventBus/index.js'
 import session  from './components/store/session';
 import peerjsFactory from './components/peerjs/index.js'
 import User from './api/user/user.model';
+import robotMasterFactory from './components/robots/robotMaster.js';
+import echoFactory from './components/robots/echo.js';
 
 const webSocketPath = '/peer/peerjs'; //to config
 
@@ -28,14 +30,15 @@ mongoose.connection.on('error', function(err) {
 // Populate databases with sample data
 if (config.seedDB) { require('./config/seed'); }
 
-
-var eventBus = new eventBusFactory();
+var di = {};
+di.eventBus = new eventBusFactory();
 
 // Setup server
 var app = express();
 var server = http.createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
+
 
 // Start server
 function startServer() {
@@ -44,12 +47,18 @@ function startServer() {
   });
 
   // Create WebSocket server
-  let wss = new WebSocket.Server({path: webSocketPath, server: serv});
-  let cm = new connectionManager(wss, eventBus);
-  let peerjs = new peerjsFactory(eventBus, session, User);
+  di.wss = new WebSocket.Server({path: webSocketPath, server: serv});
+  di.connectionManager = new connectionManager(di.wss, di.eventBus);
+  di.peerjs = new peerjsFactory(di.eventBus, session, User);
+  di.robotMaster = new robotMasterFactory(di.eventBus);
+
+  var echo = new echoFactory(di.robotMaster);
 }
 
 setImmediate(startServer);
 
 // Expose app
-module.exports = app;
+module.exports = {
+  app,
+  di
+};

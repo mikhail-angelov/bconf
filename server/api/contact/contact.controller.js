@@ -15,11 +15,22 @@ function getCurrentUser(userId) {
 }
 
 exports.index = function (req, res) {
+
+    console.log('req.user', req.user)
     var userId = req.user._id;
-    User.getContacts(userId)
-        .then(function (contacts) {
-            res.json(contacts);
-        });
+    var role = req.user.role;
+    if (role === 'guest') {
+        //todo refactor it
+        let application = require('../../index.js');
+        let robotMaster = application.di.robotMaster;
+        let list = robotMaster.getAll();
+        res.json(list);
+    } else {
+        User.getContacts(userId)
+            .then(function (contacts) {
+                res.json(contacts);
+            });
+    }
 };
 
 

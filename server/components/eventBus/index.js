@@ -1,6 +1,5 @@
 'use strict';
 
-'use strict';
 const util = require('util');
 const EventEmitter = require('events');
 const _= require('lodash');

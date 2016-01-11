@@ -25,6 +25,7 @@ function localAuthenticate(User, email, password, done) {
       });
     })
     .catch(function(err) {
+
       return done(err);
     });
 }

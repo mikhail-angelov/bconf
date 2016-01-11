@@ -26,17 +26,22 @@ function isAuthenticated() {
     })
     // Attach user to request
     .use(function(req, res, next) {
-      User.findByIdAsync(req.user._id)
-        .then(function(user) {
-          if (!user) {
-            return res.status(401).end();
-          }
-          req.user = user;
+        //todo refactor it
+        if(req.user.role === 'guest'){
           next();
-        })
-        .catch(function(err) {
-          return next(err);
-        });
+        }else {
+          User.findByIdAsync(req.user._id)
+              .then(function (user) {
+                if (!user) {
+                  return res.status(401).end();
+                }
+                req.user = user;
+                next();
+              })
+              .catch(function (err) {
+                return next(err);
+              });
+        }
     });
 }
 

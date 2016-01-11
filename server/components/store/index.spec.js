@@ -1,6 +1,5 @@
 'use strict';
 
-//import app from '../..';
 import store  from './session';
 
 describe('Session', function () {

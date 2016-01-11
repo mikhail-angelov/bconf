@@ -14,7 +14,7 @@ import cookieParser from 'cookie-parser';
 import errorHandler from 'errorhandler';
 import path from 'path';
 import lusca from 'lusca';
-import config from './environment';
+import config from './environment/index.js';
 import passport from 'passport';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';

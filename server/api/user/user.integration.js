@@ -1,8 +1,10 @@
 'use strict';
 
-import app from '../../index';
+import application from '../../index';
 import User from './user.model';
 import request from 'supertest';
+
+let app = application.app;
 
 describe('User API:', function() {
   var user;

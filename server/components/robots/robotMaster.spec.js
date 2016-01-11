@@ -1,6 +1,5 @@
 import eventBusFactory  from '../eventBus/index.js';
 import robotMasterFactory from './robotMaster.js';
-import echoFactory from './echo.js';
 
 describe('RobotMaster', function () {
 

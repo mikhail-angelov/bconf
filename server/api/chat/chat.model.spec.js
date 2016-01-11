@@ -1,6 +1,5 @@
 'use strict';
 
-//import app from '../..';
 import { Chat}  from './chat.model';
 import { User}  from '../user/user.model';
 import testDb from '../../test/testDb.js';
