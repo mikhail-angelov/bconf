@@ -2,8 +2,9 @@
 
 class ChatController{
 
-    constructor(Auth, ProfileStore, $scope){
+    constructor(Auth, ProfileStore, $scope, $state){
         this.Auth = Auth;
+        this.$state = $state;
         this.user = ProfileStore.getProfile();
         ProfileStore.subscribe($scope, ()=>{
             this.user = ProfileStore.getProfile();
@@ -12,6 +13,7 @@ class ChatController{
 
     onLogout() {
         this.Auth.logout();
+        this.$state.go('main');
     }
 
     openMenu($mdOpenMenu, ev){

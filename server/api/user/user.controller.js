@@ -113,16 +113,27 @@ exports.changePassword = function(req, res, next) {
  */
 exports.me = function(req, res, next) {
   var userId = req.user._id;
-  User.findOneAsync({ _id: userId }, '-salt -hashedPassword')
-    .then(function(user) { // don't ever give out the password or salt
-      if (!user) {
-        return res.status(401).end();
-      }
-      res.json(user);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
+  var role = req.user.role;
+  if (role === 'guest') {
+    //todo refactor it
+    let user = {
+      name:'guest',
+      avatar: 'assets/images/anonymous.png',
+      role:'guest'
+    };
+    res.json(user);
+  } else {
+    User.findOneAsync({_id: userId}, '-salt -hashedPassword')
+        .then(function (user) { // don't ever give out the password or salt
+          if (!user) {
+            return res.status(401).end();
+          }
+          res.json(user);
+        })
+        .catch(function (err) {
+          return next(err);
+        });
+  }
 };
 
 /**

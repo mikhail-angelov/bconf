@@ -9,12 +9,20 @@ export default function AuthService($http, $q, appConfig, User, EventBus) {
 
     var Auth = {
 
-        login: function (user, callback) {
+        login: function (user) {
             return $http.post('/auth/local', {
                 email: user.email,
                 password: user.password
             })
                 .then((res) => {
+                    Auth.storeToken(res.data.token);
+                    isAuthenticated = true;
+                    return this._loadCurrentUser();
+                });
+        },
+        loginGuest: function (params) {
+            return $http.post('/auth/local/guest', params)
+                .then(res => {
                     Auth.storeToken(res.data.token);
                     isAuthenticated = true;
                     return this._loadCurrentUser();
@@ -48,7 +56,12 @@ export default function AuthService($http, $q, appConfig, User, EventBus) {
         },
 
         validateAuthState: function () {
-            return this._loadCurrentUser().then(()=>isAuthenticated = true);
+            var token = localStorage.getItem('token');
+            if(token) {
+                return this._loadCurrentUser().then(()=>isAuthenticated = true);
+            }else{
+                return $q.reject();
+            }
         },
 
         isLoggedIn: function (role) {
@@ -56,7 +69,7 @@ export default function AuthService($http, $q, appConfig, User, EventBus) {
         },
 
 
-        hasRole: function (role, callback) {
+        hasRole: function (role) {
             var hasRole = function (r, h) {
                 return userRoles.indexOf(r) >= userRoles.indexOf(h);
             };
@@ -86,9 +99,9 @@ export default function AuthService($http, $q, appConfig, User, EventBus) {
         ,
 
         storeToken: function (token) {
+            token = token || '';
             localStorage.setItem('token', token);
-        }
-        ,
+        },
 
         bootstrap: function () {
             if (!isAuthenticated || Auth.getToken()) {

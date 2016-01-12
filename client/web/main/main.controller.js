@@ -2,14 +2,15 @@
 
 class MainController {
 
-  constructor($http, $scope, $state) {
+  constructor($state) {
     this.$state = $state;
   }
 
-
   onLogin(){
-    console.log('to login')
     this.$state.go('login')
+  }
+  onLoginGuest(){
+    this.$state.go('loginGuest')
   }
 }
 

@@ -1,0 +1,18 @@
+<section layout="row" layout-align="center center" class="page">
+    <md-whiteframe id="loginGuest-panel" class="md-whiteframe-1dp login-panel" layout="column" layout-align="center center"
+                   ng-class="{'animated shake': !!vm.errors}">
+
+        <section layout="column" layout-fit layout-align="center center" class="login-container">
+            <form name="loginGuestForm" ayout-fit layout-align="center center">
+                <div class="login-title">Sign in as guest</div>
+                <input  name="capture" ng-model="vm.capture" class="login-input"
+                        placeholder="capture"/>
+
+                    <md-button class="md-raised md-primary" ng-click="vm.login(loginGuestForm)">Sign in</md-button>
+
+            </form>
+        </section>
+
+    </md-whiteframe>
+</section>
+
