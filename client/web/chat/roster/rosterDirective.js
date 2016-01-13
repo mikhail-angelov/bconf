@@ -61,9 +61,9 @@ class RosterController {
 
     onAddContact() {
         this.$mdDialog.show(contactForm({yo:'yo'})).then(function (answer) {
-            $scope.alert = 'You said the information was "' + answer + '".';
+            console.log('committed', answer);
         }, function () {
-            $scope.alert = 'You cancelled the dialog.';
+            console.log('canceled');
         });
     }
 
