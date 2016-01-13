@@ -74,6 +74,11 @@ class LoginController {
     isViewType(type) {
         return this.type === type;
     }
+
+    onClose(){
+        this.Auth.logout();
+        this.$state.go('main');
+    }
 }
 
 export default LoginController;

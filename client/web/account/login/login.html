@@ -1,6 +1,9 @@
 <section layout="row" layout-align="center center" class="page">
     <md-whiteframe id="login-panel" class="md-whiteframe-1dp login-panel" layout="column" layout-align="center center"
                    ng-class="{'animated shake': !!vm.errors}">
+        <md-button class="md-icon-button md-accent closeButton" aria-label="close" ng-click="vm.onClose()">
+            <md-icon md-svg-icon="arrow-back"></md-icon>
+        </md-button>
 
         <section layout="row" layout-fit layout-align="center center" class="login-container">
             <div layout="column" flex>

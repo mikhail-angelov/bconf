@@ -27,7 +27,12 @@ angular.module('bconfApp', [
     .directive('messages', MessagesDirective)
 
 
-    .config(function ($urlRouterProvider, $locationProvider, $stateProvider, $mdThemingProvider) {
+    .config(function ($urlRouterProvider, $locationProvider, $stateProvider,
+                      $mdThemingProvider, $mdIconProvider) {
+
+        $mdIconProvider
+            .defaultIconSet('assets/material/core-icons.svg', 24)
+
         $urlRouterProvider
             .otherwise('/');
 

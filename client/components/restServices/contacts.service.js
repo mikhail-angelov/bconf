@@ -4,7 +4,7 @@ export default function ($http) {
       return $http.get('/api/users/' + contactId)
     },
     getAllContacts:  ()=> {
-        return $http.get('/api/users/contacts');
+        return $http.get('/api/contacts');
     },
     createGuest:  () =>{
       return $http.post('/api/users/createGuest');

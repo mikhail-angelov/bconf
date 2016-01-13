@@ -1,5 +1,7 @@
 "use strict"
 
+import contactForm from './contactForm/contactForm.js'
+
 export default function () {
     return {
         restrict: 'EA',
@@ -12,45 +14,22 @@ export default function () {
 };
 
 class RosterController {
-    constructor() {
+    constructor(ContactsStore, $scope, EventBus, ContactsService, $mdDialog) {
 
-        this.contacts = [
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            //{displayName:'test',provider:'local'},
-            {displayName:'test',provider:'local'}
-        ];
+        this.EventBus = EventBus;
+        this.ContactsService = ContactsService;
+        this.$mdDialog = $mdDialog;
+        this.contacts = ContactsStore.getAllContacts();
+        ContactsStore.subscribe($scope,()=>this.contacts = ContactsStore.getAllContacts());
 
-
-            //Auth.getCurrentUser().then(user=>{
-            //    $scope.user = user;
-            //
-            //    // $scope.user.id = util.randomToken(); //temp
-            //
-            //    ChatModel.init($scope.user.id);
-            //    $scope.linkToShare = Property.getLinkToShare($scope.user);
-            //
-            //    //load friends
-            //    ContactsModel.loadContactsList($scope.user.id);
-            //});
-
+        this.ContactsService.getAllContacts().then(response=>{
+           this.EventBus.emit(this.EventBus.contacts.LOAD_ALL, response.data);
+        });
     }
 
     onSelect(index) {
         console.log(index)
+        this.EventBus.emit(this.EventBus.chats.SELECT_CHAT, index);
         //ChatModel.selectChat(key);
         //$scope.session = {
         //    id: key,
@@ -81,14 +60,11 @@ class RosterController {
     }
 
     onAddContact() {
-        //$mdDialog.show({
-        //    controller: 'FindContactController',
-        //    templateUrl: 'components/findContact/findContact.html'
-        //}).then(function (answer) {
-        //    $scope.alert = 'You said the information was "' + answer + '".';
-        //}, function () {
-        //    $scope.alert = 'You cancelled the dialog.';
-        //});
+        this.$mdDialog.show(contactForm({yo:'yo'})).then(function (answer) {
+            $scope.alert = 'You said the information was "' + answer + '".';
+        }, function () {
+            $scope.alert = 'You cancelled the dialog.';
+        });
     }
 
 }
