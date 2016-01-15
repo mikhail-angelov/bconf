@@ -10,6 +10,11 @@ class BaseStore {
         return scope.$on(this.id, cb);
     }
 
+    subscribeAndInit(scope, cb) {
+        cb();
+        return scope.$on(this.id, cb);
+    }
+
     emitChanges() {
         this.EventBus.emit(this.id);
     }

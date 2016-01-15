@@ -8,25 +8,29 @@ class ChatsStore extends BaseStore{
 
         this.data = {
             chats: [],
-            index: 0
+            currentChatIndex: null
         };
         EventBus.on(EventBus.chats.LOAD_ALL, (scope,chats)=>{
             this.data.chats = chats;
             this.emitChanges();
         });
         EventBus.on(EventBus.chats.SELECT_CHAT, (scope,index)=>{
-            this.data.index = index;
+            this.data.currentChatIndex = index;
             this.emitChanges();
         });
 
     }
 
+    getAllChat(){
+        return this.data.chats;
+    }
+
     getCurrentChat(){
-        return this.data.chats[this.data.index];
+        return this.data.chats[this.data.currentChatIndex];
     }
 
     getCurrentChatIndex(){
-        return this.data.index;
+        return this.data.currentChatIndex;
     }
 }
 

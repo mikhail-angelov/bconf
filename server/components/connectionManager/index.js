@@ -43,7 +43,7 @@ class ConnectionManager {
   }
   onConnect(socket) {
     var connectionParam = this._getConnectionParams(socket);
-
+    console.log('onConnect ', connectionParam)
 
     if (!connectionParam.id || !connectionParam.token || !connectionParam.key) {
       socket.send(JSON.stringify({type: 'ERROR', payload: {msg: 'No id, token, or key supplied to websocket server'}}));

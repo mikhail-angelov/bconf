@@ -12,12 +12,18 @@ class RobotManager {
         this.bots[bot.id] = bot;
     }
 
-    dispatch(client, message) {
-        if (message && message.bot) {
-            let bot = this.bots[message.bot];
-            if (bot) {
-                bot.dispatch(client, message);
+    dispatch(client, data) {
+        try {
+            console.log(data)
+            var message = JSON.parse(data);
+            if (message && message.bot) {
+                let bot = this.bots[message.bot];
+                if (bot) {
+                    bot.dispatch(client, message);
+                }
             }
+        } catch (e) {
+            console.log('Invalid robot message', data, e);
         }
     }
 

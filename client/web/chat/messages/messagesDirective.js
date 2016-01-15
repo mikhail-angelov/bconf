@@ -12,22 +12,25 @@ export default function () {
 };
 
 class MessagesController {
-    constructor(MessagesStore, EventBus, $scope) {
-        this.EventBus = EventBus;
+    constructor(MessagesStore, ChatService, $scope, $timeout) {
+        this.ChatService = ChatService;
         this.messages = MessagesStore.getMessages();
-        MessagesStore.subscribe($scope, ()=>{
-            this.messages = MessagesStore.getMessages()
+        MessagesStore.subscribe($scope, ()=> {
+            //$timeout(()=>{
+                this.messages = MessagesStore.getMessages();
+            //});
         });
     }
 
     onSend() {
         let message = {
-            type:'out',
+            type: 'out',
             date: Date(),
             msg: this.newMessage
         };
         this.newMessage = '';
-        this.EventBus.emit(this.EventBus.messages.ADD, message);
+        console.log(message)
+        this.ChatService.sendMessage(message);
     }
 
 }

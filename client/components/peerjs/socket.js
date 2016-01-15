@@ -30,7 +30,7 @@ Socket.prototype.start = function(id, token) {
   this._httpUrl += '/' + id + '/' + token;
   this._wsUrl += '&id=' + id + '&token=' + token;
 
-  //MA this._startXhrStream();
+  //ma this._startXhrStream();
   this._startWebSocket();
 }
 

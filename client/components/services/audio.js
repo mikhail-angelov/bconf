@@ -41,6 +41,6 @@ export default function($document) {
       audioElement.ontimeupdate = function() {
         callback(audioElement.duration, audioElement.currentTime)
       };
-    },
+    }
   }
 };

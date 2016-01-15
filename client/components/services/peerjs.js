@@ -12,47 +12,64 @@ class PeerJs {
 
         this.peer = null;
         this.peerId = null;
-        this.call = null
+        this.call = null;
+
+        EventBus.on(EventBus.auth.IN, ()=>this.init());
     }
 
-    init(myPeerId, key) {
-        this.peerId = myPeerId;
-        this.peer = new Peer(myPeerId, {
+    init() {
+        let token = localStorage.getItem('token');
+        let key = 'peerjs';
+        let id = '123';
+        this.peerId = token;
+        this.peer = new Peer(id, {
+            debug: 3, // 1: Errors, 2: Warnings, 3: All logs
             host: this.Property.getHost(),
             port: this.Property.getPort(),
-            path: this.constant.PEER_PATH,
-            key: key,
-            debug: true
+            key: key, //'peerjs',
+            path: '/',
+            token: token
         });
-        this.peer.on('connection', function (conn) {
-            this.EventBus.event(this.EventBus.peer.START_CHAT, {conn: conn});
+
+        this.peer.on('connection', (conn) =>{
+            this.EventBus.emit(this.EventBus.peer.START_CHAT, {conn: conn});
         });
-        this.peer.on('error', function (err) {
+        this.peer.on('error',  (err)=> {
             console.log('on peer error ' + err);
         });
         this.peer.on('disconnected', function () {
             console.log('on peer disconnected');
         });
-        this.peer.on('message', function (msg) {
+        this.peer.on('message',  (msg) =>{
             console.log('on peer message ' + msg);
         });
-        this.peer.on('presence', function (presence) {
-            this.EventBus.event(this.EventBus.peer.PRESENCE, presence);
+        this.peer.on('presence',  (presence) =>{
+            this.EventBus.emit(this.EventBus.peer.PRESENCE, presence);
         });
-        this.peer.on('call', function (incomingCall) {
+        this.peer.on('call',  (incomingCall)=> {
             this.call = incomingCall;
-            this.EventBus.event(this.EventBus.peer.INCOMING_CALL, this.call);
+            this.EventBus.emit(this.EventBus.peer.INCOMING_CALL, this.call);
         });
+        this.peer.on('bot-message',  (message) =>{
+            message.type = 'in';
+            this.EventBus.emit(this.EventBus.messages.ADD, message);
+        });
+    }
+
+    sendHostMessage(message) {
+        if (this.peer) {
+            this.peer.socket.send(message);
+        }
     }
 
     originateCall(peerId) {
         var deferred = $q.defer();
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        navigator.getUserMedia({video: false, audio: true}, function (stream) {
+        navigator.getUserMedia({video: false, audio: true},  (stream) =>{
             this.call = this.peer.call(peerId, stream);
             this.subscribeCall(this.call);
             deferred.resolve();
-        }, function (err) {
+        },  (err) =>{
             console.log('Failed to get local stream', err);
             deferred.reject();
         });
@@ -63,11 +80,11 @@ class PeerJs {
         this.call = callData;
         var deferred = $q.defer();
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        navigator.getUserMedia({video: false, audio: true}, function (stream) {
+        navigator.getUserMedia({video: false, audio: true},  (stream)=> {
             this.call.answer(stream); // Answer the call with an A/V stream.
             this.subscribeCall(this.call);
             deferred.resolve();
-        }, function (err) {
+        },  (err) =>{
             console.log('Failed to get local stream', err);
             deferred.reject();
         });
@@ -87,40 +104,34 @@ class PeerJs {
     }
 
     subscribe(conn, onOpen, onMessage, onClose) {
-        conn.on('open', function () {
-            onOpen();
-        });
-        conn.on('data', function (data) {
-            onMessage(data);
-        });
-        conn.on('close', function (data) {
-            onClose();
-        });
+        conn.on('open', onOpen);
+        conn.on('data', onMessage);
+        conn.on('close', onClose);
     }
 
     subscribeCall(call) {
-        call.on('error', function (err) {
+        call.on('error',  (err) =>{
             console.log('call error ' + err);
-            this.EventBus.event(this.Event.peer.ERROR_CALL, err);
+            this.EventBus.emit(this.Event.peer.ERROR_CALL, err);
         });
-        call.on('close', function () {
+        call.on('close',  ()=> {
             console.log('call is closed ');
-            this.EventBus.event(this.Event.peer.CLOSE_CALL);
+            this.EventBus.emit(this.Event.peer.CLOSE_CALL);
         });
-        call.on('stream', function (remoteStream) {
+        call.on('stream',  (remoteStream) =>{
             console.log('call stream ' + JSON.stringify(remoteStream));
             this.Audio.playStream(remoteStream);
-            remoteStream.onended = function () {
+            remoteStream.onended =  () =>{
                 console.log('ma: stream ended');
             }
-            remoteStream.onaddtrack = function () {
+            remoteStream.onaddtrack =  ()=> {
                 console.log('ma: stream onaddtrack');
             }
-            remoteStream.onremovetrack = function () {
+            remoteStream.onremovetrack =  ()=> {
                 console.log('ma: stream onremovetrack');
             }
             // Show stream in some <video> element.
-            this.EventBus.event(this.Event.peer.CONNECTED_CALL);
+            this.EventBus.emit(this.Event.peer.CONNECTED_CALL);
         });
     }
 }

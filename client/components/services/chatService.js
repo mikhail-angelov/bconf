@@ -1,10 +1,11 @@
 class ChatService {
 
-    constructor(Peer, EventBus, ContactsModel) {
+    constructor(Peer, EventBus, ContactsModel, ChatsStore) {
 
-        EventBus.on(EventBus.peer.INIT, ()=> {
-            Peer.init(peerId);
-        });
+        this.ChatsStore = ChatsStore;
+        this.Peer = Peer;
+        this.EventBus = EventBus;
+
 
         EventBus.on(EventBus.peer.START_CHAT, (scope, data)=> {
             var chatId = data.conn.peer;
@@ -51,7 +52,17 @@ class ChatService {
         //return chat[activeChat];
     }
 
-    sendMessage(message) {
+    sendMessage(payload) {
+        let chat = this.ChatsStore.getCurrentChat();
+        if (chat.type === 'bot') {
+            let message = {
+                bot:chat.id,
+                type:'BOT',
+                payload
+            };
+            this.EventBus.emit(this.EventBus.messages.ADD, payload);
+            return this.Peer.sendHostMessage(message);
+        }
         //var currentChat = chat[activeChat];
         //if (currentChat) {
         //    currentChat.messages.push({type: 'out', msg: message});

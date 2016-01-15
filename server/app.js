@@ -18,7 +18,7 @@ import User from './api/user/user.model';
 import robotMasterFactory from './components/robots/robotMaster.js';
 import echoFactory from './components/robots/echo.js';
 
-const webSocketPath = '/peer/peerjs'; //to config
+const webSocketPath = '/peerjs'; //to config
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);

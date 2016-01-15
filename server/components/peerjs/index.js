@@ -26,13 +26,16 @@ class PeerJs {
       this.eventBus.emit(this.eventBus.DISCONNECT_CLIENT, client);
     } else {
       //check auth
-      if (!this.user.validateUser(client.id, client.token)) {
-        console.log('user credentials are invalid', client.id, client.token)
-        this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, {type: 'INCORRECT-TOKEN', payload: {msg: 'incorrect token'}});
-        this.eventBus.emit(this.eventBus.DISCONNECT_CLIENT, client);
-      } else {
+      if (this.user.validateUser(client.id, client.token)) {
         this.session.add(client);
         this.eventBus.emit(this.eventBus.ACCEPT_CLIENT, client);
+      } else {
+        console.log('user credentials are invalid', client.id, client.token)
+        this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, {
+          type: 'INCORRECT-TOKEN',
+          payload: {msg: 'incorrect token'}
+        });
+        this.eventBus.emit(this.eventBus.DISCONNECT_CLIENT, client);
       }
     }
   }
@@ -101,8 +104,8 @@ class PeerJs {
         console.log('unrecognized (no peerjs message)', data);
       }
     } catch (e) {
-      console.log('Invalid message', data);
-      throw e;
+      console.log('Invalid message', data, e);
+      //throw e;
     }
   }
 

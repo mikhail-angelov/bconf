@@ -3,7 +3,7 @@
     <div flex></div>
     <md-content layout-fill>
         <md-list-item ng-repeat="item in vm.messages">
-            <md-divider ng-if="!$first"></md-divider>
+            <md-divider ng-if="!$last"></md-divider>
             <md-item-content>
                 <div class="md-tile-content">
                     {{item.date | date:'hh:mm'}} {{item.type}} : {{item.msg}}
@@ -12,16 +12,14 @@
         </md-list-item>
     </md-content>
 
-    <section layout="row" layout-fill>
-        <form>
-            <md-input-container>
-                <label>new message</label>
-                <input ng-model="vm.newMessage">
-            </md-input-container>
-            <md-input-container flex>
-                <md-button class="md-raised" ng-click="vm.onSend()">Send</md-button>
-            </md-input-container>
+
+        <form ng-submit="vm.onSend()" layout="row">
+
+                <textarea flex ng-model="vm.newMessage"></textarea>
+
+                <md-button flex="20" class="md-raised" type="submit">Send</md-button>
+
         </form>
-    </section>
+
 </section>
 

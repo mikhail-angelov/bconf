@@ -1,9 +1,18 @@
-<section layout-fill layout="column" flex>
-    <input ng-model="vm.searchContact">
+<section layout-fill layout="column" flex class="roster">
+
+    <section layout="row">
+        <input class="search" ng-model="vm.searchContact" flex>
+
+        <md-button class="md-icon-button md-accent" aria-label="add" ng-click="vm.onAddContact()">
+            <md-icon md-svg-icon="add-circle" md-menu-align-target></md-icon>
+        </md-button>
+    </section>
 
     <md-content layout-fill flex>
-        <md-list-item class="md-2-line" ng-repeat="item in vm.contacts" ng-click="vm.onSelect($index)">
-            <img ng-src="assets/material/ic_person_24px.svg" class="md-avatar" alt="img" />
+        <md-list-item class="md-2-line" ng-repeat="item in vm.chats" ng-click="vm.onSelect($index)"
+                ng-class="{selected:($index==vm.currentChatIndex)}">
+            <img ng-src="assets/material/ic_person_24px.svg" class="md-avatar" alt="img"/>
+
             <div class="md-list-item-text" layout="column">
                 <h3>{{ item.name }}</h3>
                 <h4>{{ item.provider }}</h4>
@@ -12,12 +21,4 @@
         </md-list-item>
     </md-content>
 
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <md-button ng-click="vm.onAddContact()">
-                <md-icon md-svg-icon="assets/material/ic_person_24px.svg" md-menu-align-target></md-icon>
-                Add
-            </md-button>
-        </div>
-    </md-toolbar>
 </section>

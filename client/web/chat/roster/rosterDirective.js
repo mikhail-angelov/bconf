@@ -14,16 +14,18 @@ export default function () {
 };
 
 class RosterController {
-    constructor(ContactsStore, $scope, EventBus, ContactsService, $mdDialog) {
+    constructor(ContactsStore, ChatsStore, $scope, EventBus, ContactsService, $mdDialog) {
 
         this.EventBus = EventBus;
         this.ContactsService = ContactsService;
         this.$mdDialog = $mdDialog;
-        this.contacts = ContactsStore.getAllContacts();
-        ContactsStore.subscribe($scope,()=>this.contacts = ContactsStore.getAllContacts());
+        ChatsStore.subscribeAndInit($scope,()=>{
+            this.chats = ChatsStore.getAllChat();
+            this.currentChatIndex = ChatsStore.getCurrentChatIndex();
+        });
 
         this.ContactsService.getAllContacts().then(response=>{
-           this.EventBus.emit(this.EventBus.contacts.LOAD_ALL, response.data);
+           this.EventBus.emit(this.EventBus.chats.LOAD_ALL, response.data);
         });
     }
 
