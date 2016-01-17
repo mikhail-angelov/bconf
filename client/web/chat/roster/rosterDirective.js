@@ -14,7 +14,7 @@ export default function () {
 };
 
 class RosterController {
-    constructor(ContactsStore, ChatsStore, $scope, EventBus, ContactsService, $mdDialog) {
+    constructor(ChatsStore, $scope, EventBus, ContactsService, $mdDialog) {
 
         this.EventBus = EventBus;
         this.ContactsService = ContactsService;

@@ -10,7 +10,10 @@ class LoginController {
         this.submitted = false;
         this.type = 'login';
 
-        this.facebookLink = 'facebook';
+        this.facebookLink = '/facebook';
+        this.twitterLink = '/twitter';
+        this.googleLink = '/google';
+        this.yandexLink = '/yandex';
     }
 
     login(form) {

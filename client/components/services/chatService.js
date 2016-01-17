@@ -52,7 +52,12 @@ class ChatService {
         //return chat[activeChat];
     }
 
-    sendMessage(payload) {
+    sendMessage(data) {
+        let payload = {
+            type: 'out',
+            date: moment().format('hh:mm'),
+            msg: data
+        };
         let chat = this.ChatsStore.getCurrentChat();
         if (chat.type === 'bot') {
             let message = {

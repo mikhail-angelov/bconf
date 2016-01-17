@@ -15,7 +15,8 @@
     "peerjs": "~0.3.14",
     "lodash": "~3.5.0",
     "eventemitter3": "~1.1.1",
-    "animate.css": "~3.5.1"
+    "animate.css": "~3.5.1",
+    "moment": "~2.11.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0",

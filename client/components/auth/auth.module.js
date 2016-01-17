@@ -6,6 +6,7 @@ import authInterceptor from './interceptor.service.js'
 import AuthService from './auth.service.js'
 
 angular.module('auth.module', [
+    'ngCookies',
     'restServices.module',
     'ui.router'
 ])

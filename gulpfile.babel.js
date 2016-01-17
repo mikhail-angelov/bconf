@@ -342,6 +342,7 @@ gulp.task('serve', cb => {
   runSequence(['clean:tmp', 'constant'],
     ['lint:scripts', 'inject'],
     ['wiredep:client'],
+      ['env:all'],
     ['transpile:client', 'styles'],
     ['start:server', 'start:client'],
     ['watch', 'watch:js'],

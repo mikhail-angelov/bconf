@@ -1,7 +1,7 @@
 'use strict';
 
 
-export default function AuthService($http, $q, appConfig, User, EventBus) {
+export default function AuthService($http, $q, appConfig, User, EventBus, $cookies) {
     var currentUser = null;
     var isAuthenticated = false;
 
@@ -55,7 +55,11 @@ export default function AuthService($http, $q, appConfig, User, EventBus) {
         },
 
         validateAuthState: function () {
-            var token = localStorage.getItem('token');
+            var token = $cookies.get('token');
+            if(token){
+                localStorage.setItem('token', token);
+            }
+            token = localStorage.getItem('token');
             if(token) {
                 return this._loadCurrentUserAndCompleteAuth();
             }else{
@@ -74,6 +78,7 @@ export default function AuthService($http, $q, appConfig, User, EventBus) {
         storeToken: function (token) {
             token = token || '';
             localStorage.setItem('token', token);
+            $cookies.remove('token');
         },
         
         _loadCurrentUserAndCompleteAuth: function () {

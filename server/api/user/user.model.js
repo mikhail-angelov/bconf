@@ -22,6 +22,7 @@ var UserSchema = new Schema({
     facebook: {},
     twitter: {},
     google: {},
+    yandex: {},
     github: {},
     avatar: String,
     contacts: []

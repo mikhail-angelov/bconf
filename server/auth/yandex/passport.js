@@ -1,15 +1,15 @@
 import passport from 'passport';
-import {OAuth2Strategy as GoogleStrategy} from 'passport-google-oauth';
+import {Strategy as YandexStrategy} from 'passport-yandex';
 
 exports.setup = function(User, config) {
-  passport.use(new GoogleStrategy({
-    clientID: config.google.clientID,
-    clientSecret: config.google.clientSecret,
-    callbackURL: config.google.callbackURL
+  passport.use(new YandexStrategy({
+    clientID: config.yandex.clientID,
+    clientSecret: config.yandex.clientSecret,
+    callbackURL: config.yandex.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOneAsync({
-      'google.id': profile.id
+      'yandex.id': profile.id
     })
       .then(function(user) {
         if (!user) {
@@ -18,9 +18,8 @@ exports.setup = function(User, config) {
             email: profile.emails[0].value,
             role: 'user',
             username: profile.emails[0].value.split('@')[0],
-            provider: 'google',
-            google: profile._json,
-            avatar:profile._json.image.url
+            provider: 'yandex',
+            yandex: profile._json
           });
           user.saveAsync()
             .then(function(user) {

@@ -7,22 +7,22 @@
 
         <section layout="row" layout-fit layout-align="center center" class="login-container">
             <div layout="column" flex>
-                <md-button class="md-raised md-primary" ng-href="{{vm.facebookLink}}">
+                <a class="md-button md-raised md-primary" ng-href="/auth{{vm.facebookLink}}" target="_top">
                     <md-icon md-svg-icon="assets/material/facebook.svg"></md-icon>
                     Facebook
-                </md-button>
-                <md-button class="md-raised md-warn" ng-click="vm.loginSocial('twitter')">
+                </a>
+                <a class="md-button md-raised md-warn" ng-href="/auth{{vm.twitterLink}}" target="_self">
                     <md-icon md-svg-icon="assets/material/twitter.svg"></md-icon>
                     Twitter
-                </md-button>
-                <md-button class="md-raised md-danger" ng-click="vm.loginSocial('google')">
+                </a>
+                <a class="md-button md-raised md-danger" ng-href="/auth{{vm.googleLink}}" target="_self">
                     <md-icon md-svg-icon="assets/material/hangout.svg"></md-icon>
                     Google
-                </md-button>
-                <md-button class="md-raised md-info" ng-href="{{vm.yandexLink}}">
+                </a>
+                <a class="md-button md-raised md-info" ng-href="/auth{{vm.yandexLink}}" target="_self">
                     Я
                     Yandex
-                </md-button>
+                </a>
             </div>
             <div class="login-delimiter"></div>
             <div layout="column" flex layout-align="center center" class="login-left">
