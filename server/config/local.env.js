@@ -12,7 +12,7 @@ module.exports = {
   FACEBOOK_ID: '1544725999123244',
   FACEBOOK_SECRET: 'e6a02d01298bf7834bbac1870bad9d97',
 
-  TWITTER_ID: 'app-id',
+  TWITTER_ID: '8toPKTrM3UH016FahpePuEnzJ',
   TWITTER_SECRET: 'secret',
 
   GOOGLE_ID: '731186579748-kd1sffm7f4l946jksni2fpthl0t5c0q6.apps.googleusercontent.com',

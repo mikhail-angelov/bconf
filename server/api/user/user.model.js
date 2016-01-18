@@ -250,6 +250,7 @@ UserSchema.statics.addContact = function (id, contactId) {
         });
 };
 UserSchema.statics.removeContact = function (id, contactId) {
+    console.log('remove',id, contactId)
     return this.findOneAsync({_id: id})
         .then(user => {
             let index = user.contacts.indexOf(contactId);

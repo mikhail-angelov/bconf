@@ -5,7 +5,7 @@ class LoginGuestController {
     constructor(Auth, $state) {
         this.Auth = Auth;
         this.$state = $state;
-        this.capture = '';
+        this.capture = '12';
         this.errors = null;
         this.submitted = false;
     }
@@ -27,6 +27,11 @@ class LoginGuestController {
                     this.errors = err.data.message;
                 });
         }
+    }
+
+    onClose(){
+        this.Auth.logout();
+        this.$state.go('main');
     }
 
 
