@@ -65,6 +65,20 @@ describe('Contact API:', function () {
                 .end(done);
         });
 
+        it('should find list of contacts when authenticated', function (done) {
+            request(app)
+                .get('/api/contacts/search?text=Other')
+                .set('authorization', 'Bearer ' + token)
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end(function (err, res) {
+                    var contacts = res.body;
+                    contacts.length.should.be.equal(1);
+                    contacts[0]._id.toString().should.be.equal(testDb.otherUser._id.toString());
+                    done();
+                });
+        });
+
         describe('guest request', function (done) {
             var guestToken;
 
@@ -89,7 +103,8 @@ describe('Contact API:', function () {
                     .expect('Content-Type', /json/)
                     .end(function (err, res) {
                         var contacts = res.body;
-                        contacts.length.should.be.equal(1);
+                        console.log('contacts',contacts)
+                        contacts.length.should.be.gt(1);
                         contacts[0].name.toString().should.be.equal('Echo');
                         done();
                     });

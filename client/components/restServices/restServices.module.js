@@ -1,11 +1,11 @@
 
-import ContactsService from './contacts.service.js'
-import UserService from './user.service.js'
+import ContactsServiceRest from './contacts.service.js'
+import UserServiceRest from './user.service.js'
 
 angular.module('restServices.module', [])
 
-    .factory('User', UserService)
-    .factory('ContactsService', ContactsService);
+    .service('UserServiceRest', UserServiceRest)
+    .service('ContactsServiceRest', ContactsServiceRest);
 
 
 

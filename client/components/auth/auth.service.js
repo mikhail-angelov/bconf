@@ -1,7 +1,7 @@
 'use strict';
 
 
-export default function AuthService($http, $q, appConfig, User, EventBus, $cookies) {
+export default function AuthService($http, $q, appConfig, UserServiceRest, EventBus, $cookies) {
     var currentUser = null;
     var isAuthenticated = false;
 
@@ -48,7 +48,7 @@ export default function AuthService($http, $q, appConfig, User, EventBus, $cooki
         },
 
         changePassword: function (oldPassword, newPassword) {
-            return User.changePassword({id: currentUser._id}, {
+            return UserServiceRest.changePassword({id: currentUser._id}, {
                 oldPassword: oldPassword,
                 newPassword: newPassword
             });
@@ -82,7 +82,7 @@ export default function AuthService($http, $q, appConfig, User, EventBus, $cooki
         },
         
         _loadCurrentUserAndCompleteAuth: function () {
-            return User.get().then(user=> {
+            return UserServiceRest.get().then(user=> {
                 isAuthenticated = true;
                 EventBus.emit(EventBus.profile.LOAD, user);
                 EventBus.emit(EventBus.auth.IN);

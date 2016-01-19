@@ -1,6 +1,7 @@
 'use strict';
 
 import User from '../user/user.model';
+import _ from 'lodash';
 
 
 function validationError(res, statusCode) {
@@ -72,6 +73,17 @@ exports.createGuest = function (req, res, next) {
     newUser.saveAsync()
         .spread(function (user) {
             res.json(user);
+        })
+        .catch(validationError(res));
+};
+
+exports.search = function (req, res) {
+    var userId = req.user._id;
+    var text = req.query.text;
+    User.findAsync({name:{ "$regex": text, "$options": "i" } })
+        .then(function (contacts) {
+            let restricted = _.map(contacts,'contactInfo')
+            res.json(restricted);
         })
         .catch(validationError(res));
 };

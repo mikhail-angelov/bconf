@@ -1,9 +1,9 @@
-export default function (User, $rootScope, $timeout) {
+export default function (UserServiceRest, $rootScope, $timeout) {
 
   var model = {
     list: [],
     loadContactsList: function (userId) {
-      return User.getFriends(userId).then(function(friends){
+      return UserServiceRest.getFriends(userId).then(function(friends){
         model.list = friends;
       })
     },

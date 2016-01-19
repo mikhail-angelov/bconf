@@ -14,19 +14,17 @@ export default function () {
 };
 
 class RosterController {
-    constructor(ChatsStore, $scope, EventBus, ContactsService, $mdDialog) {
+    constructor(ChatsStore, $scope, EventBus, ContactService, $mdDialog) {
 
         this.EventBus = EventBus;
-        this.ContactsService = ContactsService;
+        this.ContactService = ContactService;
         this.$mdDialog = $mdDialog;
         ChatsStore.subscribeAndInit($scope,()=>{
             this.chats = ChatsStore.getAllChat();
             this.currentChatIndex = ChatsStore.getCurrentChatIndex();
         });
 
-        this.ContactsService.getAllContacts().then(response=>{
-           this.EventBus.emit(this.EventBus.chats.LOAD_ALL, response.data);
-        });
+        this.ContactService.getAllContacts();
     }
 
     onSelect(index) {
@@ -62,11 +60,7 @@ class RosterController {
     }
 
     onAddContact() {
-        this.$mdDialog.show(contactForm({yo:'yo'})).then(function (answer) {
-            console.log('committed', answer);
-        }, function () {
-            console.log('canceled');
-        });
+        this.$mdDialog.show(contactForm());
     }
 
 }

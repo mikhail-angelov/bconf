@@ -62,7 +62,8 @@ var all = {
   yandex: {
     clientID:     process.env.YANDEX_ID || 'id',
     clientSecret: process.env.YANDEX_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/yandex/callback'
+    callbackURL:  (process.env.DOMAIN || '') + '/auth/yandex/callback',
+    translationKey: (process.env.YANDEX_TRANSLATE_KEY) || 'tr-key'
   }
 };
 

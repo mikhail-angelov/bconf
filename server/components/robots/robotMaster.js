@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import echoFactory from './echo.js'
+import yaTranslatorFactory from './yaTranslator.js'
 
 class RobotManager {
 
@@ -6,6 +8,9 @@ class RobotManager {
         this.bots = {};
         this.eventBus = bus;
         this.eventBus.on(this.eventBus.SOCKET_MESSAGE, (client, message)=>this.dispatch(client, message));
+
+        let echo = new echoFactory(this);
+        let yatr = new yaTranslatorFactory(this)
     }
 
     register(bot) {

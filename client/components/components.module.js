@@ -15,6 +15,7 @@ import ChatService from './services/chatService.js'
 import Peer from './services/peerjs.js'
 import Audio from './services/audio.js'
 import Property from './services/properties.js'
+import ContactService from './services/contactService.js'
 
 
 angular.module('components.module', [
@@ -33,6 +34,7 @@ angular.module('components.module', [
     .factory('ContactsModel', ContactsModel)
     .service('Peer', Peer)
     .service('ChatService', ChatService)
+    .service('ContactService', ContactService)
     .factory('Audio', Audio)
     .factory('Property', Property)
 

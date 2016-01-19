@@ -7,20 +7,26 @@ class ContactsStore extends BaseStore{
         this.id = 'ContactsStore';
 
         this.data = {
-            contacts: []
+            contacts: [],
+            selectedIndex:0
         };
-        EventBus.on(EventBus.contacts.LOAD_ALL, (scope,contacts)=>{
-            this.data.contacts = contacts;
+        EventBus.on(EventBus.contacts.LOAD, (scope,contacts)=>{
+            this.data.contacts = contacts || [];
+            this.data.selectedIndex = 0;
             this.emitChanges();
         });
-        EventBus.on(EventBus.contacts.ADD, (scope,contact)=>{
-            this.data.contacts.push(contact);
+        EventBus.on(EventBus.contacts.SELECT, (scope,index)=>{
+            this.data.selectedIndex = index;
             this.emitChanges();
         });
     }
 
-    getAllContacts(){
+    getContacts(){
         return this.data.contacts;
+    }
+
+    getSelectedContact(){
+        return this.data.contacts[this.data.selectedIndex];
     }
 }
 

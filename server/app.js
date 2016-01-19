@@ -12,7 +12,6 @@ import session  from './components/store/session';
 import peerjsFactory from './components/peerjs/index.js'
 import User from './api/user/user.model';
 import robotMasterFactory from './components/robots/robotMaster.js';
-import echoFactory from './components/robots/echo.js';
 
 const webSocketPath = '/peerjs'; //to config
 
@@ -48,7 +47,7 @@ function startServer() {
   di.peerjs = new peerjsFactory(di.eventBus, session, User);
   di.robotMaster = new robotMasterFactory(di.eventBus);
 
-  var echo = new echoFactory(di.robotMaster);
+
 }
 
 setImmediate(startServer);

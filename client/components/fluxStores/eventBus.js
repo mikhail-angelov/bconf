@@ -11,9 +11,8 @@ class EventBus {
                 LOAD: 'loadProfile'
             },
             contacts: {
-                LOAD_ALL: 'loadAllContacts',
-                ADD: 'addContact',
-                REMOVE: 'removeContact'
+                LOAD: 'loadContacts',
+                SELECT: 'selectContact'
             },
             chats: {
                 LOAD_ALL: 'loadAllChats',

@@ -15,7 +15,9 @@ class MessagesController {
     constructor(MessagesStore, ChatsStore, ChatService, $scope, $timeout) {
         this.ChatService = ChatService;
         MessagesStore.subscribeAndInit($scope, ()=> {
+            $timeout(()=> {
                 this.messages = MessagesStore.getMessages();
+            });
         });
         ChatsStore.subscribeAndInit($scope, ()=> {
             this.chat = ChatsStore.getCurrentChat();

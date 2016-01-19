@@ -28,12 +28,12 @@ describe('Echo Bot', function () {
 
         eventBus.once(eventBus.SEND_MESSAGE, function (client, message) {
             console.log('get message', message)
-            expect(message.msg).to.be(testMessage.msg);
+            expect(testMessage.msg).to.be(message.msg);
 
             done();
         });
 
-        eventBus.emit(eventBus.SOCKET_MESSAGE, {}, testMessage)
+        eventBus.emit(eventBus.SOCKET_MESSAGE, {}, JSON.stringify(testMessage));
     });
 
 
