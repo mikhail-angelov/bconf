@@ -7,7 +7,8 @@
   "electronVersion": "0.35.0",
   "main": "server/app.js",
   "dependencies": {
-    "babel-runtime": "^5.8.20",
+    "babel": "^6.5.1",
+    "babel-runtime": "^5.8.35",
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.3",
     "composable-middleware": "^0.3.0",
@@ -15,6 +16,7 @@
     "connect-mongo": "^0.8.1",
     "cookie-parser": "^1.3.5",
     "cors": "^2.7.1",
+    "electron-debug": "^0.5.0",
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-jwt": "^3.0.0",
@@ -35,13 +37,13 @@
     "socket.io": "^1.3.5",
     "socket.io-client": "^1.3.5",
     "socketio-jwt": "^4.2.0",
-    "ws": "^0.7.1",
-    "electron-debug": "^0.5.0"
+    "ws": "^0.7.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.0",
-    "babel-core": "^5.6.4",
-    "babel-loader": "^6.2.0",
+    "babel-core": "^6.0.0",
+    "babel-preset-es2015": "^6.0.14",
+    "babel-loader": "^6.2.2",
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "chai-things": "^0.2.0",
@@ -55,7 +57,7 @@
     "gulp-angular-filesort": "^1.1.1",
     "gulp-angular-templatecache": "^1.7.0",
     "gulp-autoprefixer": "2.3.1",
-    "gulp-babel": "^5.1.0",
+    "gulp-babel": "^6.1.2",
     "gulp-cache": "^0.2.10",
     "gulp-concat": "^2.6.0",
     "gulp-env": "^0.2.0",
@@ -87,7 +89,7 @@
     "jasmine-spec-reporter": "^2.4.0",
     "jshint-stylish": "~2.1.0",
     "karma": "~0.13.3",
-    "karma-babel-preprocessor": "^5.2.1",
+    "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "~0.2.0",
     "karma-firefox-launcher": "~0.1.6",
     "karma-jade-preprocessor": "0.0.11",
@@ -111,7 +113,8 @@
     "utile": "~0.3.0",
     "webpack-stream": "^3.0.1",
     "wiredep": "^2.2.2",
-    "xo": "^0.11.1"
+    "passport-yandex": "",
+    "request-promise": ""
   },
   "engines": {
     "node": "^4.2.3",

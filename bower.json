@@ -2,12 +2,12 @@
   "name": "bconf",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.4.0",
+    "angular": "~1.5.0",
     "json3": "~3.3.1",
     "es5-shim": "~3.0.1",
-    "angular-resource": "~1.4.0",
-    "angular-cookies": "~1.4.0",
-    "angular-sanitize": "~1.4.0",
+    "angular-resource": "~1.5.0",
+    "angular-cookies": "~1.5.0",
+    "angular-sanitize": "~1.5.0",
     "font-awesome": ">=4.1.0",
     "angular-ui-router": "~0.2.15",
     "angular-validation-match": "~1.5.2",
@@ -19,8 +19,8 @@
     "moment": "~2.11.1"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.0",
-    "angular-scenario": "~1.4.0",
+    "angular-mocks": "~1.5.0",
+    "angular-scenario": "~1.5.0",
     "js-binarypack": "https://github.com/binaryjs/js-binarypack.git#~0.0.9",
     "reliable": "https://github.com/michelle/reliable.git"
   }
