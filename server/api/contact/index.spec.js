@@ -62,11 +62,11 @@ describe('Contact API Router:', function() {
 
   });
 
-  describe('POST /api/contacts/add', function() {
+  describe('POST /api/contacts/invite', function() {
 
     it('should be authenticated and route to contact.controller.add', function() {
       routerStub.post
-        .withArgs('/', 'authService.isAuthenticated', 'contactCtrl.add')
+        .withArgs('/invite', 'authService.hasRole.user', 'contactCtrl.add')
         .should.have.been.calledOnce;
     });
 

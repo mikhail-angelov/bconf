@@ -25,6 +25,9 @@ class RosterController {
         });
 
         this.ContactService.getAllContacts();
+
+
+
     }
 
     onSelect(index) {
@@ -63,4 +66,10 @@ class RosterController {
         this.$mdDialog.show(contactForm());
     }
 
+    onAcceptContact(index){
+        console.log('on accept', index)
+    }
+    onRemoveContact(index){
+        console.log('on remove', index)
+    }
 }

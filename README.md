@@ -1,6 +1,7 @@
-# bconf
+# BCONF.COM - Yet another messenger [![build status](https://travis-ci.org/mikhail-angelov/bconf.svg?branch=master)](https://travis-ci.org/mikhail-angelov/bconf)
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.0.1.
+
+This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack)
 
 ## Getting Started
 
@@ -24,8 +25,8 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 
 ## Build & development
 
-Run `grunt build` for building and `grunt serve` for preview.
+Run `gulp build` for building and `gulp serve` for preview.
 
 ## Testing
 
-Running `npm test` will run the unit tests with karma.
+Running `npm test` will run the unit tests with mocha.

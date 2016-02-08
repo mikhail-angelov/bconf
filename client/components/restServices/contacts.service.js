@@ -22,6 +22,14 @@ class ContactsServiceRest {
             params: {text: text}
         });
     }
+
+    inviteContact(contactId, invitation){
+        return this.$http({
+            url: '/api/contacts/invite',
+            method: "POST",
+            data: {contactId, invitation}
+        });
+    }
 }
 
 

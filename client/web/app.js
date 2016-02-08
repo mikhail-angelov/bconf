@@ -9,6 +9,7 @@ import VoiceCallController from './voiceCall/voiceCall.js'
 import ChatController from './chat/chatController.js'
 import RosterDirective from './chat/roster/rosterDirective.js'
 import MessagesDirective from './chat/messages/messagesDirective.js'
+import hoverToggle from './common/hoverToggle.js'
 
 
 angular.module('bconfApp', [
@@ -25,6 +26,7 @@ angular.module('bconfApp', [
     .directive('oauthButtons', oauthButtons)
     .directive('roster', RosterDirective)
     .directive('messages', MessagesDirective)
+    .directive('hoverToggle', hoverToggle)
 
 
     .config(function ($urlRouterProvider, $locationProvider, $stateProvider,

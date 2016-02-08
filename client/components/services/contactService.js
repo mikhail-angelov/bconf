@@ -18,7 +18,9 @@ class ContactService {
     }
 
     addContactAndSendInvitation(contact, invitation){
-
+        return this.ContactsServiceRest.inviteContact(contact._id, invitation).then(response=> {
+            this.EventBus.emit(this.EventBus.chats.LOAD_ALL, response.data);
+        });
     }
 }
 

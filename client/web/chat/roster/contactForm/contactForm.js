@@ -25,7 +25,7 @@ class ContactFormController {
     }
 
     onFindContact() {
-        if(this.searchContact && this.searchContact.length>1) {
+        if(this.searchContact && this.searchContact.length>0) {
             this.ContactService.findContacts(this.searchContact);
         }
     }
@@ -33,7 +33,9 @@ class ContactFormController {
     onInvite(index) {
         this.onSelect(index);
         let contact = this.ContactsStore.getSelectedContact();
-        this.ContactService.addContactAndSendInvitation(contact,'todo: please add me to contact list');
+        this.ContactService.addContactAndSendInvitation(contact,'todo: please add me to contact list').then(
+            ()=>this.onClose()
+        )
     }
 
     onClose() {

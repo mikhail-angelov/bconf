@@ -11,11 +11,11 @@
         <md-dialog-content class="resultList">
             <md-list-item class="md-2-line" ng-repeat="item in vm.contacts" ng-click="vm.onSelect($index)"
                           ng-class="{selected:($index==vm.currentContactIndex)}">
-                <div class="md-list-item-text" layout="row">
+                <div class="md-list-item-text" layout="row" layout-padding>
                     <h3>{{ item.name }}</h3>
                     <h4>{{ item.provider }}</h4>
                     <div flex></div>
-                    <md-button class="md-icon-button md-accent" aria-label="invite" ng-click="vm.onInvite($index)">
+                    <md-button class="md-accent" aria-label="invite" ng-click="vm.onInvite($index)">
                         Send invitation
                     </md-button>
                 </div>

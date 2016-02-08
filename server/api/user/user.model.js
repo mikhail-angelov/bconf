@@ -1,7 +1,8 @@
 'use strict';
 
 import crypto from 'crypto';
-var mongoose = require('bluebird').promisifyAll(require('mongoose'));
+//var mongoose = require('bluebird').promisifyAll(require('mongoose'));
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var _ = require('lodash');
@@ -27,6 +28,13 @@ var UserSchema = new Schema({
     avatar: String,
     contacts: []
 });
+
+let contactStatus = {
+    BUDDY: 'buddy',
+    BOT: 'bot',
+    REQUEST: 'request',
+    PENDING: 'pending'
+}
 
 /**
  * Virtuals
@@ -92,7 +100,7 @@ UserSchema
     .path('email')
     .validate(function (value, respond) {
         var self = this;
-        return this.constructor.findOneAsync({email: value})
+        return this.constructor.findOne({email: value})
             .then(function (user) {
                 if (user) {
                     if (self.id === user.id) {
@@ -102,9 +110,9 @@ UserSchema
                 }
                 return respond(true);
             })
-            .catch(function (err) {
-                throw err;
-            });
+            //.catch(function (err) {
+            //    throw err;
+            //});
     }, 'The specified email address is already in use.');
 
 var validatePresenceOf = function (value) {
@@ -240,41 +248,114 @@ UserSchema.methods = {
     }
 };
 
-UserSchema.statics.addContact = function (id, contactId) {
-    return this.findOneAsync({_id: id})
+UserSchema.statics.addContact = function (id, contactId, invitation) {
+    let owner;
+    let userToAdd;
+
+
+    return this.findById(id)
         .then(user => {
-            if (user.contacts.indexOf(contactId) < 0) {
-                user.contacts.push(contactId);
+            owner = user;
+            if (_.findIndex(owner.contacts, {id: contactId}) < 0) {
+                let contacts = owner.contacts.push({id: contactId, status: contactStatus.PENDING});
+                return owner.save()
             }
-            return user.saveAsync();
-        });
-};
-UserSchema.statics.removeContact = function (id, contactId) {
-    console.log('remove',id, contactId)
-    return this.findOneAsync({_id: id})
+        })
+        .then(()=>this.findById(contactId))
         .then(user => {
-            let index = user.contacts.indexOf(contactId);
-            if (index >= 0) {
-                user.contacts.splice(index, 1);
+            userToAdd = user;
+            if (_.findIndex(userToAdd.contacts, {id: id}) < 0) {
+                let contacts = userToAdd.contacts.push({id: id, status: contactStatus.REQUEST, invitation});
+                return userToAdd.save()
             }
-            return user.saveAsync();
         });
 };
 
-UserSchema.statics.getContacts = function(id) {
-    return this.findOneAsync({_id: id})
-        .then(user=> this.where('_id').in(user.contacts))
-        .then(contacts=> _.map(contacts, contact=>contact.contactInfo));
+UserSchema.statics.acceptContact = function (userId, contactId) {
+    return this.findById(userId)
+        .then((owner) => {
+            let contactIndex = _.findIndex(owner.contacts, {id: contactId});
+            console.log('get1 ', owner, contactIndex)
+            if (contactIndex >= 0 && owner.contacts[contactIndex].status === contactStatus.REQUEST) {
+                owner.contacts[contactIndex].status = contactStatus.BUDDY;
+                owner.contacts = _.clone(owner.contacts)
+                console.log('get2 ', owner)
+
+                return this.update({"_id":userId,"contacts.id" : contactId}, {"$set" : {"contacts.$.status" : contactStatus.BUDDY}})
+                //return owner.save();
+            } else {
+                return (false);
+            }
+        })
+        .then((process)=> {
+            console.log('get3 ', process)
+            return process ? this.findById(contactId) : process;
+        })
+        .then((userToAdd) => {
+            if (userToAdd) {
+                let contactIndex = _.findIndex(userToAdd.contacts, {id: userId});
+                if (contactIndex >= 0) {
+                    //userToAdd.contacts[contactIndex].status = contactStatus.BUDDY;
+
+                    //var item =  userToAdd.contacts.id(userId);
+                    //item.status = contactStatus.BUDDY;
+
+                    console.log('get4 ', userToAdd)
+
+                    return this.update({"_id":contactId,"contacts.id" : userId}, {"$set" : {"contacts.$.status" : contactStatus.BUDDY}})
+
+                 //   return userToAdd.save();
+                }
+            }
+        })
+        .then((u)=> {
+            console.log('get5 ', u)
+            return this.find();
+        })
+        .then((u)=> {
+            console.log('get6 ', u)
+            return u;
+        });
+};
+
+UserSchema.statics.removeContact = function (id, contactId) {
+    console.log('remove', id, contactId)
+    return this.findOne({_id: id})
+        .then(user => {
+            let index = _.findIndex(user.contacts, {id: contactId});
+            if (index >= 0) {
+                user.contacts.splice(index, 1);
+            }
+            return user.save();
+        });
+};
+
+UserSchema.statics.getContacts = function (id) {
+    let result = []
+    return this.findOne({_id: id})
+        .then(user=> {
+            result = user.contacts;
+            let ids = _.map(user.contacts, 'id');
+            return this.where('_id').in(ids)
+        })
+        .then(contacts=> {
+            let infos = _.reduce(contacts, (acc, contact)=> {
+                acc[contact._id.toString()] = contact.contactInfo;
+                return acc;
+            }, {});
+            console.log(infos)
+            return _.map(result, item=>_.extend(item, infos[item.id]))
+        });
 };
 
 UserSchema.statics.validateUser = function (id, token) {
     //todo: check user credentials
     return true;
-}
+};
 UserSchema.statics.isConnectionAllowed = function (src, dest) {
     //todo: do proper validation
     return true;
-}
+};
 
 
 //module.exports = mongoose.model('User', UserSchema);
