@@ -1,4 +1,4 @@
-import BaseStore from './BaseStore.js'
+import BaseStore from './baseStore.js'
 
 class ContactsStore extends BaseStore{
 
