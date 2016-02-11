@@ -9,7 +9,7 @@ describe('Signup View', function() {
   var loadPage = function() {
     browser.manage().deleteAllCookies();
     browser.get(config.baseUrl + '/signup');
-    page = require('./signup.po');
+    page = require('./signup.po.js');
   };
 
   var testUser = {
@@ -54,7 +54,7 @@ describe('Signup View', function() {
     it('should signup a new user, log them in, and redirecting to "/"', function() {
       page.signup(testUser);
 
-      var navbar = require('../../components/navbar/navbar.po');
+      var navbar = require('../../components/navbar/navbar.po.js');
 
       expect(browser.getCurrentUrl()).toBe(config.baseUrl + '/');
       expect(navbar.navbarAccountGreeting.getText()).toBe('Hello ' + testUser.name);
