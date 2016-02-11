@@ -311,5 +311,5 @@ var util = {
   }
 };
 
-//module.exports = util;
-export default util;
+module.exports = util;
+//export default util;

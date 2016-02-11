@@ -43,10 +43,8 @@ module.exports = function (config) {
 
         babelPreprocessor: {
             options: {
-                sourceMap: 'inline',
-                optional: [
-                    'es7.classProperties'
-                ]
+                presets: ['es2015'],
+                sourceMap: 'inline'
             },
             filename: function (file) {
                 return file.originalPath.replace(/\.js$/, '.es5.js');
@@ -86,7 +84,7 @@ module.exports = function (config) {
         // - Safari (only Mac)
         // - PhantomJS
         // - IE (only Windows)
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit

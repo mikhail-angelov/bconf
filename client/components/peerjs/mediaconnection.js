@@ -92,5 +92,5 @@ MediaConnection.prototype.close = function() {
   this.emit('close')
 };
 
-//module.exports = MediaConnection;
-export default MediaConnection;
+module.exports = MediaConnection;
+//export default MediaConnection;

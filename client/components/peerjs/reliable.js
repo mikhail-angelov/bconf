@@ -315,5 +315,5 @@ Reliable.higherBandwidthSDP = function(sdp) {
 // Overwritten, typically.
 Reliable.prototype.onmessage = function(msg) {};
 
-//module.exports.Reliable = Reliable;
-export default Reliable;
+module.exports.Reliable = Reliable;
+//export default Reliable;

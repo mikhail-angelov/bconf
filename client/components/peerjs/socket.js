@@ -211,5 +211,5 @@ Socket.prototype.close = function() {
   }
 }
 
-//module.exports = Socket;
-export default Socket;
+module.exports = Socket;
+//export default Socket;

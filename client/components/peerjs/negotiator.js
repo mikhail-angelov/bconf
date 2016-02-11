@@ -307,5 +307,5 @@ Negotiator.handleCandidate = function(connection, ice) {
   util.log('Added ICE candidate for:', connection.peer);
 }
 
-//module.exports = Negotiator;
-export default Negotiator;
+module.exports = Negotiator;
+//export default Negotiator;

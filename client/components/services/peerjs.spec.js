@@ -18,17 +18,6 @@ describe('peerjs.service', ()=>{
     expect(peerjs).toBeDefined();
   });
 
-  it('should create peer connection', function(done){
-
-    peerjs.init('guest', 'guest');
-
-    peerjs.peer.on('open',()=>{
-
-      done();
-    });
 
 
-  });
-
-
-})
+});

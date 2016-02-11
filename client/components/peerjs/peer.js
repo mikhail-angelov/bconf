@@ -502,5 +502,5 @@ Peer.prototype.listAllPeers = function(cb) {
   http.send(null);
 };
 
-//module.exports = Peer;
-export default Peer;
+module.exports = Peer;
+//export default Peer;

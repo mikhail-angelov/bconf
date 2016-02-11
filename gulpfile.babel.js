@@ -350,7 +350,7 @@ gulp.task('serve', cb => {
 });
 
 gulp.task('test', cb => {
-  return runSequence('test:server', 'test:client', cb);
+  return runSequence('test:client','test:server', cb);
 });
 
 gulp.task('test:server', cb => {
@@ -375,7 +375,7 @@ gulp.task('mocha:unit', () => {
     });
 });
 
-gulp.task('test:client', ['start:server','transpile:client'],(done) => {
+gulp.task('test:client', ['transpile:client'],(done) => {
   return new Karma({
     configFile: paths.karma,
     singleRun: true

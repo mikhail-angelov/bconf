@@ -264,5 +264,5 @@ DataConnection.prototype.handleMessage = function(message) {
   }
 }
 
-//module.exports = DataConnection;
-export default DataConnection
+module.exports = DataConnection;
+//export default DataConnection
