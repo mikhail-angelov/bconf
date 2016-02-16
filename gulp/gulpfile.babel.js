@@ -343,7 +343,7 @@ gulp.task('serve', cb => {
       ['lint:scripts', 'inject'],
       ['wiredep:client'],
       ['env:all'],
-      ['transpile:client', 'styles'],
+      ['transpile:client', 'styles', 'html'],
       ['start:server', 'start:client'],
       ['watch', 'watch:js'],
       cb);
@@ -449,12 +449,12 @@ gulp.task('build:client', ['transpile:client', 'styles', 'html'], () => {
   return gulp.src(paths.client.mainView)
       .pipe(assets)
       .pipe(appFilter)
+      .pipe(plugins.addSrc.append('.tmp/index.module.js'))
       .pipe(plugins.addSrc.append('.tmp/templates.js'))
-      .pipe(plugins.concat('web/app.js'))
       .pipe(appFilter.restore())
       .pipe(jsFilter)
       .pipe(plugins.ngAnnotate())
-      .pipe(plugins.uglify())
+      // .pipe(plugins.uglify()) //todo: we do not support minification for now
       .pipe(jsFilter.restore())
       .pipe(cssFilter)
       .pipe(plugins.minifyCss({
@@ -518,8 +518,7 @@ gulp.task('copy:assets', () => {
 gulp.task('copy:server', () => {
   return gulp.src([
     'package.json',
-    'bower.json',
-    '.bowerrc'
+    '.babelrc'
   ], {cwdbase: true})
       .pipe(gulp.dest(paths.dist));
 });

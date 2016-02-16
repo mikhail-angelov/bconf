@@ -1,0 +1,12 @@
+bconf:
+  build: .
+  # volumes:
+  #   - ./dist :/usr/src/app/
+  # working_dir: /usr/src/app/
+  # command: node server
+  ports:
+    - "9000:9000"  
+  links:
+    - database
+database:
+  image: mongo
