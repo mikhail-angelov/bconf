@@ -1,11 +1,25 @@
-bconf:
-  build: .
+nginx:
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes:
+    - /www/public
+  links:
+    - node1:node1
+  command: /bin/bash -c "nginx -g 'daemon off;'"
+node1:
+  # build: .
+  image: bconf
   # volumes:
   #   - ./dist :/usr/src/app/
   # working_dir: /usr/src/app/
   # command: node server
+  environment:
+    ENV NODE_ENV: production
+    PORT: 9000
   ports:
-    - "9000:9000"  
+    - "9000"
   links:
     - database
 database:
