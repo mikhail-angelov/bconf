@@ -10,7 +10,7 @@ nginx:
   command: /bin/bash -c "nginx -g 'daemon off;'"
 node1:
   # build: .
-  image: bconf
+  image: mangelov/bconf
   # volumes:
   #   - ./dist :/usr/src/app/
   # working_dir: /usr/src/app/

@@ -19,3 +19,7 @@ module.exports = {
   },
   port : 9005
 };
+
+var mongoose = require('mongoose');
+var mockgoose = require('mockgoose');
+mockgoose(mongoose);
