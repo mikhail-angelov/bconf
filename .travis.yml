@@ -14,3 +14,4 @@ before_script:
 
 after_success:
   - 'npm build'
+  - 'npm docker'
