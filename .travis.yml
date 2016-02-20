@@ -12,8 +12,8 @@ before_script:
   - 'npm install -g bower'
   - 'bower install'
 
-before_deploy
+before_deploy:
   - 'npm build'
 
-deploy
+deploy:
   - 'npm docker'
