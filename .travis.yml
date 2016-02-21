@@ -4,14 +4,10 @@ node_js:
 
 sudo: required
 
-services:
-  - docker
-
 before_script:
-  - sleep 15
+  - sleep 5
   - 'npm install -g bower'
   - 'bower install'
 
 after_success:
   - 'npm build'
-  - 'npm docker'
