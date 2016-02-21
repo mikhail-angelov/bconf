@@ -1,5 +1,9 @@
 'use strict';
 
+var mongoose = require('mongoose');
+var mockgoose = require('mockgoose');
+mockgoose(mongoose);
+
 import { User}  from './user.model';
 var user;
 var otherUser;
