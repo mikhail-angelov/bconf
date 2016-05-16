@@ -22,5 +22,8 @@ node1:
     - "9000"
   links:
     - database
+  command: npm start
+  #command: forever node server
+
 database:
   image: mongo

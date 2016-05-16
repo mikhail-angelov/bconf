@@ -1,13 +1,16 @@
 FROM node:argon
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+MAINTAINER Mikhail.Angelov (@MikhailAngelov)
 
-COPY package.json /usr/src/app/
+RUN mkdir -p /opt/bconf
+WORKDIR /opt/bconf
+
+RUN npm install forever -g
+
+COPY package.json /opt/bconf
 RUN npm install --production
 
-COPY ./ /usr/src/app
+COPY ./dist/ /opt/bconf
 
 EXPOSE 9000
 
-CMD [ "npm", "start" ]
