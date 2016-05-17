@@ -1,15 +1,27 @@
+sudo: required
+
 language: node_js
 node_js:
   - "4"
 
-sudo: false
+services:
+  - docker
 
 before_script:
-  - sleep 5
-  - 'npm install -g bower'
-  - 'bower install'
+  - npm run bower
+  #- docker build -t mangelov/bconf .
+  #- docker run -d -p 7000:7000 mangelov/travis-docker /bin/sh -c "cd /opt/app; node index.js;"
+  #- docker ps -a
+  #- export DISPLAY=:99.0
+  #- sh -e /etc/init.d/xvfb start
+  #- sleep 1 # give server time to start
 
-deploy:
-  provider: script
-  script: npm run build && npm run release
-  skip_cleanup: true
+script:
+  #- npm run protractor
+  - npm run test
+
+after_success:
+  - npm run build
+  - docker build -t mangelov/bconf .
+  - docker login -m="$DOCKER_HUB_EMAIL" -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD"
+  - docker push mangelov/bconf

@@ -11,13 +11,11 @@ nginx:
 node1:
   # build: .
   image: mangelov/bconf
-  # volumes:
-  #   - ./dist :/usr/src/app/
-  # working_dir: /usr/src/app/
-  # command: node server
   environment:
     ENV NODE_ENV: production
     PORT: 9000
+  volumes:
+    - /tmp/logs/node-webapp:/tmp/node-logs
   ports:
     - "9000"
   links:
@@ -27,3 +25,6 @@ node1:
 
 database:
   image: mongo
+  volumes:
+    - /opt/db:/data/db
+
