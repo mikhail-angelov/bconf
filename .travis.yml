@@ -22,6 +22,6 @@ script:
 
 after_success:
   - npm run build
-  - docker build -t mangelov/bconf .
+  - docker build -t mangelov/bconf:"$TRAVIS_BUILD_NUMBER" .
   - docker login -m="$DOCKER_HUB_EMAIL" -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD"
   - docker push mangelov/bconf
