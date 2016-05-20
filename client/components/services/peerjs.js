@@ -24,7 +24,7 @@ class PeerJs {
         this.peerId = token;
         this.peer = new Peer(id, {
             debug: 3, // 1: Errors, 2: Warnings, 3: All logs
-            host: location.host,
+            host: location.host.split(':')[0],
             port: location.port || '80',
             key: key, //'peerjs',
             path: '/',
