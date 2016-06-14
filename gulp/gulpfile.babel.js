@@ -1,19 +1,19 @@
 // Generated on 2015-12-09 using generator-angular-fullstack 3.0.1
 'use strict';
 
-import _ from 'lodash';
-import del from 'del';
-import gulp from 'gulp';
-import path from 'path';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import http from 'http';
-import open from 'open';
-import lazypipe from 'lazypipe';
-import {stream as wiredep} from 'wiredep';
-import nodemon from 'nodemon';
-import runSequence from 'run-sequence';
-import webpack  from 'webpack-stream';
-import env  from 'gulp-env';
+const _ = require('lodash');
+const del = require('del');
+const gulp = require('gulp');
+const path = require('path');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const http = require('http');
+const open = require('open');
+const lazypipe = require('lazypipe');
+const wiredep = require('wiredep').stream;
+const nodemon = require('nodemon');
+const runSequence = require('run-sequence');
+const webpack  = require('webpack-stream');
+const env  = require('gulp-env');
 var Karma = require('karma').Server;
 
 var plugins = gulpLoadPlugins({
@@ -195,7 +195,7 @@ gulp.task('inject:less', () => {
                   .replace('/client/components/', '../components/')
                   .replace(/_(.*).less/, (match, p1, offset, string) => p1)
                   .replace('.less', '');
-              return '@import \'' + newPath + '\';';
+              return '@const \'' + newPath + '\';';
             }
           }))
       .pipe(gulp.dest('client/web'));
@@ -459,7 +459,7 @@ gulp.task('build:client', ['transpile:client', 'styles', 'html'], () => {
       .pipe(cssFilter)
       .pipe(plugins.minifyCss({
         cache: true,
-        processImportFrom: ['!fonts.googleapis.com']
+        processconstFrom: ['!fonts.googleapis.com']
       }))
       .pipe(cssFilter.restore())
       .pipe(plugins.rev())
