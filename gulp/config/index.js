@@ -5,7 +5,8 @@ module.exports = {
     source: ['ui/**/*.{html,css,ico}', '!**/app/**'],
     destination: 'dist/ui',
     app: ['ui/**/*.js'],
-    indexHtml: 'ui/index.html'
+    indexHtml: 'ui/index.html',
+    less: 'ui/main.less'
   },
   server: {
     source: ['server/**/*.{js,json}', '!server/**/*.spec.*'],

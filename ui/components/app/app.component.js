@@ -8,6 +8,7 @@ import template from './app.template.html';
   selector: 'my-app',
   template: template
 })
+
 // @RouteConfig(routes)
 export class AppComponent {
 
@@ -15,3 +16,5 @@ export class AppComponent {
     this.environment = environment;
   }
 }
+
+
