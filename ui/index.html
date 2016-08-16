@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="/">
+<html>
+  <head>
+    <title>Bconf 2</title>
+    <link type="text/css" rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+  </head>
+  <body>
+    <!-- place the custom tag anywhere inside the body -->
+    <div id="content"></div>
+    <!-- include the tag -->
+    <script type="riot/tag" src="/ui/components/welcome.tag"></script>
+    <script type="riot/tag" src="/ui/components/auth.tag"></script>
+    <script type="riot/tag" src="/ui/components/main.tag"></script>
 
-    <title>Bconf</title>
-    <!--<link rel="icon" type="image/x-icon" href="angular.ico"/>-->
-    <link rel="stylesheet" href="main.css">
-</head>
-<body>
-    <my-app></my-app>
-
-    <script src="vendor.js"></script>
-    <script src="boot.js"></script>
-    <script>(function(){document.write('<script src="http://'+window.location.hostname+':35729\/livereload.js" type="text\/javascript"><\/script>');}).call(this);</script>
-</body>
+    <script src="/ui/router.js"></script>
+    <!-- include riot.js -->
+    <script src="/node_modules/riot/riot+compiler.js"></script>
+  </body>
 </html>
