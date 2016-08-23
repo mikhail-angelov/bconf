@@ -168,6 +168,7 @@
     "release": "bash ./release.sh",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
     "docker": "docker build -t mangelov/bconf .",
-    "bower": "bower install --allow-root"
+    "bower": "bower install --allow-root",
+    "riot": "riot ui/components ui/dist/bundle.js"
   }
 }

@@ -8,9 +8,10 @@ window.addEventListener("DOMContentLoaded",function load() {
     if (currentPage) {
       currentPage.unmount(true); //unmount and keep parent tag
     }
-    riot.compile(function() {
-      currentPage= riot.mount('div#content',page)[0]
-    })
+    const mounted = riot.mount('div#content',page)
+    if(mounted){
+      currentPage= mounted[0];
+    }
   };
 
   subRoute(function() {

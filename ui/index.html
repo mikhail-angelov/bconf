@@ -1,21 +1,25 @@
 <html>
   <head>
     <title>Bconf 2</title>
+    <!--<link type="text/css" rel="stylesheet" href="style/bootstrap.css">-->
     <link type="text/css" rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
 
-    <link type="text/css" rel="stylesheet" href='/ui/components/main/contacts.css'
   </head>
   <body>
     <!-- place the custom tag anywhere inside the body -->
     <div id="content"></div>
     <!-- include the tag -->
+
+    <script src="/node_modules/riot/riot+compiler.js"></script>
     <script type="riot/tag" src="/ui/components/welcome.tag"></script>
     <script type="riot/tag" src="/ui/components/auth.tag"></script>
     <script type="riot/tag" src="/ui/components/main/main.tag"></script>
     <script type="riot/tag" src="/ui/components/main/contacts.tag"></script>
 
     <script src="/ui/router.js"></script>
-    <!-- include riot.js -->
-    <script src="/node_modules/riot/riot+compiler.js"></script>
+    
+    <!--<script src="dist/riot.js"></script>
+    <script src="router.js"></script>
+    <script src="dist/bundle.js"></script>-->
   </body>
 </html>
