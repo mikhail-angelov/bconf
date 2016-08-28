@@ -1,5 +1,5 @@
 <contacts>
-<div>
+<div class='contacts'>
     <input type='text' id='searchContact'>
 
     <ul>
@@ -10,13 +10,32 @@
 </div>
 
 <style>
+
 .contacts {
-    height: calc(100vh - 50px);
+    height: 100vh;
     overflow: auto;
+    
 }
 
-div {
-    border: 1px solid;
+
+
+.contacts li {
+	font-weight: 300;
+	list-style-type: square;
+	border-top: 1px solid #e7e7e7;
 }
+
+.contacts li:first-child {
+	border: none;
+}
+
+.contacts li.active {
+	color: #29c5e6;
+}
+
+.contacts a {
+	color: #8f8f8f;
+}
+
 </style>
 </contacts>

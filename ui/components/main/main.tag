@@ -1,5 +1,7 @@
 <main>
-<div class='row col-lg-12'>
+
+<div class='row col-lg-12 nomargin'>
+<navbar/>
     <contacts class='contacts col-lg-4' contacts={contacts}/>
     <div class='main col-lg-8'>
         <button onclick={onBack}>Back</button>
@@ -47,12 +49,22 @@ this.messages = ['hey','ho'];
 .main{
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
+    overflow: auto;
 }
 .messages{
     display:flex;
     flex:1;
     flex-direction: column-reverse;
+    overflow: auto;
+}
+ .nomargin{
+     margin:0;
+ }
+ .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding: 0;    
 }
 </style>
 </main>
