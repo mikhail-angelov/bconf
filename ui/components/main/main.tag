@@ -18,12 +18,12 @@
 
 
 <script>
-onBack(){
+this.onBack = ()=>{
     console.log('to welcom')
     riot.route('welcome')
 }
 
-getContacts(){
+this.getContacts = ()=>{
     const contacts = [];
     for(let i=0; i < 200; i++){
         contacts.push('John Doe ' + i);
@@ -32,7 +32,7 @@ getContacts(){
     return contacts;
 }
 
-onSubmit(e){
+this.onSubmit = (e)=>{
     const value = e.target.newMessage.value;
     console.log(e.target)
     if(value){

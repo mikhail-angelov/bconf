@@ -1,3 +1,5 @@
+const riot = require('riot')
+
 window.addEventListener("DOMContentLoaded",function load() {
   var currentPage = null;
 

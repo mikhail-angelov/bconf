@@ -14,12 +14,12 @@
 </div>
 <script>
 
-onBack(){
+this.onBack = ()=>{
     console.log('to welcom')
     riot.route('welcome')
 }
 
-onLogin(){
+this.onLogin = ()=>{
     console.log('login')
     riot.route('main')
 }

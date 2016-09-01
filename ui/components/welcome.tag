@@ -12,16 +12,15 @@
   </div>
   </div>
 
-  
 <script>
 
-onLogin(){
+this.onLogin = ()=>{
     console.log('login')
     riot.route('login')
 }
 
 console.log('constructor')
-onLoginGuest(){
+this.onLoginGuest = ()=>{
     console.log('yo')
     riot.route('main')
 }
