@@ -2,8 +2,10 @@
 
 <div class='row col-lg-12 nomargin'>
 <navbar/>
+    
     <contacts class='contacts col-lg-4' contacts={contacts}/>
     <div class='main col-lg-8'>
+        <button onclick={addContact}>Add Contact</button>
         <button onclick={onBack}>Back</button>
         <div class='messages'>
             <div each={m in this.messages}>
@@ -18,19 +20,27 @@
 
 
 <script>
+
+const store = require('../../services/storeConfig').store
+const actions = require('../../services/actions')
+
+store.subscribe(()=>{
+    console.log('store change', store.getState())
+    this.contacts = store.getState();
+})
+this.contacts = store.getState();
+
+this.addContact = ()=>{
+    const action = actions.addContact('----BOB---')
+    store.dispatch(action)
+}
+
 this.onBack = ()=>{
     console.log('to welcom')
     riot.route('welcome')
 }
 
-this.getContacts = ()=>{
-    const contacts = [];
-    for(let i=0; i < 200; i++){
-        contacts.push('John Doe ' + i);
-    }
-    console.log(contacts)
-    return contacts;
-}
+
 
 this.onSubmit = (e)=>{
     const value = e.target.newMessage.value;
@@ -41,7 +51,7 @@ this.onSubmit = (e)=>{
     }
 }
 
-this.contacts = this.getContacts();
+
 this.messages = ['hey','ho'];
 </script>
 

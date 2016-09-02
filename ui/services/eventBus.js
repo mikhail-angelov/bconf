@@ -30,10 +30,6 @@ function off(event,cb){
         }
     }
 }
-function emit(event){
-    if(_listeners[event]){
-        _listeners[event].forEach(cb=>{
-            cb.apply(arguments)
-        })
-    }
+function emit(event, data){
+    if(_listeners[event]) _listeners[event].forEach(cb=>cb(data))
 }
