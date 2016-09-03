@@ -81,6 +81,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-cache": "^0.2.10",
     "gulp-concat": "^2.6.0",
+    "gulp-connect": "^5.0.0",
     "gulp-cssnano": "2.1.2",
     "gulp-delete-lines": "0.0.7",
     "gulp-env": "^0.2.0",

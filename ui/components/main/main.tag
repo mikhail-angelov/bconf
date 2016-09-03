@@ -18,17 +18,15 @@
     </div>
 </div>
 
-
 <script>
-
-const store = require('../../services/storeConfig').store
-const actions = require('../../services/actions')
+const store = require('../../services/store')
+const actions = require('../../services/actions/index.js')
 
 store.subscribe(()=>{
     console.log('store change', store.getState())
-    this.contacts = store.getState();
+    this.contacts = store.getState().contacts;
 })
-this.contacts = store.getState();
+this.contacts = store.getState().contacts;
 
 this.addContact = ()=>{
     const action = actions.addContact('----BOB---')
@@ -39,7 +37,6 @@ this.onBack = ()=>{
     console.log('to welcom')
     riot.route('welcome')
 }
-
 
 
 this.onSubmit = (e)=>{

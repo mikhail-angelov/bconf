@@ -4,7 +4,8 @@ module.exports = {
   entry: './ui/index',
   output: {
     path: __dirname + '/ui/dist',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: 'http://0.0.0.0:8080/ui/dist/'
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -20,6 +21,6 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: './ui/dist'
+    contentBase: './ui'
   }
 };
