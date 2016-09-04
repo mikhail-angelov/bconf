@@ -1,8 +1,12 @@
-image: node:4.2.2
+image: node:4.4.4
 
+cache:
+  paths:
+  - node_modules/
 
 all_tests:
   script:
-   - npm install
+   - npm set progress=false
+   - npm install --ignore-scripts --unsafe-perm
    - bower install
    - npm run test
