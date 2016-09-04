@@ -1,15 +1,7 @@
 const actions = require('../actions/index.js');
 
-function getContacts(){
-    const contacts = [];
-    for(let i=0; i < 10; i++){
-        contacts.push('John Doe ' + i);
-    }
-    console.log(contacts)
-    return contacts;
-}
 
-function contacts(state = getContacts(),action){
+function contacts(state=[],action){
 
     switch(action.type){
         case actions.contact.ADD:{
