@@ -7,6 +7,6 @@ cache:
 all_tests:
   script:
    - npm set progress=false
-   - npm install --ignore-scripts --unsafe-perm
+   - npm install -q --ignore-scripts --unsafe-perm
    - bower install
    - npm run test
