@@ -2,11 +2,8 @@
 <div class='contacts'>
     <input type='text' id='searchContact'>
 
-    <ul>
-        <li each={name in this.opts.contacts}>
-            {name}
-        </li>
-    </ul>
+    <contact-item each={name in this.opts.contacts} item={name}/>
+          
 </div>
 
 <style>
@@ -19,13 +16,13 @@
 
 
 
-.contacts li {
+.contacts div {
 	font-weight: 300;
 	list-style-type: square;
 	border-top: 1px solid #e7e7e7;
 }
 
-.contacts li:first-child {
+.contacts div:first-child {
 	border: none;
 }
 

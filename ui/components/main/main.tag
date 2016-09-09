@@ -29,7 +29,12 @@ store.subscribe(()=>{
 this.contacts = store.getState().contacts;
 
 this.addContact = ()=>{
-    const action = actions.addContact('----BOB---')
+    const action = actions.addContact({
+    name:'-bob',
+    info: 'dude',
+    photo: 'cool.png'
+    
+    })
     store.dispatch(action)
 }
 

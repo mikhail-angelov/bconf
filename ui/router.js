@@ -5,10 +5,11 @@ window.addEventListener("DOMContentLoaded",function load() {
 
   var subRoute = riot.route.create()
 
-  var goTo = function(page){
+  var goTo = function(page,path){
       console.log('route', page )
     if (currentPage) {
       currentPage.unmount(true); //unmount and keep parent tag
+      
     }
     const mounted = riot.mount('div#content',page)
     if(mounted){
@@ -26,6 +27,11 @@ window.addEventListener("DOMContentLoaded",function load() {
 
   subRoute('/main', function() {
     goTo('main');
+  });
+  
+  
+  subRoute('/singup', function(){
+    goTo('singup');
   });
 
 
