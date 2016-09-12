@@ -1,39 +1,64 @@
 <auth>
 <div class='container'>
-<div id="singup" class="singin">
+ <div  id="signin">
+<signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
+<signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
+<forget if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
 
-<form>
-  User name:<br>
-  <input type="text" name="username"><br>
-  User password:<br>
-  <input type="password" name="psw">
-</form>
-<div class="buttons">
-<button onclick={onSingUp} class="waves-effect waves-light btn">SingUp</button>
-<button onclick={onLogin} class="waves-effect waves-light btn">SingIn</button>
-</div>
-</div>
+
+ </div>
 <div class="social">
-  <button onclick={onLogin} class="waves-effect waves-light btn">google</button>
-  <button onclick={onLogin} class="waves-effect waves-light btn">vk</button>
-  <button onclick={onLogin} class="waves-effect waves-light btn">facebook</button>
-  <button onclick={onLogin} class="waves-effect waves-light btn">twitter</button>
+  <material-button class="ui" shady="true">
+    <div class="text">google</div>
+</material-button>
+<material-button class="ui" shady="true">
+    <div class="text">vk</div>
+</material-button>
+<material-button class="ui" shady="true">
+    <div class="text">twitter</div>
+</material-button>
+<material-button class="ui" shady="true">
+    <div class="text">facebook</div>
+    <i class="material-icons"></i>
+</material-button>
 </div>
 </div>
 <script>
-
-this.onBack = ()=>{
-    console.log('to welcome')
-    riot.route('welcome')
-}
+this.state = 'signin';
 
 this.onLogin = ()=>{
     console.log('login')
     riot.route('main')
 }
-this.onSingUp = ()=>{
-  console.log('login')
-    riot.route('singup')
+this.onSignUp = ()=>{
+	this.state = 'signup'
+	this.update()
+  console.log('signup complete')
+}
+this.onSignUpBack = ()=>{
+	this.state = 'signin'
+	this.update()
+  console.log('signin complete')
+}
+this.onSignUpTrue = ()=>{
+  this.state = 'signin'
+	this.update()
+  alert("SignUp complete!")
+  console.log('signun complete')
+}
+this.onForgetPassword = ()=>{
+  this.state = 'forget'
+  this.update()
+  console.log('You forgetpassword')
+}
+this.onForgetPasswordBack = ()=>{
+  this.state = 'signin'
+	this.update()
+}
+this.onForgetPasswordTrue = ()=>{
+  this.state = 'signin'
+	this.update()
+  alert("Your password send on your email!")
 }
 </script>
 
@@ -47,7 +72,7 @@ this.onSingUp = ()=>{
     align-items: center;
     height: 100%; 
   }
-  .singin {
+  .signin {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -59,10 +84,10 @@ this.onSingUp = ()=>{
     margin-right: 35px;
     
   }
-  .social button {
+  .social material-button {
     margin-top: 10px;
-    height: 35px;
-    width: 300px;
+    height: 40px;
+    width: 250px;
   }
   .auth h1 {
     font-family: 'Oswald', sans-serif;

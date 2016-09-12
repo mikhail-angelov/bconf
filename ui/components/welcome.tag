@@ -16,7 +16,7 @@
 
 this.onLogin = ()=>{
     console.log('login')
-    riot.route('login')
+    riot.route('auth')
 }
 
 console.log('constructor')

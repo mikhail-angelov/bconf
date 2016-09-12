@@ -6,7 +6,7 @@
     <contacts class='contacts col-lg-4' contacts={contacts}/>
     <div class='main col-lg-8'>
         <button onclick={addContact}>Add Contact</button>
-        <button onclick={onBack}>Back</button>
+        <button onclick={onLogin}>Back</button>
         <div class='messages'>
             <div each={m in this.messages}>
                 {m}
@@ -51,6 +51,11 @@ this.onSubmit = (e)=>{
         this.messages = [value].concat(this.messages);
         e.target.newMessage.value = '';
     }
+}
+
+this.onLogin = ()=>{
+    console.log('login')
+    riot.route('auth')
 }
 
 
