@@ -1,21 +1,15 @@
 <main>
-
-<div class='row col-lg-12 nomargin'>
+<div class='main'>
+<header>
 <navbar/>
-    
-    <contacts class='contacts col-lg-4' contacts={contacts}/>
-    <div class='main col-lg-8'>
-        <button onclick={addContact}>Add Contact</button>
-        <button onclick={onLogin}>Back</button>
-        <div class='messages'>
-            <div each={m in this.messages}>
-                {m}
-            </div>
-        </div>
-        <form onsubmit={onSubmit}>
-        <input type='text' name='newMessage' id='newMessage'>
-        </form>
-    </div>
+</header>
+<button onclick={addContact}>Add Contact</button>
+<button onclick={onLogin}>Back</button>
+<div class='maincontent'>
+<aside>
+<contacts class='contacts' contacts={contacts}/>
+</aside>
+<chat/>
 </div>
 
 <script>
@@ -44,14 +38,7 @@ this.onBack = ()=>{
 }
 
 
-this.onSubmit = (e)=>{
-    const value = e.target.newMessage.value;
-    console.log(e.target)
-    if(value){
-        this.messages = [value].concat(this.messages);
-        e.target.newMessage.value = '';
-    }
-}
+
 
 this.onLogin = ()=>{
     console.log('login')
@@ -65,11 +52,18 @@ this.messages = ['hey','ho'];
 <style>
 .main{
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: auto;
+    flex-flow: column wrap;
+    height:100%;
 }
-.messages{
+.maincontent{
+    display: flex;
+    flex-direction: row;
+    justify-content: ;
+    align-items: ;
+    border: 1px;
+    
+}
+.chat{
     display:flex;
     flex:1;
     flex-direction: column-reverse;
@@ -78,10 +72,5 @@ this.messages = ['hey','ho'];
  .nomargin{
      margin:0;
  }
- .col-lg-12 {
-    position: relative;
-    min-height: 1px;
-    padding: 0;    
-}
 </style>
 </main>

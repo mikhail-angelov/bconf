@@ -9,7 +9,7 @@
 <style>
 
 .contacts {
-    height: 100vh;
+    
     overflow: auto;
     
 }
