@@ -1,13 +1,11 @@
 <chat>
-   <div class='chat'>     
-            <div each={m in this.messages}>
-                {m}
+         
+        <div class="messages" each={m in this.messages}>
+            {m}
         </div>
-        <form onsubmit={onSubmit}>
-        <input type='text' name='newMessage' id='newMessage'>
-        </form>
     </div>
-    </div>
+    
+   
 <script>
 
 this.onSubmit = (e)=>{
@@ -17,18 +15,23 @@ this.onSubmit = (e)=>{
         this.messages = [value].concat(this.messages);
         e.target.newMessage.value = '';
     }
+    this.update();
 }
 
 </script>
 
 <style>
 
-.chat {
+
+.messages {
     display: flex;
-    flex-flow: column;
-    justify-content: flex-end;
-    width: 100%;
-    overflow: auto;
+    flex-flow: row wrap;
+    max-width: 200px;
+    flex: 0 0 auto;
+    height: auto;
+    width: auto;
+    border: 2px solid grey;
+    
 }
     
 
