@@ -4,12 +4,16 @@
 <button onclick={addContact}>Add Contact</button>
 <button onclick={onLogin}>Back</button>
 <div class='row'>
-    <div class='col-xs-3'>
-    <searchbar/>
-    <contacts contacts={contacts}/>
+    <div class='col-xs-3 toflex'>
+       <div class="searchbar">
+            <searchbar/>
+       </div>
+        <div class="contacts toflex">
+            <contacts contacts={contacts}/>
+        </div>
     </div>
-    <div class="col-xs-offset-1"/>
-    <div class='col-xs-8'>
+    <div class="col-xs-offset-1 toflex"/>
+    <div class='col-xs-8 toflex'>
     <chat messages={messages}/>
     <chatinput messages={messages}/>
     </div>
@@ -94,24 +98,23 @@ body {
 .main .col-xs, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, 
 .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, 
 .col-xs-8, .col-xs-9 {
-    overflow: auto;
     border-right: 1px solid #e7e8ec;
     border-left: 1px solid #e7e8ec;
-    padding: 0;
-}
-
-.main .col-xs-3 {
-    flex-flow: column nowrap;
+    flex-direction: column;
+    flex: 100%;
 }
 
 .main .col-xs-8, .col-xs-9 {
-    flex-direction: column;
-    justify-content: flex-end;
+
 }
 
-div {
-    display: flex;
+.toflex {
+    display:flex;
 }
+.contacts {
+    overflow: auto;
+}
+
 
 </style>
 </main>
