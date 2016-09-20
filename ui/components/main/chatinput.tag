@@ -1,10 +1,13 @@
 <chatinput>
     <div class="chatinput toflex">
-        <form onsubmit={onSubmit} >
-        <textarea  onsubmit={onSubmit} name='newMessage' id='newMessage' placeholder="Введите сообщение"
-                style="height: 50px; width: 400px;"></textarea>
-        <input type="submit" onclick={onSubmit}>
-        </form>
+        
+            <material-textarea  onkeyup={this.opts.onsendmessage}   label="Введите сообщение"
+                    style="width: 400px; overflow: auto;"></material-textarea>
+                <material-button onclick={this.opts.onsendmessagebutton} class="ui">
+                    <div class="text">Send</div>
+                </material-button>
+        
+        
     </div>
 <style>
     .chatinput {
@@ -12,7 +15,6 @@
     align-items: center;
     flex: 1 1 100%;
     height: 100%;
-    flex-direction: column;
     flex-wrap: nowrap;
     }
     .chatinput input {
@@ -20,14 +22,6 @@
     }
 </style>
 <script>
-    this.onSubmit = (e)=>{
-    const value = e.target.newMessage.value;
-    console.log(e.target)
-    if(value){
-        this.messages = [value].concat(this.messages);
-        e.target.newMessage.value = '';
-    }
-    this.update()
-}
+   
 </script>
 </chatinput>

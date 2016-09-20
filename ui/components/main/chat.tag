@@ -1,6 +1,6 @@
-<chat>
+<chat class="toflex" style="flex-flow: column-reverse nowrap;">
          
-        <div class="messages" each={m in this.messages}>
+        <div class="messages" each={m in this.opts.messages}>
             {m}
         </div>
     </div>
@@ -8,15 +8,7 @@
    
 <script>
 
-this.onSubmit = (e)=>{
-    const value = e.target.newMessage.value;
-    console.log(e.target)
-    if(value){
-        this.messages = [value].concat(this.messages);
-        e.target.newMessage.value = '';
-    }
-    this.update();
-}
+ 
 
 </script>
 
@@ -31,7 +23,9 @@ this.onSubmit = (e)=>{
     height: auto;
     width: auto;
     border: 2px solid grey;
-    
+    margin-bottom: 3;
+    word-wrap: break-word;
+
 }
     
 

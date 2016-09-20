@@ -13,10 +13,10 @@
     <div class="col-xs-offset-1 toflex"></div>
     <div class='col-xs-8 toflex'>
     <div class="chat toflex">
-    <chat messages={messages}/>
+    <chat messages={messages} />
     </div>
     <div class="input">
-    <chatinput messages={messages}/>
+    <chatinput onsendMessage={sendMessage} onsendMessageButton={sendMessageButton}/>
     </div>
     </div>
 </div>
@@ -45,7 +45,7 @@ this.addContact = ()=>{
 }
 
 this.onBack = ()=>{
-    console.log('to welcom')
+    console.log('to welcome')
     riot.route('welcome')
 }
 
@@ -59,6 +59,23 @@ this.onLogin = ()=>{
 
 
 this.messages = ['hey','ho'];
+
+this.sendMessage = (e)=>{
+    console.log(e.keyCode)
+    if(e.keyCode==13){
+        const value = e.target.value;
+        this.messages = [value].concat(this.messages);
+        console.log(this.messages);
+        e.target.value = '';
+        this.update()
+    }
+
+this.sendMessageButton = ()=>{
+
+    console.log('send');
+}
+    
+}
 </script>
 
 <style>
@@ -75,7 +92,7 @@ body {
     flex-flow: column nowrap;
     height: 100%;
     width: 100%;
-    background-color: #fafbfc;
+    background-color: #edeef0;
 }
 .main .row {
     box-sizing: border-box;
@@ -122,11 +139,18 @@ body {
     overflow: auto;
     flex-flow: column-reverse nowrap;
     flex: 1 1 100%;
+    padding: 0 15;
 }
 .input {
     height: 100px;
-    padding: 10 25;
+    border-top: 2px solid #e7e8ec;
+    margin-top: 10px;
 }
+.chatinput material-button {
+    background: #cc0044;
+     margin: 0px 0px 0px 20px;
+
+  }
 
 </style>
 </main>
