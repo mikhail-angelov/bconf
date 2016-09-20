@@ -5,7 +5,7 @@
     <h1>BCONF</h1>
     <h3>SimpleMessager</h3>
     
-     <dic class='buttons'>
+     <div class='buttons'>
     <material-button class="ui" onclick={onLogin}>
       <div class="text">Login</div>
     </material-button>

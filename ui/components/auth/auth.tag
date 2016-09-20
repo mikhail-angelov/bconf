@@ -70,8 +70,9 @@ this.onForgetPasswordTrue = ()=>{
     flex-flow: row-reverse wrap;
     justify-content: center;
     align-items: center;
-    height: 100%; 
-  }
+    height: 100%;
+    width: 100%;
+}
   .signin {
     display: flex;
     flex-flow: column wrap;
