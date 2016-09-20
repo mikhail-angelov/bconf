@@ -1,8 +1,6 @@
 <main>
 <div class='main'>
-<navbar/>
-<button onclick={addContact}>Add Contact</button>
-<button onclick={onLogin}>Back</button>
+<navbar style="margin-bottom: 15px;"/>
 <div class='row'>
     <div class='col-xs-3 toflex'>
        <div class="searchbar">
@@ -12,10 +10,14 @@
             <contacts contacts={contacts}/>
         </div>
     </div>
-    <div class="col-xs-offset-1 toflex"/>
+    <div class="col-xs-offset-1 toflex"></div>
     <div class='col-xs-8 toflex'>
+    <div class="chat toflex">
     <chat messages={messages}/>
+    </div>
+    <div class="input">
     <chatinput messages={messages}/>
+    </div>
     </div>
 </div>
 </div>
@@ -116,7 +118,15 @@ body {
     flex-flow: column nowrap;
     flex: 1 1 100%;
 }
-
+.chat {
+    overflow: auto;
+    flex-flow: column-reverse nowrap;
+    flex: 1 1 100%;
+}
+.input {
+    height: 100px;
+    padding: 10 25;
+}
 
 </style>
 </main>

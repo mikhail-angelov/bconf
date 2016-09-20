@@ -61,6 +61,9 @@ this.onLoginGuest = ()=>{
     justify-content: center;
     margin-top: 15px;
   }
+  material-button {
+    background: #cc0044;
+  }
   </style>
 
 </welcome>

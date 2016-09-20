@@ -105,6 +105,9 @@ this.onForgetPasswordTrue = ()=>{
     margin-left: 36%;
   }
 
+material-button {
+    background: #cc0044;
+  }
 
   .buttons {
 	

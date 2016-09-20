@@ -1,15 +1,22 @@
 <chatinput>
-    <div class="chatinput">
-    <form onsubmit={onSubmit}>
-        <input type='text' name='newMessage' id='newMessage'>
-    </form>
+    <div class="chatinput toflex">
+        <form onsubmit={onSubmit} >
+        <textarea  onsubmit={onSubmit} name='newMessage' id='newMessage' placeholder="Введите сообщение"
+                style="height: 50px; width: 400px;"></textarea>
+        <input type="submit" onclick={onSubmit}>
+        </form>
     </div>
 <style>
     .chatinput {
     justify-content: center;
+    align-items: center;
+    flex: 1 1 100%;
+    height: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
     }
     .chatinput input {
-
+        
     }
 </style>
 <script>
