@@ -22,6 +22,7 @@
         margin: 0 10;
         width: 80;
         height: 80;
+        float: left;
     }
     .account_photo_img {
     width: 80;

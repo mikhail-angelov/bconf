@@ -25,12 +25,13 @@
     padding: 5 0;
 }
 .messages_textarea {
-    justify-content: center;
+    justify-content: flex-start;
 }
 .messages {
     display: flex;
     flex-flow: row wrap;
-    max-width: 200px;
+    max-width: 400px;
+    min-width: 300px;
     flex: 0 0 auto;
     height: auto;
     width: auto;
@@ -38,8 +39,7 @@
     border-radius: 10%;
     margin-bottom: 3;
     word-wrap: break-word;
-    background: blue;
-    overflow: hidden;
+    background: cornflowerblue;
 }
     
 
