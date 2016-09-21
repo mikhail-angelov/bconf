@@ -1,8 +1,8 @@
 <chatinput>
     <div class="chatinput toflex">
         
-            <material-textarea  onkeyup={this.opts.onsendmessage}   label="Введите сообщение"
-                    style="width: 400px; overflow: auto;"></material-textarea>
+            <textarea id='text' rows="4"  onkeyup={this.opts.onsendmessage} onkeydown={keydown}  placeholder="Введите сообщение"
+                    style="width: 400px; overflow: auto; height: 50px; background: #fff;"></textarea>
                 <material-button onclick={this.opts.onsendmessagebutton} class="ui">
                     <div class="text">Send</div>
                 </material-button>

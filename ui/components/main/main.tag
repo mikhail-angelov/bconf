@@ -61,18 +61,24 @@ this.onLogin = ()=>{
 this.messages = ['hey','ho'];
 
 this.sendMessage = (e)=>{
-    console.log(e.keyCode)
-    if(e.keyCode==13){
-        const value = e.target.value;
-        this.messages = [value].concat(this.messages);
-        console.log(this.messages);
+    console.log(e.keyCode, e.shiftKey, e.ctrlKey)
+    if(e.keyCode=='13' && e.shiftKey){
+        const value = e.target.value.trim();
+        if (value) {
+            this.messages = [value].concat(this.messages);
+            console.log(this.messages);
+            e.target.value = '';
+            this.update();
+            }
         e.target.value = '';
-        this.update()
     }
 
-this.sendMessageButton = ()=>{
-
+this.sendMessageButton = (e)=>{
     console.log('send');
+    var text = document.getElementById('text');
+    text.value = text.value.concat(this.messages);
+    e.target.text.value = '';
+        this.update();
 }
     
 }
@@ -137,9 +143,10 @@ body {
 }
 .chat {
     overflow: auto;
-    flex-flow: column-reverse nowrap;
+    flex-flow: column nowrap;
     flex: 1 1 100%;
     padding: 0 15;
+    justify-content: flex-end;
 }
 .input {
     height: 100px;
