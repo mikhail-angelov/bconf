@@ -1,7 +1,7 @@
 <chat class="toflex" style="flex-flow: column-reverse nowrap;">
     <div class="message_field"  each={m in this.opts.messages}>
         <div class="account-foto">
-            <a class="friend_photo" href="###">
+            <a class="friend_photo" href="#">
                 <img class="account_photo_img" src={this.opts.item.photo}>
             </a>
         </div>
