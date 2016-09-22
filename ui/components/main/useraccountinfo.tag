@@ -17,7 +17,7 @@
             <i class="material-icons" style="font-size:36px; color:black">settings</i>
         </material-button>
         <div class="dropdown-content">
-            <a class="" onclick={addContact}>Add Contact!</a>
+            <div class="toflex link" onclick={addContact}><i class="material-icons">add</i><p>Add Contact!</p></div>
         </div>
          </div>
      </div>
@@ -48,17 +48,15 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        .link:hover {
-            background-color: green;
-        }
-        .dropdown-content a {
+        .dropdown-content .link {
             color: black;
             padding: 12px 16px;
             text-decoration: none;
-            display: block;
+            align-items: center;
         }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1
+        .dropdown-content .link:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
         }
     </style>
 </useraccountinfo>

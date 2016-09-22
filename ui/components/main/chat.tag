@@ -2,7 +2,7 @@
     <div class="message_field"  each={m in this.opts.messages}>
         <div class="account-foto">
             <a class="friend_photo" href="#">
-                <img class="account_photo_img" src={this.opts.foto}>
+                <img class="account_photo_img" src="cool.png">
             </a>
         </div>
         <div class="messages_textarea toflex">
