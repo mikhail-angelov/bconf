@@ -3,6 +3,9 @@
 <navbar style="margin-bottom: 15px;"/>
 <div class='row'>
     <div class='col-xs-3 toflex'>
+        <div class="useraccountinfo">
+            <useraccountinfo/>
+        </div>
        <div class="searchbar">
             <searchbar/>
        </div>
@@ -13,7 +16,7 @@
     <div class="col-xs-offset-1 toflex"></div>
     <div class='col-xs-8 toflex'>
     <div class="chat toflex">
-    <chat messages={messages} />
+    <chat messages={messages} accountFoto={accountFoto} />
     </div>
     <div class="input">
     <chatinput onsendMessage={sendMessage} onsendMessageButton={sendMessageButton}/>
@@ -39,9 +42,16 @@ this.addContact = ()=>{
     photo: 'cool.png'
     
     })
+
     store.dispatch(action)
     this.update()
     console.log('Contact')
+}
+
+this.accountFoto = ()=> {
+    const foto = accountFoto({
+        photo: 'cool.png'
+    })
 }
 
 this.onBack = ()=>{

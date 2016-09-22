@@ -8,13 +8,14 @@
     </div>
     <div class="material-pane-title">BCONF</div>
     <div class="material-pane-right-bar" style="margin: 10px;">
-        <material-button onclick={addContact} class="ui" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" style="background:#cc0044">
+        <material-button  class="ui" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" style="background:#cc0044">
             <i class="material-icons">add</i>
         </material-button>
     </div>
 </material-pane>
 </div>
-
+<script>
+</script>
 <style>
 
     .navbar {
@@ -26,6 +27,17 @@
     }
     material-navbar {
         background-color: #cc0044;
+    }
+    .user-account-foto {
+        height: 80px;
+        width: 80px;
+        border: 5px solid black;
+        border-radius: 50%;
+    }
+    material-pane-content {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
     }
 </style>
 
