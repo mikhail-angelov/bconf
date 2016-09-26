@@ -28,18 +28,19 @@
     justify-content: flex-start;
 }
 .messages {
-    display: flex;
-    flex-flow: row wrap;
-    max-width: 400px;
+    /*flex-flow: row wrap;*/
+    /* max-width: 400px; */
     min-width: 300px;
-    flex: 0 0 auto;
-    height: auto;
-    width: auto;
+    min-height: 70px;
+    /* flex: 0 0 auto; */
+    /* height: auto; */
+    /* width: auto; */
     border: 2px solid grey;
     border-radius: 10%;
     margin-bottom: 3;
     word-wrap: break-word;
-    background: cornflowerblue;
+    background: #fff;
+    padding-left: 15px;
 }
     
 

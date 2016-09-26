@@ -4,7 +4,7 @@
 <div class='row'>
     <div class='col-xs-3 toflex'>
         <div class="useraccountinfo">
-            <useraccountinfo/>
+            <useraccountinfo editable={editable} status={status} updateStatus={updateStatus} changeStatus={changeStatus}/>
         </div>
        <div class="searchbar">
             <searchbar/>
@@ -13,7 +13,9 @@
             <contacts contacts={contacts}/>
         </div>
     </div>
-    <div class="col-xs-offset-1 toflex"></div>
+    <div class="col-xs-1 toflex">
+        <useraccountsettings/>
+    </div>
     <div class='col-xs-8 toflex'>
     <div class="chat toflex">
     <chat messages={messages} accountFoto={accountFoto} />
@@ -42,6 +44,7 @@ this.addContact = ()=>{
     photo: 'cool.png'
     
     })
+
 
     store.dispatch(action)
     this.update()
@@ -89,9 +92,32 @@ this.sendMessageButton = (e)=>{
     text.value = text.value.concat(this.messages);
     e.target.text.value = '';
         this.update();
+} 
 }
-    
+
+
+this.status = 'Status';
+
+this.editable = false;
+
+this.changeStatus = (e)=> {
+    this.editable = !this.editable;
+    console.log("input show");
+    if(this.editable==false){
+        console.log('click')
+        }
+    }
+
+this.updateStatus = (e)=>{
+    const value = e.target.value;
+    if(e.keyCode=='13'){
+        console.log(e.keyCode);
+        
+        this.status = value;
+        this.changeStatus();
+    }
 }
+
 </script>
 
 <style>
