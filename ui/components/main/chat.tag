@@ -36,11 +36,12 @@
     /* height: auto; */
     /* width: auto; */
     border: 2px solid grey;
-    border-radius: 10%;
+    border-radius: 15px;
     margin-bottom: 3;
     word-wrap: break-word;
     background: #fff;
     padding-left: 15px;
+    padding-right: 15px;
 }
     
 

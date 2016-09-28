@@ -4,12 +4,12 @@
 <div class='row'>
     <div class='col-xs-3 toflex'>
         <div class="useraccountinfo">
-            <useraccountinfo editable={editable} status={status} updateStatus={updateStatus} changeStatus={changeStatus}/>
+            <useraccountinfo status={status} updatestatus={updatestatus}/>
         </div>
        <div class="searchbar">
             <searchbar/>
        </div>
-        <div class="contacts toflex">
+        <div class="contacts toflex white">
             <contacts contacts={contacts}/>
         </div>
     </div>
@@ -17,10 +17,10 @@
         <useraccountsettings/>
     </div>
     <div class='col-xs-8 toflex'>
-    <div class="chat toflex">
+    <div class="chat toflex white">
     <chat messages={messages} accountFoto={accountFoto} />
     </div>
-    <div class="input">
+    <div class="input white">
     <chatinput onsendMessage={sendMessage} onsendMessageButton={sendMessageButton}/>
     </div>
     </div>
@@ -98,25 +98,12 @@ this.sendMessageButton = (e)=>{
 
 this.status = 'Status';
 
-this.editable = false;
-
-this.changeStatus = (e)=> {
-    this.editable = !this.editable;
-    console.log("input show");
-    if(this.editable==false){
-        console.log('click')
-        }
-    }
-
-this.updateStatus = (e)=>{
-    const value = e.target.value;
-    if(e.keyCode=='13'){
-        console.log(e.keyCode);
-        
-        this.status = value;
-        this.changeStatus();
-    }
+this.updatestatus = (newstatus)=>{
+    this.status = newstatus;
+    this.update();
 }
+
+
 
 </script>
 
@@ -191,8 +178,12 @@ body {
 }
 .chatinput material-button {
     background: #cc0044;
-     margin: 0px 0px 0px 20px;
+    margin: 0px 0px 0px 20px;
 
+  }
+  .white {
+    background: #fff;
+    border-radius: 4px;
   }
 
 </style>

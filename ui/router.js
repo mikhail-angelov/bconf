@@ -35,6 +35,6 @@ window.addEventListener("DOMContentLoaded",function load() {
   
  
 
-
+  riot.route.start();
   riot.route.exec(goTo); //default redirect
 },true)

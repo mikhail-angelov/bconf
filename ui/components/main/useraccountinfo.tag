@@ -1,4 +1,4 @@
-<useraccountinfo class="toflex account_info">
+<useraccountinfo class="toflex account_info white">
      <div class='user-account-foto'>
          <img class="account_photo_img" src="cool.png">
      </div>
@@ -7,14 +7,58 @@
             <h2>Dmitriev Ivan<h2>
         </div>
         <div class="user-account-status toflex">
-            <h3 onclick={this.opts.changestatus} show={!this.opts.editable}>{this.opts.status}</h3>
-            <input id="hidden" show={this.opts.editable} type="text" value={this.opts.status} onkeyup={this.opts.updatestatus}/>
-            <!-- <material-button onclick={this.opts.changestatus} class="ui" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" style="background:#edeef0">
+            <h3 onclick={onChange} show={!editable}>{this.opts.status||"change your status"}</h3>
+            <input name='status' show={editable} type="text" value={this.opts.status} onkeyup={this.updateStatus} onblur={onFocus}/>
+       <!-- <material-button onclick={this.opts.changestatus} class="ui" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" style="background:#edeef0">
                 <i class="material-icons" style="color:black">edit</i>
             </material-button> -->
         </div>
      </div>
 <script>
+
+    this.onChange = e=>this.changeStatus(e,this.opts.status);
+
+    this.editable = false;
+
+    this.changeStatus = (e,input)=> {
+        this.editable = !this.editable;
+        console.log("input show");
+        this.onSelectText(input);
+        if(this.editable==false){
+            console.log('click');
+        }
+        if(this.editable==true){
+            console.log('clack');
+        }
+
+    }
+
+
+    this.updateStatus = (e)=>{
+    const value = e.target.value;
+    const change = 'change status here';
+    if(e.keyCode=='13'){
+        console.log(e.keyCode);
+        this.opts.updatestatus(value);
+        this.changeStatus();
+    }
+}
+
+
+    this.onSelectText = ()=>{
+        console.log ('select');
+        this.status.setSelectionRange(0, this.status.value.length);
+    }
+
+    this.onFocus = ()=>{
+        this.editable = false;
+    }
+    this.onfocusfield = ()=>{
+        console.log('focus');
+        //this.status.onblur();
+        this.status.focus();
+    }
+
 
 </script>
 
@@ -46,14 +90,14 @@
             font-weight: 100;
             width: 100%;
             margin: auto;
-            font-size: 1.3em;
+            font-size: 1em;
         }
         .user-account-status input {
             font-weight: 100;
             width: 100%;
             margin: auto;
             /* padding-top: 10px; */
-            font-size: 1em;
+            font-size: 0.9em;
         }
         .show {
             display: block;
