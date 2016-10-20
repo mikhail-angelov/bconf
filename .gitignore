@@ -30,3 +30,4 @@ config.js
 dist
 .tmp
 bower_components
+.vscode
