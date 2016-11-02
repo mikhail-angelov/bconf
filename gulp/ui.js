@@ -24,6 +24,6 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('dev', ['connect','riot:watch'], function() {
+gulp.task('dev', ['riot','connect','riot:watch'], function() {
 	gutil.log('done');
 });
