@@ -6,8 +6,13 @@
     </a>
 </div>
 
+
 <div class="account-name">{this.opts.item.name}</br>
     {this.opts.item.info}</div>
+
+    <div class="removecontact">
+        <i class="material-icons" onclick={()=>this.opts.removecontactitem(this.opts.item.id)}>delete forever</i>
+    </div>
 
 </div>
 <style>
@@ -37,6 +42,11 @@
     flex-basis: 100%;
     justify-content: flex-start;
     align-items: center;
+    }
+    .removecontact {
+    float: right;
+    width: 30;
+    padding: 28px 0px;
     }
 </style>    
 </contact-item>

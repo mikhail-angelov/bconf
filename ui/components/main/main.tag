@@ -7,10 +7,10 @@
             <useraccountinfo status={status} updatestatus={updatestatus}/>
         </div>
        <div class="searchbar">
-            <searchbar/>
+            <searchbar contacts={contacts} searchContact={searchContact}/>
        </div>
         <div class="contacts toflex white">
-            <contacts contacts={contacts}/>
+            <contacts removeContact={removeContact} contacts={contacts}/>
         </div>
     </div>
     <div class="col-xs-1 toflex">
@@ -37,19 +37,38 @@ store.subscribe(()=>{
 })
 this.contacts = store.getState().contacts;
 
+
 this.addContact = ()=>{
     const action = actions.addContact({
-    name:'-bob',
+    name: Math.floor((Math.random() * 100) + 1),
     info: 'dude',
-    photo: 'cool.png'
-    
+    photo: 'cool.png',
+    id: Math.floor((Math.random() * 100) + 1)
     })
-
 
     store.dispatch(action)
     this.update()
     console.log('Contact')
 }
+this.removeContact = (contactId)=>{
+    console.log('contact removed',contactId)
+    const action = actions.removeContact(contactId)
+
+    store.dispatch(action)
+    this.update()
+    console.log('contact removed')
+}
+this.searchContact = (contactName)=>{
+    if(contactName.keyCode==13){
+    console.log('searched', contactName)
+    const action = actions.searchContact(contactName)
+    store.dispatch(action)
+    this.update()
+    console.log('contact searched')
+    }
+}
+
+
 
 this.accountFoto = ()=> {
     const foto = accountFoto({
@@ -184,6 +203,7 @@ body {
   .white {
     background: #fff;
     border-radius: 4px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.27);
   }
 
 </style>

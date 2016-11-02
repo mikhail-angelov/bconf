@@ -14,6 +14,9 @@ function contacts(state=[],action){
         case actions.contact.SET_LIST:{
             return action.list
         }
+        case actions.contact.SEARCH:{
+            return _.filter(state,item => item.name !=actions.contactName)
+        }
         default:
             return state
     }

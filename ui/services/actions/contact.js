@@ -2,7 +2,8 @@
 const props = {
     SET_LIST: 'setContactList',
     ADD: 'addContact',
-    REMOVE: 'removeContact'
+    REMOVE: 'removeContact',
+    SEARCH: 'searchContact'
 }
 
 function setContactList(list){
@@ -25,10 +26,17 @@ function removeContact(contactId){
         contactId
     }
 }
+function searchContact(contactName){
+    return {
+        type: props.SEARCH,
+        contactName
+    }
+}
 
 module.exports = {
     contact: props,
     setContactList,
     addContact,
-    removeContact
+    removeContact,
+    searchContact
 }
