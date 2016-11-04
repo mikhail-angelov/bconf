@@ -2,11 +2,11 @@ task list
 2/11
 Ivan:
 
-- make messaging list UI the same as in vk messager
-- move user avatar to the bottom panel
-- add stub icon for emoji
++ make messaging list UI the same as in vk messager
++ move user avatar to the bottom panel
++ add stub icon for emoji
 - top panel for messaging - with status and search icon
-- sub menu button
++ sub menu button
 
 
 
@@ -14,4 +14,16 @@ Mikhail
 + refine styles loading
 + fix layout main view
 + validate fresh version of material UI
+- backend API to send receive messages
+
+4/11
+Ivan
+
+- top panel for messaging - with status and search icon
+- make message filter
+- make contact filter
+- redesign left panel as vk
+
+Mikhail
+
 - backend API to send receive messages

@@ -14,8 +14,27 @@
 const actions = require('../actions/index.js')
 const _ = require('lodash')
 
+const testMessages = {
+    'test':[{
+        text:'hey',
+        type:'in',
+        from: {
+            name: 'Ivan',
+            surname:'Dmitriev'
+        },
+        date: new Date()
+    },{
+        text: 'ho',
+        type:'out',
+        from: {
+            name: 'Vasya',
+            surname: 'Vasin'
+        },
+        date: new Date()
+    }]
+};
 
-function messages(state={},action){
+function messages(state=testMessages,action){
     switch(action.type){
         case actions.message.ADD_MESSAGE:{
             const userId = action.message.userId
@@ -23,9 +42,12 @@ function messages(state={},action){
             const message = {
                 id: action.message.id,
                 type: action.message.type,
-                text: action.message.text
+                text: action.message.text,
+                from: action.message.from,
+                date: action.message.date,
             }
             state[userId].push(message)
+            state[userId] = [message].concat(state[userId]);
             return state
         }
         case actions.message.REMOVE_MESSAGE:{

@@ -2,20 +2,33 @@ const actions = require('../actions/index.js')
 const _ = require('lodash')
 
 
-function contacts(state=[],action){
+function contacts(state={
+    contacts:[],
+    filtered:[]
+},action){
     switch(action.type){
         case actions.contact.ADD:{
-            state.push(action.contact)
+            state.contacts.push(action.contact)
+            state.filtered.push(action.contact)
             return state
         }
         case actions.contact.REMOVE:{
-            return _.filter(state,item => item.id != action.contactId)
+            return {
+                contacts:_.filter(state.contacts,item => item.id != action.contactId),
+                filtered:_.filter(state.filtered,item => item.id != action.contactId),
+            }
         }
         case actions.contact.SET_LIST:{
-            return action.list
+            return {
+                contacts: action.list,
+                filtered:action.list
+            }
         }
         case actions.contact.SEARCH:{
-            return _.filter(state,item => item.name !=actions.contactName)
+            return {
+                contacts: state.contacts,
+                filtered: _.filter(state.contacts,item => item.name == actions.contactName)
+            }
         }
         default:
             return state

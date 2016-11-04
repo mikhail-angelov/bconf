@@ -1,6 +1,6 @@
 <chatinput>
 <div class="fixed_to_bottom">
-    <div class="chatinput toflex">
+    <div class="account_chat">
         <div class='user-account-foto toflex'>
              <div class="account-foto">{this.opts.user_name.firstname.substr(0,1)}{this.opts.user_name.secondname.substr(0,1)}</div>
         </div>
@@ -11,7 +11,7 @@
                 <i class="material-icons">insert_emoticon</i>
             </div>
         </div>
-        <material-button onclick={this.opts.onsendmessagebutton} class="ui">
+        <material-button onclick={this.opts.onsendmessagebutton} class="ui" style="background-color:#cc0044; margin-left: 20px;">
                 <div class="text">Send</div>
         </material-button>
     </div>
@@ -19,11 +19,15 @@
         
     </div>
 </div>
+<script>
+   
+</script>
 <style>
-    .chatinput {
+.test{}
+    .account_chat{
+        display: flex;
         justify-content: center;
         align-items: center;
-        flex: 1 1 100%;
         flex-wrap: nowrap;
     }
 
@@ -66,9 +70,8 @@
     }
     .emodji i:hover {
         color: #cc0044;
+        opacity: 1;
     }
 </style>
-<script>
-   
-</script>
+
 </chatinput>
