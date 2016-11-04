@@ -11,7 +11,7 @@ Ivan:
 
 
 Mikhail
-- refine styles loading
-- fix layout main view
-- validate fresh version of material UI
++ refine styles loading
++ fix layout main view
++ validate fresh version of material UI
 - backend API to send receive messages

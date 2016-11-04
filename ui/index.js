@@ -2,6 +2,9 @@ require('./router')
 require('./services/eventBus')
 require('./services/connectionManager')
 require('riot-mui')
+require("riot-mui/build/styles/riot-mui.min.css");
+require("flexboxgrid/dist/flexboxgrid.css");
+require("material-design-icons/iconfont/material-icons.css");
 
 require('./components/welcome.tag')
 require('./components/auth/auth.tag')
