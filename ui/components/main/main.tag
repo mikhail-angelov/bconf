@@ -1,30 +1,33 @@
 <main>
 <div class='main'>
-<navbar style="margin-bottom: 15px;"/>
-<div class='row'>
-    <div class='col-xs-3 toflex'>
-        <div class="useraccountinfo">
-            <useraccountinfo status={status} updatestatus={updatestatus}/>
+
+    <navbar style="margin-bottom: 15px;"/>
+
+    <div class='row' style="margin-bottom: 15px;">
+        <div class='col-xs-3 toflex'>
+            <div class="useraccountinfo">
+                <useraccountinfo user_name={user} status={status} updatestatus={updatestatus}/>
+            </div>
+        <div class="searchbar">
+                <searchbar contacts={contacts} searchContact={searchContact}/>
         </div>
-       <div class="searchbar">
-            <searchbar contacts={contacts} searchContact={searchContact}/>
-       </div>
-        <div class="contacts toflex white">
-            <contacts removeContact={removeContact} contacts={contacts}/>
+            <div class="contacts toflex white">
+                <contacts removeContact={removeContact} contacts={contacts}/>
+            </div>
+        </div>
+        <div class="col-xs-1 toflex">
+            <useraccountsettings/>
+        </div>
+        <div class='col-xs-8 toflex white align_bottom' style="margin-right: 15px; padding: 0;">
+
+            <chatmenu/>
+
+            <chat class="chat" username={user} messages={messages} accountFoto={accountFoto}/>
+        
+            <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton}/>
+
         </div>
     </div>
-    <div class="col-xs-1 toflex">
-        <useraccountsettings/>
-    </div>
-    <div class='col-xs-8 toflex'>
-    <div class="chat toflex white">
-    <chat messages={messages} accountFoto={accountFoto} />
-    </div>
-    <div class="input white">
-    <chatinput onsendMessage={sendMessage} onsendMessageButton={sendMessageButton}/>
-    </div>
-    </div>
-</div>
 </div>
 
 <script>
@@ -36,6 +39,7 @@ store.subscribe(()=>{
     this.contacts = store.getState().contacts;
 })
 this.contacts = store.getState().contacts;
+
 
 
 this.addContact = ()=>{
@@ -68,6 +72,7 @@ this.searchContact = (contactName)=>{
     }
 }
 
+this.user = {firstname:'Ivan', secondname:'Dmitrich'};
 
 
 this.accountFoto = ()=> {
@@ -90,7 +95,7 @@ this.onLogin = ()=>{
 }
 
 
-this.messages = ['hey','ho'];
+this.messages = ['hey','ho','hello'];
 
 this.sendMessage = (e)=>{
     console.log(e.keyCode, e.shiftKey, e.ctrlKey)
@@ -133,6 +138,20 @@ body {
     border-left: 2px solid;
     border-right: 2px solid;
     border-bottom: 2px solid;
+    font-size: 12.5px;
+    font-weight: 400;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Open Sans,Helvetica Neue,sans-serif;
+    outline: none;
+}
+textarea {
+    resize: none;
+}
+textarea:focus {
+    outline: none;
+}
+
+input:focus {
+    outline: none;
 }
 
 .main{
@@ -190,11 +209,7 @@ body {
     padding: 0 15;
     justify-content: flex-end;
 }
-.input {
-    height: 100px;
-    border-top: 2px solid #e7e8ec;
-    margin-top: 10px;
-}
+
 .chatinput material-button {
     background: #cc0044;
     margin: 0px 0px 0px 20px;
@@ -204,6 +219,10 @@ body {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.27);
+  }
+
+  .align_bottom {
+      justify-content: flex-end;
   }
 
 </style>

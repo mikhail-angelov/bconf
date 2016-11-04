@@ -1,10 +1,10 @@
 <useraccountinfo class="toflex account_info white">
-     <div class='user-account-foto'>
-         <img class="account_photo_img" src="cool.png">
+     <div class='user-account-foto toflex'>
+         <div class="account-foto">{this.opts.user_name.firstname.substr(0,1)}{this.opts.user_name.secondname.substr(0,1)}</div>
      </div>
      <div class="user-account-info toflex">
         <div class="user-account-name">
-            <h2>Dmitriev Ivan<h2>
+            <h2>{this.opts.user_name.firstname} {this.opts.user_name.secondname}<h2>
         </div>
         <div class="user-account-status toflex">
             <h3 onclick={onChange} show={!editable}>{this.opts.status||"change your status"}</h3>
@@ -63,6 +63,7 @@
 </script>
 
     <style>
+        
         .account_info{
             flex-flow: row nowrap;
             justify-content: flex-start;
@@ -70,28 +71,50 @@
             flex: 1 1 100%;
             background-color: #fff;
         }
+
         .user-account-name h2 {
             margin: auto;
         }
+
         .user-account-info {
             flex-flow: column nowrap;
             padding: 25px 10px;
-            flex-basis: 100%;
         }
+
+        .user-account-foto {
+            height: 40px;
+            width: 40px;
+            border: 1px solid grey;
+            border-radius: 50%;
+            background: #cc0044;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10;
+        }
+
+        .account-foto {
+            font-size: 32px;
+            font-weight: 300;
+        }
+
         .user-account-settings {
             flex-direction: column;
             align-items: center;
             padding: 10 0;
         }
+
         .user-account-status h3:hover {
             background-color: #f0f2f5;
         }
+
         .user-account-status h3 {
             font-weight: 100;
             width: 100%;
             margin: auto;
             font-size: 1em;
         }
+
         .user-account-status input {
             font-weight: 100;
             width: 100%;
@@ -99,9 +122,11 @@
             /* padding-top: 10px; */
             font-size: 0.9em;
         }
+
         .show {
             display: block;
         }
+
         .dropdown {
             position: relative;
             display: inline-block;
@@ -120,15 +145,18 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
         .dropdown-content .link {
             color: black;
             padding: 12px 16px;
             text-decoration: none;
             align-items: center;
         }
+
         .dropdown-content .link:hover {
             background-color: #f1f1f1;
             cursor: pointer;
         }
+
     </style>
 </useraccountinfo>

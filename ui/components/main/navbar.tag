@@ -28,12 +28,7 @@
     material-navbar {
         background-color: #cc0044;
     }
-    .user-account-foto {
-        height: 80px;
-        width: 80px;
-        border: 5px solid black;
-        border-radius: 50%;
-    }
+    
     material-pane-content {
         display: flex;
         flex-flow: row nowrap;
