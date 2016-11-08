@@ -1,4 +1,4 @@
-<useraccountinfo class="toflex account_info white">
+<useraccountinfo class="toflex account_info">
      <div class='user-account-foto toflex'>
          <div class="account-foto">{this.opts.user_name.firstname.substr(0,1)}{this.opts.user_name.secondname.substr(0,1)}</div>
      </div>
@@ -63,7 +63,7 @@
 </script>
 
     <style>
-        
+
         .account_info{
             flex-flow: row nowrap;
             justify-content: flex-start;
@@ -79,6 +79,7 @@
         .user-account-info {
             flex-flow: column nowrap;
             padding: 25px 10px;
+            flex-grow: 1;
         }
 
         .user-account-foto {

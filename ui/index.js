@@ -1,10 +1,11 @@
+require("riot-mui/build/styles/riot-mui.min.css");
+require("flexboxgrid/dist/flexboxgrid.css");
+require("material-design-icons/iconfont/material-icons.css");
+
 require('./router')
 require('./services/eventBus')
 require('./services/connectionManager')
 require('riot-mui')
-require("riot-mui/build/styles/riot-mui.min.css");
-require("flexboxgrid/dist/flexboxgrid.css");
-require("material-design-icons/iconfont/material-icons.css");
 
 require('./components/welcome.tag')
 require('./components/auth/auth.tag')
@@ -12,6 +13,7 @@ require('./components/auth/signup.tag')
 require('./components/auth/signin.tag')
 require('./components/auth/forget.tag')
 require('./components/main/main.tag')
+require('./components/main/tabs.tag')
 require('./components/main/chat.tag')
 require('./components/main/chatmenu.tag')
 require('./components/main/chatinput.tag')

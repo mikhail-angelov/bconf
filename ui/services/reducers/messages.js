@@ -46,13 +46,13 @@ function messages(state=testMessages,action){
                 from: action.message.from,
                 date: action.message.date,
             }
-            state[userId].push(message)
+            //state[userId].push(message)
             state[userId] = [message].concat(state[userId]);
             return state
         }
         case actions.message.REMOVE_MESSAGE:{
             const userId = action.message.userId
-  
+
 
             //state[userId].splice(message)
             state[userId] = _.filter(state[userId],message => message.id != action.message.id)

@@ -4,6 +4,8 @@ window.addEventListener("DOMContentLoaded",function load() {
   var currentPage = null;
   var currentSingup = null;
 
+  riot.mount('*');
+
   var subRoute = riot.route.create()
 
   var goTo = function(page){

@@ -1,36 +1,41 @@
 <main>
     <div class='main'>
 
-        <navbar style="margin-bottom: 15px;" />
+        <navbar style="margin-bottom: 15px;" addContact={addContact}/>
 
         <div class='row' style="margin-bottom: 15px;">
-            <div class='col-xs-3 toflex'>
-                <div class="useraccountinfo">
+
+            <div class='col-xs-3 toflex white' style="padding: 0px; margin: 0 10px; position: relative;">
+
+                <div class="useraccountinfo"  if={state==='accountlist'}>
                     <useraccountinfo user_name={user} status={status} updatestatus={updatestatus}/>
                 </div>
-                <div class="searchbar">
-                    <searchbar contacts={contacts} searchContact={searchContact}/>
+
+                <div class="searchbar" if={state==='contacts'}>
+                    <searchbar contacts={contacts} searchContact={searchContact} />
                 </div>
-                <div class="contacts toflex white">
-                    <contacts removeContact={removeContact} contacts={contacts}/>
+
+                <div class="contacts toflex" if={state=='contacts'}>
+                    <contacts removeContact={removeContact} contacts={contacts.filtered} />
                 </div>
+
+                <tabs contactList={contactList} chatList={chatList} accountList={accountList} state={state} />
+
             </div>
-            <div class="col-xs-1 toflex">
-                <useraccountsettings/>
-            </div>
-            <div class='col-xs-8 toflex white align_bottom' style="margin-right: 15px; padding: 0;">
+            <div class='col-xs-9 toflex white align_bottom' style="margin-right: 10px; padding: 0; flex: 100%;">
 
                 <chatmenu/>
 
-                <chat class="chat" user={user} messages={messages} accountFoto={accountFoto}/>
+                <chat class="chat" user={user} messages={messages} accountFoto={accountFoto} />
 
-                <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton}/>
+                <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
 
             </div>
         </div>
     </div>
 
     <script>
+        
 const store = require('../../services/store')
 const actions = require('../../services/actions/index.js')
 
@@ -42,20 +47,18 @@ store.subscribe(()=>{
 this.contacts = store.getState().contacts;
 this.messages = store.getState().messages['test'];
 
-
-
 this.addContact = ()=>{
+    console.log('add');
     const action = actions.addContact({
-    name: Math.floor((Math.random() * 100) + 1),
-    info: 'dude',
-    photo: 'cool.png',
-    id: Math.floor((Math.random() * 100) + 1)
-    })
-
-    store.dispatch(action)
-    this.update()
-    console.log('Contact')
+                userId: 'any',
+                firstName: 'firstname',
+                secondName: 'secondname',
+                info: 'some information'
+            });
+    store.dispatch(action);
+    this.update();
 }
+
 this.removeContact = (contactId)=>{
     console.log('contact removed',contactId)
     const action = actions.removeContact(contactId)
@@ -65,7 +68,7 @@ this.removeContact = (contactId)=>{
     console.log('contact removed')
 }
 this.searchContact = (contactName)=>{
-    if(contactName.keyCode==13){
+    if(contactName.keyCode === '13'){
     console.log('searched', contactName)
     const action = actions.searchContact(contactName)
     store.dispatch(action)
@@ -148,6 +151,27 @@ this.updatestatus = (newstatus)=>{
     this.update();
 }
 
+        this.state = 'contacts';
+        console.log(this.state);
+
+        this.contactList = ()=> {
+            console.log(this.state + 'main')
+            this.state = 'contacts';
+            this.state === 'contacts';
+            this.update();
+        }
+        this.chatList = ()=> {
+            console.log(this.state + 'main2')
+            this.state = 'chatlist';
+            this.state === 'chatlist';
+            this.update();
+        }
+        this.accountList = ()=> {
+            console.log(this.state + 'main3')
+            this.state = 'accountlist';
+            this.state === 'accountlist';
+            this.update();
+        }
 
 
 </script>
