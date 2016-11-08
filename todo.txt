@@ -5,7 +5,7 @@ task list
 Ivan
 - make message filter
 - make contact filter
-- redesign left panel as vk
++ redesign left panel as vk
 
 Mikhail
 - integrate message send / contact crud network api

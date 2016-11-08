@@ -24,7 +24,9 @@
             </div>
             <div class='col-xs-9 toflex white align_bottom' style="margin-right: 10px; padding: 0; flex: 100%;">
 
-                <chatmenu/>
+                <chatmenu if={search} chatSearchOpen={chatSearchOpen} />
+
+                <chatsearch if={!search} chatSearchClose={chatSearchClose} />
 
                 <chat class="chat" user={user} messages={messages} accountFoto={accountFoto} />
 
@@ -171,6 +173,21 @@ this.updatestatus = (newstatus)=>{
             this.state = 'accountlist';
             this.state === 'accountlist';
             this.update();
+        }
+
+
+        this.search = true;
+        console.log(this.search)
+
+        this.chatSearchOpen = ()=> {
+            this.search = false;
+            this.update();
+            console.log(this.search)
+        }
+        this.chatSearchClose = ()=> {
+            this.search = true;
+            this.update();
+            console.log(this.search)
         }
 
 
