@@ -5,6 +5,8 @@ const webpackStream = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require("webpack-dev-server");
 const connect = require('gulp-connect');
+const spawn = require('child_process').spawn;
+var node;
 
 gulp.task('riot', () => {
   return gulp.src('ui/index.js')
@@ -14,6 +16,7 @@ gulp.task('riot', () => {
 });
 
 gulp.task('riot:watch', ()=>{
+  snode();
   return gulp.watch(['ui/**/*.tag','ui/index.js','ui/router.js','ui/services/**/*.js'], ['riot']);
 })
 
@@ -27,3 +30,17 @@ gulp.task('connect', function() {
 gulp.task('dev', ['riot','connect','riot:watch'], function() {
 	gutil.log('done');
 });
+
+function snode() {
+  if (node) node.kill()
+  node = spawn('node', ['snode/index.js'], {stdio: 'inherit'})
+  node.on('close', function (code) {
+    if (code === 8) {
+      gulp.log('Error detected, waiting for changes...');
+    }
+  });
+}
+
+process.on('exit', function() {
+    if (node) node.kill()
+})

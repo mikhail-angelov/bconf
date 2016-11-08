@@ -1,4 +1,28 @@
 task list
+
+8/11
+
+Ivan
+- make message filter
+- make contact filter
+- redesign left panel as vk
+
+Mikhail
+- integrate message send / contact crud network api
+
+4/11
+Ivan
+
++ top panel for messaging - with status and search icon
+- make message filter
+- make contact filter
+- redesign left panel as vk
+
+Mikhail
+
++ backend API to send receive messages
+
+
 2/11
 Ivan:
 
@@ -8,22 +32,8 @@ Ivan:
 - top panel for messaging - with status and search icon
 + sub menu button
 
-
-
 Mikhail
 + refine styles loading
 + fix layout main view
 + validate fresh version of material UI
-- backend API to send receive messages
-
-4/11
-Ivan
-
-- top panel for messaging - with status and search icon
-- make message filter
-- make contact filter
-- redesign left panel as vk
-
-Mikhail
-
 - backend API to send receive messages
