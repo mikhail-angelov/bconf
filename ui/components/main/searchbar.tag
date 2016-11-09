@@ -1,9 +1,11 @@
 <searchbar>
-        <material-input onkeyup={search} icon="true" waves-color="#42648b" label="Search Contact">
+        <material-input name="searchField" valueChanged={search} icon="true" waves-color="#42648b" label="Search Contact">
             <i class="material-icons">search</i>
         </material-input>
         <script>
-            this.search = (contactName)=>this.opts.searchcontact(this.opts.contacts.name)
+            this.search = (searchText)=> {
+                this.opts.searchcontact(searchText)
+            }
         </script>
 
 <style>

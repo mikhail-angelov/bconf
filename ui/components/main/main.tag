@@ -18,9 +18,9 @@
                 <div class="contacts toflex" if={state=='contacts'}>
                     <contacts removeContact={removeContact} contacts={contacts.filtered} />
                 </div>
-
-                <tabs contactList={contactList} chatList={chatList} accountList={accountList} state={state} />
-
+                <div class="tabs-field">
+                    <tabs contactList={contactList} chatList={chatList} accountList={accountList} state={state} />
+                </div>
             </div>
             <div class='col-xs-9 toflex white align_bottom' style="margin-right: 10px; padding: 0; flex: 100%;">
 
@@ -53,7 +53,7 @@ this.addContact = ()=>{
     console.log('add');
     const action = actions.addContact({
                 userId: 'any',
-                firstName: 'firstname',
+                firstName: 'name' + Math.floor((Math.random() * 100) + 1),
                 secondName: 'secondname',
                 info: 'some information'
             });
@@ -69,14 +69,14 @@ this.removeContact = (contactId)=>{
     this.update()
     console.log('contact removed')
 }
-this.searchContact = (contactName)=>{
-    if(contactName.keyCode === '13'){
-    console.log('searched', contactName)
-    const action = actions.searchContact(contactName)
+this.searchContact = (searchText)=>{
+    
+    console.log('searched')
+    const action = actions.searchContact(searchText)
     store.dispatch(action)
     this.update()
     console.log('contact searched')
-    }
+    
 }
 
 this.user = {firstname:'Ivan', secondname:'Dmitrich'};
@@ -113,7 +113,7 @@ this.sendMessage = (e)=>{
                 userId:'test',
                 text:value,
                 type:'out',
-                from: { name:'Ivan'},
+                from: 'me',
                 date: new Date()
             })
             store.dispatch(action)
@@ -123,7 +123,7 @@ this.sendMessage = (e)=>{
                 userId:'test',
                 text: value +' your self',
                 type:'in',
-                from: { name:'Vasy'},
+                from: { name:'echo', surname:''},
                 date: new Date()
             })
             store.dispatch(echo)
@@ -272,6 +272,7 @@ this.updatestatus = (newstatus)=>{
             overflow: auto;
             flex-flow: column nowrap;
             flex: 1 1 100%;
+            margin-bottom: 35px;
         }
         
         .chat {

@@ -7,7 +7,7 @@
 </div>
 
 
-<div class="account-name">{this.opts.item.firstname}</br>
+<div class="account-name">{this.opts.item.firstName}</br>
     {this.opts.item.info}</div>
 
     <div class="removecontact">

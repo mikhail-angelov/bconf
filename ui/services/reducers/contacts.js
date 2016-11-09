@@ -33,9 +33,17 @@ function contacts(state={
             }
         }
         case actions.contact.SEARCH:{
+            var filtred 
+            if (action.contactName) {
+                filtred = _.filter(state.contacts,item => {
+                    return item.firstName.indexOf(action.contactName)>=0;
+                })
+            }else{
+                filtred = state.contacts
+            }
             return {
                 contacts: state.contacts,
-                filtered: _.filter(state.contacts,item => item.name == actions.contactName)
+                filtered: filtred
             }
         }
         default:
