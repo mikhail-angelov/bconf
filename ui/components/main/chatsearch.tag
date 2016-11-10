@@ -2,10 +2,10 @@
     <div class="menu">
         <i class="material-icons msg-search-menu">search</i>
         <div class="chat-search-input">
-            <input type="text" placeholder="поиск по истории сообщений">
+            <input name="messageSearchInput" type="text" placeholder="поиск по истории сообщений">
         </div>
         <div class="chat-search-btn-field toflex">
-            <material-button class="ui" waves-color="#000" shady="true" style="background:#cc0044;">
+            <material-button class="ui" waves-color="#000" shady="true" style="background:#cc0044;" onclick={searchMsg} >
                 <div class="text">Search</div>
             </material-button>
             <material-button class="ui" waves-color="#000" shady="true" style="background:#42648b; opacity: 0.5;" onclick={this.opts.chatsearchclose}>
@@ -13,6 +13,12 @@
             </material-button>
         </div>
     </div>
+    <script>
+        const messageText = this.messageSearchInput.textContent;
+        this.searchMsg = (messageText)=> {
+            this.opts.searchmessage(messageText);
+        }
+    </script>
     <style>
     .msg-search-menu {
         color: #42648b;
@@ -43,6 +49,7 @@
         align-items: center;
         justify-content: space-around;
         width: 225px;
+        float: right;
     }
     .chat-search-btn-field material-button {
         padding: 0px 15px 0px;

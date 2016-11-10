@@ -22,8 +22,8 @@ function contacts(state={
         }
         case actions.contact.REMOVE:{
             return {
-                contacts: _.filter(state.contacts,item => item.id != action.contactId),
-                filtered: _.filter(state.filtered,item => item.id != action.contactId),
+                contacts: _.filter(state.contacts,item => item.userId != action.contactId),
+                filtered: _.filter(state.filtered,item => item.userId != action.contactId),
             }
         }
         case actions.contact.SET_LIST:{

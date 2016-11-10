@@ -34,20 +34,26 @@ const testMessages = {
     }]
 };
 
-function messages(state=testMessages,action){
+function messages(state={
+    messages:[],
+    filtered:[],
+    testMessages
+    },action){
     switch(action.type){
         case actions.message.ADD_MESSAGE:{
             const userId = action.message.userId
             state[userId] = state[userId] || []
             const message = {
                 id: action.message.id,
+                userId: action.message.userId,
                 type: action.message.type,
                 text: action.message.text,
                 from: action.message.from,
                 date: action.message.date,
             }
             //state[userId].push(message)
-            state[userId] = [message].concat(state[userId]);
+            state[userId].messages = [message].concat(state[userId].messages);
+            state[userId].filtered = [message].concat(state[userId].filtered);
             return state
         }
         case actions.message.REMOVE_MESSAGE:{
@@ -60,6 +66,22 @@ function messages(state=testMessages,action){
         }
         case actions.message.LOAD_MESSAGES:{
             return Object.assign (state,action.messages)
+        }
+
+        case actions.message.SEARCH_MESSAGE:{
+            const userId = action.message.userId
+            var filtred
+            if (action.messageText) {
+                    filtred = _.filter(state[userId].messages,item => {
+                    return item.text.indexOf(action.messageText)>=0;
+                })
+            }else{
+                filtred = state[userId].messages
+            }
+            return {
+                messages: state[userId].messages,
+                filtered: filtred
+            }
         }
         default:
             return state

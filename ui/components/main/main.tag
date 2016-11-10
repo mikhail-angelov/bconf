@@ -26,9 +26,9 @@
 
                 <chatmenu if={search} chatSearchOpen={chatSearchOpen} />
 
-                <chatsearch if={!search} chatSearchClose={chatSearchClose} />
+                <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
-                <chat class="chat" user={user} messages={messages} accountFoto={accountFoto} />
+                <chat class="chat" user={user} messages={messages.filtered} accountFoto={accountFoto} />
 
                 <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
 
@@ -52,7 +52,7 @@ this.messages = store.getState().messages['test'];
 this.addContact = ()=>{
     console.log('add');
     const action = actions.addContact({
-                userId: 'any',
+                userId: 'id:' + Math.floor((Math.random() * 100) + 1),
                 firstName: 'name' + Math.floor((Math.random() * 100) + 1),
                 secondName: 'secondname',
                 info: 'some information'
@@ -62,22 +62,21 @@ this.addContact = ()=>{
 }
 
 this.removeContact = (contactId)=>{
-    console.log('contact removed',contactId)
+    console.log('contact')
     const action = actions.removeContact(contactId)
-
     store.dispatch(action)
     this.update()
     console.log('contact removed')
 }
+
 this.searchContact = (searchText)=>{
-    
-    console.log('searched')
+    console.log('searching')
     const action = actions.searchContact(searchText)
     store.dispatch(action)
     this.update()
     console.log('contact searched')
-    
 }
+
 
 this.user = {firstname:'Ivan', secondname:'Dmitrich'};
 
@@ -144,6 +143,15 @@ this.sendMessageButton = (e)=>{
         this.update();
 } 
 }
+
+this.searchMessage = (messageText)=> {
+    console.log('start searching msg');
+    const action = actions.searchMessage(messageText);
+    store.dispatch(action);
+    this.update();
+    console.log('message searched')
+}
+
 
 
 this.status = 'Status';

@@ -1,7 +1,8 @@
 const props = {
     LOAD_MESSAGES: 'loadMessages',
     ADD_MESSAGE: 'addMessage',
-    REMOVE_MESSAGE: 'removeMessage'
+    REMOVE_MESSAGE: 'removeMessage',
+    SEARCH_MESSAGE: 'searchMessage'
 }
 
 function loadMessages(messages){
@@ -25,9 +26,17 @@ function removeMessage(message){
     }
 }
 
+function searchMessage(messageText){
+    return {
+        type: props.SEARCH_MESSAGE,
+        messageText
+    }
+}
+
 module.exports = {
     message: props,
     loadMessages,
     addMessage,
-    removeMessage
+    removeMessage,
+    searchMessage
 }

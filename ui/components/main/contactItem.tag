@@ -11,7 +11,7 @@
     {this.opts.item.info}</div>
 
     <div class="removecontact">
-        <i class="material-icons" onclick={()=>this.opts.removecontactitem(this.opts.item.id)}>delete forever</i>
+        <i class="material-icons" onclick={()=>this.opts.removecontactitem(this.opts.item.userId)}>delete forever</i>
     </div>
 
 </div>
