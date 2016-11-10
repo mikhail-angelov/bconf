@@ -4,7 +4,7 @@ task list
 
 Ivan
 - make message filter
-- make contact filter
++ make contact filter
 + redesign left panel as vk
 
 Mikhail
