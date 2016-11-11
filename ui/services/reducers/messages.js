@@ -14,8 +14,7 @@
 const actions = require('../actions/index.js')
 const _ = require('lodash')
 
-const testMessages = {
-    'test':[{
+const testMessages = [{
         text:'hey',
         type:'in',
         from: {
@@ -31,13 +30,13 @@ const testMessages = {
             surname: 'Vasin'
         },
         date: new Date()
-    }]
-};
+    }];
 
 function messages(state={
-    messages:[],
-    filtered:[],
-    testMessages
+        'test':{
+            messages:testMessages,
+            filtered:testMessages
+        }
     },action){
     switch(action.type){
         case actions.message.ADD_MESSAGE:{
@@ -61,26 +60,28 @@ function messages(state={
 
 
             //state[userId].splice(message)
-            state[userId] = _.filter(state[userId],message => message.id != action.message.id)
+            state[userId].messages = _.filter(state[userId],message => message.id != action.message.id)
+            state[userId].filtered = _.filter(state[userId],message => message.id != action.message.id)
              return state
         }
-        case actions.message.LOAD_MESSAGES:{
-            return Object.assign (state,action.messages)
-        }
+
 
         case actions.message.SEARCH_MESSAGE:{
-            const userId = action.message.userId
+            const userId = 'test';
+            const text = action.messageText
             var filtred
             if (action.messageText) {
                     filtred = _.filter(state[userId].messages,item => {
-                    return item.text.indexOf(action.messageText)>=0;
+                    return item.text.indexOf(text)>=0;
                 })
             }else{
                 filtred = state[userId].messages
             }
             return {
-                messages: state[userId].messages,
-                filtered: filtred
+                'test': {
+                    messages: state[userId].messages,
+                    filtered: filtred
+                }
             }
         }
         default:

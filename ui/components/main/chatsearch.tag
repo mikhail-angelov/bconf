@@ -14,9 +14,9 @@
         </div>
     </div>
     <script>
-        const messageText = this.messageSearchInput.textContent;
-        this.searchMsg = (messageText)=> {
-            this.opts.searchmessage(messageText);
+        this.searchMsg = ()=> {
+            const text = this.messageSearchInput.value;
+            this.opts.searchmessage(text);
         }
     </script>
     <style>

@@ -29,7 +29,7 @@ function removeMessage(message){
 function searchMessage(messageText){
     return {
         type: props.SEARCH_MESSAGE,
-        messageText
+        messageText: messageText
     }
 }
 

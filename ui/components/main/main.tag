@@ -144,9 +144,9 @@ this.sendMessageButton = (e)=>{
 } 
 }
 
-this.searchMessage = (messageText)=> {
+this.searchMessage = (text)=> {
     console.log('start searching msg');
-    const action = actions.searchMessage(messageText);
+    const action = actions.searchMessage(text);
     store.dispatch(action);
     this.update();
     console.log('message searched')
