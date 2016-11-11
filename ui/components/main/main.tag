@@ -41,6 +41,9 @@
 const store = require('../../services/store')
 const actions = require('../../services/actions/index.js')
 
+const openSocketAction = actions.openWS()
+store.dispatch(openSocketAction);
+
 store.subscribe(()=>{
     console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
@@ -117,15 +120,10 @@ this.sendMessage = (e)=>{
             })
             store.dispatch(action)
 
-            const echo = actions.addMessage({
-                id:'any',
-                userId:'test',
-                text: value +' your self',
-                type:'in',
-                from: { name:'echo', surname:''},
-                date: new Date()
-            })
+            const echo = actions.sendWSMessage(value)
             store.dispatch(echo)
+
+
 
 
             console.log(this.messages);
