@@ -33,9 +33,15 @@ const testMessages = [{
     }];
 
 function messages(state={
-        'test':{
-            messages:testMessages,
-            filtered:testMessages
+        active:  'test',
+        filtered: testMessages,
+        chats:{
+            'test':{
+                messages:testMessages,
+            },
+            'test1':{
+                messages:testMessages
+            }
         }
     },action){
     switch(action.type){
@@ -52,7 +58,7 @@ function messages(state={
             }
             //state[userId].push(message)
             state[userId].messages = [message].concat(state[userId].messages);
-            state[userId].filtered = [message].concat(state[userId].filtered);
+            state.filtered = [message].concat(state.filtered);
             return state
         }
         case actions.message.REMOVE_MESSAGE:{
@@ -60,8 +66,8 @@ function messages(state={
 
 
             //state[userId].splice(message)
-            state[userId].messages = _.filter(state[userId],message => message.id != action.message.id)
-            state[userId].filtered = _.filter(state[userId],message => message.id != action.message.id)
+            //state[userId].messages = _.filter(state[userId],message => message.id != action.message.id)
+           // state.filtered = _.filter(state[userId],message => message.id != action.message.id)
              return state
         }
 
@@ -84,6 +90,12 @@ function messages(state={
                 }
             }
         }
+        case actions.message.SET_ACTIVE:{
+            state.active = action.active;
+            state.filtered = state.chats[state.active];
+            return state
+        }
+
         default:
             return state
     }

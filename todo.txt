@@ -1,5 +1,15 @@
 task list
 
+11/11
+Ivan 
++ make message filter
+- make chat selection flow
++ make sure screen update on new message
+
+Mikhail
++ integrate message send 
+- contact crud network api
+
 8/11
 
 Ivan

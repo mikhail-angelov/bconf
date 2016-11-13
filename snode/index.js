@@ -27,7 +27,7 @@ wss.on('connection', function connection(ws) {
         console.log('on message')
         // Broadcast to everyone else.
         wss.clients.forEach(function each(client) {
-            if (client !== ws) client.send(data);
+            if (client == ws) client.send(data);
         })
     })
 })

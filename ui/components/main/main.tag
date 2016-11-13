@@ -28,7 +28,7 @@
 
                 <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
-                <chat class="chat" user={user} messages={messages.filtered} accountFoto={accountFoto} />
+                <chat class="chat" user={user} messages={messages} accountFoto={accountFoto} />
 
                 <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
 
@@ -47,10 +47,11 @@ store.dispatch(openSocketAction);
 store.subscribe(()=>{
     console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
-    this.messages = store.getState().messages['test'];
+    this.messages = store.getState().messages.filtered;
+    this.update();
 })
 this.contacts = store.getState().contacts;
-this.messages = store.getState().messages['test'];
+this.messages = store.getState().messages.filtered;
 
 this.addContact = ()=>{
     console.log('add');
