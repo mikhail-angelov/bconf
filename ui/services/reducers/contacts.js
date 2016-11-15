@@ -1,23 +1,22 @@
 const actions = require('../actions/index.js')
 const _ = require('lodash')
 
-const test = {
-    'filtered':[{
+const test = [{
         firstName: 'Vasya',
         secondName: 'Vasin',
-        userId: 'test',
+        userId: 'test1',
         info: 'some info'
     },{
 
         firstName: 'Petya',
         secondName: 'Petin',
-        userId: 'test1',
+        userId: 'test2',
         info: 'some info'
     }]
-}
+
 function contacts(state={
-    contacts:[],
-    filtered:[]
+    contacts:test,
+    filtered:test
 },action){
     switch(action.type){
         case actions.contact.ADD:{
