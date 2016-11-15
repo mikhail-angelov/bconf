@@ -11,30 +11,33 @@
                     <useraccountinfo user_name={user} status={status} updatestatus={updatestatus}/>
                 </div>
 
-                <div class="searchbar" if={state==='contacts'}>
+                <div class="searchbar" if={isContactsState() || isChatsState()}>
                     <searchbar contacts={contacts} searchContact={searchContact} />
                 </div>
 
-                <div class="contacts toflex" if={state=='contacts'}>
+                <div class="contacts toflex" if={isContactsState()}>
                     <contacts removeContact={removeContact} contacts={contacts.filtered} setActiveChat={setActiveChat} />
                 </div>
 
-                <chatlist if={state=='chatlist'} />
+                <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
 
                 <div class="tabs-field">
-                    <tabs contactList={contactList} chatList={chatList} accountList={accountList} state={state} />
+                    <tabs changeState={chageState} />
                 </div>
             </div>
-            <div class='col-xs-9 toflex white align_bottom' style="margin-right: 10px; padding: 0; flex: 100%;">
+            <div if={isChatsState()} class='col-xs-9 toflex white align_bottom' style="margin-right: 10px; padding: 0; flex: 100%;">
 
                 <chatmenu if={search} chatSearchOpen={chatSearchOpen} />
 
                 <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
-                <chat class="chat" user={user} messages={messages.filtered} accountFoto={accountFoto} />
+                <chat class="chat"  user={user} messages={chats.filtered} accountFoto={accountFoto} />
 
                 <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
 
+            </div>
+            <div if={isContactsState()}>
+            contact info
             </div>
         </div>
     </div>
@@ -50,17 +53,27 @@ store.dispatch(openSocketAction);
 store.subscribe(()=>{
     console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
-    this.messages = store.getState().messages;
+    this.chats = store.getState().messages;
+    this.state = store.getState().uiState;
     this.update();
 })
 this.contacts = store.getState().contacts;
-this.messages = store.getState().messages;
+this.chats = store.getState().messages;
+this.state = store.getState().uiState;
+
+this.isContactsState = ()=>this.state === actions.uiState.CONTACTS;
+this.isChatsState = ()=>this.state === actions.uiState.CHATS;
+this.isSettingsState = ()=>this.state === actions.uiState.SETTINGS;
+
+this.chageState = newState=>{
+    const action = actions.newState(newState)
+    store.dispatch(action)
+}
 
 this.setActiveChat = (chatId)=>{
     console.log('contact select');
     const action = actions.setActiveChat(chatId);
     store.dispatch(action);
-    this.update();
 }
 
 this.addContact = ()=>{
@@ -134,20 +147,11 @@ this.sendMessage = (e)=>{
             const echo = actions.sendWSMessage(value)
             store.dispatch(echo)
 
-            console.log(this.messages);
             e.target.value = '';
             this.update();
             }
         e.target.value = '';
     }
-
-this.sendMessageButton = (e)=>{
-    console.log('send');
-    var text = document.getElementById('text');
-    text.value = text.value.concat(this.messages);
-    e.target.text.value = '';
-        this.update();
-} 
 }
 
 this.searchMessage = (text)=> {

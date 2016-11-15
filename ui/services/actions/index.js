@@ -3,6 +3,7 @@ const contact = require('./contact')
 const message = require('./message')
 const chats = require('./chats')
 const ws = require('./ws')
+const uiState = require('./uiState')
 
 module.exports = Object.assign(
     {},
@@ -10,5 +11,6 @@ module.exports = Object.assign(
     contact,
     message,
     chats,
-    ws
+    ws,
+    uiState
 )

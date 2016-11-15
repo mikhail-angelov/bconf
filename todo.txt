@@ -1,9 +1,17 @@
 task list
+15/11
+
+Ivan 
+- create contacts view
+- change chats model
+
+Mikhail
+- contact crud network api
 
 11/11
 Ivan 
 + make message filter
-- make chat selection flow
++ make chat selection flow
 + make sure screen update on new message
 
 Mikhail
