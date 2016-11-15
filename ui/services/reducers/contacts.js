@@ -4,15 +4,20 @@ const _ = require('lodash')
 const test = {
     'filtered':[{
         firstName: 'Vasya',
-        secondName: 'Pupkin',
-        userId: '57',
+        secondName: 'Vasin',
+        userId: 'test',
+        info: 'some info'
+    },{
+
+        firstName: 'Petya',
+        secondName: 'Petin',
+        userId: 'test1',
         info: 'some info'
     }]
 }
 function contacts(state={
     contacts:[],
-    filtered:[],
-    test
+    filtered:[]
 },action){
     switch(action.type){
         case actions.contact.ADD:{

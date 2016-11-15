@@ -2,7 +2,8 @@ const props = {
     LOAD_MESSAGES: 'loadMessages',
     ADD_MESSAGE: 'addMessage',
     REMOVE_MESSAGE: 'removeMessage',
-    SEARCH_MESSAGE: 'searchMessage'
+    SEARCH_MESSAGE: 'searchMessage',
+    SET_ACTIVE: 'setActiveChat'
 }
 
 function loadMessages(messages){
@@ -32,11 +33,18 @@ function searchMessage(messageText){
         messageText: messageText
     }
 }
+function setActiveChat(active){
+    return {
+        type: props.SET_ACTIVE,
+        active: active
+    }
+}
 
 module.exports = {
     message: props,
     loadMessages,
     addMessage,
     removeMessage,
-    searchMessage
+    searchMessage,
+    setActiveChat
 }

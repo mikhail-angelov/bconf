@@ -32,16 +32,31 @@ const testMessages = [{
         date: new Date()
     }];
 
+    const testMessages1 = [{
+        text:'hey',
+        type:'in',
+        from: {
+            name: 'Ivan',
+            surname:'Dmitriev'
+        },
+        date: new Date()
+    },{
+        text: 'hello',
+        type:'out',
+        from: {
+            name: 'Petya',
+            surname: 'Petin'
+        },
+        date: new Date()
+    }];
+
 function messages(state={
-        active:  'test',
+        active:  'test1',
         filtered: testMessages,
         chats:{
-            'test':{
-                messages:testMessages,
-            },
-            'test1':{
-                messages:testMessages
-            }
+            'test1':testMessages,
+            'test2':testMessages1
+            
         }
     },action){
     switch(action.type){
@@ -73,7 +88,7 @@ function messages(state={
 
 
         case actions.message.SEARCH_MESSAGE:{
-            const userId = 'test';
+            const userId = state.active;
             const text = action.messageText
             var filtred
             if (action.messageText) {
@@ -84,7 +99,7 @@ function messages(state={
                 filtred = state[userId].messages
             }
             return {
-                'test': {
+                'test':{
                     messages: state[userId].messages,
                     filtered: filtred
                 }
@@ -95,7 +110,7 @@ function messages(state={
             state.filtered = state.chats[state.active];
             return state
         }
-
+        
         default:
             return state
     }

@@ -16,8 +16,11 @@
                 </div>
 
                 <div class="contacts toflex" if={state=='contacts'}>
-                    <contacts removeContact={removeContact} contacts={contacts.filtered} />
+                    <contacts removeContact={removeContact} contacts={contacts.filtered} setActiveChat={setActiveChat} />
                 </div>
+
+                <chatlist if={state=='chatlist'} />
+
                 <div class="tabs-field">
                     <tabs contactList={contactList} chatList={chatList} accountList={accountList} state={state} />
                 </div>
@@ -28,7 +31,7 @@
 
                 <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
-                <chat class="chat" user={user} messages={messages} accountFoto={accountFoto} />
+                <chat class="chat" user={user} messages={messages.filtered} accountFoto={accountFoto} />
 
                 <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
 
@@ -47,16 +50,23 @@ store.dispatch(openSocketAction);
 store.subscribe(()=>{
     console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
-    this.messages = store.getState().messages.filtered;
+    this.messages = store.getState().messages;
     this.update();
 })
 this.contacts = store.getState().contacts;
-this.messages = store.getState().messages.filtered;
+this.messages = store.getState().messages;
+
+this.setActiveChat = (chatId)=>{
+    console.log('contact select');
+    const action = actions.setActiveChat(chatId);
+    store.dispatch(action);
+    this.update();
+}
 
 this.addContact = ()=>{
     console.log('add');
     const action = actions.addContact({
-                userId: 'id:' + Math.floor((Math.random() * 100) + 1),
+                userId: 'test' + Math.floor((Math.random() * 2) + 1),
                 firstName: 'name' + Math.floor((Math.random() * 100) + 1),
                 secondName: 'secondname',
                 info: 'some information'
@@ -114,7 +124,7 @@ this.sendMessage = (e)=>{
             const action = actions.addMessage({
                 id:'any',
                 userId:'test',
-                text:value,
+                text: value,
                 type:'out',
                 from: 'me',
                 date: new Date()
@@ -123,9 +133,6 @@ this.sendMessage = (e)=>{
 
             const echo = actions.sendWSMessage(value)
             store.dispatch(echo)
-
-
-
 
             console.log(this.messages);
             e.target.value = '';

@@ -1,4 +1,4 @@
-<contact-item>
+<contact-item onclick={setActiveChat} >
 <div class='contact-item'>
 <div class="account-foto">
     <a class="friend_photo" href="#">
@@ -15,6 +15,13 @@
     </div>
 
 </div>
+<script>
+    this.setActiveChat = ()=> {
+        console.log('setactivechat')
+        const active = this.opts.item.userId;
+        this.opts.setactive(active);
+    }
+</script>
 <style>
     .contact-item {
         display: flex;
