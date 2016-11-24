@@ -5,7 +5,7 @@ const actions = require('../actions')
 const sock = {
   ws: null,
   URL: 'echo.websocket.org',
-  wsDipatcher: (store)=> (msg) => {
+  wsDipatcher: (store)=>(msg) => {
       const action = actions.addMessage({
                 id:'any',
                 userId:'test',
