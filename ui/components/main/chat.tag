@@ -33,7 +33,7 @@ this.getUser = (message)=>{
     if(message.type === 'out'){
         return this.opts.user.firstname + " " + this.opts.user.secondname
     }else{
-        return message.from.name + " " + message.from.surname
+        return this.opts.messages.chats[this.opts.messages.active].contact.firstName + " " + this.opts.messages.chats[this.opts.messages.active].contact.secondName
     }
 }
 

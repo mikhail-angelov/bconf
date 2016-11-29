@@ -3,9 +3,9 @@
 
 <form>
   
-  <material-input label="User Name"></material-input>
+  <material-input name="user_name" label="User Name"></material-input>
   
-  <material-input label="User Password"></material-input>
+  <material-input name="user_password" label="User Password"></material-input>
   
   <material-checkbox name="checker">
     Remember me
@@ -23,9 +23,18 @@
 <a href='' onclick={this.opts.onforgetpassword}>Forget Password</a>
 </div>
 <script>
+const store = require('../../services/store')
+const actions = require('../../services/actions/index.js')
+
 this.state = 'signin'
 
 this.onLogin = ()=>{
+    const credentials = {
+        email:this.user_name.ownerDocument.activeElement.value,
+        password:this.user_password.ownerDocument.activeElement.value
+    }
+    const action = actions.doLogin(credentials)
+    
     console.log('login')
     riot.route('main')
 }
