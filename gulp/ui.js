@@ -6,10 +6,18 @@ const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require("webpack-dev-server");
 const connect = require('gulp-connect');
 const spawn = require('child_process').spawn;
+const plumber = require('gulp-plumber');
+const notify = require('gulp-notify');
 var node;
 
 gulp.task('riot', () => {
   return gulp.src('ui/index.js')
+    .pipe(plumber({ errorHandler: function(err) {
+              notify.onError({
+                  title: "Gulp error in " + err.plugin,
+                  message:  err.toString()
+              })(err);
+          }}))
     .pipe(webpackStream(webpackConfig))
     .pipe(gulp.dest('ui/dist/'))
     .pipe(connect.reload());
