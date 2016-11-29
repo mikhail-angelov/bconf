@@ -22,7 +22,7 @@
                 <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
 
                 <div class="tabs-field">
-                    <tabs changeState={changeState} />
+                    <tabs changeState={changeState} active_tab={state}/>
                 </div>
 
             </div>
@@ -88,8 +88,12 @@ this.setActiveChat = (chatId)=>{
     this.update();
 }
 this.startChat = (contact)=>{
+    console.log('yo')
+    const newStateAction = actions.newState(actions.uiState.CHATS);
+    store.dispatch(newStateAction);
     const action = actions.startChat(contact);
     store.dispatch(action);
+    this.setActiveChat(contact.userId)
 }
 
 this.addContact = ()=>{

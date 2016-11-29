@@ -50,24 +50,9 @@
         </div>
     </div>
     <script>
-
-        const actions = require('../../services/actions/index.js')
-        this.contactList = ()=>  changeState.bind(this)(actions.uiState.CONTACTS)
-        this.chatList = ()=>  changeState.bind(this)(actions.uiState.CHATS)
-        this.accountList = ()=>  changeState.bind(this)(actions.uiState.SETTINGS)
-
-        this.isContactsState = ()=>this.activeState === actions.uiState.CONTACTS;
-        this.isChatsState = ()=>this.activeState === actions.uiState.CHATS;
-        this.isSettingsState = ()=>this.activeState === actions.uiState.SETTINGS;
-
-        function changeState(state){
-            this.activeState = state;
-            this.opts.changestate(state);
-        }
     
     this.startNewChat = ()=>{
         this.opts.chatwith(this.opts.contact);
-        this.chatList = ()=>  changeState.bind(this)(actions.uiState.CHATS);
     }
 
     </script>

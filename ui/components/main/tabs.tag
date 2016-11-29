@@ -16,14 +16,12 @@
         this.chatList = ()=>  changeState.bind(this)(actions.uiState.CHATS)
         this.accountList = ()=>  changeState.bind(this)(actions.uiState.SETTINGS)
 
-        this.activeState = actions.uiState.CONTACTS
-
-        this.isContactsState = ()=>this.activeState === actions.uiState.CONTACTS;
-        this.isChatsState = ()=>this.activeState === actions.uiState.CHATS;
-        this.isSettingsState = ()=>this.activeState === actions.uiState.SETTINGS;
+       
+        this.isContactsState = ()=>this.opts.active_tab === actions.uiState.CONTACTS;
+        this.isChatsState = ()=>this.opts.active_tab === actions.uiState.CHATS;
+        this.isSettingsState = ()=>this.opts.active_tab === actions.uiState.SETTINGS;
 
         function changeState(state){
-            this.activeState = state;
             this.opts.changestate(state)
         }
     </script>
