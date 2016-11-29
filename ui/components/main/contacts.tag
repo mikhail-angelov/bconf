@@ -1,17 +1,15 @@
 <contacts>
 
-    <contact-item each={item in this.opts.contacts} contact={item} chatWith={startChatWithContact} removeContactItem={removeContactItem} 
-    setActive={activeContact} accountInformation={information} />
+    <contact-item each={item in this.opts.contacts} contact={item} remove_contact_item={removeContactItem} 
+    set_active={activeContact} account_information={information} />
           
 <script>
 
 this.activeContact = (active)=>{
     this.opts.setactivechat(active);
 }
-this.startChatWithContact = (contact) =>{
-    this.opts.startchat(contact)
-}
-this.information = (contact)=>this.opts.choosecontact(contact);
+
+this.information = (contact)=>this.opts.choose_contact(contact);
 this.removeContactItem = (contactId)=>this.opts.removecontact(contactId)
 
 </script>

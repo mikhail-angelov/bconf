@@ -10,7 +10,7 @@
     {this.opts.contact.status}</div>
 
     <div class="removecontact">
-        <i class="material-icons" onclick={()=>this.opts.removecontactitem(this.opts.contact.userId)}>delete forever</i>
+        <i class="material-icons" onclick={()=>this.opts.remove_contact_item(this.opts.contact.userId)}>delete forever</i>
     </div>
 
 </div>
@@ -18,16 +18,16 @@
     this.setActiveChat = ()=> {
         console.log('setactivechat')
         const active = this.opts.contact.userId;
-        this.opts.setactive(active);
+        this.opts.set_active(active);
     }
 
     this.chatStarted = ()=>{
         //- this.opts.chatwith(this.opts.contact);
-        this.opts.accountinformation(this.opts.contact);
+        this.opts.account_information(this.opts.contact);
     }
 
     this.selectAccount = ()=>{
-        this.opts.accountinformation(this.opts.contact);
+        this.opts.account_information(this.opts.contact);
     }
 
 </script>

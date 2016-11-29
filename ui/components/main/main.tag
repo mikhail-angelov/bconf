@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="contacts toflex" if={isContactsState()}>
-                    <contacts removeContact={removeContact} contacts={contacts.filtered} chooseContact={chooseContact}  startChat={startChat} />
+                    <contacts removeContact={removeContact} contacts={contacts.filtered} choose_contact={chooseContact}  startChat={startChat} />
                 </div>
 
                 <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
@@ -88,7 +88,6 @@ this.setActiveChat = (chatId)=>{
     this.update();
 }
 this.startChat = (contact)=>{
-    console.log('yo')
     const newStateAction = actions.newState(actions.uiState.CHATS);
     store.dispatch(newStateAction);
     const action = actions.startChat(contact);
