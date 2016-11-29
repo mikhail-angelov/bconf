@@ -24,16 +24,29 @@ app.get('/api/contact', (req, res) => {
     ])
 })
 
-app.post('/login', (req, res) => {
-    console.log('/login')
-    res.end({
+const TOKEN = {
         token:'test token'
-    })
+    };
+app.post('/login', (req, res) => {
+    console.log('/login', req.body)
+    res.json(TOKEN)
 })
 app.post('/logout', (req, res) => {
     console.log('/logout')
 
     res.json({})
+})
+app.post('/validate', (req, res) => {
+    console.log('/validate')
+    res.json(TOKEN)
+})
+app.post('/forgotPassword', (req, res) => {
+    console.log('/forgotPassword',req.body)
+    res.json(TOKEN)
+})
+app.post('/signIn', (req, res) => {
+    console.log('/signIn',req.body)
+    res.json(TOKEN)
 })
 
 //ws
