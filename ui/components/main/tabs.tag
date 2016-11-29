@@ -33,7 +33,6 @@
             bottom: 0px;
             height:35px;
             width: 100%;
-            /*border-top: solid 1px #e4e6e9;*/
             display: flex;
             justify-content: flex-start;
         }

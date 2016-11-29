@@ -1,6 +1,6 @@
 const props = {
     uiState: {
-        SET: 'setUISatate',
+        SET: 'setUIState',
 
         CONTACTS: 'contacts',
         CHATS: 'chats',

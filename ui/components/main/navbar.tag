@@ -9,9 +9,13 @@
             <i class="material-icons">arrow_back</i>
         </material-button>
 
-        <h1> BCONF </h1>
+        <h1 style="color: white;"> BCONF </h1>
 
-        <material-button class="ui rounded-buttons-position" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" onclick={addContact} >
+        <material-button class="ui rounded-buttons-position" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" onclick={this.opts.addcontact} >
+            <i class="material-icons">add</i>
+        </material-button>
+        
+        <material-button class="ui rounded-buttons-position" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" onclick={this.opts.startchat} >
             <i class="material-icons">add</i>
         </material-button>
 
@@ -19,11 +23,12 @@
 </div>
 <script>
     this.onLogin = ()=>{
+        this.opts.onback();
         console.log('onBack')
     }
-    this.addContact = ()=>{
-        this.opts.addcontact()
-    }
+    // this.addContact = ()=>{
+    //     this.opts.addcontact();
+    // }
 </script>
 <style>
 

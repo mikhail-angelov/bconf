@@ -1,45 +1,57 @@
 <main>
     <div class='main'>
 
-        <navbar style="margin-bottom: 15px;" addContact={addContact}/>
+        <navbar style="margin-bottom: 15px;" addContact={addContact} onBack={onBack}/>
 
         <div class='row' style="margin-bottom: 15px;">
 
-            <div class='col-xs-3 toflex white' style="padding: 0px; margin: 0 10px; position: relative;">
+            <div class='col-xs-3 toflex white position_of_left_side'>
 
-                <div class="useraccountinfo"  if={state==='accountlist'}>
+                <div class="useraccountinfo"  if={isSettingsState()}>
                     <useraccountinfo user_name={user} status={status} updatestatus={updatestatus}/>
                 </div>
 
                 <div class="searchbar" if={isContactsState() || isChatsState()}>
-                    <searchbar contacts={contacts} searchContact={searchContact} />
+                    <searchbar searchContact={searchContact} />
                 </div>
 
                 <div class="contacts toflex" if={isContactsState()}>
-                    <contacts removeContact={removeContact} contacts={contacts.filtered} setActiveChat={setActiveChat} />
+                    <contacts removeContact={removeContact} contacts={contacts.filtered} chooseContact={chooseContact}  startChat={startChat} />
                 </div>
 
                 <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
 
                 <div class="tabs-field">
-                    <tabs changeState={chageState} />
+                    <tabs changeState={changeState} />
                 </div>
+
             </div>
-            <div if={isChatsState()} class='col-xs-9 toflex white align_bottom' style="margin-right: 10px; padding: 0; flex: 100%;">
+
+            <div if={isChatsState()} class='col-xs-9 toflex white position_of_right_side'>
 
                 <chatmenu if={search} chatSearchOpen={chatSearchOpen} />
 
                 <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
-                <chat class="chat"  user={user} messages={chats.filtered} accountFoto={accountFoto} />
+                <chat class="chat"  user={user} messages={chats} contact={chats.contact} accountFoto={accountFoto} />
 
                 <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
 
             </div>
-            <div if={isContactsState()}>
-            contact info
+            
+            <div if={isContactsState()}  class='col-xs-9 white toflex position_of_right_side'>
+                
+                <div show={!contactSelect} class="contact_not_selected">
+                    <i class="material-icons font_size">account_circle</i>
+                    <p>choose contact from your contactlist</p>
+                </div>
+
+                <contactinformation class="contact_information" show={contactSelect} changeState={changeState} contact={selectedContact} chatWith={startChat}/>
+            
             </div>
+        
         </div>
+   
     </div>
 
     <script>
@@ -53,43 +65,48 @@ store.dispatch(openSocketAction);
 store.subscribe(()=>{
     console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
-    this.chats = store.getState().messages;
+    this.chats = store.getState().chats;
     this.state = store.getState().uiState;
     this.update();
 })
 this.contacts = store.getState().contacts;
-this.chats = store.getState().messages;
+this.chats = store.getState().chats;
 this.state = store.getState().uiState;
 
 this.isContactsState = ()=>this.state === actions.uiState.CONTACTS;
 this.isChatsState = ()=>this.state === actions.uiState.CHATS;
 this.isSettingsState = ()=>this.state === actions.uiState.SETTINGS;
 
-this.chageState = newState=>{
+this.changeState = newState =>{
     const action = actions.newState(newState)
     store.dispatch(action)
 }
 
 this.setActiveChat = (chatId)=>{
-    console.log('contact select');
     const action = actions.setActiveChat(chatId);
+    store.dispatch(action);
+    this.update();
+}
+this.startChat = (contact)=>{
+    const action = actions.startChat(contact);
     store.dispatch(action);
 }
 
 this.addContact = ()=>{
-    console.log('add');
     const action = actions.addContact({
-                userId: 'test' + Math.floor((Math.random() * 2) + 1),
+                userId: 'test' + Math.floor((Math.random() * 100) + 1),
                 firstName: 'name' + Math.floor((Math.random() * 100) + 1),
                 secondName: 'secondname',
-                info: 'some information'
+                info: 'some information about this contact',
+                status: 'I`m cool',
+                country: 'USA',
+                city: 'California',
+                phoneNumber: '123456789'
             });
     store.dispatch(action);
-    this.update();
 }
 
 this.removeContact = (contactId)=>{
-    console.log('contact')
     const action = actions.removeContact(contactId)
     store.dispatch(action)
     this.update()
@@ -97,37 +114,30 @@ this.removeContact = (contactId)=>{
 }
 
 this.searchContact = (searchText)=>{
-    console.log('searching')
     const action = actions.searchContact(searchText)
     store.dispatch(action)
     this.update()
-    console.log('contact searched')
 }
 
+this.contactSelect = false;
+
+this.chooseContact = (contact)=>{
+    this.selectedContact = contact;
+    this.contactSelect = true;
+    this.update();
+}
 
 this.user = {firstname:'Ivan', secondname:'Dmitrich'};
-
-
-this.accountFoto = ()=> {
-    const foto = accountFoto({
-        photo: 'cool.png'
-    })
-}
 
 this.onBack = ()=>{
     console.log('to welcome')
     riot.route('welcome')
 }
 
-
-
-
 this.onLogin = ()=>{
     console.log('login')
     riot.route('auth')
 }
-
-
 
 this.sendMessage = (e)=>{
     console.log(e.keyCode, e.shiftKey, e.ctrlKey)
@@ -155,7 +165,6 @@ this.sendMessage = (e)=>{
 }
 
 this.searchMessage = (text)=> {
-    console.log('start searching msg');
     const action = actions.searchMessage(text);
     store.dispatch(action);
     this.update();
@@ -273,21 +282,29 @@ this.updatestatus = (newstatus)=>{
         .col-xs-7,
         .col-xs-8,
         .col-xs-9 {
-            border-right: 1px solid #e7e8ec;
-            border-left: 1px solid #e7e8ec;
             flex-direction: column;
             flex: 100%;
         }
         
-        .main .col-xs-8,
-        .col-xs-9 {}
-        
         .toflex {
             display: flex;
         }
+
+        .position_of_right_side{
+            margin-right: 10px;
+            padding: 0;
+            position: relative;
+        }
+        .position_of_left_side{
+             padding: 0px; 
+             margin: 0 10px; 
+             position: relative;
+             overflow-x: hidden;
+        }
         
         .contacts {
-            overflow: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
             flex-flow: column nowrap;
             flex: 1 1 100%;
             margin-bottom: 35px;
@@ -314,6 +331,22 @@ this.updatestatus = (newstatus)=>{
         
         .align_bottom {
             justify-content: flex-end;
+        }
+        .contact_not_selected {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .contact_information {
+            display: flex;
+            height: 100%;
+            margin: 0 20px;
+        }
+        .font_size {
+            font-size: 100px;
+            color: #cc0044;
         }
     </style>
 </main>

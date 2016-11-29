@@ -1,34 +1,45 @@
-<contact-item onclick={setActiveChat} >
-<div class='contact-item'>
+<contact-item onclick={chatStarted} >
+<div class='contact-item {selected: this.selected}'>
 <div class="account-foto">
     <a class="friend_photo" href="#">
-        <img class="account_photo_img" src={this.opts.item.photo}>
+        <img class="account_photo_img" src={this.opts.contact.photo}>
     </a>
 </div>
 
-
-<div class="account-name">{this.opts.item.firstName}</br>
-    {this.opts.item.info}</div>
+<div class="account-name">{this.opts.contact.firstName}</br>
+    {this.opts.contact.status}</div>
 
     <div class="removecontact">
-        <i class="material-icons" onclick={()=>this.opts.removecontactitem(this.opts.item.userId)}>delete forever</i>
+        <i class="material-icons" onclick={()=>this.opts.removecontactitem(this.opts.contact.userId)}>delete forever</i>
     </div>
 
 </div>
 <script>
     this.setActiveChat = ()=> {
         console.log('setactivechat')
-        const active = this.opts.item.userId;
+        const active = this.opts.contact.userId;
         this.opts.setactive(active);
     }
+
+    this.chatStarted = ()=>{
+        //- this.opts.chatwith(this.opts.contact);
+        this.opts.accountinformation(this.opts.contact);
+    }
+
+    this.selectAccount = ()=>{
+        this.opts.accountinformation(this.opts.contact);
+    }
+
 </script>
 <style>
     .contact-item {
         display: flex;
         flex-flow: row nowrap;
-        padding: 5 15;
-        flex-basis: 100%;
         border-top: 1px solid #e7e8ec;
+    }
+    .contact-item:hover {
+        cursor: pointer;
+        background: #e9eaec;
     }
     
     .account_photo_img {

@@ -5,13 +5,27 @@ const test = [{
         firstName: 'Vasya',
         secondName: 'Vasin',
         userId: 'test1',
-        info: 'some info'
+        info: 'some information about this contact',
+        status: 'I`m cool',
+        country: 'USA',
+        city: 'California',
+        phoneNumber: '123456789',
+        birthday: '1 march 1994',
+        sex: 'male',
+        date: new Date()
     },{
 
         firstName: 'Petya',
         secondName: 'Petin',
         userId: 'test2',
-        info: 'some info'
+        info: 'some information about this contact',
+        status: 'I`m cool',
+        country: 'USA',
+        city: 'California',
+        phoneNumber: '123456789',
+        birthday: '1 march 1994',
+        sex: 'male',
+        date: new Date()
     }]
 
 function contacts(state={
@@ -20,9 +34,10 @@ function contacts(state={
 },action){
     switch(action.type){
         case actions.contact.ADD:{
-            state.contacts.push(action.contact)
-            state.filtered.push(action.contact)
-            return state
+            return {
+                contacts: _.concat(state.contacts,action.contact),
+                filtered: _.concat(state.filtered,action.contact)
+            }
         }
         case actions.contact.REMOVE:{
             return {

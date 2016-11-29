@@ -1,5 +1,5 @@
 <chat class="toflex main-chat">
-    <div class="message_field" each={m in this.opts.messages}>
+    <div class="message_field" each={m in this.opts.messages.filtered}>
         <div class="check_selection">
             <i class="material-icons">check_circle</i>
         </div>
@@ -22,16 +22,15 @@
     <script>
 
 this.getAvatar = (message)=>{
-    console.log(this.opts.user)
-    if(message.from ==='me'){
-        return this.opts.user.firstname.substr(0,1) +''+ this.opts.user.secondname.substr(0,1)
+    if(message.type ==='out'){
+        return this.opts.user.firstname.substr(0,1).toUpperCase() +''+ this.opts.user.secondname.substr(0,1).toUpperCase()
     }else{
-        return message.from.name.substr(0,1) + "" + message.from.surname.substr(0,1);
+        return this.opts.messages.chats[this.opts.messages.active].contact.firstName.substr(0,1).toUpperCase() + "" + this.opts.messages.chats[this.opts.messages.active].contact.secondName.substr(0,1).toUpperCase();
     }
 }
 
 this.getUser = (message)=>{
-    if(message.from === 'me'){
+    if(message.type === 'out'){
         return this.opts.user.firstname + " " + this.opts.user.secondname
     }else{
         return message.from.name + " " + message.from.surname
@@ -80,8 +79,8 @@ this.getUser = (message)=>{
             /*flex-flow: row wrap;*/
             /* max-width: 400px; */
             /* min-width: 300px;
-    min-height: auto;
-    /* flex: 0 0 auto; */
+            min-height: auto;
+            /* flex: 0 0 auto; */
             /* height: auto; */
             /* width: auto; */
             /*border: 1px solid grey;*/

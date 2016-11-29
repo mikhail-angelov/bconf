@@ -2,7 +2,7 @@
 <div class="fixed_to_bottom">
     <div class="account_chat">
         <div class='user-account-foto toflex'>
-             <div class="account-foto">{this.opts.user_name.firstname.substr(0,1)}{this.opts.user_name.secondname.substr(0,1)}</div>
+             <div class="account-foto">{this.opts.user_name.firstname.substr(0,1).toUpperCase()}{this.opts.user_name.secondname.substr(0,1).toUpperCase()}</div>
         </div>
         <div class="textarea_emodji">
             <textarea id='text' rows="4"  onkeyup={this.opts.onsendmessage} onkeydown={keydown}  placeholder="Введите сообщение"

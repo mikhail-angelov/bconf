@@ -95,8 +95,10 @@
         }
 
         .account-foto {
+            margin: auto;
             font-size: 32px;
             font-weight: 300;
+            
         }
 
         .user-account-settings {
