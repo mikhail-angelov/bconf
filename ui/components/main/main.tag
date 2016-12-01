@@ -1,7 +1,7 @@
 <main>
     <div class='main'>
 
-        <navbar style="margin-bottom: 15px;" addContact={addContact} onBack={onBack}/>
+        <navbar style="margin-bottom: 15px;" onLogout={onLogout} addContact={addContact} onBack={onBack}/>
 
         <div class='row' style="margin-bottom: 15px;">
 
@@ -93,6 +93,14 @@ this.startChat = (contact)=>{
     const action = actions.startChat(contact);
     store.dispatch(action);
     this.setActiveChat(contact.userId)
+}
+
+this.onLogout = ()=>{
+    const user = this.user
+    store.dispatch(actions.logout(user))
+
+    console.log('logout')
+    
 }
 
 this.addContact = ()=>{

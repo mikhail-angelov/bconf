@@ -1,11 +1,11 @@
 <navbar>
 <div class='navbar toflex'>
 
-        <!--<material-button onclick={onLogin} rounded="true" style='margin-top: 10px;'>
+        <!--<material-button onclick={this.opts.onlogout} rounded="true" style='margin-top: 10px;'>
             <i class="material-icons">arrow_back</i>
         </material-button>-->
 
-        <material-button class="ui rounded-buttons-position" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" onclick={onLogin} >
+        <material-button class="ui rounded-buttons-position" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" onclick={this.opts.onlogout} >
             <i class="material-icons">arrow_back</i>
         </material-button>
 

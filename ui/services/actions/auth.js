@@ -19,16 +19,16 @@ function logoutComplete (){
     }
 }
 
-function logout (list){
+function logout (user){
     return function(dispatch, getState) {
     var state = getState();
-    return http.post('http://localhost:3333/login', credentials)
+    return http.post('http://localhost:3333/login', user)
       .then(function(result) {
           console.log('--', result)
         dispatch(logoutComplete(result));
       })
       .catch(function(err) {
-        console.log("Oops...", "Couldn't logout for user: " + credentials.user, err);
+        console.log("Oops...", "Couldn't logout for user: " + user, err);
       });
   }
 }
