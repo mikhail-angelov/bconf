@@ -14,7 +14,6 @@ const test = [{
         sex: 'male',
         date: new Date()
     },{
-
         firstName: 'Petya',
         secondName: 'Petin',
         userId: 'test2',

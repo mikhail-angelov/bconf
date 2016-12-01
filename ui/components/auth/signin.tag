@@ -33,10 +33,10 @@ this.onLogin = ()=>{
         email:this.user_name.ownerDocument.activeElement.value,
         password:this.user_password.ownerDocument.activeElement.value
     }
-    const action = actions.doLogin(credentials)
-    
+    store.dispatch(actions.login(credentials))
+
     console.log('login')
-    riot.route('main')
+    
 }
 
 </script>

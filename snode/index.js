@@ -25,10 +25,13 @@ app.get('/api/contact', (req, res) => {
 })
 
 const TOKEN = {
+        firstName:'Ivan',
+        secondName:'Dmitriev',
         token:'test token'
     };
 app.post('/login', (req, res) => {
     console.log('/login', req.body)
+    TOKEN.firstName = req.body.email
     res.json(TOKEN)
 })
 app.post('/logout', (req, res) => {

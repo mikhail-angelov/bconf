@@ -1,10 +1,15 @@
 const props = {
     uiState: {
         SET: 'setUIState',
-
+        main:{
+            LOGIN: 'login',
+            MAIN: 'main'
+        },
+        sub:{
         CONTACTS: 'contacts',
         CHATS: 'chats',
         SETTINGS: 'settings'
+        }
     },
     newState
 }

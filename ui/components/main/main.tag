@@ -73,9 +73,9 @@ this.contacts = store.getState().contacts;
 this.chats = store.getState().chats;
 this.state = store.getState().uiState;
 
-this.isContactsState = ()=>this.state === actions.uiState.CONTACTS;
-this.isChatsState = ()=>this.state === actions.uiState.CHATS;
-this.isSettingsState = ()=>this.state === actions.uiState.SETTINGS;
+this.isContactsState = ()=>this.state === actions.uiState.sub.CONTACTS;
+this.isChatsState = ()=>this.state === actions.uiState.sub.CHATS;
+this.isSettingsState = ()=>this.state === actions.uiState.sub.SETTINGS;
 
 this.changeState = newState =>{
     const action = actions.newState(newState)

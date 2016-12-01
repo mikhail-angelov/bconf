@@ -1,7 +1,10 @@
 
 const actions = require('../actions')
 
-function uiState(state=actions.uiState.CONTACTS, action){
+function uiState(state = {
+    main: actions.uiState.main.LOGIN,
+    sub: null
+}, action){
     switch(action.type){
         case actions.uiState.SET: {
             return action.state
@@ -12,3 +15,4 @@ function uiState(state=actions.uiState.CONTACTS, action){
 }
 
 module.exports = uiState
+// actions.uiState.CONTACTS
