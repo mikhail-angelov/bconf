@@ -4,8 +4,8 @@ const actions = require('../actions/index.js')
 
 
 function auth (state = {
-    name:'Guest',
-    surname:''
+    firstName:'Guest',
+    secondName:''
 },action){
     switch(action.type){
         case actions.auth.LOGIN_COMPLETE:{

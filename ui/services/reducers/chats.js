@@ -54,8 +54,7 @@ function chats(state = {
     active: 'test1',
     filtered: [],
     chats: {
-        'test1': '',
-        'test2': ''
+        
     }
 }, action) {
     switch (action.type) {

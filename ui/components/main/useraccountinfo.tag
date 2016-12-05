@@ -1,17 +1,14 @@
 <useraccountinfo class="toflex account_info">
      <div class='user-account-foto toflex'>
-         <div class="account-foto">{this.opts.user_name.firstname.substr(0,1)}{this.opts.user_name.secondname.substr(0,1)}</div>
+         <div class="account-foto">{this.opts.user_name.firstName.substr(0,1)}{this.opts.user_name.secondName.substr(0,1)}</div>
      </div>
      <div class="user-account-info toflex">
         <div class="user-account-name">
-            <h2>{this.opts.user_name.firstname} {this.opts.user_name.secondname}<h2>
+            <h2>{this.opts.user_name.firstName} {this.opts.user_name.secondName}<h2>
         </div>
         <div class="user-account-status toflex">
             <h3 onclick={onChange} show={!editable}>{this.opts.status||"change your status"}</h3>
             <input name='status' show={editable} type="text" value={this.opts.status} onkeyup={this.updateStatus} onblur={onFocus}/>
-       <!-- <material-button onclick={this.opts.changestatus} class="ui" waves-center="true" rounded="true" waves-opacity="0.6" waves-duration="600" style="background:#edeef0">
-                <i class="material-icons" style="color:black">edit</i>
-            </material-button> -->
         </div>
      </div>
 <script>
@@ -98,7 +95,7 @@
             margin: auto;
             font-size: 32px;
             font-weight: 300;
-            
+
         }
 
         .user-account-settings {

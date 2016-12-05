@@ -59,18 +59,23 @@
 const store = require('../../services/store')
 const actions = require('../../services/actions/index.js')
 
-const openSocketAction = actions.openWS()
+const openSocketAction = actions.openWS('echo.websocket.org')
 store.dispatch(openSocketAction);
+
+const contactList = actions.setContactList()
+store.dispatch(contactList);
 
 store.subscribe(()=>{
     console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
     this.chats = store.getState().chats;
     this.state = store.getState().uiState;
+    this.auth = store.getState().auth;
     this.update();
 })
 this.contacts = store.getState().contacts;
 this.chats = store.getState().chats;
+this.auth = store.getState().auth;
 this.state = store.getState().uiState;
 
 this.isContactsState = ()=>this.state === actions.uiState.sub.CONTACTS;
@@ -88,7 +93,7 @@ this.setActiveChat = (chatId)=>{
     this.update();
 }
 this.startChat = (contact)=>{
-    const newStateAction = actions.newState(actions.uiState.CHATS);
+    const newStateAction = actions.newState(actions.uiState.sub.CHATS);
     store.dispatch(newStateAction);
     const action = actions.startChat(contact);
     store.dispatch(action);
@@ -96,11 +101,9 @@ this.startChat = (contact)=>{
 }
 
 this.onLogout = ()=>{
-    const user = this.user
-    store.dispatch(actions.logout(user))
-
+    this.user = null
+    store.dispatch(actions.logout(this.user))
     console.log('logout')
-    
 }
 
 this.addContact = ()=>{
@@ -138,7 +141,7 @@ this.chooseContact = (contact)=>{
     this.update();
 }
 
-this.user = {firstname:'Ivan', secondname:'Dmitrich'};
+this.user = this.auth;
 
 this.onBack = ()=>{
     console.log('to welcome')

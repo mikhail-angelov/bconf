@@ -1,14 +1,31 @@
 
+const http = require('../http')
+
+
 const props = {
     SET_LIST: 'setContactList',
     ADD: 'addContact',
     REMOVE: 'removeContact',
-    SEARCH: 'searchContact'
+    SEARCH: 'searchContact',
+    CONTACT_LIST_UPLOAD: 'contactListUpload'
 }
 
-function setContactList(list){
+function setContactList(){
+    return function(dispatch, getState) {
+    return http.get('http://localhost:3333/api/contact')
+      .then(function(result) {
+          console.log('--', result)
+        dispatch(contactListUpload(result));
+      })
+      .catch(function(err) {
+        console.log("Oops...", "Couldn't upload contacts: " + err);
+      });
+    }
+}
+
+function contactListUpload(list) {
     return {
-        type: props.SET_LIST,
+        type: props.CONTACT_LIST_UPLOAD,
         list
     }
 }

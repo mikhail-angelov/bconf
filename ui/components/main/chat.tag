@@ -23,7 +23,7 @@
 
 this.getAvatar = (message)=>{
     if(message.type ==='out'){
-        return this.opts.user.firstname.substr(0,1).toUpperCase() +''+ this.opts.user.secondname.substr(0,1).toUpperCase()
+        return this.opts.user.firstName.substr(0,1).toUpperCase() +''+ this.opts.user.secondName.substr(0,1).toUpperCase()
     }else{
         return this.opts.messages.chats[this.opts.messages.active].contact.firstName.substr(0,1).toUpperCase() + "" + this.opts.messages.chats[this.opts.messages.active].contact.secondName.substr(0,1).toUpperCase();
     }
@@ -31,7 +31,7 @@ this.getAvatar = (message)=>{
 
 this.getUser = (message)=>{
     if(message.type === 'out'){
-        return this.opts.user.firstname + " " + this.opts.user.secondname
+        return this.opts.user.firstName + " " + this.opts.user.secondName
     }else{
         return this.opts.messages.chats[this.opts.messages.active].contact.firstName + " " + this.opts.messages.chats[this.opts.messages.active].contact.secondName
     }

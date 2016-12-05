@@ -1,31 +1,7 @@
 const actions = require('../actions/index.js')
 const _ = require('lodash')
 
-const test = [{
-        firstName: 'Vasya',
-        secondName: 'Vasin',
-        userId: 'test1',
-        info: 'some information about this contact',
-        status: 'I`m cool',
-        country: 'USA',
-        city: 'California',
-        phoneNumber: '123456789',
-        birthday: '1 march 1994',
-        sex: 'male',
-        date: new Date()
-    },{
-        firstName: 'Petya',
-        secondName: 'Petin',
-        userId: 'test2',
-        info: 'some information about this contact',
-        status: 'I`m cool',
-        country: 'USA',
-        city: 'California',
-        phoneNumber: '123456789',
-        birthday: '1 march 1994',
-        sex: 'male',
-        date: new Date()
-    }]
+const test = []
 
 function contacts(state={
     contacts:test,
@@ -44,7 +20,7 @@ function contacts(state={
                 filtered: _.filter(state.filtered,item => item.userId != action.contactId),
             }
         }
-        case actions.contact.SET_LIST:{
+        case actions.contact.CONTACT_LIST_UPLOAD:{
             return {
                 contacts: action.list,
                 filtered: action.list

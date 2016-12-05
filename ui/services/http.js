@@ -11,7 +11,7 @@ function get(url, query){
         xhr.open('get', url);
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                resolve(xhr.response);
+                resolve(parsToJson(xhr.response));
             } else {
                 reject({
                     status: this.status,
@@ -38,7 +38,7 @@ console.log('-',data, (typeof data == "object")?JSON.stringify(data):data)
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
-                resolve(xhr.response);
+                resolve(parsToJson(xhr.response));
             } else {
                 reject({
                     status: this.status,
@@ -55,4 +55,13 @@ console.log('-',data, (typeof data == "object")?JSON.stringify(data):data)
         const buffer = (typeof data == "object")?JSON.stringify(data):data;
         xhr.send(buffer);
     });
+}
+
+function parsToJson(str){
+    try{
+        return JSON.parse(str);
+    }catch(e){
+        console.log('json parce error', e)
+        return str;
+    }
 }

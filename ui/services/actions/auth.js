@@ -5,27 +5,27 @@ const actions = {
     auth: {
         LOGIN: 'login',
         LOGOUT: 'logout',
-        LOGIN_COMPLETE: 'loginComplete'
+        LOGIN_COMPLETE: 'loginComplete',
+        LOGOUT_COMPLETE: 'logoutComplete'
     },
     login,
     logout,
-    loginComplete
+    loginComplete,
+    logoutComplete
 }
 
 function logoutComplete (){
     return {
-        type: actions.auth.LOGOUT_COMPLETE,
-        user
+        type: actions.auth.LOGOUT_COMPLETE
     }
 }
 
 function logout (user){
     return function(dispatch, getState) {
-    var state = getState();
-    return http.post('http://localhost:3333/login', user)
-      .then(function(result) {
-          console.log('--', result)
-        dispatch(logoutComplete(result));
+    return http.post('http://localhost:3333/logout', {})
+      .then(function() {
+          console.log('--')
+        dispatch(logoutComplete());
       })
       .catch(function(err) {
         console.log("Oops...", "Couldn't logout for user: " + user, err);

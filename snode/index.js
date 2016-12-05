@@ -16,17 +16,36 @@ app.use(function(req, res, next) {
 //rest
 app.get('/api/contact', (req, res) => {
     console.log('/api/contact')
-    res.json([
-        {
-            id: '123',
-            name: 'Ivan'
-        }
-    ])
+    res.json([{
+        firstName: 'Vasya',
+        secondName: 'Vasin',
+        userId: 'test1',
+        info: 'some information about this contact',
+        status: 'I`m cool',
+        country: 'USA',
+        city: 'California',
+        phoneNumber: '123456789',
+        birthday: '1 march 1994',
+        sex: 'male',
+        date: new Date()
+    },{
+        firstName: 'Petya',
+        secondName: 'Petin',
+        userId: 'test2',
+        info: 'some information about this contact',
+        status: 'I`m cool',
+        country: 'USA',
+        city: 'California',
+        phoneNumber: '123456789',
+        birthday: '1 march 1994',
+        sex: 'male',
+        date: new Date()
+    }])
 })
 
 const TOKEN = {
-        firstName:'Ivan',
-        secondName:'Dmitriev',
+        // firstName:'Ivan',
+        secondName:'Trump',
         token:'test token'
     };
 app.post('/login', (req, res) => {
