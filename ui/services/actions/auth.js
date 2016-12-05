@@ -25,6 +25,7 @@ function logout (user){
     return http.post('http://localhost:3333/login', user)
       .then(function(result) {
           console.log('--', result)
+          localStorage.set('token', null);
         dispatch(logoutComplete(result));
       })
       .catch(function(err) {
@@ -50,6 +51,7 @@ function login (credentials) {
       .then(function(result) {
           console.log('--', result)
         dispatch(loginComplete(result));
+        localStorage.set('token', result.token);
       })
       .catch(function(err) {
         console.log("Oops...", "Couldn't fetch repos for user: " + credentials.user, err);
