@@ -4,6 +4,7 @@ const server = require('http').createServer(app)
 const WebSocketServer = require('ws').Server
 const wss = new WebSocketServer({ server: server })
 const port = process.env.PORT || 3333
+const user = require('./user')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,43 +14,55 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.use(function(req, res, next) {
+  const token = req.headers['x-access-token'];
+  if(token){
+      const decoded = user.decode(token);
+      req.decoded = decoded;
+  }
+  next();
+});
+
+
 //rest
 app.get('/api/contact', (req, res) => {
-    console.log('/api/contact')
-    res.json([
-        {
-            id: '123',
-            name: 'Ivan'
-        }
-    ])
+    const contacts = user.getContacts(req.decoded.id);
+    res.json(contacts)
+})
+app.post('/api/contact', (req, res) => {
+    const contacts = user.addContact(reqdecoded.id, req.body);
+    res.json(contacts)
 })
 
-const TOKEN = {
-        firstName:'Ivan',
-        secondName:'Dmitriev',
-        token:'test token'
-    };
 app.post('/login', (req, res) => {
     console.log('/login', req.body)
-    TOKEN.firstName = req.body.email
-    res.json(TOKEN)
+    const data = user(req.body);
+    const response = data.user;
+    response.token = data.token;
+    res.json(response)
 })
 app.post('/logout', (req, res) => {
     console.log('/logout')
-
     res.json({})
 })
 app.post('/validate', (req, res) => {
     console.log('/validate')
-    res.json(TOKEN)
+    if(req.decoded){
+        res.status(200).end()
+    }else{
+        res.status(401).end()
+    }
 })
 app.post('/forgotPassword', (req, res) => {
     console.log('/forgotPassword',req.body)
-    res.json(TOKEN)
+    const url = user.resetPassword(req.body)
+    res.json({url:url})
 })
 app.post('/signIn', (req, res) => {
     console.log('/signIn',req.body)
-    res.json(TOKEN)
+    const newUser = user.createUser(req.body)
+    res.json(newUser)
 })
 
 //ws
