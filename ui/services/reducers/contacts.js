@@ -1,11 +1,7 @@
 const actions = require('../actions/index.js')
 const _ = require('lodash')
 
-<<<<<<< HEAD
-const test = []
 
-=======
->>>>>>> 003c0363f06182ef2931f1a6584c800f85bc1567
 function contacts(state={
     contacts:[],
     filtered:[]
@@ -46,6 +42,7 @@ function contacts(state={
         default:
             return state
     }
+    
 }
 
 module.exports = contacts

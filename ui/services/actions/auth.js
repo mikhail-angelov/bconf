@@ -22,23 +22,15 @@ function logoutComplete (){
 
 function logout (user){
     return function(dispatch, getState) {
-<<<<<<< HEAD
-    return http.post('http://localhost:3333/logout', {})
-      .then(function() {
-          console.log('--')
-        dispatch(logoutComplete());
-=======
-    var state = getState();
-    return http.post('http://localhost:3333/login', user)
-      .then(function(result) {
-          console.log('--', result)
-          localStorage.set('token', null);
-        dispatch(logoutComplete(result));
->>>>>>> 003c0363f06182ef2931f1a6584c800f85bc1567
-      })
-      .catch(function(err) {
-        console.log("Oops...", "Couldn't logout for user: " + user, err);
-      });
+        return http.post('http://localhost:3333/logout', {})
+        .then(function() {
+            console.log('--')
+            dispatch(logoutComplete());
+
+        })
+        .catch(function(err) {
+            console.log("Oops...", "Couldn't logout for user: " + user, err);
+        });
   }
 }
 function loginComplete (user){
@@ -51,10 +43,6 @@ function loginComplete (user){
 
 function login (credentials) {  
   return function(dispatch, getState) {
-    var state = getState();
-    
-    //dispatch(loadingChangedAction(true));
-
     return http.post('http://localhost:3333/login', credentials)
       .then(function(result) {
           console.log('--', result)
