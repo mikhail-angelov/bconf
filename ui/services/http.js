@@ -64,7 +64,8 @@ function parsToJson(str){
         console.log('json parce error', e)
         return str;
     }
+}
 function addAuthHeader(xhr){
-    const token = localStorage.get('token');
+    const token = localStorage.getItem('token');
     xhr.setRequestHeader('x-access-token', token);
-}}
+}

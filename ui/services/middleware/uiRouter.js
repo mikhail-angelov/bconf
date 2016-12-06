@@ -15,8 +15,6 @@ module.exports = store => next => action => {
          return (
              riot.route('main')
              )
-            
-
     }
   }
 //   console.log('next state', store.getState())

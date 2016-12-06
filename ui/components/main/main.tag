@@ -22,7 +22,7 @@
                 <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
 
                 <div class="tabs-field">
-                    <tabs changeState={changeState} active_tab={state}/>
+                    <tabs changeState={changeState} active_tab={state.sub}/>
                 </div>
 
             </div>
@@ -78,9 +78,9 @@ this.chats = store.getState().chats;
 this.auth = store.getState().auth;
 this.state = store.getState().uiState;
 
-this.isContactsState = ()=>this.state === actions.uiState.sub.CONTACTS;
-this.isChatsState = ()=>this.state === actions.uiState.sub.CHATS;
-this.isSettingsState = ()=>this.state === actions.uiState.sub.SETTINGS;
+this.isContactsState = ()=>this.state.sub === actions.uiState.sub.CONTACTS;
+this.isChatsState = ()=>this.state.sub === actions.uiState.sub.CHATS;
+this.isSettingsState = ()=>this.state.sub === actions.uiState.sub.SETTINGS;
 
 this.changeState = newState =>{
     const action = actions.newState(newState)

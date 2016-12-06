@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
   next();
 });
 
@@ -27,42 +27,8 @@ app.use(function(req, res, next) {
 
 //rest
 app.get('/api/contact', (req, res) => {
-<<<<<<< HEAD
-    console.log('/api/contact')
-    res.json([{
-        firstName: 'Vasya',
-        secondName: 'Vasin',
-        userId: 'test1',
-        info: 'some information about this contact',
-        status: 'I`m cool',
-        country: 'USA',
-        city: 'California',
-        phoneNumber: '123456789',
-        birthday: '1 march 1994',
-        sex: 'male',
-        date: new Date()
-    },{
-        firstName: 'Petya',
-        secondName: 'Petin',
-        userId: 'test2',
-        info: 'some information about this contact',
-        status: 'I`m cool',
-        country: 'USA',
-        city: 'California',
-        phoneNumber: '123456789',
-        birthday: '1 march 1994',
-        sex: 'male',
-        date: new Date()
-    }])
-})
-
-const TOKEN = {
-        // firstName:'Ivan',
-        secondName:'Trump',
-        token:'test token'
-    };
-=======
     const contacts = user.getContacts(req.decoded.id);
+    console.log('/api/contact', contacts);
     res.json(contacts)
 })
 app.post('/api/contact', (req, res) => {
@@ -70,10 +36,9 @@ app.post('/api/contact', (req, res) => {
     res.json(contacts)
 })
 
->>>>>>> 003c0363f06182ef2931f1a6584c800f85bc1567
 app.post('/login', (req, res) => {
     console.log('/login', req.body)
-    const data = user(req.body);
+    const data = user.auth(req.body);
     const response = data.user;
     response.token = data.token;
     res.json(response)

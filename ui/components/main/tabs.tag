@@ -12,9 +12,9 @@
     <script>
 
         const actions = require('../../services/actions/index.js')
-        this.contactList = ()=>  changeState.bind(this)(actions.uiState.sub.CONTACTS)
-        this.chatList = ()=>  changeState.bind(this)(actions.uiState.sub.CHATS)
-        this.accountList = ()=>  changeState.bind(this)(actions.uiState.sub.SETTINGS)
+        this.contactList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.CONTACTS, main:actions.uiState.main.MAIN})
+        this.chatList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.CHATS, main:actions.uiState.main.MAIN})
+        this.accountList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.SETTINGS, main:actions.uiState.main.MAIN})
 
        
         this.isContactsState = ()=>this.opts.active_tab === actions.uiState.sub.CONTACTS;
