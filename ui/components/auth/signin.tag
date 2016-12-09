@@ -5,7 +5,7 @@
   
   <material-input name="user_name" label="User Name"></material-input>
   
-  <material-input name="user_password" label="User Password"></material-input>
+  <material-input type="password" name="user_password" label="User Password"></material-input>
   
   <material-checkbox name="checker">
     Remember me
@@ -30,10 +30,13 @@ this.state = 'signin'
 
 this.onLogin = ()=>{
     const credentials = {
-        email:this.user_name.ownerDocument.activeElement.value,
-        password:this.user_password.ownerDocument.activeElement.value
+        email:this.user_name.children[1].lastElementChild.value,
+        password:this.user_password.children[1].lastElementChild.value
     }
-    store.dispatch(actions.login(credentials))
+    const rememberMe = this.checker.lastElementChild.value == 'true';
+    console.log(this.checker.lastElementChild.value)
+
+    store.dispatch(actions.login(credentials, rememberMe))
 
     console.log('login')
     

@@ -3,9 +3,9 @@
   
   <material-input label="User Name"></material-input>
   
-  <material-input label="User Password"></material-input>
+  <material-input type="password" label="User Password"></material-input>
   
-  <material-input type='psw' label="Repeat Password"></material-input>
+  <material-input type="password" label="Repeat Password"></material-input>
   
 </form>
 <div class="buttons">

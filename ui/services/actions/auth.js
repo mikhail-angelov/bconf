@@ -27,6 +27,8 @@ function logout (user){
         .then(function() {
             console.log('--')
             localStorage.setItem('token', "");
+            localStorage.setItem('uiState', "");
+            localStorage.setItem('user', "");
             dispatch(logoutComplete());
 
         })
@@ -43,13 +45,16 @@ function loginComplete (user){
     }
 }
 
-function login (credentials) {  
+function login (credentials, rememberMe) {  
   return function(dispatch, getState) {
     return http.post('http://localhost:3333/login', credentials)
       .then(function(result) {
             localStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result));
             dispatch(loginComplete(result));
+            if(rememberMe){
+                localStorage.setItem('credentials', JSON.stringify(credentials))
+            }
       })
       .catch(function(err) {
         console.log("Oops...", "Couldn't fetch repos for user: " + credentials, err);

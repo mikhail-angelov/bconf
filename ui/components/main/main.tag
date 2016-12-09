@@ -65,7 +65,7 @@ store.dispatch(openSocketAction);
 const contactList = actions.setContactList()
 store.dispatch(contactList);
 
-const subUiState = localStorage.getItem('uiState');
+const subUiState = localStorage.getItem('uiState') || actions.uiState.sub.CONTACTS;
 
 const newStateAction = actions.newState({sub: subUiState, main:actions.uiState.main.MAIN});
 store.dispatch(newStateAction);
