@@ -19,15 +19,15 @@
 
 <script>
 
+const store = require('../services/store')
+const actions = require('../services/actions/index.js')
+
 this.onLogin = ()=>{
-    console.log('login')
     riot.route('auth')
 }
 
-console.log('constructor')
 this.onLoginGuest = ()=>{
-    console.log('yo')
-    riot.route('main')
+    store.dispatch(actions.loginGuest())
 }
 </script>
 

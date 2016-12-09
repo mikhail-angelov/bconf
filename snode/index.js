@@ -47,6 +47,13 @@ app.post('/logout', (req, res) => {
     console.log('/logout')
     res.json({})
 })
+
+app.post('/loginGuest', (req, res) => {
+    console.log('/loginGuest', req.body)
+    const data = user.authGuest();
+    res.json(data)
+})
+
 app.post('/validate', (req, res) => {
     console.log('/validate')
     if(req.decoded){

@@ -38,7 +38,6 @@ this.onLogin = ()=>{
     console.log('login')
     
 }
-
 </script>
 <style>
   material-input {
@@ -48,10 +47,10 @@ this.onLogin = ()=>{
     width: 235;
     height: 50px;
     }
-  .buttons {
+   /*.buttons {
       display: flex;
-      flex-direction: row;
-  }
+       flex-direction: row;
+   }*/
   .buttons material-button {
       margin-right: 5px;
   }    

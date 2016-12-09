@@ -65,13 +65,18 @@ store.dispatch(openSocketAction);
 const contactList = actions.setContactList()
 store.dispatch(contactList);
 
+const subUiState = localStorage.getItem('uiState');
+
+const newStateAction = actions.newState({sub: subUiState, main:actions.uiState.main.MAIN});
+store.dispatch(newStateAction);
+
 store.subscribe(()=>{
-    console.log('store change', store.getState())
     this.contacts = store.getState().contacts;
     this.chats = store.getState().chats;
     this.state = store.getState().uiState;
     this.auth = store.getState().auth;
     this.update();
+    console.log('===', store.getState())
 })
 this.contacts = store.getState().contacts;
 this.chats = store.getState().chats;
@@ -93,7 +98,7 @@ this.setActiveChat = (chatId)=>{
     this.update();
 }
 this.startChat = (contact)=>{
-    const newStateAction = actions.newState(actions.uiState.sub.CHATS);
+    const newStateAction = actions.newState({sub:actions.uiState.sub.CHATS, main:actions.uiState.main.MAIN});
     store.dispatch(newStateAction);
     const action = actions.startChat(contact);
     store.dispatch(action);

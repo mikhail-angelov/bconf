@@ -6,7 +6,8 @@ module.exports = {
     createUser: createUser,
     resetPassword: resetPassword,
     getContacts: getContacts,
-    addContact: addContact
+    addContact: addContact,
+    authGuest: authGuest
 }
 
 const USER = {
@@ -53,6 +54,20 @@ const CONTACTS = [{
 }];
 
 const TOKEN = 'test token';
+const GUEST = {
+    token: "guestToken",
+    id: "testGuest",
+    firstName: 'Guest',
+    secondName: 'Guestovich',
+    info: 'some information about this contact',
+    status: 'I`m cool',
+    country: 'USA',
+    city: 'California',
+    phoneNumber: '123456789',
+    birthday: '1 march 1994',
+    sex: 'male',
+    date: new Date()
+}
 
 function auth(credentials){
     return {
@@ -87,4 +102,8 @@ function getContacts(id){
 function addContact(id, contact){
     CONTACTS.push(contact);
     return CONTACTS;
+}
+
+function authGuest(){
+    return GUEST;
 }

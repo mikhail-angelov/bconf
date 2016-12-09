@@ -38,5 +38,10 @@ window.addEventListener("DOMContentLoaded",function load() {
  
 
   riot.route.start();
-  riot.route.exec(goTo); //default redirect
+  if(localStorage.getItem('token') == false){
+    riot.route.exec(goTo); //default redirect
+  }else{
+    riot.route('main');
+    goTo('main');
+  }
 },true)

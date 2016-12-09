@@ -7,7 +7,7 @@ var defaultState = {
         sub: null
     }
 if (token) {
-        defaultState = {
+    defaultState = {
         main: actions.uiState.main.MAIN,
         sub: actions.uiState.sub.CONTACTS
     }
@@ -15,6 +15,7 @@ if (token) {
 function uiState(state = defaultState, action){
     switch(action.type){
         case actions.uiState.SET: {
+            localStorage.setItem('uiState', action.state.sub)
             return action.state
         }
         default:

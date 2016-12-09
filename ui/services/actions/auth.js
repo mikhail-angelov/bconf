@@ -11,7 +11,8 @@ const actions = {
     login,
     logout,
     loginComplete,
-    logoutComplete
+    logoutComplete,
+    loginGuest
 }
 
 function logoutComplete (){
@@ -25,7 +26,7 @@ function logout (user){
         return http.post('http://localhost:3333/logout', {})
         .then(function() {
             console.log('--')
-            localStorage.setItem('token', null);
+            localStorage.setItem('token', "");
             dispatch(logoutComplete());
 
         })
@@ -34,13 +35,13 @@ function logout (user){
         });
   }
 }
+
 function loginComplete (user){
     return {
         type: actions.auth.LOGIN_COMPLETE,
         user
     }
 }
-
 
 function login (credentials) {  
   return function(dispatch, getState) {
@@ -52,6 +53,20 @@ function login (credentials) {
       })
       .catch(function(err) {
         console.log("Oops...", "Couldn't fetch repos for user: " + credentials, err);
+      });
+  }
+}
+
+function loginGuest () {  
+  return function(dispatch, getState) {
+    return http.post('http://localhost:3333/loginGuest')
+      .then(function(result) {
+            localStorage.setItem('token', result.token);
+            localStorage.setItem('user', JSON.stringify(result));
+            dispatch(loginComplete(result));
+      })
+      .catch(function(err) {
+        console.log("Oops...", "Couldn't fetch repos for user: " + err);
       });
   }
 }

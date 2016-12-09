@@ -1,12 +1,12 @@
 const actions = require('../actions/index.js')
 
-
-
-
-function auth (state = {
+const user = localStorage.getItem('user');
+const defaultUser = user?JSON.parse(user):{
     firstName:'Guest',
     secondName:''
-},action){
+}
+
+function auth (state = defaultUser, action){
     switch(action.type){
         case actions.auth.LOGIN_COMPLETE:{
             return action.user;

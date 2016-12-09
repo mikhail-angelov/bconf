@@ -3,7 +3,7 @@
  <div  id="signin">
 <signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
 <signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
-<forget if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
+<forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
 
 
  </div>
@@ -78,6 +78,9 @@ this.onForgetPasswordTrue = ()=>{
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+  }
+  #signin {
+    width: 285px;
   }
   .social {
     display: flex;
