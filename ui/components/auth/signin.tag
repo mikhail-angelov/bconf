@@ -3,11 +3,11 @@
 
 <form>
   
-  <material-input name="user_name" label="User Name"></material-input>
+  <material-input name="user_name" value={userName} label="User Name"></material-input>
   
-  <material-input type="password" name="user_password" label="User Password"></material-input>
+  <material-input type="password" name="user_password" value={userPassword} label="User Password"></material-input>
   
-  <material-checkbox name="checker">
+  <material-checkbox name="checker" checked=true>
     Remember me
   </material-checkbox>
   
@@ -23,18 +23,25 @@
 <a href='' onclick={this.opts.onforgetpassword}>Forget Password</a>
 </div>
 <script>
+
+const localStorageCredentials = localStorage.getItem('credentials');
+if (localStorageCredentials){
+    const localCredentials = JSON.parse(localStorageCredentials);
+
+    this.userName = localCredentials.email;
+    this.userPassword = localCredentials.password;
+}
 const store = require('../../services/store')
 const actions = require('../../services/actions/index.js')
 
 this.state = 'signin'
-
 this.onLogin = ()=>{
     const credentials = {
-        email:this.user_name.children[1].lastElementChild.value,
-        password:this.user_password.children[1].lastElementChild.value
+        email: this.user_name.querySelector('input').value,
+        password: this.user_password.querySelector('input').value
     }
-    const rememberMe = this.checker.lastElementChild.value == 'true';
-    console.log(this.checker.lastElementChild.value)
+    const rememberMe = this.checker.querySelector('input').value == 'true';
+    console.log('checker',this.checker.querySelector('input').value)
 
     store.dispatch(actions.login(credentials, rememberMe))
 

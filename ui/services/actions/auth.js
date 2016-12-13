@@ -54,6 +54,8 @@ function login (credentials, rememberMe) {
             dispatch(loginComplete(result));
             if(rememberMe){
                 localStorage.setItem('credentials', JSON.stringify(credentials))
+            }else{
+                localStorage.setItem('credentials', "")
             }
       })
       .catch(function(err) {
