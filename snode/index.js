@@ -67,8 +67,8 @@ app.post('/forgotPassword', (req, res) => {
     const url = user.resetPassword(req.body)
     res.json({url:url})
 })
-app.post('/signIn', (req, res) => {
-    console.log('/signIn',req.body)
+app.post('/signUp', (req, res) => {
+    console.log('/signUp',req.body)
     const newUser = user.createUser(req.body)
     res.json(newUser)
 })

@@ -3,8 +3,6 @@
   
   <material-input label="User Email"></material-input>
   
-  <material-input label="Answer"></material-input>
-  
 </form>
 <div class="buttons">
 <material-button class="ui" onclick={this.opts.onforgetpasswordtrue}>

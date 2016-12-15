@@ -8,16 +8,16 @@
 
  </div>
 <div class="social">
-  <material-button class="ui" shady="true">
+  <material-button class="ui" shady="true" disabled=true>
     <div class="text">google</div>
 </material-button>
-<material-button class="ui" shady="true">
+<material-button class="ui" shady="true" disabled=true>
     <div class="text">vk</div>
 </material-button>
-<material-button class="ui" shady="true">
+<material-button class="ui" shady="true" disabled=true>
     <div class="text">twitter</div>
 </material-button>
-<material-button class="ui" shady="true">
+<material-button class="ui" shady="true" disabled=true>
     <div class="text">facebook</div>
     <i class="material-icons"></i>
 </material-button>
@@ -26,10 +26,10 @@
 <script>
 this.state = 'signin';
 
-this.onLogin = ()=>{
-    console.log('login')
-    riot.route('main')
-}
+// this.onLogin = ()=>{
+//     console.log('login')
+//     riot.route('main')
+// }
 this.onSignUp = ()=>{
 	this.state = 'signup'
 	this.update()
@@ -64,7 +64,6 @@ this.onForgetPasswordTrue = ()=>{
 
 <style scoped>
 
- 
   .container {
     display: flex;
     flex-flow: row-reverse wrap;
@@ -93,30 +92,23 @@ this.onForgetPasswordTrue = ()=>{
     height: 40px;
     width: 250px;
   }
+
   .auth h1 {
     font-family: 'Oswald', sans-serif;
     font-size: 225;   
     
   }
+
   .auth h3 {
     font-family: 'Oswald', sans-serif;
     font-size: 100;
     margin-left: 2%;
     
   }
+
   .auth form {
     margin-left: 36%;
   }
-
-material-button {
-    background: #cc0044;
-  }
-
-  .buttons {
-	
-    
-}
-
   </style>
 
 </auth>
