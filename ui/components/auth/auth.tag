@@ -8,7 +8,7 @@
 
  </div>
 <div class="social">
-  <material-button class="ui" shady="true" disabled=true>
+  <material-button class="ui" shady="true" >
     <div class="text">google</div>
 </material-button>
 <material-button class="ui" shady="true" disabled=true>
