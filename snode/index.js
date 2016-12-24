@@ -5,6 +5,7 @@ const WebSocketServer = require('ws').Server
 const wss = new WebSocketServer({ server: server })
 const port = process.env.PORT || 3333
 const user = require('./user')
+const createPeerServer = require('./peer')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -90,5 +91,7 @@ wss.on('connection', function connection(ws) {
 const serv = server.listen(port, function () {
     console.log('Express server listening on %d, in %s mode', port, app.get('env'));
 })
+
+createPeerServer(serv)
 
 

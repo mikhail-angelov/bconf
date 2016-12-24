@@ -1,4 +1,4 @@
-module.exports = function init(url, listner){
+module.exports = function createWebSocket(url, listner){
     const service = {
         close: close,
         sendMessage: sendMessage
