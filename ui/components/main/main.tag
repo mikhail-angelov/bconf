@@ -83,6 +83,9 @@ this.chats = store.getState().chats;
 this.auth = store.getState().auth;
 this.state = store.getState().uiState;
 
+const initChats = actions.initChats(this.auth)
+store.dispatch(initChats)
+
 this.isContactsState = ()=>this.state.sub === actions.uiState.sub.CONTACTS;
 this.isChatsState = ()=>this.state.sub === actions.uiState.sub.CHATS;
 this.isSettingsState = ()=>this.state.sub === actions.uiState.sub.SETTINGS;

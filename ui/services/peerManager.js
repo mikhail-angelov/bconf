@@ -28,12 +28,12 @@ module.exports = function openPeer (opts) {
     delete _peers[username]
   }
 
-  function send(username, message) {
-    const conn = _peers[username]
+  function send(data) {
+    const conn = _peers[data.username]
     if(conn){
-      conn.send(message);
+      conn.send(data.message);
     }else{
-      console.log('peer is not connected for',username)
+      console.log('peer is not connected for',data.username)
     }
   }
 

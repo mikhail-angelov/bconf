@@ -2,6 +2,7 @@ const actions = require('../actions/index.js')
 
 const user = localStorage.getItem('user');
 const defaultUser = user?JSON.parse(user):{
+    id:'guest',
     firstName:'Guest',
     secondName:''
 }

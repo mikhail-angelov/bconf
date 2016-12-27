@@ -1,4 +1,4 @@
-
+const config = require('../config')
 const http = require('../http')
 
 const actions = {
@@ -23,7 +23,7 @@ function logoutComplete (){
 
 function logout (user){
     return function(dispatch, getState) {
-        return http.post('http://localhost:3333/logout', {})
+        return http.post(config.host+'logout', {})
         .then(function() {
             console.log('--')
             localStorage.setItem('token', "");
@@ -47,7 +47,7 @@ function loginComplete (user){
 
 function login (credentials, rememberMe) {  
   return function(dispatch, getState) {
-    return http.post('http://localhost:3333/login', credentials)
+    return http.post(config.host+'login', credentials)
       .then(function(result) {
             localStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result));
@@ -66,7 +66,7 @@ function login (credentials, rememberMe) {
 
 function loginGuest () {  
   return function(dispatch, getState) {
-    return http.post('http://localhost:3333/loginGuest')
+    return http.post(config.host+'loginGuest')
       .then(function(result) {
             localStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result));

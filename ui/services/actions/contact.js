@@ -1,4 +1,4 @@
-
+const config = require('../config')
 const http = require('../http')
 
 
@@ -12,7 +12,7 @@ const props = {
 
 function setContactList(){
     return function(dispatch, getState) {
-    return http.get('http://localhost:3333/api/contact')
+    return http.get(config.host+'api/contact')
       .then(function(result) {
           console.log('--', result)
         dispatch(contactListUpload(result));

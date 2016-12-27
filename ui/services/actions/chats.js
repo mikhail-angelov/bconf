@@ -1,10 +1,19 @@
 const props = {
+    INIT: 'initChats',
     LOAD_MESSAGES: 'loadMessages',
     ADD_MESSAGE: 'addMessage',
+    SEND_MESSAGE: 'sendMessage',
     REMOVE_MESSAGE: 'removeMessage',
     SEARCH_MESSAGE: 'searchMessage',
     SET_ACTIVE: 'setActiveChat',
     START_CHAT:'startChat'
+}
+
+function initChats(user){
+    return {
+        type: props.INIT,
+        user
+    }
 }
 
 function loadMessages(messages){
@@ -17,6 +26,13 @@ function loadMessages(messages){
 function addMessage(message) {
     return {
         type: props.ADD_MESSAGE,
+        message
+    }
+}
+
+function sendMessage(message) {
+    return {
+        type: props.SEND_MESSAGE,
         message
     }
 }
@@ -49,8 +65,10 @@ function startChat(contact){
 
 module.exports = {
     chats: props,
+    initChats,
     loadMessages,
     addMessage,
+    sendMessage,
     removeMessage,
     searchMessage,
     setActiveChat,
