@@ -12,13 +12,13 @@ global.location = {
 global.WebSocket = require('websocket').w3cwebsocket
 
 module.exports = {
-  init
+  connect
 }
 
-function init() {
+function connect(username) {
   const Peer = require('../ui/services/peerjs/peer')
 
-  const peer = new Peer('test', {
+  const peer = new Peer(username, {
     host: '0.0.0.0',
     port: 9000,
     path: '/chat',

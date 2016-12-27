@@ -11,7 +11,7 @@ module.exports = {
 }
 
 const USER = {
-    id: "test0",
+    id: "test-user",
     firstName: 'Unit',
     secondName: 'Testov',
     userId: 'test1',
@@ -26,7 +26,7 @@ const USER = {
 }
 
 const CONTACTS = [{
-    id: "test1",
+    id: "test",
     firstName: 'Vasya',
     secondName: 'Vasin',
     userId: 'test1',

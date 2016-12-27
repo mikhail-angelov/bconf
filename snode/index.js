@@ -91,7 +91,7 @@ wss.on('connection', function connection(ws) {
 
 const serv = server.listen(port, function () {
     console.log('Express server listening on %d, in %s mode', port, app.get('env'));
-    fakeWebRTCClient.init();
+    fakeWebRTCClient.connect('test');
 })
 
 createPeerServer(serv)
