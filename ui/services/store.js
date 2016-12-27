@@ -5,14 +5,16 @@ const wsListener = require('./middleware/wsListener')
 const uiRouter = require('./middleware/uiRouter')
 const peerListner = require('./middleware/peerListner')
 
+const middleware = [
+    uiRouter,
+    thunk,
+    peerListner.middleware,
+    wsListener.middleware
+]
 function configureStore() {
     const store = redux.createStore(
         reducers,
-        redux.applyMiddleware(uiRouter),
-        redux.applyMiddleware(thunk),
-        redux.applyMiddleware(wsListener.middleware),
-        redux.applyMiddleware(peerListner.middleware)
-        
+        redux.applyMiddleware(...middleware)
     );
 
     return store;

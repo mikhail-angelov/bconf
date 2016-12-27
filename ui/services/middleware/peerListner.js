@@ -1,14 +1,10 @@
 const actions = require('../../services/actions/index.js')
 const peerManager = require('../peerManager')
 
-module.exports = {
-    start,
-    middleware
-}
 let peer;
 
 function start(store, user) {
-    peer = peerManager.openPeer({
+    peer = peerManager({
         username: user.id,
         onOpen: () => console.log('open'),
         onConnect: () => console.log('connect'),
@@ -17,7 +13,7 @@ function start(store, user) {
     return peer;
 }
 
-function middleware(store) {
+function peerMiddleware (store) {
     return (next) => (action) => {
 
         const returnValue = next(action)
@@ -33,3 +29,7 @@ function middleware(store) {
     }
 }
 
+module.exports = {
+    start: start,
+    middleware: peerMiddleware
+}
