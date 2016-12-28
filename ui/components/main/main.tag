@@ -35,7 +35,7 @@
 
                 <chat class="chat"  user={user} messages={chats} contact={chats.contact} accountFoto={accountFoto} />
 
-                <chatinput user_name={user} onsendMessage={sendMessage} onsendMessageButton={sendMessageButton} />
+                <chatinput user_name={user} onsendMessage={sendMessage} />
 
             </div>
             
@@ -161,10 +161,7 @@ this.onLogin = ()=>{
     riot.route('auth')
 }
 
-this.sendMessage = (e)=>{
-    console.log(e.keyCode, e.shiftKey, e.ctrlKey)
-    if(e.keyCode=='13' && e.shiftKey){
-        const value = e.target.value.trim();
+this.sendMessage = (value)=>{
         if (value) {
             const action = actions.addMessage({
                 id:'any',
@@ -176,14 +173,13 @@ this.sendMessage = (e)=>{
             })
             store.dispatch(action)
 
-            const echo = actions.sendWSMessage(value)
+            const echo = actions.sendMessage({
+                username:'test',
+                message: value
+            });
             store.dispatch(echo)
 
-            e.target.value = '';
-            this.update();
-            }
-        e.target.value = '';
-    }
+        }
 }
 
 this.searchMessage = (text)=> {

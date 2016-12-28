@@ -5,13 +5,12 @@
              <div class="account-foto">{this.opts.user_name.firstName.substr(0,1).toUpperCase()}{this.opts.user_name.secondName.substr(0,1).toUpperCase()}</div>
         </div>
         <div class="textarea_emodji">
-            <textarea id='text' rows="4"  onkeyup={this.opts.onsendmessage} onkeydown={keydown}  placeholder="Введите сообщение"
-                    class="textarea"></textarea>
+            <textarea id='text' rows="4"  onkeyup={pressShiftEnter} placeholder="Введите сообщение" class="textarea"></textarea>
             <div class="emodji">
                 <i class="material-icons">insert_emoticon</i>
             </div>
         </div>
-        <material-button onclick={this.opts.onsendmessagebutton} class="ui" style="background-color:#cc0044; margin-left: 20px;">
+        <material-button onclick={sendMessage} class="ui" style="background-color:#cc0044; margin-left: 20px;">
                 <div class="text">Send</div>
         </material-button>
     </div>
@@ -20,7 +19,19 @@
     </div>
 </div>
 <script>
-   
+
+this.pressShiftEnter = (e)=>{
+    console.log(e.keyCode, e.shiftKey, e.ctrlKey)
+    if(e.keyCode=='13' && e.shiftKey){
+        this.sendMessage()
+    }
+}
+this.sendMessage = ()=>{
+    const value = this.text.value.trim()
+    this.opts.onsendmessage(value)
+    this.text.value = ''
+    this.update()
+}
 </script>
 <style>
     .test{}

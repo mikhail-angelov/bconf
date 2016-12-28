@@ -10,6 +10,28 @@ global.location = {
 }
 
 global.WebSocket = require('websocket').w3cwebsocket
+global.Blob = Uint8Array
+global.FileReader = FR
+
+function FR() { }
+
+FR.prototype.readAsBinaryString = function(data) {
+  console.log('readAsBinaryString', data)
+  this.onload({
+    target: {
+      result: data
+    }
+  })
+}
+FR.prototype.readAsArrayBuffer = function(data) {
+  console.log('readAsArrayBuffer', data)
+  this.onload({
+    target: {
+      result: data
+    }
+  })
+}
+
 
 module.exports = {
   connect
@@ -29,7 +51,6 @@ function connect(username) {
   });
   peer.on('connection', (conn) => {
     _registerPeer(conn.peer, conn);
-    opts.onConnect(conn.peer);
   });
 
   function _registerPeer(username, conn) {

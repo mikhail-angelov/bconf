@@ -18,11 +18,24 @@ module.exports = function openPeer (opts) {
   });
 
   function connect (username) {
-    const conn = peer.connect(username);
-    conn.on('open', () => {
-      _registerPeer(username, conn);
+    return new Promise((resolve, reject)=>{
+      const conn = peer.connect(username);
+      if(conn){
+        conn.on('open', () => {
+          _registerPeer(username, conn);
+          resolve(conn)
+        })
+        conn.on('error', (err) => {
+          reject(err)
+        })
+        conn.on('end', (err) => {
+          reject(err)
+        })
+      }else{
+        reject('disconnected :(')
+      }
     })
-  };
+  }
 
   function disconnect (username) {
     delete _peers[username]
@@ -34,6 +47,13 @@ module.exports = function openPeer (opts) {
       conn.send(data.message);
     }else{
       console.log('peer is not connected for',data.username)
+      connect(data.username)
+      .then((conn)=>{
+        conn.send(data.message);
+      })
+      .catch(err=>{
+        console.log('cannot connect to ', data.username, err)
+      })
     }
   }
 
