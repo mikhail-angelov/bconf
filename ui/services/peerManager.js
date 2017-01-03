@@ -19,7 +19,9 @@ module.exports = function openPeer (opts) {
 
   function connect (username) {
     return new Promise((resolve, reject)=>{
-      const conn = peer.connect(username);
+      const conn = peer.connect(username,{
+        serialization: 'json'
+      });
       if(conn){
         conn.on('open', () => {
           _registerPeer(username, conn);

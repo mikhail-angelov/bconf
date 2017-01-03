@@ -2,6 +2,7 @@ const props = {
     INIT: 'initChats',
     LOAD_MESSAGES: 'loadMessages',
     ADD_MESSAGE: 'addMessage',
+    CHAT_MESSAGE: 'chatMessage',
     SEND_MESSAGE: 'sendMessage',
     REMOVE_MESSAGE: 'removeMessage',
     SEARCH_MESSAGE: 'searchMessage',
@@ -27,6 +28,13 @@ function addMessage(message) {
     return {
         type: props.ADD_MESSAGE,
         message
+    }
+}
+
+function chatMessage(payload) {
+    return {
+        type: props.CHAT_MESSAGE,
+        payload
     }
 }
 
@@ -68,6 +76,7 @@ module.exports = {
     initChats,
     loadMessages,
     addMessage,
+    chatMessage,
     sendMessage,
     removeMessage,
     searchMessage,

@@ -29,7 +29,7 @@ const CONTACTS = [{
     id: "test",
     firstName: 'Vasya',
     secondName: 'Vasin',
-    userId: 'test1',
+    userId: 'test',
     info: 'some information about this contact',
     status: 'I`m cool',
     country: 'USA',

@@ -17,9 +17,11 @@ function FR() { }
 
 FR.prototype.readAsBinaryString = function(data) {
   console.log('readAsBinaryString', data)
+
+
   this.onload({
     target: {
-      result: data
+      result: 'data'
     }
   })
 }
@@ -44,6 +46,7 @@ function connect(username) {
     host: '0.0.0.0',
     port: 9000,
     path: '/chat',
+    serialization: 'json',
     debug: 3
   });
   peer.on('open', () => {

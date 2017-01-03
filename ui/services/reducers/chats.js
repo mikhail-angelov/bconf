@@ -1,62 +1,20 @@
 
-//module.exports = function(state={}, action){
-
-//ADD_MESSAGE: action.message = {userId:'test',type:'in/out',text:'test', id:'id'}
-//LOAD_MESSAGES: action.messages = {'userId': [{id:'1',type:'in/out',text:'test'}]}
-//REMOVE_MESSAGES: action.message =  {userId:'test',id:'id'}
-//}
-
-//{
-//    'userId' [{id:'1',type:'in/out',text:'test'}]
-//}
-
-
 const actions = require('../actions/index.js')
 const _ = require('lodash')
 
-
-const chat1 = {
-    contact:{
-        firstName: 'Ivan',
-        secondName: 'Dmitriev'
-    },
-    unread: 0,
-    messages:[{
-        text: 'hey',
-        type: 'in',
-        date: new Date()
-    },
-    {
-        text: 'ho',
-        type: 'out',
-        date: new Date()
-    }]
-};
-const chat2 = {
-    contact:{
-        firstName: 'Ivan',
-        secondName: 'Dmitriev'
-    },
-    unread: 0,
-    messages:[{
-        text: 'hey',
-        type: 'in',
-        date: new Date()
-    },
-    {
-        text: 'hello',
-        type: 'out',
-        date: new Date()
-    }]
-};
-
-function chats(state = {
-    active: 'test1',
+const TEMP_INIT_STATE = {
+    active: 'test',
     filtered: [],
     chats: {
-        
+       'test':{
+           contact: {"id":"test","firstName":"Vasya","secondName":"Vasin"},
+            unread:0,
+            messages:[]
+       } 
     }
-}, action) {
+}
+
+function chats(state = TEMP_INIT_STATE, action) {
     switch (action.type) {
         case actions.chats.ADD_MESSAGE: {
             //state.chats[state.active].messages = state.chats[state.active].messages || []
@@ -69,6 +27,23 @@ function chats(state = {
             //state[userId].push(message)
             state.chats[state.active].messages = [message].concat(state.chats[state.active].messages);
             state.filtered = [message].concat(state.filtered);
+
+            return Object.assign(state, {
+                chats: state.chats,
+                filtered: state.filtered
+            })
+        }
+        case actions.chats.CHAT_MESSAGE: {
+            const message = {
+                type: 'IN',
+                text: action.payload.content,
+                date: new Date(),
+            }
+            state.chats[action.payload.author] = state.chats[action.payload.author] || {messages:[]}
+            state.chats[action.payload.author].messages = [message].concat(state.chats[action.payload.author].messages)
+            if(state.active == action.payload.author){
+                state.filtered = [message].concat(state.filtered);
+            }
 
             return Object.assign(state, {
                 chats: state.chats,

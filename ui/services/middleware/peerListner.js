@@ -8,7 +8,7 @@ function start(store, user) {
         username: user.id,
         onOpen: () => console.log('open'),
         onConnect: () => console.log('connect'),
-        onMessage: (data) => store.dispatch(actions.addMessage(data))
+        onMessage: (data) => store.dispatch(actions.chatMessage(data))
     });
     return peer;
 }
