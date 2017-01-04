@@ -31,10 +31,11 @@ function addMessage(message) {
     }
 }
 
-function chatMessage(payload) {
+function chatMessage(payload, contact) {
     return {
         type: props.CHAT_MESSAGE,
-        payload
+        payload,
+        contact
     }
 }
 

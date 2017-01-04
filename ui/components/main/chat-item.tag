@@ -1,4 +1,5 @@
-<chat-item onclick={setActiveChat}>
+<chat-item class='chat-item' onclick={setActiveChat}>
+    <div class='tag {tag_hide: (this.opts.active || this.opts.chat.unread==0)}'>{this.opts.chat.unread}</div>
     <div class='chat_item {selected_chat: this.opts.active}'>
             <a class="friend_photo" href="#">
                 <img class="chat_photo_img" src="">
@@ -18,6 +19,9 @@
     }
 </script>
 <style>
+.chat-item{
+    position: relative;
+}
     .selected_chat {
         color: #fff;
         background: #cc0044;        
@@ -45,6 +49,22 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+    }
+    .tag{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 2;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: pink;
+    }
+    .tag_hide {
+        display: none;
     }
 </style>
 </chat-item>

@@ -8,9 +8,27 @@ function start(store, user) {
         username: user.id,
         onOpen: () => console.log('open'),
         onConnect: () => console.log('connect'),
-        onMessage: (data) => store.dispatch(actions.chatMessage(data))
+        onMessage: (payload) => {
+            const contact = getOrCreateContact(store, payload.author)
+            store.dispatch(actions.chatMessage(payload, contact))
+        }
     });
     return peer;
+}
+
+function getOrCreateContact(store, contactId){
+    const contacts = store.getState().contacts.contacts
+    const contact = contacts.find(item=>item.id === contactId)
+    if(contact){
+        return contact
+    }else{
+        const newContact = {
+            id: contactId,
+            firstName: contactId
+        }
+        store.dispatch(actions.addContact(newContact))
+        return newContact
+    }
 }
 
 function peerMiddleware (store) {

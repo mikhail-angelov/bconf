@@ -39,11 +39,20 @@ function chats(state = TEMP_INIT_STATE, action) {
                 text: action.payload.content,
                 date: new Date(),
             }
-            state.chats[action.payload.author] = state.chats[action.payload.author] || {messages:[]}
-            state.chats[action.payload.author].messages = [message].concat(state.chats[action.payload.author].messages)
-            if(state.active == action.payload.author){
-                state.filtered = [message].concat(state.filtered);
+            const chat = state.chats[action.payload.author] || {
+                conatct: action.contact,
+                messages:[],
+                unread: 0
             }
+            chat.messages = [message].concat(state.chats[action.payload.author].messages)
+            if(state.active == action.payload.author){
+                state.filtered = [message].concat(state.filtered)
+            }else{
+                chat.unread++
+            }
+
+
+            state.chats[action.payload.author] = chat
 
             return Object.assign(state, {
                 chats: state.chats,
@@ -77,9 +86,11 @@ function chats(state = TEMP_INIT_STATE, action) {
             })
         }
         case actions.chats.SET_ACTIVE: {
+            state.chats[action.active].unread = 0
             return Object.assign(state, {
                 active: action.active,
-                filtered: state.chats[action.active].messages
+                filtered: state.chats[action.active].messages,
+                chats: state.chats
             })
         }
         case actions.chats.START_CHAT:{
