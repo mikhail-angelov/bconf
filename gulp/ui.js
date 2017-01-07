@@ -24,7 +24,7 @@ gulp.task('riot', () => {
 });
 
 gulp.task('riot:watch', ()=>{
-  //snode();
+  snode();
   return gulp.watch(['ui/**/*.tag','ui/index.js','ui/router.js','ui/services/**/*.js'], ['riot']);
 })
 
