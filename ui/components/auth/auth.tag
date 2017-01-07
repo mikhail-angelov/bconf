@@ -1,14 +1,10 @@
 <auth>
 <div class='container'>
- <div  id="signin">
-<signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
-<signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
-<forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
-
-
- </div>
+    <signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
+    <signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
+    <forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
 <div class="social">
-  <material-button class="ui" shady="true" >
+  <material-button class="ui" shady="true" disabled=true>
     <div class="text">google</div>
 </material-button>
 <material-button class="ui" shady="true" disabled=true>
@@ -77,10 +73,13 @@ this.onForgetPasswordTrue = ()=>{
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+    width: 300px;
+    padding-right: 30px;
   }
-  #signin {
-    width: 285px;
-  }
+  /*#signin {
+    width: 300px;
+    padding-right: 30px;
+  }*/
   .social {
     display: flex;
     flex-flow: column wrap;

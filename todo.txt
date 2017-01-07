@@ -1,4 +1,11 @@
 task list
+15/12
+Ivan
+
+-create error notification
+-auth.tag view
+
+
 15/11
 
 Ivan 
