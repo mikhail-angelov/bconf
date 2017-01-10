@@ -10,20 +10,7 @@ module.exports = {
     authGuest: authGuest
 }
 
-const USER = {
-    id: "test-user",
-    firstName: 'Unit',
-    secondName: 'Testov',
-    userId: 'test1',
-    info: 'some information about this contact',
-    status: 'I`m cool',
-    country: 'USA',
-    city: 'California',
-    phoneNumber: '123456789',
-    birthday: '1 march 1994',
-    sex: 'male',
-    date: new Date()
-}
+const USER = 
 
 const CONTACTS = [{
     id: "test",
