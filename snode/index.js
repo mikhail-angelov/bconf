@@ -21,7 +21,7 @@ mongoUnit.start()
         const auth = require('./src/auth')(dao)
         const contacts = require('./src/contacts')(dao)
 
-        app.use('/', auth)
+        app.use('/', auth.router)
         app.use('/api/contact', contacts.router)
 
         const ws = require('./src/ws')(server)

@@ -6,18 +6,9 @@ const sequrity = require('./security')
 module.exports = (dao) => {
     router.post('/login', (req, res) => {
         console.log('/login', req.body)
-        dao.findOne('users', { email: req.body.email })
-            .then(user => {
-                if (user && sequrity.validatePassword(req.body.password, user.password)) {
-                    const token = sequrity.encodeToken({
-                        id: user.id
-                    })
-                    user.token = token
-                    res.json(user)
-                } else {
-                    res.status(401).end('invalid password')
-                }
-            })
+        login(req.body)
+            .then(user => res.json(user))
+            .catch(err => res.status(401).end(err))
     })
     router.post('/logout', (req, res) => {
         console.log('/logout')
@@ -34,23 +25,63 @@ module.exports = (dao) => {
     })
     router.post('/forgotPassword', (req, res) => {
         console.log('/forgotPassword', req.body)
-        const url = user.resetPassword(req.body)
-        res.json({ url: url })
+        return resetPassword(req.body)
+            .then(url => res.json({ url: url }))
+            .catch(err => res.status(400).end(err))
     })
     router.post('/signUp', (req, res) => {
         console.log('/signUp', req.body)
-        const user = req.body
-        user.password = sequrity.encodePassword(user.password)
-        const newUser = dao.create('users', user)
-            .then(() => {
-                res.json(newUser)
-            })
-            .catch(err => {
-                res.status(400).end(err)
-            })
-
+        return createUser(req.body)
+            .then((user) => res.json(user))
+            .catch(err => res.status(400).end(err))
     })
 
-    return router
+    function login(credentials) {
+        return dao.findOne('users', { email: credentials.email })
+            .then(user => {
+                if (user && sequrity.validatePassword(credentials.password, user.password)) {
+                    const token = sequrity.encodeToken({
+                        id: user.id
+                    })
+                    user.token = token
+                    return user
+                } else {
+                    return Promise.reject('Invalid password')
+                }
+            })
+    }
+
+    function createUser(user) {
+        return dao.findOne('users', { email: user.email })
+            .then(exist => {
+                if (!exist) {
+                    user.password = sequrity.encodePassword(user.password)
+                    return dao.create('users', user)
+                        .then(result => {
+                            const user = result.ops[0]
+                            const token = sequrity.encodeToken({
+                                id: user.id
+                            })
+                            user.token = token
+                            return user
+                        })
+                } else {
+                    return Promise.reject('The user with this email is already exist.')
+                }
+            })
+    }
+
+    function resetPassword(email) {
+        return Promise.resolve('/fake-url') //todo: implement
+    }
+
+    return {
+        router,
+
+        //private
+        login,
+        createUser,
+        resetPassword
+    }
 }
 
