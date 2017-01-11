@@ -3,18 +3,18 @@
 const router = require('express').Router()
 
 module.exports = (dao) => {
-    router.get('/', function getContacts(req, res) {
+    router.get('/', (req, res) => {
         getContacts(req.decoded.id)
             .then(contacts => res.json(contacts || []))
             .catch(err => res.status(400).end('search error'))
     })
-    router.post('/', function addCOntact(req, res) {
+    router.post('/', (req, res) => {
         addContact(req.decoded.id, req.body)
             .then(contacts => res.json(contacts || []))
             .catch(err => res.status(400).end('add contact error'))
     })
 
-    router.get('/search', function searchContacts(req, res) {
+    router.get('/search', (req, res) => {
         findContacts(req.decoded.id, req.query.q)
             .then(contacts => res.json(contacts || []))
             .catch(err => res.status(400).end('search error'))
