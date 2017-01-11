@@ -8,6 +8,5 @@ all_tests:
   script:
    - npm set progress=false
    - npm install -q --ignore-scripts --unsafe-perm
-   - npm bower
    - npm test
-   - npm run test-ui
+  
