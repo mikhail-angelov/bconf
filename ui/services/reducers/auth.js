@@ -1,19 +1,28 @@
 const actions = require('../actions/index.js')
 
-const user = localStorage.getItem('user');
-const defaultUser = user?JSON.parse(user):{
-    id:'guest',
-    firstName:'Guest',
-    secondName:''
-}
 
-function auth (state = defaultUser, action){
+function auth (state = {status:'done'}, action){
     switch(action.type){
         case actions.auth.LOGIN_COMPLETE:{
-            return action.user;
+            return {
+                user:action.user,
+                status:'login'
+            }
         }
         case actions.auth.LOGOUT_COMPLETE:{
-            return null;
+            return {
+                status:'done'    
+            };
+        }
+        case actions.auth.LOGIN_ERROR:{
+            return {
+                status:'error'
+            };
+        }
+        case actions.auth.LOGIN_REQUEST:{
+            return {
+                status:'progress'
+            };
         }
 
         default:

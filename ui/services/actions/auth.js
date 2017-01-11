@@ -6,13 +6,17 @@ const actions = {
         LOGIN: 'login',
         LOGOUT: 'logout',
         LOGIN_COMPLETE: 'loginComplete',
-        LOGOUT_COMPLETE: 'logoutComplete'
+        LOGOUT_COMPLETE: 'logoutComplete',
+        LOGIN_ERROR: 'loginError',
+        LOGIN_REQUEST: 'loginRequest'
     },
     login,
     logout,
     loginComplete,
     logoutComplete,
-    loginGuest
+    loginGuest,
+    loginError,
+    loginRequest
 }
 
 function logoutComplete (){
@@ -30,11 +34,31 @@ function logout (user){
             localStorage.setItem('uiState', "");
             localStorage.setItem('user', "");
             dispatch(logoutComplete());
-
         })
         .catch(function(err) {
             console.log("Oops...", "Couldn't logout for user: " + user, err);
         });
+  }
+}
+
+function login (credentials, rememberMe) {  
+  return function(dispatch, getState) {
+    dispatch(loginRequest());
+    return http.post(config.host+'login', credentials)
+      .then(function(result) {
+            localStorage.setItem('token', result.token);
+            localStorage.setItem('user', JSON.stringify(result));
+            if(rememberMe){
+                localStorage.setItem('credentials', JSON.stringify(credentials))
+            }else{
+                localStorage.setItem('credentials', "")
+            }
+            dispatch(loginComplete(result));
+      })
+      .catch(function(err) {
+        console.log("Oops...", "Couldn't fetch repos for user: " + credentials, err);
+        dispatch(loginError(err));
+      });
   }
 }
 
@@ -45,23 +69,16 @@ function loginComplete (user){
     }
 }
 
-function login (credentials, rememberMe) {  
-  return function(dispatch, getState) {
-    return http.post(config.host+'login', credentials)
-      .then(function(result) {
-            localStorage.setItem('token', result.token);
-            localStorage.setItem('user', JSON.stringify(result));
-            dispatch(loginComplete(result));
-            if(rememberMe){
-                localStorage.setItem('credentials', JSON.stringify(credentials))
-            }else{
-                localStorage.setItem('credentials', "")
-            }
-      })
-      .catch(function(err) {
-        console.log("Oops...", "Couldn't fetch repos for user: " + credentials, err);
-      });
-  }
+function loginError (err){
+    return {
+        type: actions.auth.LOGIN_ERROR,
+        err
+    }
+}
+function loginRequest (){
+    return {
+        type: actions.auth.LOGIN_REQUEST,
+    }
 }
 
 function loginGuest () {  

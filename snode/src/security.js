@@ -25,5 +25,5 @@ function encodePassword(password){
 }
 
 function validatePassword(password, encodedPassword){
-    return password == encodedPassword
+    return encodePassword(password) == encodedPassword
 }

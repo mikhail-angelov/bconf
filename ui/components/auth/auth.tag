@@ -3,6 +3,7 @@
     <signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
     <signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
     <forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
+    
 <div class="social">
   <material-button class="ui" shady="true" disabled=true>
     <div class="text">google</div>
@@ -20,12 +21,10 @@
 </div>
 </div>
 <script>
+
 this.state = 'signin';
 
-// this.onLogin = ()=>{
-//     console.log('login')
-//     riot.route('main')
-// }
+
 this.onSignUp = ()=>{
 	this.state = 'signup'
 	this.update()
@@ -76,16 +75,15 @@ this.onForgetPasswordTrue = ()=>{
     width: 300px;
     padding-right: 30px;
   }
-  /*#signin {
-    width: 300px;
-    padding-right: 30px;
-  }*/
+  
+
   .social {
     display: flex;
     flex-flow: column wrap;
     margin-right: 35px;
     
   }
+
   .social material-button {
     margin-top: 10px;
     height: 40px;

@@ -56,22 +56,22 @@ this.allInputsComplete = () => {
 this.validatePassword = ()=>{
     // var name = this.newUser.querySelector('input').value;
     // var email = this.newEmail.querySelector('input').value;
-    var p = this.newPassword.querySelector('input').value;
-    var rp = this.repeatNewPassword.querySelector('input').value,
+    var password = this.newPassword.querySelector('input').value;
+    var repeatPassword = this.repeatNewPassword.querySelector('input').value,
         errors = [];
     // if (name.length < 5) {
     //     errors.push("Your user name must be at least 5 characters");
     // }
-    if (p !== rp) {
+    if (password !== repeatPassword) {
         errors.push("Your passwords must be same");
     }
-    if (p.length < 8) {
+    if (password.length < 8) {
         errors.push("Your password must be at least 8 characters"); 
     }
-    if (p.search(/[a-z]/i) < 0) {
+    if (password.search(/[a-z]/i) < 0) {
         errors.push("Your password must contain at least one letter.");
     }
-    if (p.search(/[0-9]/) < 0) {
+    if (password.search(/[0-9]/) < 0) {
         errors.push("Your password must contain at least one digit."); 
     }
     if (errors.length > 0) {
@@ -79,7 +79,6 @@ this.validatePassword = ()=>{
         this.error = true;
         // this.newPassword.querySelector('input').focus();
         return false;
-        this.update();
     }
     return true;
 }
@@ -89,18 +88,20 @@ this.onSignUp = () => {
         if (this.newPassword.querySelector('input').value.length > 0 && this.repeatNewPassword.querySelector('input').value.length > 0){
             this.newPsw = this.newPassword.querySelector('input').value
             this.error = false;
+            
         }
     }else{
         this.error = true;
     }    
-    this.validatePassword();
-    if (validatePassword) {
+    if (this.validatePassword()){
         const newUserCredentials = {
-            userName: this.newUser.querySelector('input').value,
-            email: this.newEmail.querySelector('input').value,
-            password: this.newPsw
-        }
-    }
+                userName: this.newUser.querySelector('input').value,
+                email: this.newEmail.querySelector('input').value,
+                password: this.newPsw
+            }
+            console.log('===')
+    };
+        
     this.state = 'signin'
 
 }

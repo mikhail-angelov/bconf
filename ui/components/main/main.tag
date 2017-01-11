@@ -149,7 +149,7 @@ this.chooseContact = (contact)=>{
     this.update();
 }
 
-this.user = this.auth;
+this.user = this.auth.user;
 
 this.onBack = ()=>{
     console.log('to welcome')
@@ -303,7 +303,9 @@ this.updatestatus = (newstatus)=>{
             flex-direction: column;
             flex: 100%;
         }
-        
+        .position_relative {
+            position: relative;
+        }
         .toflex {
             display: flex;
         }
