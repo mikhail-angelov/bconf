@@ -1,27 +1,29 @@
-import passport from 'passport';
-import {Strategy as YandexStrategy} from 'passport-yandex';
+'use strict'
 
-exports.setup = function(User, config) {
+const passport = require('passport')
+const YandexStrategy = require('passport-yandex').Strategy
+
+module.exports = (auth, config) => {
   passport.use(new YandexStrategy({
-    clientID: config.yandex.clientID,
-    clientSecret: config.yandex.clientSecret,
-    callbackURL: config.yandex.callbackURL
+    clientID: config.clientID,
+    clientSecret: config.clientSecret,
+    callbackURL: config.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOneAsync({
+    auth.findUser({
       'yandex.id': profile.id
     })
       .then(function(user) {
         if (!user) {
-          user = new User({
+          console.log('ya',profile)
+          auth.createUser(req.body, {
             name: profile.displayName,
             email: profile.emails[0].value,
             role: 'user',
             username: profile.emails[0].value.split('@')[0],
             provider: 'yandex',
             yandex: profile._json
-          });
-          user.saveAsync()
+          }, { 'yandex.id': profile._json.id })
             .then(function(user) {
               return done(null, user);
             })

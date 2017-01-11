@@ -1,93 +1,75 @@
-'use strict';
+'use strict'
 
-import passport from 'passport';
-import config from '../../config';
-import jwt from 'jsonwebtoken';
-import expressJwt from 'express-jwt';
-import compose from 'composable-middleware';
-import User from '../api/user/user.model';
-var validateJwt = expressJwt({
-  secret: config.secrets.session
-});
+const sequrity = require('../security')
 
-/**
- * Attaches the user object to the request if authenticated
- * Otherwise returns 403
- */
-function isAuthenticated() {
-  return compose()
-    // Validate jwt
-    .use(function(req, res, next) {
-      // allow access_token to be passed through query parameter as well
-      if (req.query && req.query.hasOwnProperty('access_token')) {
-        req.headers.authorization = 'Bearer ' + req.query.access_token;
-      }
-      validateJwt(req, res, next);
-    })
-    // Attach user to request
-    .use(function(req, res, next) {
-        //todo refactor it
-        if(req.user.role === 'guest'){
-          next();
-        }else {
-          User.findByIdAsync(req.user._id)
-              .then(function (user) {
-                if (!user) {
-                  return res.status(401).end();
+module.exports = (dao) => {
+    
+    function login(credentials) {
+        return findUser({ email: credentials.email })
+            .then(user => {
+                if (user && sequrity.validatePassword(credentials.password, user.password)) {
+                    user.token = signToken( user.id)
+                    return user
+                } else {
+                    return Promise.reject('Invalid password')
                 }
-                req.user = user;
-                next();
-              })
-              .catch(function (err) {
-                return next(err);
-              });
-        }
-    });
-}
+            })
+    }
 
-/**
- * Checks if the user role meets the minimum requirements of the route
- */
-function hasRole(roleRequired) {
-  if (!roleRequired) {
-    throw new Error('Required role needs to be set');
-  }
+    function findUser(query){
+      return dao.findOne('users', query)
+    }
 
-  return compose()
-    .use(isAuthenticated())
-    .use(function meetsRequirements(req, res, next) {
-      if (config.userRoles.indexOf(req.user.role) >=
-          config.userRoles.indexOf(roleRequired)) {
-        next();
+    function authenticate(user, password){
+      if (sequrity.validatePassword(password, user.password)) {
+          user.token = signToken( user.id)
+          return user
       }
-      else {
-        res.status(403).send('Forbidden');
+    }
+
+    function createUser(user, query) {
+        return dao.findOne('users', query)
+            .then(exist => {
+                if (!exist) {
+                    user.password = sequrity.encodePassword(user.password)
+                    return dao.create('users', user)
+                        .then(result => {
+                            const user = result.ops[0]
+                            user.token = signToken( user.id)
+                            return user
+                        })
+                } else {
+                    return Promise.reject('The user with this email is already exist.')
+                }
+            })
+    }
+
+    function resetPassword(email) {
+        return Promise.resolve('/fake-url') //todo: implement
+    }
+
+    function signToken(userId){
+        return sequrity.encodeToken({
+                    id: userId
+                })
+    }
+
+    function setTokenCookie(req, res) {
+      if (!req.user) {
+        return res.status(404).send('Something went wrong, please try again.');
+      }else{
+        const token = signToken( req.user.id)
+        res.cookie('token', token);
+        res.redirect('/');
       }
-    });
-}
+    }
 
-/**
- * Returns a jwt token signed by the app secret
- */
-function signToken(id, role) {
-  return jwt.sign({ _id: id, role: role }, config.secrets.session, {
-    expiresIn: '2d'
-  });
+    return {
+        login,
+        authenticate,
+        findUser,
+        createUser,
+        resetPassword,
+        setTokenCookie
+    }
 }
-
-/**
- * Set token cookie directly for oAuth strategies
- */
-function setTokenCookie(req, res) {
-  if (!req.user) {
-    return res.status(404).send('Something went wrong, please try again.');
-  }
-  var token = signToken(req.user._id, req.user.role);
-  res.cookie('token', token);
-  res.redirect('/');
-}
-
-exports.isAuthenticated = isAuthenticated;
-exports.hasRole = hasRole;
-exports.signToken = signToken;
-exports.setTokenCookie = setTokenCookie;

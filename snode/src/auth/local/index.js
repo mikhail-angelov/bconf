@@ -1,33 +1,39 @@
-'use strict';
+'use strict'
 
-import express from 'express';
-import passport from 'passport';
-import auth from '../auth.service';
-import util from '../../components/util/index.js'
+const router = require('express').Router()
 
-var router = express.Router();
+module.exports = (auth) => {
+    router.post('/login', (req, res) => {
+        console.log('/login', req.body)
+        auth.login(req.body)
+            .then(user => res.json(user))
+            .catch(err => res.status(401).end(err))
+    })
+    router.post('/logout', (req, res) => {
+        console.log('/logout')
+        res.json({})
+    })
 
-router.post('/', function (req, res, next) {
-    passport.authenticate('local', function (err, user, info) {
-        var error = err || info;
-        if (error) {
-            return res.status(401).json(error);
+    router.post('/validate', (req, res) => {
+        console.log('/validate')
+        if (req.decoded) {
+            res.status(200).end()
+        } else {
+            res.status(401).end()
         }
-        if (!user) {
-            return res.status(404).json({message: 'Something went wrong, please try again.'});
-        }
+    })
+    router.post('/forgotPassword', (req, res) => {
+        console.log('/forgotPassword', req.body)
+        return auth.resetPassword(req.body)
+            .then(url => res.json({ url: url }))
+            .catch(err => res.status(400).end(err))
+    })
+    router.post('/signUp', (req, res) => {
+        console.log('/signUp', req.body)
+        return auth.createUser(req.body, { email: req.body.email })
+            .then((user) => res.json(user))
+            .catch(err => res.status(400).end(err))
+    })
 
-        var token = auth.signToken(user._id, user.role);
-        res.json({token: token});
-    })(req, res, next)
-});
-
-//guest auth
-router.post('/guest', function (req, res, next) {
-    //todo: check capture
-    var guestId = util.randomId();
-    var token = auth.signToken(guestId, 'guest');
-    res.json({token: token});
-});
-
-module.exports = router;
+    return router
+}

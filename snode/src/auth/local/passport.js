@@ -1,8 +1,10 @@
-import passport from 'passport';
-import {Strategy as LocalStrategy} from 'passport-local';
+'use strict'
 
-function localAuthenticate(User, email, password, done) {
-  User.findOneAsync({
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+
+function localAuthenticate(auth, email, password, done) {
+  auth.findUser({
     email: email.toLowerCase()
   })
     .then(function(user) {
@@ -11,30 +13,25 @@ function localAuthenticate(User, email, password, done) {
           message: 'This email is not registered.'
         });
       }
-      user.authenticate(password, function(authError, authenticated) {
-        if (authError) {
-          return done(authError);
-        }
-        if (!authenticated) {
-          return done(null, false, {
-            message: 'This password is not correct.'
-          });
-        } else {
-          return done(null, user);
-        }
-      });
+      const authenticated = auth.authenticate(user, password) 
+      if (!authenticated) {
+        return done(null, false, {
+          message: 'This password is not correct.'
+        });
+      } else {
+        return done(null, authenticated);
+      }
     })
     .catch(function(err) {
-
       return done(err);
     });
 }
 
-exports.setup = function(User, config) {
+module.exports = (auth) => {
   passport.use(new LocalStrategy({
     usernameField: 'email',
-    passwordField: 'password' // this is the virtual field on the model
-  }, function(email, password, done) {
-    return localAuthenticate(User, email, password, done);
+    passwordField: 'password'
+  }, (email, password, done) => {
+    return localAuthenticate(auth, email, password, done);
   }));
-};
+}

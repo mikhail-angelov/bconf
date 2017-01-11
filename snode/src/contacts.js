@@ -1,20 +1,21 @@
 'use strict'
 
 const router = require('express').Router()
+const security = require('./security')
 
 module.exports = (dao) => {
-    router.get('/', (req, res) => {
+    router.get('/', security.authRequired, (req, res) => {
         getContacts(req.decoded.id)
             .then(contacts => res.json(contacts || []))
             .catch(err => res.status(400).end('search error'))
     })
-    router.post('/', (req, res) => {
+    router.post('/', security.authRequired, (req, res) => {
         addContact(req.decoded.id, req.body)
             .then(contacts => res.json(contacts || []))
             .catch(err => res.status(400).end('add contact error'))
     })
 
-    router.get('/search', (req, res) => {
+    router.get('/search', security.authRequired, (req, res) => {
         findContacts(req.decoded.id, req.query.q)
             .then(contacts => res.json(contacts || []))
             .catch(err => res.status(400).end('search error'))

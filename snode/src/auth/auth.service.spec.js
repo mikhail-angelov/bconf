@@ -4,8 +4,8 @@ const expect = require('chai').expect
 
 describe('auth', () => {
     const mongoUnit = require('mongo-unit')
-    const dbData = require('../test/fixtures/authDb.json')
-    const daoService = require('./dao')
+    const dbData = require('../../test/fixtures/authDb.json')
+    const daoService = require('../dao')
     var dao
     var auth
 
@@ -15,7 +15,7 @@ describe('auth', () => {
         }))
         .then(_dao => {
             dao = _dao
-            auth = require('./auth')(dao)
+            auth = require('./auth.service')(dao)
         })
         .then(() => mongoUnit.load(dbData)))
 
@@ -54,7 +54,7 @@ describe('auth', () => {
             email: 'new mail',
             password: 'test',
             firstName: 'NewUser'
-        }).then(user => {
+        },{email:'new mail'}).then(user => {
             expect(!!user.token).to.equal(true)
             expect(user.firstName).to.equal('NewUser')
         })
@@ -64,7 +64,7 @@ describe('auth', () => {
         return auth.login({
             email: 'test',
             password: 'test'
-        }).catch(err => {
+        },{email:'test'}).catch(err => {
             expect(err).to.equal('The user with this email is already exist.')
         })
     })

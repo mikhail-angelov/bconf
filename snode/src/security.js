@@ -5,7 +5,8 @@ module.exports = {
     encodeToken,
     decodeToken,
     encodePassword,
-    validatePassword
+    validatePassword,
+    authRequired
 }
 
 function encodeToken(data) {
@@ -26,4 +27,15 @@ function encodePassword(password){
 
 function validatePassword(password, encodedPassword){
     return password == encodedPassword
+}
+
+function authRequired(req, res, next){
+    const token = req.headers ? req.headers['x-access-token'] : ''
+    const decoded = decodeToken(token)
+    if (decoded) {
+        req.decoded = decoded
+        next()
+    } else {
+        res.status(401).end()
+    }
 }

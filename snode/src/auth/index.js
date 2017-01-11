@@ -1,23 +1,24 @@
 'use strict';
 
-import express from 'express';
-import passport from 'passport';
-import config from '../config/environment/index';
-import User from '../api/user/user.model';
+const router = require('express').Router()
+const authService = require('./auth.service')
 
-// Passport Configuration
-require('./local/passport').setup(User, config);
-require('./facebook/passport').setup(User, config);
-require('./google/passport').setup(User, config);
-require('./twitter/passport').setup(User, config);
-require('./yandex/passport').setup(User, config);
+module.exports = (dao, config) => {
 
-var router = express.Router();
+    const auth = authService(dao)
 
-router.use('/local', require('./local'));
-router.use('/facebook', require('./facebook'));
-router.use('/twitter', require('./twitter'));
-router.use('/google', require('./google'));
-router.use('/yandex', require('./yandex'));
+    // Passport Configuration
+    require('./local/passport')(auth)
+    // require('./facebook/passport').setup(auth, config);
+    // require('./google/passport').setup(auth, config);
+    // require('./twitter/passport').setup(auth, config);
+    require('./yandex/passport')(auth, config.yandex)
 
-module.exports = router;
+    router.use('/local', require('./local')(auth))
+    // router.use('/facebook', require('./facebook')(auth));
+    // router.use('/twitter', require('./twitter')(auth));
+    // router.use('/google', require('./google')(auth));
+    router.use('/yandex', require('./yandex')(auth))
+
+    return router
+}
