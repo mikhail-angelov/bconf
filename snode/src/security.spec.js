@@ -6,10 +6,10 @@ describe('sequrity', () => {
     const security = require('./security')
     
     it('should encode token', () => {
-        const token = 'test'
+        const token = {test:'test'}
         const encodedToken = security.encodeToken(token)
         expect(token != encodedToken).to.equal(true)
-        expect(security.decodeToken(encodedToken)).to.equal(token)
+        expect(security.decodeToken(encodedToken).test).to.equal(token.test)
     })
 
     it('should encode password', () => {
