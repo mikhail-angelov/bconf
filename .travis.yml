@@ -7,25 +7,15 @@ node_js:
 services:
   - docker
 
-before_script:
-  - npm run bower
-  #- docker build -t mangelov/bconf .
-  #- docker run -d -p 7000:7000 mangelov/travis-docker /bin/sh -c "cd /opt/app; node index.js;"
-  #- docker ps -a
-  #- export DISPLAY=:99.0
-  #- sh -e /etc/init.d/xvfb start
-  #- sleep 1 # give server time to start
+# script:
+#   - npm test
 
-script:
-  #- npm run protractor
-  - npm run test
-
-after_success:
-  - npm run build
-  - docker build -t $DOCKER_IMAGE_NAME .
-  - docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
-  - docker login -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD"
-  - docker push $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
+# after_success:
+  # - npm run build
+  # - docker build -t $DOCKER_IMAGE_NAME .
+  # - docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
+  # - docker login -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD"
+  # - docker push $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
 
 env:
   - DOCKER_IMAGE_NAME=mangelov/bconf
