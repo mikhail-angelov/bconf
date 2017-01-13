@@ -1,0 +1,23 @@
+{
+    "users": [
+        {
+            "id": "unit-test",
+            "firstName": "Unit",
+            "lastName": "Testov",
+            "email": "test",
+            "password": "test",
+            "info": "some information about this contact",
+            "status": "I`m cool",
+            "country": "USA",
+            "city": "California",
+            "phoneNumber": "123456789",
+            "birthday": "1 march 1994",
+            "sex": "male",
+            "date": "2017-01-11T11:39:34.389Z",
+            "contacts": [
+                "test",
+                "test2"
+            ]
+        }
+    ]
+}

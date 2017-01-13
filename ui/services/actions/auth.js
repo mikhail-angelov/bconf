@@ -27,7 +27,7 @@ function logoutComplete (){
 
 function logout (user){
     return function(dispatch, getState) {
-        return http.post(config.host+'logout', {})
+        return http.post(config.host+'local/logout', {})
         .then(function() {
             console.log('--')
             localStorage.setItem('token', "");
@@ -44,7 +44,7 @@ function logout (user){
 function login (credentials, rememberMe) {  
   return function(dispatch, getState) {
     dispatch(loginRequest());
-    return http.post(config.host+'login', credentials)
+    return http.post(config.host+'local/login', credentials)
       .then(function(result) {
             localStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result));
@@ -83,7 +83,7 @@ function loginRequest (){
 
 function loginGuest () {  
   return function(dispatch, getState) {
-    return http.post(config.host+'loginGuest')
+    return http.post(config.host+'local/loginGuest')
       .then(function(result) {
             localStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result));

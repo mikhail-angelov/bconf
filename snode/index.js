@@ -8,7 +8,7 @@ const fakeWebRTCClient = require('./fake.webrtc.client.js')
 const mongoUnit = require('mongo-unit')
 const daoService = require('./src/dao')
 const fakeDb = require('./fakeDb')
-
+const config = require('./config')
 
 const expressConfig = require('./expressConfig')(app)
 
@@ -18,11 +18,11 @@ mongoUnit.start()
     }))
     .then(dao => {
 
-        const auth = require('./src/auth')(dao)
+        const auth = require('./src/auth')(dao, config)
         const contacts = require('./src/contacts')(dao)
 
         app.use('/', auth)
-        app.use('/api/contact', contacts)
+        app.use('/api/contact', contacts.router)
 
         const ws = require('./src/ws')(server)
 
