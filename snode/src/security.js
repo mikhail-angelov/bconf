@@ -26,10 +26,7 @@ function encodePassword(password){
 }
 
 function validatePassword(password, encodedPassword){
-<<<<<<< HEAD
     return encodePassword(password) == encodedPassword
-=======
-    return password == encodedPassword
 }
 
 function authRequired(req, res, next){
@@ -41,5 +38,4 @@ function authRequired(req, res, next){
     } else {
         res.status(401).end()
     }
->>>>>>> 197e36b6dd1bfea3c3d828064f0ae4060ceb3d4b
 }
