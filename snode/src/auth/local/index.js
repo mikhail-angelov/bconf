@@ -1,11 +1,14 @@
 'use strict'
 
 const router = require('express').Router()
+const passportConfig = require('./passport')
 
 module.exports = (auth) => {
+    passportConfig(auth)
+
     router.post('/login', (req, res) => {
-        console.log('/login', req.body)
-        auth.login(req.body)
+        console.log('local/login', req.body.email)
+        login(req.body)
             .then(user => res.json(user))
             .catch(err => res.status(401).end(err))
     })
@@ -35,5 +38,22 @@ module.exports = (auth) => {
             .catch(err => res.status(400).end(err))
     })
 
-    return router
+    function login(credentials) {
+        return auth.findUser({ email: credentials.email })
+            .then(user => {
+                const autorization = auth.authenticate(user, credentials.password)
+                if (autorization) {
+                    return autorization
+                } else {
+                    return Promise.reject('Invalid password')
+                }
+            })
+    }
+
+    return {
+        router,
+
+        //private
+        login
+    }
 }

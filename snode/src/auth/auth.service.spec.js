@@ -21,34 +21,6 @@ describe('auth', () => {
 
     after(() => mongoUnit.drop())
 
-    it('should succesfuly login', () => {
-        return auth.login({
-            email: 'test',
-            password: 'test'
-        }).then(user => {
-            expect(!!user.token).to.equal(true)
-            expect(user.firstName).to.equal('Unit')
-        })
-    })
-
-    it('should fail login, invalid password', () => {
-        return auth.login({
-            email: 'test',
-            password: 'wrong'
-        }).catch(err => {
-            expect(err).to.equal('Invalid password')
-        })
-    })
-
-    it('should fail login, invalid mail', () => {
-        return auth.login({
-            email: 'wrong',
-            password: 'test'
-        }).catch(err => {
-            expect(err).to.equal('Invalid password')
-        })
-    })
-
     it('should create new user', () => {
         return auth.createUser({
             email: 'new mail',
@@ -61,7 +33,7 @@ describe('auth', () => {
     })
 
     it('should fail create user if mail exist', () => {
-        return auth.login({
+        return auth.createUser({
             email: 'test',
             password: 'test'
         },{email:'test'}).catch(err => {

@@ -4,26 +4,16 @@ const sequrity = require('../security')
 
 module.exports = (dao) => {
     
-    function login(credentials) {
-        return findUser({ email: credentials.email })
-            .then(user => {
-                if (user && sequrity.validatePassword(credentials.password, user.password)) {
-                    user.token = signToken( user.id)
-                    return user
-                } else {
-                    return Promise.reject('Invalid password')
-                }
-            })
-    }
-
     function findUser(query){
       return dao.findOne('users', query)
     }
 
     function authenticate(user, password){
-      if (sequrity.validatePassword(password, user.password)) {
+      if (user && sequrity.validatePassword(password, user.password)) {
           user.token = signToken( user.id)
           return user
+      }else{
+          return null
       }
     }
 
@@ -65,7 +55,6 @@ module.exports = (dao) => {
     }
 
     return {
-        login,
         authenticate,
         findUser,
         createUser,
