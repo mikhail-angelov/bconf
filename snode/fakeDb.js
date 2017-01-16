@@ -1,7 +1,9 @@
+const ObjectId = require('mongodb').ObjectId
+
 module.exports = {
     users: [
         {
-            id: "guest",
+            _id: ObjectId("5554ba3324d05f4bc2cab3f0"),
             firstName: 'Guest',
             secondName: 'Guestovich',
             email: 'guest',
@@ -16,7 +18,7 @@ module.exports = {
             date: new Date()
         },
         {
-            id: "unit-test",
+            _id: ObjectId("5554ba3324d05f4bc2cab3f1"),
             firstName: 'Unit',
             secondName: 'Testov',
             email: 'test',
@@ -29,10 +31,10 @@ module.exports = {
             birthday: '1 march 1994',
             sex: 'male',
             date: new Date(),
-            contacts: ["test", "test2"]
+            contacts: [ObjectId("5554ba3324d05f4bc2cab3f2"), ObjectId("5554ba3324d05f4bc2cab3f3")]
         },
         {
-            id: "test",
+            _id: ObjectId("5554ba3324d05f4bc2cab3f2"),
             firstName: 'Vasya',
             secondName: 'Vasin',
             email: 'test1',
@@ -46,7 +48,7 @@ module.exports = {
             sex: 'male',
             date: new Date()
         }, {
-            id: "test2",
+            _id: ObjectId("5554ba3324d05f4bc2cab3f3"),
             firstName: 'Petya',
             secondName: 'Petin',
             email: 'test2',

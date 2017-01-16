@@ -33,15 +33,24 @@ window.addEventListener("DOMContentLoaded",function load() {
   subRoute('/main', function() {
     goTo('main');
   });
-  
-  
- 
 
   riot.route.start();
+
+  const redirectToken = getAuthRedirectToken()
+  if(redirectToken){
+    localStorage.setItem('token', redirectToken)
+  }
+
   if(localStorage.getItem('token') == false){
     riot.route.exec(goTo); //default redirect
   }else{
     riot.route('main');
     goTo('main');
+  }
+
+  function getAuthRedirectToken(){
+    if(document.location.hash && document.location.hash.indexOf('#auth-redirect=') === 0){
+      return document.location.hash.substr(15)
+    }
   }
 },true)

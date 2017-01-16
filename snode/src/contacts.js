@@ -25,7 +25,7 @@ module.exports = (dao) => {
         return dao.findById('users', userId)
             .then(user => {
                 if(user){
-                    return dao.find('users', { id: { $in: user.contacts } })
+                    return dao.find('users', { _id: { $in: user.contacts||[] } })
                 }else{
                     return Promise.reject('invalid user id ' + userId)
                 }
