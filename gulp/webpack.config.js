@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: __dirname + '/ui/dist',
     filename: 'bundle.js',
-    publicPath: 'http://0.0.0.0:8080/dist/'
+    publicPath: 'http://0.0.0.0:9000/dist/'
   },
   plugins: [
     new webpack.ProvidePlugin({

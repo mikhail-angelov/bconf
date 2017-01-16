@@ -8,7 +8,7 @@ module.exports = function openPeer (opts) {
   console.log('Connecting with username', opts.username);
   const peer = new Peer(opts.username, {
     host: location.hostname,
-    port: opts.port || 9000,
+    port: opts.port || 9001,
     path: opts.path || '/chat'
   });
   peer.on('open', opts.onOpen);

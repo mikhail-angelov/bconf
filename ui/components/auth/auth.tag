@@ -1,27 +1,31 @@
 <auth>
 <div class='container'>
-    <signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
-    <signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
-    <forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
-    
-<div class="social">
-  <material-button class="ui" shady="true" disabled=true>
-    <div class="text">google</div>
-</material-button>
-<material-button class="ui" shady="true" disabled=true>
-    <div class="text">vk</div>
-</material-button>
-<material-button class="ui" shady="true" disabled=true>
-    <div class="text">twitter</div>
-</material-button>
-<material-button class="ui" shady="true" disabled=true>
-    <div class="text">facebook</div>
-    <i class="material-icons"></i>
-</material-button>
+  <signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
+  <signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
+  <forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
+  
+  <div class="social">
+    <material-button class="ui" shady="true" disabled=true>
+      <div class="text">google</div>
+    </material-button>
+    <material-button class="ui" shady="true" disabled=true>
+        <div class="text">vk</div>
+    </material-button>
+    <material-button class="ui" shady="true" disabled=true>
+        <div class="text">twitter</div>
+    </material-button>
+    <material-button class="ui" shady="true" disabled=true>
+        <div class="text">facebook</div>
+        <i class="material-icons"></i>
+    </material-button>
+    <material-button class="ui" shady="true" onclick={loginWithYandex}>
+        <div class="text">yandex</div>
+        <i class="material-icons"></i>
+    </material-button>
+  </div>
 </div>
-</div>
-<script>
 
+<script>
 this.state = 'signin';
 
 this.onSignUp = ()=>{
@@ -54,10 +58,13 @@ this.onForgetPasswordTrue = ()=>{
 	this.update()
   alert("Your password send on your email!")
 }
+
+this.loginWithYandex = ()=>{
+  document.location = '/auth/yandex'
+}
 </script>
 
 <style scoped>
-
   .container {
     display: flex;
     flex-flow: row-reverse wrap;

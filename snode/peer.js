@@ -1,12 +1,12 @@
 const PeerServer = require('peer').PeerServer
 const socketIO = require('socket.io')
+const config = require('./config')
 
 module.exports = createPeerServer
 
-
 function createPeerServer(expressServer) {
     const io = socketIO(expressServer).listen(expressServer)
-    const peerServer = new PeerServer({ port: 9000, path: '/chat' });
+    const peerServer = new PeerServer({ port: config.peerServerPort, path: '/chat' });
 
     peerServer.on('connection', function (id) {
         io.emit('user-connected', id);

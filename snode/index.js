@@ -2,7 +2,6 @@
 
 const app = require('express')()
 const server = require('http').createServer(app)
-const port = process.env.PORT || 9001
 const createPeerServer = require('./peer')
 const fakeWebRTCClient = require('./fake.webrtc.client.js')
 const mongoUnit = require('mongo-unit')
@@ -21,13 +20,13 @@ mongoUnit.start()
         const auth = require('./src/auth')(dao, config)
         const contacts = require('./src/contacts')(dao)
 
-        app.use('/', auth)
+        app.use('/auth', auth)
         app.use('/api/contact', contacts.router)
 
         const ws = require('./src/ws')(server)
 
-        const serv = server.listen(port, function () {
-            console.log('Express server listening on %d, in %s mode', port, app.get('env'));
+        const serv = server.listen(config.port, function () {
+            console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
             fakeWebRTCClient.connect('test');
         })
 
