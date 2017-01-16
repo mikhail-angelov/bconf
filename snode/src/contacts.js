@@ -1,5 +1,6 @@
 'use strict'
 
+const ObjectId = require('mongodb').ObjectId
 const router = require('express').Router()
 const security = require('./security')
 
@@ -37,17 +38,17 @@ module.exports = (dao) => {
             .then(user => {
                 if(user){
                     const contacts = user.contacts || []
-                    contacts.push(contactId)
+                    contacts.push(ObjectId(contactId))
                     return dao.update('users',{_id:user._id},{contacts: contacts})
                 }else{
                     return Promise.reject('invalid user id ' + userId)
                 }
             })
-            .then(user => getContacts(user.id))
+            .then(() => getContacts(userId))
     }
 
     function findContacts(userId, text) {
-        const query = new RegExp(text || '')
+        const query = new RegExp(text || '','i')
         return dao.find('users', {$or:[{ firstName: query  },{ lastName: query  }]})
     }
 
