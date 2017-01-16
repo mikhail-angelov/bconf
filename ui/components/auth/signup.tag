@@ -11,10 +11,10 @@
   
 </form>
 <div class="buttons">
-    <material-button name="signUpButton" class="ui"  onclick={onSignUp} disabled='true'>
+    <material-button name="signUpButton" class="{background-color: allInputsComplete()} ui"  onclick={onSignUp} disabled='true'>
         <div class="text">Signup</div>
     </material-button>
-    <material-button class="ui" onclick={this.opts.onsignupback}>
+    <material-button class="background-color ui" onclick={this.opts.onsignupback}>
         <div class="text">Back</div>
     </material-button>
 </div>
@@ -44,13 +44,15 @@ this.checkCredentials = (isFocused)=>{
 
 
 this.allInputsComplete = () => {
-    
     if (this.newUser.querySelector('input').value.length > 0 && this.newEmail.querySelector('input').value.length > 0 
         && this.newPassword.querySelector('input').value.length > 0 && this.repeatNewPassword.querySelector('input').value.length > 0){
             this.signUpButton.setAttribute('disabled',false)
+            return true;
         }else{
             this.signUpButton.setAttribute('disabled',true)
+            return false;
         }
+        this.update();
 }
 
 this.validatePassword = ()=>{

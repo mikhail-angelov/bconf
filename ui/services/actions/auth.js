@@ -31,6 +31,7 @@ function logout (user){
         .then(function() {
             console.log('--')
             localStorage.setItem('token', "");
+            localStorage.setItem('status', "");
             localStorage.setItem('uiState', "");
             localStorage.setItem('user', "");
             dispatch(logoutComplete());
@@ -47,6 +48,7 @@ function login (credentials, rememberMe) {
     return http.post(config.host+'local/login', credentials)
       .then(function(result) {
             localStorage.setItem('token', result.token);
+            localStorage.setItem('status', 'login');
             localStorage.setItem('user', JSON.stringify(result));
             if(rememberMe){
                 localStorage.setItem('credentials', JSON.stringify(credentials))

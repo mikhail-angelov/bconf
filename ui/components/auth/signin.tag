@@ -11,10 +11,10 @@
     
     </form>
     <div class="buttons">
-        <material-button class="ui" onclick={onLogin}>
+        <material-button class="background-color ui" onclick={onLogin}>
             <div class="text">SignIn</div>
         </material-button>
-        <material-button class="ui" onclick={this.opts.onsignup}>
+        <material-button class="background-color ui" onclick={this.opts.onsignup}>
             <div class="text">SignUp</div>
         </material-button>
     </div>

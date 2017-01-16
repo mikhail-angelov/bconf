@@ -17,13 +17,16 @@
         this.accountList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.SETTINGS, main:actions.uiState.main.MAIN})
 
        
-        this.isContactsState = ()=>this.opts.active_tab === actions.uiState.sub.CONTACTS;
+        this.isContactsState = ()=>{
+            return this.opts.active_tab === actions.uiState.sub.CONTACTS;
+        }
         this.isChatsState = ()=>this.opts.active_tab === actions.uiState.sub.CHATS;
         this.isSettingsState = ()=>this.opts.active_tab === actions.uiState.sub.SETTINGS;
 
         function changeState(state){
             this.opts.changestate(state)
         }
+        this.update();
     </script>
     <style>
         .tabs {

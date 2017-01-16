@@ -65,10 +65,7 @@ store.dispatch(openSocketAction);
 const contactList = actions.setContactList()
 store.dispatch(contactList);
 
-const subUiState = localStorage.getItem('uiState') || actions.uiState.sub.CONTACTS;
 
-const newStateAction = actions.newState({sub: subUiState, main:actions.uiState.main.MAIN});
-store.dispatch(newStateAction);
 
 store.subscribe(()=>{
     this.contacts = store.getState().contacts;
@@ -82,6 +79,11 @@ this.contacts = store.getState().contacts;
 this.chats = store.getState().chats;
 this.auth = store.getState().auth;
 this.state = store.getState().uiState;
+
+const subUiState = localStorage.getItem('uiState') || actions.uiState.sub.CONTACTS;
+
+const newStateAction = actions.newState({main:actions.uiState.main.MAIN, sub:subUiState});
+store.dispatch(newStateAction);
 
 const initChats = actions.initChats(this.auth)
 store.dispatch(initChats)
@@ -198,27 +200,6 @@ this.updatestatus = (newstatus)=>{
     this.update();
 }
 
-        this.state = 'contacts';
-        console.log(this.state);
-
-        this.contactList = ()=> {
-            console.log(this.state + 'main')
-            this.state = 'contacts';
-            this.state === 'contacts';
-            this.update();
-        }
-        this.chatList = ()=> {
-            console.log(this.state + 'main2')
-            this.state = 'chatlist';
-            this.state === 'chatlist';
-            this.update();
-        }
-        this.accountList = ()=> {
-            console.log(this.state + 'main3')
-            this.state = 'accountlist';
-            this.state === 'accountlist';
-            this.update();
-        }
 
 
         this.search = true;

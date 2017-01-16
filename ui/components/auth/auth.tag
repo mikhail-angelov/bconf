@@ -24,7 +24,6 @@
 
 this.state = 'signin';
 
-
 this.onSignUp = ()=>{
 	this.state = 'signup'
 	this.update()
@@ -105,6 +104,9 @@ this.onForgetPasswordTrue = ()=>{
 
   .auth form {
     margin-left: 36%;
+  }
+  .background-color {
+    background-color: #cc0044;
   }
   </style>
 
