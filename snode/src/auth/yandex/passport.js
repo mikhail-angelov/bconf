@@ -8,31 +8,30 @@ module.exports = (auth, config) => {
     clientID: config.clientID,
     clientSecret: config.clientSecret,
     callbackURL: config.callbackURL
-  },
-    function (accessToken, refreshToken, profile, done) {
-      console.log('login with yandex id', profile.id)
-      const userQuery = {
-        'yandex.id': profile.id
-      }
-      auth.findUser(userQuery)
-        .then(function (user) {
-          if (!user) {
-            //console.log('ya', profile)
-            createUser(userQuery, profile, accessToken, refreshToken)
-              .then(function (user) {
-                return done(null, user);
-              })
-              .catch(function (err) {
-                return done(err);
-              });
-          } else {
-            return done(null, user);
-          }
-        })
-        .catch(function (err) {
-          return done(err);
-        });
-    }));
+  }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))
+
+  function authenticate(accessToken, refreshToken, profile, done) {
+    console.log('login with yandex id', profile.id)
+    const userQuery = {
+      'yandex.id': profile.id
+    }
+    return auth.findUser(userQuery)
+      .then(user => {
+        if (!user) {
+          //console.log('ya', profile)
+          return createUser(userQuery, profile, accessToken, refreshToken)
+            .then(user=> done(null, user))
+            .catch(err => {
+              return done(err)
+            });
+        } else {
+          return done(null, user)
+        }
+      })
+      .catch(err => {
+        return done(err)
+      });
+  }
 
   function createUser(userQuery, profile, accessToken, refreshToken) {
     return auth.createUser({
@@ -47,4 +46,4 @@ module.exports = (auth, config) => {
       yandex: profile._json
     }, userQuery)
   }
-};
+}

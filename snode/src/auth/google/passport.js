@@ -1,19 +1,40 @@
-import passport from 'passport';
-import {OAuth2Strategy as GoogleStrategy} from 'passport-google-oauth';
+'use strict'
 
-exports.setup = function(User, config) {
-  passport.use(new GoogleStrategy({
-    clientID: config.google.clientID,
-    clientSecret: config.google.clientSecret,
-    callbackURL: config.google.callbackURL
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOneAsync({
+const passport = require('passport')
+const Strategy = require('passport-google-oauth').OAuth2Strategy
+
+module.exports = (auth, config) => {
+  passport.use(new Strategy({
+    clientID: config.clientID,
+    clientSecret: config.clientSecret,
+    callbackURL: config.callbackURL
+  }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))
+
+  function authenticate(accessToken, refreshToken, profile, done) {
+    console.log('login with google id', profile.id)
+    const userQuery = {
       'google.id': profile.id
-    })
-      .then(function(user) {
+    }
+    return auth.findUser(userQuery)
+      .then(user => {
         if (!user) {
-          user = new User({
+          console.log('google', profile)
+          return createUser(userQuery, profile, accessToken, refreshToken)
+            .then(user=> done(null, user))
+            .catch(err => {
+              return done(err)
+            });
+        } else {
+          return done(null, user)
+        }
+      })
+      .catch(err => {
+        return done(err)
+      });
+  }
+
+  function createUser(userQuery, profile, accessToken, refreshToken) {
+    return auth.createUser({
             name: profile.displayName,
             email: profile.emails[0].value,
             role: 'user',
@@ -21,20 +42,6 @@ exports.setup = function(User, config) {
             provider: 'google',
             google: profile._json,
             avatar:profile._json.image.url
-          });
-          user.saveAsync()
-            .then(function(user) {
-              return done(null, user);
-            })
-            .catch(function(err) {
-              return done(err);
-            });
-        } else {
-          return done(null, user);
-        }
-      })
-      .catch(function(err) {
-        return done(err);
-      });
-  }));
-};
+          }, userQuery)
+  }
+}

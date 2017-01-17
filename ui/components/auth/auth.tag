@@ -5,20 +5,20 @@
   <forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
   
   <div class="social">
-    <material-button class="ui" shady="true" disabled=true>
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/google')}>
       <div class="text">google</div>
     </material-button>
-    <material-button class="ui" shady="true" disabled=true>
+    <!-- <material-button class="ui" shady="true" disabled=true>
         <div class="text">vk</div>
-    </material-button>
-    <material-button class="ui" shady="true" disabled=true>
+    </material-button> -->
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/twitter')}>
         <div class="text">twitter</div>
     </material-button>
-    <material-button class="ui" shady="true" disabled=true>
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/facebook')}>
         <div class="text">facebook</div>
         <i class="material-icons"></i>
     </material-button>
-    <material-button class="ui" shady="true" onclick={loginWithYandex}>
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/yandex')}>
         <div class="text">yandex</div>
         <i class="material-icons"></i>
     </material-button>
@@ -59,8 +59,8 @@ this.onForgetPasswordTrue = ()=>{
   alert("Your password send on your email!")
 }
 
-this.loginWithYandex = ()=>{
-  document.location = '/auth/yandex'
+this.loginWith = url=>()=>{
+  document.location = url
 }
 </script>
 
