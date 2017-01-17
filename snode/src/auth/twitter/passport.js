@@ -36,6 +36,8 @@ module.exports = (auth, config) => {
   function createUser(userQuery, profile, accessToken, refreshToken) {
     return auth.createUser({
             name: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             username: profile.username,
             role: 'user',
             provider: 'twitter',

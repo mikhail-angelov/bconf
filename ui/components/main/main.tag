@@ -1,14 +1,14 @@
 <main>
     <div class='main'>
 
-        <navbar style="margin-bottom: 15px;" onLogout={onLogout} addContact={addContact} onBack={onBack}/>
+        <navbar style="margin-bottom: 15px;" onLogout={onLogout} addContact={addContact} onBack={onLogout}/>
 
         <div class='row' style="margin-bottom: 15px;">
 
             <div class='col-xs-3 toflex white position_of_left_side'>
 
                 <div class="useraccountinfo"  if={isSettingsState()}>
-                    <useraccountinfo user_name={user} status={status} updatestatus={updatestatus}/>
+                    <useraccountinfo user={auth.user} status={status} updatestatus={updatestatus}/>
                 </div>
 
                 <div class="searchbar" if={isContactsState() || isChatsState()}>
@@ -33,9 +33,9 @@
 
                 <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
-                <chat class="chat"  user={user} messages={chats} contact={chats.contact} accountFoto={accountFoto} />
+                <chat class="chat"  user={auth.user} messages={chats} contact={chats.contact} accountFoto={accountFoto} />
 
-                <chatinput user_name={user} onsendMessage={sendMessage} />
+                <chatinput user_name={auth.user} onsendMessage={sendMessage} />
 
             </div>
             
@@ -65,7 +65,7 @@ store.dispatch(openSocketAction);
 const contactList = actions.setContactList()
 store.dispatch(contactList);
 
-
+store.dispatch(actions.ensureUserInfo());
 
 store.subscribe(()=>{
     this.contacts = store.getState().contacts;
@@ -151,16 +151,8 @@ this.chooseContact = (contact)=>{
     this.update();
 }
 
-this.user = this.auth.user;
-
-this.onBack = ()=>{
-    console.log('to welcome')
-    riot.route('welcome')
-}
-
-this.onLogin = ()=>{
-    console.log('login')
-    riot.route('auth')
+this.onLogout = ()=>{
+    store.dispatch(actions.logout());
 }
 
 this.sendMessage = (value)=>{

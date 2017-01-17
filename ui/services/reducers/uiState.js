@@ -18,6 +18,12 @@ function uiState(state = defaultState, action){
             localStorage.setItem('uiState', action.state.sub)
             return action.state
         }
+        case actions.auth.LOGOUT_COMPLETE:{
+            localStorage.setItem('uiState', {
+                main: actions.uiState.main.LOGIN,
+                sub: null
+            });
+        }
         default:
             return state
     }

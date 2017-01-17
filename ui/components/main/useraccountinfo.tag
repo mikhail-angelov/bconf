@@ -1,14 +1,15 @@
 <useraccountinfo class="toflex account_info">
      <div class='user-account-foto toflex'>
-         <div class="account-foto">{this.opts.user_name.firstName.substr(0,1)}{this.opts.user_name.secondName.substr(0,1)}</div>
+         <div class="account-foto" show={getAvatar()}><img src={getAvatar()}></img></div>
+         <div class="account-foto" show={!getAvatar()}>{getInitials()}</div>
      </div>
      <div class="user-account-info toflex">
         <div class="user-account-name">
-            <h2>{this.opts.user_name.firstName} {this.opts.user_name.secondName}<h2>
+            <h2>{getName()}<h2>
         </div>
         <div class="user-account-status toflex">
-            <h3 onclick={onChange} show={!editable}>{this.opts.status||"change your status"}</h3>
-            <input name='status' show={editable} type="text" value={this.opts.status} onkeyup={this.updateStatus} onblur={onFocus}/>
+            <h3 onclick={onChange} show={!editable}>{opts.status||"change your status"}</h3>
+            <input name='status' show={editable} type="text" value={opts.status} onkeyup={updateStatus} onblur={onFocus}/>
         </div>
      </div>
 <script>
@@ -16,6 +17,16 @@
     this.onChange = e=>this.changeStatus(e,this.opts.status);
 
     this.editable = false;
+
+    this.getAvatar = function(){
+        return this.opts.user.avatar
+    }
+    this.getInitials = function(){
+        return this.opts.user.firstName.substr(0,1)+this.opts.user.lastName.substr(0,1)
+    }
+    this.getName = function(){
+        return this.opts.user.firstName + ' '+this.opts.user.lastName
+    }
 
     this.changeStatus = (e,input)=> {
         this.editable = !this.editable;

@@ -36,6 +36,8 @@ module.exports = (auth, config) => {
   function createUser(userQuery, profile, accessToken, refreshToken) {
     return auth.createUser({
             name: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             email: profile.emails[0].value,
             role: 'user',
             username: profile.emails[0].value.split('@')[0],

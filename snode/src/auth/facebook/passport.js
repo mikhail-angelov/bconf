@@ -40,6 +40,8 @@ module.exports = (auth, config) => {
   function createUser(userQuery, profile, accessToken, refreshToken) {
     return auth.createUser({
             name: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             email: profile.emails[0].value+'.facebook',
             role: 'user',
             provider: 'facebook',

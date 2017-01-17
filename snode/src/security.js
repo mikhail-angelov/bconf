@@ -9,8 +9,13 @@ module.exports = {
     authRequired
 }
 
-function encodeToken(data) {
-    return jwt.sign(data, SECRET, { expiresIn: '5d' })
+function encodeToken(user) {
+    return jwt.sign({
+        id: user._id,
+        name: user.name
+    },
+        SECRET,
+        { expiresIn: '5d' })
 }
 
 function decodeToken(token) {
@@ -21,15 +26,15 @@ function decodeToken(token) {
     }
 }
 
-function encodePassword(password){
+function encodePassword(password) {
     return password
 }
 
-function validatePassword(password, encodedPassword){
+function validatePassword(password, encodedPassword) {
     return encodePassword(password) == encodedPassword
 }
 
-function authRequired(req, res, next){
+function authRequired(req, res, next) {
     const token = req.headers ? req.headers['x-access-token'] : ''
     const decoded = decodeToken(token)
     if (decoded) {

@@ -7,6 +7,9 @@ module.exports = (dao) => {
     function findUser(query){
       return dao.findOne('users', query)
     }
+    function getUser(id){
+      return dao.findById('users', id)
+    }
 
     function authenticate(user, password){
       if (user && sequrity.validatePassword(password, user.password)) {
@@ -39,9 +42,7 @@ module.exports = (dao) => {
     }
 
     function signToken(user){
-        return sequrity.encodeToken({
-                    id: user._id
-                })
+        return sequrity.encodeToken(user)
     }
 
     function setTokenCookie(req, res) {
@@ -56,6 +57,7 @@ module.exports = (dao) => {
     return {
         authenticate,
         findUser,
+        getUser,
         createUser,
         resetPassword,
         setTokenCookie
