@@ -4,7 +4,7 @@
     <material-input error={error} name="user_name" value={userName} label="User Name"></material-input>
     
     <material-input error={error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
-    <div class="incorrect_password" show={loginError}>Incorrect password or user name</div>
+    <div class="incorrect_password" show={opts.error}>Incorrect password or user name</div>
     <material-checkbox name="checker" checked=true>
         Remember me
     </material-checkbox>
@@ -14,45 +14,16 @@
         <material-button class="background-color ui" onclick={onLogin}>
             <div class="text">SignIn</div>
         </material-button>
-        <material-button class="background-color ui" onclick={this.opts.onsignup}>
+        <material-button class="background-color ui" onclick={this.opts.tosignup}>
             <div class="text">SignUp</div>
         </material-button>
     </div>
-    <a href='' onclick={this.opts.onforgetpassword}>Forget Password</a>
-    <material-spinner class="progressBar" if={progress}></material-spinner>
+    <a href='' onclick={this.opts.toforgetpassword}>Forget Password</a>
 <script>
 
-const store = require('../../services/store')
-const actions = require('../../services/actions/index.js')
-store.subscribe(()=>{
-    this.contacts = store.getState().contacts;
-    this.chats = store.getState().chats;
-    this.state = store.getState().uiState;
-    this.auth = store.getState().auth;
-    if (this.auth.status == "error") {
-        this.loginError = true;
-        this.error = true;
-    }
-    if (this.auth.status == "done") {
-        this.loginError = false;
-        this.error = false;
-    }
-    if (this.auth.status == "progress") {
-        this.progress = true;
-    }else{
-        this.progress = false;
-    }
-    this.update();
-});
-this.loginError = false;
-const localStorageCredentials = localStorage.getItem('credentials');
-if (localStorageCredentials){
-    const localCredentials = JSON.parse(localStorageCredentials);
 
-    this.userName = localCredentials.email;
-    this.userPassword = localCredentials.password;
-}
-this.state = 'signin'
+const localStorageCredentials = localStorage.getItem('credentials');
+
 this.onLogin = ()=>{
     
     const credentials = {
@@ -61,8 +32,8 @@ this.onLogin = ()=>{
     }
     const rememberMe = this.checker.querySelector('input').value == 'true';
     console.log('checker',this.checker.querySelector('input').value);
-    store.dispatch(actions.login(credentials, rememberMe));
-    console.log('login');
+
+    this.opts.login(credentials, rememberMe)
 }
 
 </script>

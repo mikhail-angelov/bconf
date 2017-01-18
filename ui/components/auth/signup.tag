@@ -14,18 +14,12 @@
     <material-button name="signUpButton" class="{background-color: allInputsComplete()} ui"  onclick={onSignUp} disabled='true'>
         <div class="text">Signup</div>
     </material-button>
-    <material-button class="background-color ui" onclick={this.opts.onsignupback}>
+    <material-button class="background-color ui" onclick={this.opts.back}>
         <div class="text">Back</div>
     </material-button>
 </div>
 <script>
 
-this.state = 'signup'
-
-this.onLogin = ()=>{
-    console.log('login')
-    riot.route('main')
-}
 
 this.checkCredentials = (isFocused)=>{
     if (!isFocused){
@@ -96,16 +90,15 @@ this.onSignUp = () => {
         this.error = true;
     }    
     if (this.validatePassword()){
-        const newUserCredentials = {
+        const newUser = {
                 userName: this.newUser.querySelector('input').value,
                 email: this.newEmail.querySelector('input').value,
                 password: this.newPsw
             }
-            console.log('===')
+        console.log('===')
+        this.opts.onsignup(newUser)
     };
-        
-    this.state = 'signin'
-
+    
 }
 </script>
 <style>

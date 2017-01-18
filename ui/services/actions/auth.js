@@ -9,7 +9,8 @@ const actions = {
         LOGOUT_COMPLETE: 'logoutComplete',
         LOGIN_ERROR: 'loginError',
         LOGIN_REQUEST: 'loginRequest',
-        UPDATE_USER: 'updateUserInfo'
+        UPDATE_USER: 'updateUserInfo',
+        FORGET_REQUEST_COMPLETE:'forgetRequestComplete'
     },
     login,
     logout,
@@ -18,6 +19,8 @@ const actions = {
     loginGuest,
     loginError,
     loginRequest,
+    signUp,
+    forgetPassword,
     updateUser,
     ensureUserInfo
 }
@@ -44,9 +47,7 @@ function login(credentials, rememberMe) {
         dispatch(loginRequest());
         return http.post(config.host + 'auth/local/login', credentials)
             .then(function (result) {
-                localStorage.setItem('token', result.token);
-                localStorage.setItem('status', 'login');
-                localStorage.setItem('user', JSON.stringify(result));
+
                 if (rememberMe) {
                     localStorage.setItem('credentials', JSON.stringify(credentials))
                 } else {
@@ -55,7 +56,7 @@ function login(credentials, rememberMe) {
                 dispatch(loginComplete(result));
             })
             .catch(function (err) {
-                console.log("Oops...", "Couldn't fetch repos for user: " + credentials, err);
+                console.log("Oops...", "Couldn't login user: " + credentials, err);
                 dispatch(loginError(err));
             });
     }
@@ -64,7 +65,8 @@ function login(credentials, rememberMe) {
 function loginComplete(user) {
     return {
         type: actions.auth.LOGIN_COMPLETE,
-        user
+        user,
+        token: user.token
     }
 }
 
@@ -80,16 +82,42 @@ function loginRequest() {
     }
 }
 
+function forgetComplete(url){
+    return {
+        type: actions.auth.FORGET_REQUEST_COMPLETE,
+        url
+    }
+}
+
 function loginGuest() {
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
         return http.post(config.host + 'auth/local/loginGuest')
-            .then(function (result) {
-                localStorage.setItem('token', result.token);
-                localStorage.setItem('user', JSON.stringify(result));
-                dispatch(loginComplete(result));
-            })
-            .catch(function (err) {
-                console.log("Oops...", "Couldn't fetch repos for user: " + err);
+            .then( result=>dispatch(loginComplete(result)))
+            .catch(err => {
+                console.log("Oops...", "login guest error: " + err)
+                dispatch(loginError(err))
+            });
+    }
+}
+
+function signUp(newUser) {
+    return (dispatch, getState) => {
+        return http.post(config.host + 'auth/local/signUp',newUser)
+            .then( result=>dispatch(loginComplete(result)))
+            .catch(err => {
+                console.log("Oops...", "Couldn't sign up user: " + err)
+                dispatch(loginError(err))
+            });
+    }
+}
+
+function forgetPassword(email){
+    return (dispatch, getState) => {
+        return http.post(config.host + 'auth/local/forgetPassword',email)
+            .then( result=>dispatch(forgetComplete(result)))
+            .catch(err => {
+                console.log("Oops...", "Couldn't sign up user: " + err)
+                dispatch(loginError(err))
             });
     }
 }
@@ -110,7 +138,8 @@ function ensureUserInfo() {
                     dispatch(updateUser(result));
                 })
                 .catch(err => {
-                    console.log("Oops...", "Couldn't fetch repos for user: " + err);
+                    console.log("Oops...", "Couldn't fetch user: " + err)
+                    dispatch(loginError(err))
                 });
         }
     }

@@ -15,14 +15,10 @@ if (token) {
 function uiState(state = defaultState, action){
     switch(action.type){
         case actions.uiState.SET: {
-            localStorage.setItem('uiState', action.state.sub)
             return action.state
         }
-        case actions.auth.LOGOUT_COMPLETE:{
-            localStorage.setItem('uiState', {
-                main: actions.uiState.main.LOGIN,
-                sub: null
-            });
+        case actions.uiState.SET_SUB: {
+            return Object.assign(state,{sub:action.state})
         }
         default:
             return state
