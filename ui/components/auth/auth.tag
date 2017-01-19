@@ -1,8 +1,8 @@
 <auth>
 <div class='container'>
-  <signin class="signin" if={state.sub==='signIn'} toSignUp={toSignUp} toForgetPassword={toForgetPassword} login={onLogin} error={error}/>
-  <signup class="signin" if={state.sub==='signUp'} back={onBack} onSignUp={onSignUp} error={error}/>
-  <forget class="signin" if={state.sub==='forget'} back={onBack} onForgetPassword={onForgetPassword} error={error}/>
+  <signin class="signin" if={state.sub==='signIn'} toSignUp={toSignUp} toForgetPassword={toForgetPassword} login={onLogin} http_error={error}/>
+  <signup class="signin" if={state.sub==='signUp'} back={onBack} onSignUp={onSignUp} http_error={error}/>
+  <forget class="signin" if={state.sub==='forget'} back={onBack} onForgetPassword={onForgetPassword} http_error={error}/>
   
   <div class="social">
     <material-button class="ui" shady="true" onclick={loginWith('/auth/google')}>
@@ -108,6 +108,14 @@ this.loginWith = (url)=>()=>{
   .background-color {
     background-color: #cc0044;
   }
+
+  .error {
+    width: 235px;
+    text-align: center;
+    bottom: 20px;
+    color: #cc0044;
+    font-size: 12px;
+}
   </style>
 
 </auth>

@@ -113,11 +113,11 @@ function signUp(newUser) {
 
 function forgetPassword(email){
     return (dispatch, getState) => {
-        return http.post(config.host + 'auth/local/forgetPassword',email)
-            .then( result=>dispatch(forgetComplete(result)))
+        return http.post(config.host + 'auth/local/forgotPassword',email)
+            .then( result=>dispatch(forgetComplete('check your mail')))
             .catch(err => {
                 console.log("Oops...", "Couldn't sign up user: " + err)
-                dispatch(loginError(err))
+                result=>dispatch(forgetComplete('check your mail')) //ignore err
             });
     }
 }

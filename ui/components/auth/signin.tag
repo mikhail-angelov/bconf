@@ -4,7 +4,7 @@
     <material-input error={error} name="user_name" value={userName} label="User Name"></material-input>
     
     <material-input error={error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
-    <div class="incorrect_password" show={opts.error}>Incorrect password or user name</div>
+    <div class="error" show={opts.http_error}>Incorrect password or user name</div>
     <material-checkbox name="checker" checked=true>
         Remember me
     </material-checkbox>
@@ -52,14 +52,7 @@ this.onLogin = ()=>{
 .buttons material-button {
     margin-right: 5px;
 }
-.incorrect_password {
-    position: absolute;
-    width: 235px;
-    text-align: center;
-    bottom: 20px;
-    color: #cc0044;
-    font-size: 12px;
-}
+
 .progressBar {
     position: absolute;
     left: 0;

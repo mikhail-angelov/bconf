@@ -1,7 +1,9 @@
 <signup>
 <form>
   
-  <material-input name="newUser" valueChanged={allInputsComplete} label="User Name"></material-input>
+  <material-input name="firstName" valueChanged={allInputsComplete} label="First Name"></material-input>
+
+  <material-input name="lastName" valueChanged={allInputsComplete} label="Last Name"></material-input>
   
   <material-input name="newEmail" focusChanged={checkCredentials} valueChanged={allInputsComplete} type="email" label="User Email"></material-input>
   
@@ -9,6 +11,7 @@
 
   <material-input focusChanged={checkCredentials} error="{error}" valueChanged={allInputsComplete} name="repeatNewPassword" type="password" label="Repeat Password"></material-input>
   
+  <div class="error" show={opts.http_error}>user with this email already exist</div>
 </form>
 <div class="buttons">
     <material-button name="signUpButton" class="{background-color: allInputsComplete()} ui"  onclick={onSignUp} disabled='true'>
@@ -38,7 +41,7 @@ this.checkCredentials = (isFocused)=>{
 
 
 this.allInputsComplete = () => {
-    if (this.newUser.querySelector('input').value.length > 0 && this.newEmail.querySelector('input').value.length > 0 
+    if (this.firstName.querySelector('input').value.length > 0 && this.newEmail.querySelector('input').value.length > 0 
         && this.newPassword.querySelector('input').value.length > 0 && this.repeatNewPassword.querySelector('input').value.length > 0){
             this.signUpButton.setAttribute('disabled',false)
             return true;
@@ -61,7 +64,7 @@ this.validatePassword = ()=>{
     if (password !== repeatPassword) {
         errors.push("Your passwords must be same");
     }
-    if (password.length < 8) {
+    if (password.length < 2) {
         errors.push("Your password must be at least 8 characters"); 
     }
     if (password.search(/[a-z]/i) < 0) {
@@ -91,9 +94,10 @@ this.onSignUp = () => {
     }    
     if (this.validatePassword()){
         const newUser = {
-                userName: this.newUser.querySelector('input').value,
+                firstName: this.firstName.querySelector('input').value,
+                lastName: this.lastName.querySelector('input').value,
                 email: this.newEmail.querySelector('input').value,
-                password: this.newPsw
+                password: this.newPassword.querySelector('input').value
             }
         console.log('===')
         this.opts.onsignup(newUser)

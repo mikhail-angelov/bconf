@@ -33,8 +33,12 @@ function auth(state = {
             return toLogoutState(state)
         }
         case actions.auth.FORGET_REQUEST_COMPLETE: {
-            return Object.assign({},state,{
-                status: 'forget completed',
+            return Object.assign(toLogoutState(state),{
+                error: 'forgetComplete'
+            })
+        }
+        case actions.uiState.SET_SUB: {
+            return Object.assign(state,{
                 error: null
             })
         }
