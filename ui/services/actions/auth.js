@@ -8,7 +8,9 @@ const actions = {
         LOGIN_COMPLETE: 'loginComplete',
         LOGOUT_COMPLETE: 'logoutComplete',
         LOGIN_ERROR: 'loginError',
-        LOGIN_REQUEST: 'loginRequest'
+        LOGIN_REQUEST: 'loginRequest',
+        UPDATE_USER: 'updateUserInfo',
+        FORGET_REQUEST_COMPLETE:'forgetRequestComplete'
     },
     login,
     logout,
@@ -16,85 +18,131 @@ const actions = {
     logoutComplete,
     loginGuest,
     loginError,
-    loginRequest
+    loginRequest,
+    signUp,
+    forgetPassword,
+    updateUser,
+    ensureUserInfo
 }
 
-function logoutComplete (){
+function logoutComplete() {
     return {
         type: actions.auth.LOGOUT_COMPLETE
     }
 }
 
-function logout (user){
-    return function(dispatch, getState) {
-        return http.post(config.host+'auth/local/logout', {})
-        .then(function() {
-            console.log('--')
-            localStorage.setItem('token', "");
-            localStorage.setItem('status', "");
-            localStorage.setItem('uiState', "");
-            localStorage.setItem('user', "");
-            dispatch(logoutComplete());
-        })
-        .catch(function(err) {
-            console.log("Oops...", "Couldn't logout for user: " + user, err);
-        });
-  }
-}
-
-function login (credentials, rememberMe) {  
-  return function(dispatch, getState) {
-    dispatch(loginRequest());
-    return http.post(config.host+'auth/local/login', credentials)
-      .then(function(result) {
-            localStorage.setItem('token', result.token);
-            localStorage.setItem('status', 'login');
-            localStorage.setItem('user', JSON.stringify(result));
-            if(rememberMe){
-                localStorage.setItem('credentials', JSON.stringify(credentials))
-            }else{
-                localStorage.setItem('credentials', "")
-            }
-            dispatch(loginComplete(result));
-      })
-      .catch(function(err) {
-        console.log("Oops...", "Couldn't fetch repos for user: " + credentials, err);
-        dispatch(loginError(err));
-      });
-  }
-}
-
-function loginComplete (user){
-    return {
-        type: actions.auth.LOGIN_COMPLETE,
-        user
+function logout() {
+    return (dispatch, getState) => {
+        dispatch(logoutComplete());
+        return http.post(config.host + 'auth/local/logout', {})
+            .then(() => console.log('logout is completed'))
+            .catch( err => {
+                console.log("Oops...", "Couldn't logout ",  err);
+            });
     }
 }
 
-function loginError (err){
+function login(credentials, rememberMe) {
+    return function (dispatch, getState) {
+        dispatch(loginRequest());
+        return http.post(config.host + 'auth/local/login', credentials)
+            .then(function (result) {
+
+                if (rememberMe) {
+                    localStorage.setItem('credentials', JSON.stringify(credentials))
+                } else {
+                    localStorage.setItem('credentials', "")
+                }
+                dispatch(loginComplete(result));
+            })
+            .catch(function (err) {
+                console.log("Oops...", "Couldn't login user: " + credentials, err);
+                dispatch(loginError(err));
+            });
+    }
+}
+
+function loginComplete(user) {
+    return {
+        type: actions.auth.LOGIN_COMPLETE,
+        user,
+        token: user.token
+    }
+}
+
+function loginError(err) {
     return {
         type: actions.auth.LOGIN_ERROR,
         err
     }
 }
-function loginRequest (){
+function loginRequest() {
     return {
         type: actions.auth.LOGIN_REQUEST,
     }
 }
 
-function loginGuest () {  
-  return function(dispatch, getState) {
-    return http.post(config.host+'auth/local/loginGuest')
-      .then(function(result) {
-            localStorage.setItem('token', result.token);
-            localStorage.setItem('user', JSON.stringify(result));
-            dispatch(loginComplete(result));
-      })
-      .catch(function(err) {
-        console.log("Oops...", "Couldn't fetch repos for user: " + err);
-      });
-  }
+function forgetComplete(url){
+    return {
+        type: actions.auth.FORGET_REQUEST_COMPLETE,
+        url
+    }
+}
+
+function loginGuest() {
+    return (dispatch, getState) => {
+        return http.post(config.host + 'auth/local/loginGuest')
+            .then( result=>dispatch(loginComplete(result)))
+            .catch(err => {
+                console.log("Oops...", "login guest error: " + err)
+                dispatch(loginError(err))
+            });
+    }
+}
+
+function signUp(newUser) {
+    return (dispatch, getState) => {
+        return http.post(config.host + 'auth/local/signUp',newUser)
+            .then( result=>dispatch(loginComplete(result)))
+            .catch(err => {
+                console.log("Oops...", "Couldn't sign up user: " + err)
+                dispatch(loginError(err))
+            });
+    }
+}
+
+function forgetPassword(email){
+    return (dispatch, getState) => {
+        return http.post(config.host + 'auth/local/forgotPassword',email)
+            .then( result=>dispatch(forgetComplete('check your mail')))
+            .catch(err => {
+                console.log("Oops...", "Couldn't sign up user: " + err)
+                result=>dispatch(forgetComplete('check your mail')) //ignore err
+            });
+    }
+}
+
+function updateUser(user) {
+    return {
+        type: actions.auth.UPDATE_USER,
+        user
+    }
+}
+
+function ensureUserInfo() {
+    return function (dispatch, getState) {
+        const user = getState().auth.user
+        if(!user){
+            return http.post(config.host + 'auth/local/userInfo')
+                .then( result => {
+                    dispatch(updateUser(result));
+                })
+                .catch(err => {
+                    console.log("Oops...", "Couldn't fetch user: " + err)
+                    dispatch(loginError(err))
+                });
+        }
+    }
 }
 
 module.exports = actions

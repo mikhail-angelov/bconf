@@ -62,7 +62,7 @@
     "npm": "^2.14.7"
   },
   "scripts": {
-    "test": "mocha ./snode/**/*.spec.js",
+    "test": "mocha ./snode/**/*.spec.js ./snode/**/**/*.spec.js ./snode/**/**/**/*.spec.js",
     "build": "gulp build",
     "release": "bash ./release.sh",
     "riot": "riot ui/components ui/dist/bundle.js",

@@ -1,21 +1,28 @@
-'use strict';
+'use strict'
 
-import express from 'express';
-import passport from 'passport';
-import auth from '../auth.service';
+const passport = require('passport')
+const router = require('express').Router()
+const passportConfig = require('./passport')
 
-var router = express.Router();
+module.exports = (auth, config) => {
+  passportConfig(auth, config)
 
-router
-  .get('/', passport.authenticate('facebook', {
-    scope: ['email', 'user_about_me'],
-    failureRedirect: '/signup',
-    session: false
-  }))
+  router
+    .get('/', passport.authenticate('facebook', {
+      failureRedirect: '/#login',
+      scope: [
+        'user_about_me',
+        'email'
+      ],
+      session: false
+    }))
 
-  .get('/callback', passport.authenticate('facebook', {
-    failureRedirect: '/signup',
-    session: false
-  }), auth.setTokenCookie);
+    .get('/callback', passport.authenticate('facebook', {
+      failureRedirect: '/#login',
+      session: false
+    }), auth.setTokenCookie)
 
-module.exports = router;
+  return {
+    router
+  }
+}

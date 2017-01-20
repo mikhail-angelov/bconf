@@ -1,42 +1,51 @@
-import passport from 'passport';
-import {Strategy as FacebookStrategy} from 'passport-facebook';
+'use strict'
 
-exports.setup = function(User, config) {
-  passport.use(new FacebookStrategy({
-    clientID: config.facebook.clientID,
-    clientSecret: config.facebook.clientSecret,
-    callbackURL: config.facebook.callbackURL,
+const passport = require('passport')
+const Strategy = require('passport-facebook').Strategy
+
+module.exports = (auth, config) => {
+  passport.use(new Strategy({
+    clientID: config.clientID,
+    clientSecret: config.clientSecret,
+    callbackURL: config.callbackURL,
     profileFields: [
       'displayName',
       'emails'
     ]
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOneAsync({
+  }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))
+
+  function authenticate(accessToken, refreshToken, profile, done) {
+    console.log('login with facebook id', profile.id)
+    const userQuery = {
       'facebook.id': profile.id
-    })
-      .then(function(user) {
+    }
+    return auth.findUser(userQuery)
+      .then(user => {
         if (!user) {
-          user = new User({
+          console.log('facebook', profile)
+          return createUser(userQuery, profile, accessToken, refreshToken)
+            .then(user=> done(null, user))
+            .catch(err => {
+              return done(err)
+            });
+        } else {
+          return done(null, user)
+        }
+      })
+      .catch(err => {
+        return done(err)
+      });
+  }
+
+  function createUser(userQuery, profile, accessToken, refreshToken) {
+    return auth.createUser({
             name: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             email: profile.emails[0].value+'.facebook',
             role: 'user',
             provider: 'facebook',
             facebook: profile._json
-          });
-          user.saveAsync()
-            .then(function(user) {
-              return done(null, user);
-            })
-            .catch(function(err) {
-              return done(err);
-            });
-        } else {
-          return done(null, user);
-        }
-      })
-      .catch(function(err) {
-        return done(err);
-      });
-  }));
-};
+          }, userQuery)
+  }
+}

@@ -1,38 +1,47 @@
-import passport from 'passport';
-import {Strategy as TwitterStrategy} from 'passport-twitter';
+'use strict'
 
-exports.setup = function(User, config) {
-  passport.use(new TwitterStrategy({
-    consumerKey: config.twitter.clientID,
-    consumerSecret: config.twitter.clientSecret,
-    callbackURL: config.twitter.callbackURL
-  },
-  function(token, tokenSecret, profile, done) {
-    User.findOneAsync({
-      'twitter.id_str': profile.id
-    })
-      .then(function(user) {
+const passport = require('passport')
+const Strategy = require('passport-twitter').Strategy
+
+module.exports = (auth, config) => {
+  passport.use(new Strategy({
+        consumerKey: config.clientID,
+    consumerSecret: config.clientSecret,
+    callbackURL: config.callbackURL
+  }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))
+
+  function authenticate(accessToken, refreshToken, profile, done) {
+    console.log('login with twitter id', profile.id)
+    const userQuery = {
+      'twitter.id': profile.id
+    }
+    return auth.findUser(userQuery)
+      .then(user => {
         if (!user) {
-          user = new User({
+          console.log('twitter', profile)
+          return createUser(userQuery, profile, accessToken, refreshToken)
+            .then(user=> done(null, user))
+            .catch(err => {
+              return done(err)
+            });
+        } else {
+          return done(null, user)
+        }
+      })
+      .catch(err => {
+        return done(err)
+      });
+  }
+
+  function createUser(userQuery, profile, accessToken, refreshToken) {
+    return auth.createUser({
             name: profile.displayName,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
             username: profile.username,
             role: 'user',
             provider: 'twitter',
             twitter: profile._json
-          });
-          user.saveAsync()
-            .then(function(user) {
-              return done(null, user);
-            })
-            .catch(function(err) {
-              return done(err);
-            });
-        } else {
-          return done(null, user);
-        }
-      })
-      .catch(function(err) {
-        return done(err);
-      });
-  }));
-};
+          }, userQuery)
+  }
+}

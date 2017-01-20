@@ -2,12 +2,14 @@
 
 const passport = require('passport')
 const router = require('express').Router()
+const passportConfig = require('./passport')
 
-module.exports = (auth) => {
+module.exports = (auth, config) => {
+  passportConfig(auth, config)
 
   router
     .get('/', passport.authenticate('yandex', {
-      failureRedirect: '/signup',
+      failureRedirect: '/#login',
       scope: [
         'profile',
         'email'
@@ -16,9 +18,11 @@ module.exports = (auth) => {
     }))
 
     .get('/callback', passport.authenticate('yandex', {
-      failureRedirect: '/signup',
+      failureRedirect: '/#login',
       session: false
-    }), auth.setTokenCookie);
+    }), auth.setTokenCookie)
 
-  return router;
+  return {
+    router
+  }
 }

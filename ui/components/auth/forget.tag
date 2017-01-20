@@ -2,16 +2,14 @@
 <form>
   
   <material-input label="User Email"></material-input>
-  
+
+  <div class="error" show={opts.http_error ==='forgetComplete'}>Check your mail to find a link to reset your password</div> 
 </form>
 <div class="buttons">
-<material-button class="ui" onclick={this.opts.onforgetpasswordtrue}>
+<material-button class="ui" onclick={this.opts.onforgetpassword}>
     <div class="text">send</div>
 </material-button>
-<material-button class="ui" onclick={this.opts.onforgetpasswordback}>
+<material-button class="ui" onclick={this.opts.back}>
     <div class="text">back</div>
 </material-button>
-<script>
-  this.state = 'forgetpassword'
-</script>
 </forget>

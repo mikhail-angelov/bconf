@@ -1,20 +1,24 @@
 'use strict';
 
-import express from 'express';
-import passport from 'passport';
-import auth from '../auth.service';
+const passport = require('passport')
+const router = require('express').Router()
+const passportConfig = require('./passport')
 
-var router = express.Router();
+module.exports = (auth, config) => {
+  passportConfig(auth, config)
 
-router
-  .get('/', passport.authenticate('twitter', {
-    failureRedirect: '/signup',
-    session: false
-  }))
+  router
+    .get('/', passport.authenticate('twitter', {
+      failureRedirect: '/#login',
+      session: false
+    }))
 
-  .get('/callback', passport.authenticate('twitter', {
-    failureRedirect: '/signup',
-    session: false
-  }), auth.setTokenCookie);
+    .get('/callback', passport.authenticate('twitter', {
+      failureRedirect: '/#login',
+      session: false
+    }), auth.setTokenCookie)
 
-module.exports = router;
+  return {
+    router
+  }
+}

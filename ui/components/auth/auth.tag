@@ -1,66 +1,59 @@
 <auth>
 <div class='container'>
-  <signin class="signin" if={state==='signin'} onSignUp={onSignUp} onForgetPassword={onForgetPassword}/>
-  <signup class="signin" if={state==='signup'} onSignUpBack={onSignUpBack} onSignUpTrue={onSignUpTrue}/>
-  <forget class="signin" if={state==='forget'} onForgetPasswordBack={onForgetPasswordBack} onForgetPasswordTrue={onForgetPasswordTrue}/>
+  <signin class="signin" if={state.sub==='signIn'} toSignUp={toSignUp} toForgetPassword={toForgetPassword} login={onLogin} http_error={error}/>
+  <signup class="signin" if={state.sub==='signUp'} back={onBack} onSignUp={onSignUp} http_error={error}/>
+  <forget class="signin" if={state.sub==='forget'} back={onBack} onForgetPassword={onForgetPassword} http_error={error}/>
   
   <div class="social">
-    <material-button class="ui" shady="true" disabled=true>
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/google')}>
       <div class="text">google</div>
     </material-button>
-    <material-button class="ui" shady="true" disabled=true>
+    <!-- <material-button class="ui" shady="true" disabled=true>
         <div class="text">vk</div>
-    </material-button>
-    <material-button class="ui" shady="true" disabled=true>
+    </material-button> -->
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/twitter')}>
         <div class="text">twitter</div>
     </material-button>
-    <material-button class="ui" shady="true" disabled=true>
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/facebook')}>
         <div class="text">facebook</div>
         <i class="material-icons"></i>
     </material-button>
-    <material-button class="ui" shady="true" onclick={loginWithYandex}>
+    <material-button class="ui" shady="true" onclick={loginWith('/auth/yandex')}>
         <div class="text">yandex</div>
         <i class="material-icons"></i>
     </material-button>
   </div>
+   <material-spinner class="progressBar" if={auth.status == "progress"}></material-spinner>
 </div>
 
 <script>
-this.state = 'signin';
 
-this.onSignUp = ()=>{
-	this.state = 'signup'
-	this.update()
-  console.log('signup complete')
-}
-this.onSignUpBack = ()=>{
-	this.state = 'signin'
-	this.update()
-  console.log('signin complete')
-}
-this.onSignUpTrue = ()=>{
-  this.state = 'signin'
-	this.update()
-  alert("SignUp complete!")
-  console.log('signun complete')
-}
-this.onForgetPassword = ()=>{
-  this.state = 'forget'
-  this.update()
-  console.log('You forgetpassword')
-}
-this.onForgetPasswordBack = ()=>{
-  this.state = 'signin'
-	this.update()
-}
-this.onForgetPasswordTrue = ()=>{
-  this.state = 'signin'
-	this.update()
-  alert("Your password send on your email!")
+const store = require('../../services/store')
+const actions = require('../../services/actions/index.js')
+store.subscribe(()=>{
+    this.state = store.getState().uiState
+    this.auth = store.getState().auth
+    this.error = this.auth.error
+    this.update();
+});
+store.dispatch(actions.subState(actions.uiState.AUTH.signIn));
+
+this.toSignUp = ()=>store.dispatch(actions.subState(actions.uiState.AUTH.signUp))
+this.onBack = ()=>store.dispatch(actions.subState(actions.uiState.AUTH.signIn))
+this.toForgetPassword = ()=>store.dispatch(actions.subState(actions.uiState.AUTH.forget))
+
+this.onLogin = (credentials, rememberMe)=>{
+  store.dispatch(actions.login(credentials, rememberMe));
 }
 
-this.loginWithYandex = ()=>{
-  document.location = '/auth/yandex'
+this.onSignUp = (newUser)=>store.dispatch(actions.signUp(newUser))
+
+this.onForgetPassword = (email)=>{
+  store.dispatch(actions.forgetPassword(email))
+}
+
+this.loginWith = (url)=>()=>{
+  document.location = url
 }
 </script>
 
@@ -112,6 +105,17 @@ this.loginWithYandex = ()=>{
   .auth form {
     margin-left: 36%;
   }
+  .background-color {
+    background-color: #cc0044;
+  }
+
+  .error {
+    width: 235px;
+    text-align: center;
+    bottom: 20px;
+    color: #cc0044;
+    font-size: 12px;
+}
   </style>
 
 </auth>

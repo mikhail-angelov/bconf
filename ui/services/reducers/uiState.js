@@ -15,8 +15,10 @@ if (token) {
 function uiState(state = defaultState, action){
     switch(action.type){
         case actions.uiState.SET: {
-            localStorage.setItem('uiState', action.state.sub)
             return action.state
+        }
+        case actions.uiState.SET_SUB: {
+            return Object.assign(state,{sub:action.state})
         }
         default:
             return state

@@ -2,14 +2,14 @@
 
 const expect = require('chai').expect
 
-describe('sequrity', () => {
+describe('security', () => {
     const security = require('./security')
     
     it('should encode token', () => {
-        const token = {test:'test'}
-        const encodedToken = security.encodeToken(token)
-        expect(token != encodedToken).to.equal(true)
-        expect(security.decodeToken(encodedToken).test).to.equal(token.test)
+        const user = {id:'test', name:'test'}
+        const encodedToken = security.encodeToken(user)
+        expect(user != encodedToken).to.equal(true)
+        expect(security.decodeToken(encodedToken).name).to.equal(user.name)
     })
 
     it('should encode password', () => {
