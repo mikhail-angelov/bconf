@@ -112,9 +112,6 @@ this.loginWithYandex = ()=>{
   .auth form {
     margin-left: 36%;
   }
-  .background-color {
-    background-color: #cc0044;
-  }
   </style>
 
 </auth>
