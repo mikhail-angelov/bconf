@@ -41,12 +41,7 @@ window.addEventListener("DOMContentLoaded",function load() {
     localStorage.setItem('token', redirectToken)
   }
 
-  if(localStorage.getItem('token') == false){
-    riot.route.exec(goTo); //default redirect
-  }else{
-    riot.route('main');
-    goTo('main');
-  }
+  riot.route.exec(goTo);
 
   function getAuthRedirectToken(){
     if(document.location.hash && document.location.hash.indexOf('#auth-redirect=') === 0){
