@@ -105,12 +105,11 @@ this.loginWith = (url)=>()=>{
   .auth form {
     margin-left: 36%;
   }
-  .background-color {
-    background-color: #cc0044;
-  }
 
-  .error {
+  .error_notification {
     width: 235px;
+    position: absolute;
+    z-index: 2;
     text-align: center;
     bottom: 20px;
     color: #cc0044;

@@ -1,45 +1,36 @@
 <signup>
-<form>
+<form class="form_margin">
   
   <material-input name="firstName" valueChanged={allInputsComplete} label="First Name"></material-input>
 
   <material-input name="lastName" valueChanged={allInputsComplete} label="Last Name"></material-input>
   
-  <material-input name="newEmail" focusChanged={checkCredentials} valueChanged={allInputsComplete} type="email" label="User Email"></material-input>
+  <material-input name="newEmail" valueChanged={allInputsComplete} type="email" label="User Email"></material-input>
   
-  <material-input error="{error}" name="newPassword" focusChanged={checkCredentials} type="password" valueChanged={allInputsComplete} label="User Password"></material-input>
+  <material-input error="{error}" name="newPassword" type="password" valueChanged={allInputsComplete} label="User Password"></material-input>
 
-  <material-input focusChanged={checkCredentials} error="{error}" valueChanged={allInputsComplete} name="repeatNewPassword" type="password" label="Repeat Password"></material-input>
+  <material-input error="{error}" valueChanged={allInputsComplete} name="repeatNewPassword" type="password" label="Repeat Password"></material-input>
   
-  <div class="error" show={opts.http_error}>user with this email already exist</div>
 </form>
+<div class="error_notification_area">
+    <div class="error_notification_show" show={opts.http_error}>
+        <i class="material-icons error_icon">error_outline</i>
+        <div class="error_name">User with this email already exist</div>
+    </div>
+    <div class="error_notification_show" each={err in this.errors_noti} show={show_errors}>
+        <i class="material-icons error_icon">error_outline</i>
+        <div class="error_name">{err}</div>
+    </div>
+</div>
 <div class="buttons">
-    <material-button name="signUpButton" class="{background-color: allInputsComplete()} ui"  onclick={onSignUp} disabled='true'>
+    <material-button name="signUpButton" class="ui"  onclick={onSignUp} disabled="true">
         <div class="text">Signup</div>
     </material-button>
-    <material-button class="background-color ui" onclick={this.opts.back}>
+    <material-button class="ui" onclick={this.opts.back}>
         <div class="text">Back</div>
     </material-button>
 </div>
 <script>
-
-
-this.checkCredentials = (isFocused)=>{
-    if (!isFocused){
-        if (this.newPassword.querySelector('input').value.length > 0 && this.repeatNewPassword.querySelector('input').value.length > 0){
-            if (this.newPassword.querySelector('input').value === this.repeatNewPassword.querySelector('input').value){
-                this.error = false;
-            }else{
-                this.error = true;
-            }
-        }
-    }else{
-        this.error = false;
-    }
-    this.update();
-}
-
-
 this.allInputsComplete = () => {
     if (this.firstName.querySelector('input').value.length > 0 && this.newEmail.querySelector('input').value.length > 0 
         && this.newPassword.querySelector('input').value.length > 0 && this.repeatNewPassword.querySelector('input').value.length > 0){
@@ -53,18 +44,18 @@ this.allInputsComplete = () => {
 }
 
 this.validatePassword = ()=>{
-    // var name = this.newUser.querySelector('input').value;
+    //var name = this.firstName.querySelector('input').value;
     // var email = this.newEmail.querySelector('input').value;
     var password = this.newPassword.querySelector('input').value;
     var repeatPassword = this.repeatNewPassword.querySelector('input').value,
         errors = [];
-    // if (name.length < 5) {
-    //     errors.push("Your user name must be at least 5 characters");
-    // }
+    //if (name.length < 5) {
+    //    errors.push("Your user name must be at least 5 characters");
+    //}
     if (password !== repeatPassword) {
         errors.push("Your passwords must be same");
     }
-    if (password.length < 2) {
+    if (password.length < 8) {
         errors.push("Your password must be at least 8 characters"); 
     }
     if (password.search(/[a-z]/i) < 0) {
@@ -74,24 +65,17 @@ this.validatePassword = ()=>{
         errors.push("Your password must contain at least one digit."); 
     }
     if (errors.length > 0) {
-        alert(errors.join("\n"));
+        this.show_errors = true ;
         this.error = true;
-        // this.newPassword.querySelector('input').focus();
+        this.errors_noti = errors;
         return false;
     }
+    this.show_errors = false;
     return true;
+    this.update();
 }
 
 this.onSignUp = () => {
-    if (this.newPassword.querySelector('input').value === this.repeatNewPassword.querySelector('input').value){
-        if (this.newPassword.querySelector('input').value.length > 0 && this.repeatNewPassword.querySelector('input').value.length > 0){
-            this.newPsw = this.newPassword.querySelector('input').value
-            this.error = false;
-            
-        }
-    }else{
-        this.error = true;
-    }    
     if (this.validatePassword()){
         const newUser = {
                 firstName: this.firstName.querySelector('input').value,
@@ -102,10 +86,29 @@ this.onSignUp = () => {
         console.log('===')
         this.opts.onsignup(newUser)
     };
+    this.update();
     
 }
 </script>
 <style>
-    
+    .error_notification_show{
+        color: #cc0044;
+        text-align: left;
+        position: relative;
+        padding: 2px 0px;
+    }
+    .error_notification_area{
+        margin-bottom: 10px;
+    }
+    .error_name {
+        line-height: 24px;
+        padding-left: 24px;
+    }
+    .error_icon {
+        position: absolute;
+    }
+    .form_margin {
+        margin-bottom: 0px;
+    }
 </style>
 </signup>
