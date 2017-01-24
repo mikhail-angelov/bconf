@@ -23,21 +23,19 @@
     .msg-search-menu {
         color: #42648b;
         margin: 13px 13px;
-        float: left;
     } 
     .chat-search-input {
-        float: left;
-        height: 100%;
+        flex: 1 1 100%;
     }
     .chat-search-input input {
-        width: 500px;
-        height: 100%;
-        padding: 14px 44px 13px 0px;
+        width: 100%;
+        height: 50px;
+        padding: 5px 0px 5px 0px;
         box-sizing: border-box;
         border: none;
         margin: 0;
-        line-height: 18px;
-        font-size: 13px;
+        line-height: 23px;
+        font-size: 14px;
         outline: none;
         box-shadow: none;
         border-left: 20px solid transparent;
@@ -49,7 +47,6 @@
         align-items: center;
         justify-content: space-around;
         width: 225px;
-        float: right;
     }
     .chat-search-btn-field material-button {
         padding: 0px 15px 0px;

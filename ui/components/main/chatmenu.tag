@@ -4,7 +4,8 @@
             <i class="material-icons arrow-back">arrow_back</i>
         </div>
         <div class="chat-name">
-            nickname of someone
+            {this.opts.chats.chats[this.opts.chats.active].contact.firstName} 
+            {this.opts.chats.chats[this.opts.chats.active].contact.secondName}
         </div>
         <div class="sub-menu-field" >
         <i class="material-icons sub-menu">more_horiz</i>
@@ -25,13 +26,14 @@
 </script>
 <style>
     .menu {
-        vertical-align: middle;
-        height: 50px;
-        border-radius: 4px 4px 0px 0px;
-        width: 100%;
-        background: white;
-        border-bottom: solid 1px #e4e6e9;
-        position: relative;
+    display: flex;
+    flex: 1 1 100%;
+    flex-direction: row;
+    height: 50px;
+    border-radius: 4px 4px 0px 0px;
+    width: 100%;
+    background: white;
+    border-bottom: solid 1px #e4e6e9;
     }
     .sub-menu-field {
         float: right;
@@ -121,13 +123,14 @@
     .chat-name {
         color: #42648b;
         font-weight: 700;
-        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         display: inline-block;
         vertical-align: top;
         line-height: 4;
+        flex: 1 1 100%;
+        width: 100%;
     }
 </style>
 </chatmenu>

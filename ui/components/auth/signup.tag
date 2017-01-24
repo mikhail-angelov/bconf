@@ -22,6 +22,7 @@
         <div class="error_name">{err}</div>
     </div>
 </div>
+
 <div class="buttons">
     <material-button name="signUpButton" class="ui"  onclick={onSignUp} disabled="true">
         <div class="text">Signup</div>
@@ -30,6 +31,7 @@
         <div class="text">Back</div>
     </material-button>
 </div>
+
 <script>
 this.allInputsComplete = () => {
     if (this.firstName.querySelector('input').value.length > 0 && this.newEmail.querySelector('input').value.length > 0 
@@ -42,7 +44,6 @@ this.allInputsComplete = () => {
         }
         this.update();
 }
-
 this.validatePassword = ()=>{
     //var name = this.firstName.querySelector('input').value;
     // var email = this.newEmail.querySelector('input').value;
@@ -72,7 +73,6 @@ this.validatePassword = ()=>{
     }
     this.show_errors = false;
     return true;
-    this.update();
 }
 
 this.onSignUp = () => {

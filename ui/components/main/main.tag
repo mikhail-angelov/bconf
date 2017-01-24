@@ -10,7 +10,7 @@
                 <div class="useraccountinfo"  if={isSettingsState()}>
                     <useraccountinfo user={auth.user} status={status} updatestatus={updatestatus}/>
                 </div>
-
+                
                 <div class="searchbar" if={isContactsState() || isChatsState()}>
                     <searchbar searchContact={searchContact} />
                 </div>
@@ -27,9 +27,13 @@
 
             </div>
 
+            <div class='col-xs-9 white toflex position_of_right_side' if={isSettingsState()}>
+                <useraccount user={auth.user} status={status} updatestatus={updatestatus}/>
+            </div>
+
             <div if={isChatsState()} class='col-xs-9 toflex white position_of_right_side'>
 
-                <chatmenu if={search} chatSearchOpen={chatSearchOpen} />
+                <chatmenu if={search} chats={chats} chatSearchOpen={chatSearchOpen} />
 
                 <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
 
