@@ -1,9 +1,10 @@
 <signin>
     <form class="position_relative">
-    
-    <material-input error={error} name="user_name" value={userName} label="User Name"></material-input>
-    
-    <material-input error={error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
+  
+    <!--<material-input-with-error error={error_user_name} name="user_name" value={userName} label="User Name"></material-input-with-error>  -->
+    <material-input error={opts.http_error} name="user_name" value={userName} label="User Name"></material-input>
+
+    <material-input error={opts.http_error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
 
     <material-checkbox name="checker" checked=true>
         Remember me

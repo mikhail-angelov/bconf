@@ -1,18 +1,22 @@
 <signup>
 <form class="form_margin">
   
-  <material-input name="firstName" valueChanged={allInputsComplete} label="First Name"></material-input>
+  <material-input error="{name_error}" name="firstName" valueChanged={allInputsComplete} label="First Name"></material-input>
 
-  <material-input name="lastName" valueChanged={allInputsComplete} label="Last Name"></material-input>
+  <material-input error="{lastName_error}" name="lastName" valueChanged={allInputsComplete} label="Last Name"></material-input>
   
   <material-input name="newEmail" valueChanged={allInputsComplete} type="email" label="User Email"></material-input>
   
-  <material-input error="{error}" name="newPassword" type="password" valueChanged={allInputsComplete} label="User Password"></material-input>
+  <material-input-with-error error="{psw_error}" name="newPassword" type="password" valueChanged={allInputsComplete} label="User Password"/>
 
-  <material-input error="{error}" valueChanged={allInputsComplete} name="repeatNewPassword" type="password" label="Repeat Password"></material-input>
+  <!--<material-input error="{psw_error}" name="newPassword" type="password" valueChanged={allInputsComplete} label="User Password"></material-input>-->
+
+  <!--<material-input error="{repeat_psw_error}" valueChanged={allInputsComplete} name="repeatNewPassword" type="password" label="Repeat Password"></material-input>-->
   
+  <material-input-with-error error="{repeat_psw_error}" name="repeatNewPassword" type="password" valueChanged={allInputsComplete} label="User Password"/>
+
 </form>
-<div class="error_notification_area">
+<!--<div class="error_notification_area">
     <div class="error_notification_show" show={opts.http_error}>
         <i class="material-icons error_icon">error_outline</i>
         <div class="error_name">User with this email already exist</div>
@@ -21,7 +25,7 @@
         <i class="material-icons error_icon">error_outline</i>
         <div class="error_name">{err}</div>
     </div>
-</div>
+</div>-->
 
 <div class="buttons">
     <material-button name="signUpButton" class="ui"  onclick={onSignUp} disabled="true">
@@ -55,19 +59,22 @@ this.validatePassword = ()=>{
     //}
     if (password !== repeatPassword) {
         errors.push("Your passwords must be same");
+        this.repeat_psw_error = "Your passwords must be same";
     }
     if (password.length < 8) {
-        errors.push("Your password must be at least 8 characters"); 
+        errors.push("Your password must be at least 8 characters");
+        this.psw_error = "Your password must be at least 8 characters";
     }
     if (password.search(/[a-z]/i) < 0) {
         errors.push("Your password must contain at least one letter.");
+        this.psw_error = "Your password must contain at least one letter.";
     }
     if (password.search(/[0-9]/) < 0) {
         errors.push("Your password must contain at least one digit."); 
+        this.psw_error = "Your password must contain at least one digit.";
     }
     if (errors.length > 0) {
         this.show_errors = true ;
-        this.error = true;
         this.errors_noti = errors;
         return false;
     }
@@ -91,13 +98,13 @@ this.onSignUp = () => {
 }
 </script>
 <style>
-    .error_notification_show{
+    .error_notification_show {
         color: #cc0044;
         text-align: left;
         position: relative;
         padding: 2px 0px;
     }
-    .error_notification_area{
+    .error_notification_area {
         margin-bottom: 10px;
     }
     .error_name {
@@ -105,7 +112,7 @@ this.onSignUp = () => {
         padding-left: 24px;
     }
     .error_icon {
-        position: absolute;
+        float: left;
     }
     .form_margin {
         margin-bottom: 0px;

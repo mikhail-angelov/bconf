@@ -44,7 +44,6 @@
 
     this.updateStatus = (e)=>{
     const value = e.target.value;
-    const change = 'change status here';
     if(e.keyCode=='13'){
         console.log(e.keyCode);
         this.opts.updatestatus(value);

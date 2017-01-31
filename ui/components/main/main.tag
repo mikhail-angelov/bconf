@@ -189,10 +189,10 @@ this.searchMessage = (text)=> {
 
 
 
-this.status = 'Status';
+this.status = this.auth.user.status || 'Change status';
 
 this.updatestatus = (newstatus)=>{
-    this.status = newstatus;
+    store.dispatch(action.changeUserStatus(newstatus));
     this.update();
 }
 

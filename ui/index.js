@@ -8,6 +8,7 @@ require('./services/connectionManager')
 require('riot-mui')
 
 require('./components/welcome.tag')
+require('./components/common/material-input-with-error.tag')
 require('./components/auth/auth.tag')
 require('./components/auth/signup.tag')
 require('./components/auth/signin.tag')
