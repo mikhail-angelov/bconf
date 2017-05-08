@@ -1,11 +1,10 @@
 var webpack = require('webpack');
  
 module.exports = {
-  entry: './ui/index',
+  entry: './ui/index.js',
   output: {
-    path: __dirname + '/ui/dist',
-    filename: 'bundle.js',
-    publicPath: 'http://0.0.0.0:9000/dist/'
+    path: __dirname + '/dist',
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.ProvidePlugin({

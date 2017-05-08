@@ -22,7 +22,9 @@
     "socket.io": "^1.7.2",
     "socket.io-client": "^1.7.2",
     "socketio-jwt": "^4.2.0",
-    "ws": "^1.1.1"
+    "ws": "^1.1.1",
+    "wrtc": "0.0.61",
+    "websocket": "^1.0.23"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -53,9 +55,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.15.1",
-    "webpack-stream": "^3.0.1",
-    "websocket": "^1.0.23",
-    "wrtc": "0.0.61"
+    "webpack-stream": "^3.0.1"
   },
   "engines": {
     "node": "^4.2.3",

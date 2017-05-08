@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
-    app.use('/',express.static(__dirname+'/../ui'));
+    app.use('/',express.static(__dirname+'/../dist'));
 
     //cors
     app.use(function (req, res, next) {

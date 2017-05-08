@@ -19,9 +19,16 @@ gulp.task('riot', () => {
               })(err);
           }}))
     .pipe(webpackStream(webpackConfig))
-    .pipe(gulp.dest('ui/dist/'))
+    .pipe(gulp.dest('dist/'))
     .pipe(connect.reload());
 });
+
+gulp.task('assets',()=>{
+  return gulp.src(['ui/index.html','ui/assets/**'])
+  .pipe(gulp.dest('dist/'))
+})
+
+gulp.task('dist', ['riot', 'assets'])
 
 gulp.task('riot:watch', ()=>{
   //snode();
@@ -30,7 +37,7 @@ gulp.task('riot:watch', ()=>{
 
 gulp.task('connect', function() {
   connect.server({
-    root: 'ui',
+    root: 'dist',
     livereload: true
   });
 });
