@@ -31,7 +31,7 @@ gulp.task('assets',()=>{
 gulp.task('dist', ['riot', 'assets'])
 
 gulp.task('riot:watch', ()=>{
-  //snode();
+  snode();
   return gulp.watch(['ui/**/*.tag','ui/index.js','ui/router.js','ui/services/**/*.js'], ['riot']);
 })
 

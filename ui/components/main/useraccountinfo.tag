@@ -8,13 +8,13 @@
             <h2>{getName()}<h2>
         </div>
         <div class="user-account-status toflex">
-            <h3 onclick={onChange} show={!editable}>{opts.status||"change your status"}</h3>
-            <input name='status' show={editable} type="text" value={opts.status} onkeyup={updateStatus} onblur={onFocus}/>
+            <h3 onclick={onChange} show={!editable}>{this.opts.user.status||"change your status"}</h3>
+            <input name='status' show={editable} type="text" value={this.opts.user.status} onkeyup={updateStatus} onblur={onFocus}/>
         </div>
      </div>
 <script>
 
-    this.onChange = e=>this.changeStatus(e,this.opts.status);
+    this.onChange = e=>this.changeStatus(e,this.opts.user.status);
 
     this.editable = false;
 
@@ -22,10 +22,10 @@
         return this.opts.user.avatar
     }
     this.getInitials = function(){
-        return this.opts.user.firstName.substr(0,1)+this.opts.user.lastName.substr(0,1)
+        return this.opts.user.firstName.substr(0,1)+this.opts.user.secondName.substr(0,1)
     }
     this.getName = function(){
-        return this.opts.user.firstName + ' '+this.opts.user.lastName
+        return this.opts.user.firstName + ' '+this.opts.user.secondName
     }
 
     this.changeStatus = (e,input)=> {
@@ -44,7 +44,6 @@
 
     this.updateStatus = (e)=>{
     const value = e.target.value;
-    const change = 'change status here';
     if(e.keyCode=='13'){
         console.log(e.keyCode);
         this.opts.updatestatus(value);

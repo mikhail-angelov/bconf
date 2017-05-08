@@ -1,9 +1,12 @@
 task list
-15/12
+
+
+25/01/17
 Ivan
 
 - create error notification
-- auth.tag view
+- try to do user setting update on server
+- try to make feed main page
 
 
 15/11

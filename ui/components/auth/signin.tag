@@ -1,20 +1,27 @@
 <signin>
     <form class="position_relative">
-    
-    <material-input error={error} name="user_name" value={userName} label="User Name"></material-input>
-    
-    <material-input error={error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
-    <div class="error" show={opts.http_error}>Incorrect password or user name</div>
+  
+    <!--<material-input-with-error error={error_user_name} name="user_name" value={userName} label="User Name"></material-input-with-error>  -->
+    <material-input error={opts.http_error} name="user_name" value={userName} label="User Name"></material-input>
+
+    <material-input error={opts.http_error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
+
     <material-checkbox name="checker" checked=true>
         Remember me
     </material-checkbox>
     
     </form>
+    <div class="error_notification_area">
+        <div class="error_notification_show" show={opts.http_error}>
+            <i class="material-icons error_icon">error_outline</i>
+            <div class="error_name">Incorrect password or user name</div>
+        </div>
+    </div>
     <div class="buttons">
-        <material-button class="background-color ui" onclick={onLogin}>
+        <material-button class="ui" onclick={onLogin}>
             <div class="text">SignIn</div>
         </material-button>
-        <material-button class="background-color ui" onclick={this.opts.tosignup}>
+        <material-button class="ui" onclick={this.opts.tosignup}>
             <div class="text">SignUp</div>
         </material-button>
     </div>
