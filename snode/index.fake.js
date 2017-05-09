@@ -1,42 +1,26 @@
-//process.env.DEBUG= '*'
+'use strict'
 
-const app = require('express')()
-const server = require('http').createServer(app)
+const http = require('http')
 const createPeerServer = require('./peer')
-const fakeWebRTCClient = require('./fake.webrtc.client.js')
-const mongoUnit = require('mongo-unit')
-const daoService = require('./src/dao')
-const fakeDb = require('./fakeDb')
+const app = require('./app')
 const config = require('./config')
 
-const expressConfig = require('./expressConfig')(app)
+const fakeWebRTCClient = require('./fake.webrtc.client.js')
+const mongoUnit = require('mongo-unit')
+const fakeDb = require('./fakeDb')
 
 mongoUnit.start()
-    .then(mongoUrl => daoService({
-        url: mongoUrl
-    }))
-    .then(dao => {
-
-        const auth = require('./src/auth')(dao, config)
-        const contacts = require('./src/contacts')(dao)
-
-        app.use('/auth', auth)
-        app.use('/api/contact', contacts.router)
-
+    .then(mongoUrl => app.start(mongoUrl))
+    .then(expressApp => {
+        const server = http.createServer(expressApp)
         const ws = require('./src/ws')(server)
 
         const serv = server.listen(config.port, function () {
-            console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
-            fakeWebRTCClient.connect('test');
+            console.log('Express server listening on %d, in %s mode', config.port)
+            fakeWebRTCClient.connect('test')
         })
-
         createPeerServer(serv)
     })
     .then(()=>{
         mongoUnit.load(fakeDb)
     })
-
-
-
-
-

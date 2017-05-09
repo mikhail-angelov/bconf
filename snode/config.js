@@ -1,6 +1,7 @@
 module.exports = {
     port: process.env.PORT || 9000,
     peerServerPort: process.env.PEER_PORT || 9001,
+    dbUrl: process.env.DB_URL || 'mongodb://mongo:27017/db',
     facebook: {
         clientID: process.env.FACEBOOK_ID || 'id',
         clientSecret: process.env.FACEBOOK_SECRET || 'secret',

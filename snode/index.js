@@ -1,33 +1,17 @@
-//process.env.DEBUG= '*'
+'use strict'
 
-const app = require('express')()
-const server = require('http').createServer(app)
+const http = require('http')
 const createPeerServer = require('./peer')
-const daoService = require('./src/dao')
+const app = require('./app')
 const config = require('./config')
 
-const expressConfig = require('./expressConfig')(app)
+app.start(config.dbUrl)
+    .then(expressApp => {
+        const server = http.createServer(expressApp)
+        const ws = require('./src/ws')(server)
 
-daoService({
-    url: 'mongodb://mongo:27017/db'
-}).then(dao => {
-
-    const auth = require('./src/auth')(dao, config)
-    const contacts = require('./src/contacts')(dao)
-
-    app.use('/auth', auth)
-    app.use('/api/contact', contacts.router)
-
-    const ws = require('./src/ws')(server)
-
-    const serv = server.listen(config.port, function () {
-        console.log('Express server listening on %d, in %s mode', config.port, app.get('env'))
+        const serv = server.listen(config.port, function () {
+            console.log('Express server listening on %d, in %s mode', config.port)
+        })
+        createPeerServer(serv)
     })
-
-    createPeerServer(serv)
-})
-
-
-
-
-
