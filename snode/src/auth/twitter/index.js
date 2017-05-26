@@ -9,13 +9,11 @@ module.exports = (auth, config) => {
 
   router
     .get('/', passport.authenticate('twitter', {
-      failureRedirect: '/#login',
-      session: false
+      failureRedirect: '/#login'
     }))
 
     .get('/callback', passport.authenticate('twitter', {
-      failureRedirect: '/#login',
-      session: false
+      failureRedirect: '/#login'
     }), auth.setTokenCookie)
 
   return {

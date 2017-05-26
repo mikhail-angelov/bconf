@@ -8,7 +8,7 @@
             <div class='col-xs-3 toflex white position_of_left_side'>
 
                 <div class="useraccountinfo"  if={isSettingsState()}>
-                    <useraccountinfo user={auth.user} status={status} updatestatus={updatestatus}/>
+                    <useraccountinfo user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
                 </div>
                 
                 <div class="searchbar" if={isContactsState() || isChatsState()}>
@@ -28,7 +28,7 @@
             </div>
 
             <div class='col-xs-9 white toflex position_of_right_side' if={isSettingsState()}>
-                <useraccount user={auth.user} status={status} updatestatus={updatestatus}/>
+                <useraccount user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
             </div>
 
             <div if={isChatsState()} class='col-xs-9 toflex white position_of_right_side'>
@@ -62,6 +62,7 @@
         
 const store = require('../../services/store')
 const actions = require('../../services/actions/index.js')
+const _ = require('lodash')
 
 const openSocketAction = actions.openWS('echo.websocket.org')
 store.dispatch(openSocketAction);
@@ -187,9 +188,9 @@ this.searchMessage = (text)=> {
     console.log('message searched')
 }
 
-
-
-this.status = this.auth.user.status || 'Change status';
+this.getStatus = ()=>{
+    return _.get(this,'auth.user.status') || 'Change status'
+}
 
 this.updatestatus = (newstatus)=>{
     store.dispatch(action.changeUserStatus(newstatus));

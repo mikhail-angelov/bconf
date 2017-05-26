@@ -5,7 +5,7 @@ const Strategy = require('passport-twitter').Strategy
 
 module.exports = (auth, config) => {
   passport.use(new Strategy({
-        consumerKey: config.clientID,
+    consumerKey: config.clientID,
     consumerSecret: config.clientSecret,
     callbackURL: config.callbackURL
   }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))

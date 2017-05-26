@@ -1,5 +1,7 @@
 task list
 
+8/5/17
++ update docker deployment
 
 25/01/17
 Ivan

@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express')
+const passport = require('passport')
 const dao = require('./src/dao')
 const config = require('./config')
 const bodyParser = require('body-parser')
@@ -8,6 +9,9 @@ const auth = require('./src/auth')
 const contacts = require('./src/contacts')
 
 const app = express()
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
 
 module.exports = {
     start
@@ -19,7 +23,9 @@ function start(dbUrl) {
     }).then(() => {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
-        
+        app.use(passport.initialize());
+        app.use(passport.session());
+
         app.use('/auth', auth(dao, config))
         app.use('/api/contact', contacts(dao).router)
         app.use('/', express.static(__dirname + '/../dist'));

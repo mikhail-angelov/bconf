@@ -9,17 +9,11 @@ module.exports = (auth, config) => {
 
   router
     .get('/', passport.authenticate('yandex', {
-      failureRedirect: '/#login',
-      scope: [
-        'profile',
-        'email'
-      ],
-      session: false
+      failureRedirect: '/#login'
     }))
 
     .get('/callback', passport.authenticate('yandex', {
-      failureRedirect: '/#login',
-      session: false
+      failureRedirect: '/#login'
     }), auth.setTokenCookie)
 
   return {
