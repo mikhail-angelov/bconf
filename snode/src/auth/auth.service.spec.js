@@ -5,21 +5,11 @@ const expect = require('chai').expect
 describe('auth', () => {
     const mongoUnit = require('mongo-unit')
     const dbData = require('../../test/fixtures/authDb.json')
-    const daoService = require('../dao')
-    var dao
-    var auth
+    const dao = require('../dao')
+    const auth = require('./auth.service')(dao)
 
-    before(() => mongoUnit.start()
-        .then(mongoUrl => daoService({
-            url: mongoUrl
-        }))
-        .then(_dao => {
-            dao = _dao
-            auth = require('./auth.service')(dao)
-        })
-        .then(() => mongoUnit.load(dbData)))
-
-    after(() => mongoUnit.drop())
+    beforeEach(() => mongoUnit.load(dbData))
+    afterEach(() => mongoUnit.drop())
 
     it('should create new user', () => {
         return auth.createUser({

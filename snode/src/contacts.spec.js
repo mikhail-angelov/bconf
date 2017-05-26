@@ -1,25 +1,14 @@
 'use strict';
 
 const expect = require('chai').expect
+const mongoUnit = require('mongo-unit')
 
 describe('contacts', () => {
-    const mongoUnit = require('mongo-unit')
     const dbData = require('../test/fixtures/contactsDb.js')
-    const daoService = require('./dao')
-    var dao
-    var contacts
+    const contacts = require('./contacts')
 
-    before(() => mongoUnit.start()
-        .then(mongoUrl => daoService({
-            url: mongoUrl
-        }))
-        .then(_dao => {
-            dao = _dao
-            contacts = require('./contacts')(dao)
-        })
-        .then(() => mongoUnit.load(dbData)))
-
-    after(() => mongoUnit.drop())
+    beforeEach(() => mongoUnit.load(dbData))
+    afterEach(() => mongoUnit.drop())
 
     it('should get users contacts', () => {
         return contacts.getContacts("5554ba3324d05f4bc2cab3f1")

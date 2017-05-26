@@ -5,23 +5,12 @@ const expect = require('chai').expect
 describe('local', () => {
     const mongoUnit = require('mongo-unit')
     const dbData = require('../../../test/fixtures/authDb.json')
-    const daoService = require('../../dao')
-    var dao
-    var auth
-    var local
+    const dao = require('../../dao')
+    const auth = require('../auth.service')(dao)
+    const local = require('./index')(auth)
 
-    before(() => mongoUnit.start()
-        .then(mongoUrl => daoService({
-            url: mongoUrl
-        }))
-        .then(_dao => {
-            dao = _dao
-            auth = require('../auth.service')(dao)
-            local = require('./index')(auth)
-        })
-        .then(() => mongoUnit.load(dbData)))
-
-    after(() => mongoUnit.drop())
+    beforeEach(() => mongoUnit.load(dbData))
+    afterEach(() => mongoUnit.drop())
 
     it('should succesfuly login', () => {
         return local.login({

@@ -26,8 +26,8 @@ function start(dbUrl) {
         app.use(passport.initialize());
         app.use(passport.session());
 
-        app.use('/auth', auth(dao, config))
-        app.use('/api/contact', contacts(dao).router)
+        app.use('/auth', auth.router)
+        app.use('/api/contact', contacts.router)
         app.use('/', express.static(__dirname + '/../dist'));
 
         //cors
