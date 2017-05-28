@@ -7,15 +7,15 @@ node_js:
 services:
   - docker
 
-# script:
-#   - npm test
+script:
+  - npm test
 
-# after_success:
-  # - npm run build
-  # - docker build -t $DOCKER_IMAGE_NAME .
-  # - docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
-  # - docker login -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD"
-  # - docker push $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
+after_success:
+  - npm run build
+  - docker build -t $DOCKER_IMAGE_NAME .
+  - docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
+  - docker login -u="$DOCKER_HUB_USERNAME" -p="$DOCKER_HUB_PASSWORD"
+  - docker push $DOCKER_IMAGE_NAME:$TRAVIS_BUILD_NUMBER
 
 env:
   - DOCKER_IMAGE_NAME=mangelov/bconf
