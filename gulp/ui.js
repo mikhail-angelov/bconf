@@ -3,8 +3,9 @@ const gutil = require("gulp-util");
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
- const WebpackDevServer = require("webpack-dev-server");
+const WebpackDevServer = require("webpack-dev-server");
 const connect = require('gulp-connect');
+const proxy = require('http-proxy-middleware');
 const spawn = require('child_process').spawn;
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
@@ -38,17 +39,25 @@ gulp.task('riot:watch', ()=>{
 gulp.task('connect', function() {
   connect.server({
     root: 'dist',
-    livereload: true
+    livereload: true,
+    middleware: function(connect, opt) {
+            return [
+                proxy(['/api/**', '/auth/**'], {
+                    target: 'http://localhost:9000',
+                    changeOrigin:true
+                })
+            ]
+        }
   });
 });
 
-gulp.task('dev', ['riot','connect','riot:watch'], function() {
+gulp.task('dev', ['connect', 'riot','riot:watch'], function() {
 	gutil.log('done');
 });
 
 function snode() {
   if (node) node.kill()
-  node = spawn('node', ['snode/index.js'], {stdio: 'inherit'})
+  node = spawn('node', ['snode/index.fake.js'], {stdio: 'inherit'})
   node.on('close', function (code) {
     if (code === 8) {
       gulp.log('Error detected, waiting for changes...');

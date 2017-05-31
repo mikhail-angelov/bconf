@@ -1,33 +1,15 @@
 <tabs class='tabs'>
-    <button class="contact-list {selected: isContactsState()}" onclick={contactList}>
+    <button class="contact-list {selected: opts.activetab==='contacts'}" onclick={()=>opts.changetab('contacts')}>
         <i class="material-icons">contacts</i>
     </button>
-    <button class="chat-list {selected: isChatsState()}" onclick={chatList}>
+    <button class="chat-list {selected: opts.activetab==='chats'}" onclick={()=>opts.changetab('chats')}>
         <i class="material-icons">chat</i>
     </button>
-    <button class="account-infotmation-list {selected: isSettingsState()}" onclick={accountList}>
+    <button class="account-infotmation-list {selected: opts.activetab==='settings'}" onclick={()=>opts.changetab('settings')}>
         <i class="material-icons">account_circle</i>
     </button>
         
-    <script>
 
-        const actions = require('../../services/actions/index.js')
-        this.contactList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.CONTACTS, main:actions.uiState.main.MAIN})
-        this.chatList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.CHATS, main:actions.uiState.main.MAIN})
-        this.accountList = ()=>  changeState.bind(this)({sub:actions.uiState.sub.SETTINGS, main:actions.uiState.main.MAIN})
-
-       
-        this.isContactsState = ()=>{
-            return this.opts.active_tab === actions.uiState.sub.CONTACTS;
-        }
-        this.isChatsState = ()=>this.opts.active_tab === actions.uiState.sub.CHATS;
-        this.isSettingsState = ()=>this.opts.active_tab === actions.uiState.sub.SETTINGS;
-
-        function changeState(state){
-            this.opts.changestate(state)
-        }
-        this.update();
-    </script>
     <style>
         .tabs {
             position: absolute;

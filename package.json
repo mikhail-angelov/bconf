@@ -22,9 +22,9 @@
     "socket.io": "^1.7.2",
     "socket.io-client": "^1.7.2",
     "socketio-jwt": "^4.2.0",
-    "ws": "^1.1.1",
+    "websocket": "^1.0.23",
     "wrtc": "0.0.61",
-    "websocket": "^1.0.23"
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -40,6 +40,7 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-util": "^3.0.8",
+    "http-proxy-middleware": "^0.17.4",
     "material-design-icons": "^3.0.1",
     "material-icons": "^0.1.0",
     "mocha": "^3.2.0",

@@ -1,7 +1,7 @@
 'use strict';
 
-const config = require('./config')
-const dao = require('./dao')
+const config = require('../../config')
+const dao = require('../dao')
 const router = require('express').Router()
 const authService = require('./auth.service')
 const security = require('../security')
