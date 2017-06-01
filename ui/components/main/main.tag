@@ -1,59 +1,39 @@
 <main>
-    <div class='main'>
-        
-        <div class='row' style="margin-top: 15px; margin-bottom: 15px;">
-
-            <div class='col-xs-2 toflex white position_of_left_side'>
-
-                <div class="useraccountinfo"  if={isSettingsState()}>
-                    <useraccountinfo user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
-                </div>
-                
-                <div class="searchbar" if={isContactsState() || isChatsState()}>
-                    <searchbar searchContact={searchContact} />
-                </div>
-
-                <div class="contacts toflex" if={isContactsState()}>
-                    <contacts removeContact={removeContact} contacts={contacts.filtered} choose_contact={chooseContact}  startChat={startChat} />
-                </div>
-
+    <div class='row'>
+        <div class='col-xs-2' style='height:100%; display: flex;'>
+            <div style='flex:1'>
+                <settingsMenu if={isSettingsState()} user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
+                <contacts if={isContactsState()} removeContact={removeContact} contacts={contacts.filtered} choose_contact={chooseContact}  startChat={startChat} />
                 <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
-
-                <div class="tabs-field">
-                    <tabs changeTab={changeTab} activeTab={state.sub}/>
-                </div>
-
             </div>
-
-            <div class='col-xs-10 white toflex position_of_right_side' if={isSettingsState()}>
-                <useraccount user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
-            </div>
-
-            <div if={isChatsState()} class='col-xs-10 toflex white position_of_right_side'>
-
-                <chatmenu if={search} chats={chats} chatSearchOpen={chatSearchOpen} />
-
-                <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
-
-                <chat class="chat"  user={auth.user} messages={chats} contact={chats.contact} accountFoto={accountFoto} />
-
-                <chatinput user_name={auth.user} onsendMessage={sendMessage} />
-
-            </div>
-            
-            <div if={isContactsState()}  class='col-xs-10 white toflex position_of_right_side'>
-                
-                <div show={!contactSelect} class="contact_not_selected">
-                    <i class="material-icons font_size">account_circle</i>
-                    <p>choose contact from your contactlist</p>
-                </div>
-
-                <contactinformation class="contact_information" show={contactSelect} changeTab={changeTab} contact={selectedContact} chatWith={startChat}/>
-            
-            </div>
-        
+            <mtabs changeTab={changeTab} activeTab={state.sub}/>
         </div>
-   
+
+        <div class='col-xs-10' style='height:100%; display: flex;'>
+
+            <settings 
+                if={isSettingsState()}
+                user={auth.user} 
+                status={getStatus()} 
+                updatestatus={updatestatus}
+            />
+            <chat 
+                if={isChatsState()} 
+                class="chat"  
+                user={auth.user} 
+                messages={chats} 
+                contact={chats.contact} 
+                accountFoto={accountFoto} 
+            />
+            <contactinformation 
+                if={isContactsState()} 
+                class="contact_information" 
+                show={contactSelect} 
+                changeTab={changeTab} 
+                contact={selectedContact} 
+                chatWith={startChat}
+            />
+        </div>
     </div>
 
     <script>

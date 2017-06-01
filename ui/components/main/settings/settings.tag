@@ -1,4 +1,4 @@
-<useraccount>
+<settings>
     <div class="row">
         <div class="col-xs-4 toflex align_items_center">
             <div class="contact_foto" show={getAvatar()}><img src={getAvatar()}></img></div>
@@ -29,4 +29,4 @@
         return this.opts.user.firstName.substr(0,1)+this.opts.user.secondName.substr(0,1)
     }
 </script>
-</useraccount>
+</settings>

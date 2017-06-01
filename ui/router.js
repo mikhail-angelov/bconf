@@ -1,4 +1,5 @@
 const riot = require('riot')
+const route = require('riot-route')
 
 window.addEventListener("DOMContentLoaded",function load() {
   var currentPage = null;
@@ -6,7 +7,7 @@ window.addEventListener("DOMContentLoaded",function load() {
 
   riot.mount('*');
 
-  var subRoute = riot.route.create()
+  const subRoute = route.create()
 
   var goTo = function(page){
       console.log('route', page )
@@ -34,14 +35,14 @@ window.addEventListener("DOMContentLoaded",function load() {
     goTo('main');
   });
 
-  riot.route.start();
+  route.start();
 
   const redirectToken = getAuthRedirectToken()
   if(redirectToken){
     localStorage.setItem('token', redirectToken)
   }
 
-  riot.route.exec(goTo);
+  route.exec(goTo);
 
   function getAuthRedirectToken(){
     if(document.location.hash && document.location.hash.indexOf('#auth-redirect=') === 0){

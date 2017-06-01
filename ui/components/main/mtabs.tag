@@ -1,4 +1,4 @@
-<tabs class='tabs'>
+<mtabs class='mtabs toflex'>
     <button class="contact-list {selected: opts.activetab==='contacts'}" onclick={()=>opts.changetab('contacts')}>
         <i class="material-icons">contacts</i>
     </button>
@@ -9,9 +9,8 @@
         <i class="material-icons">account_circle</i>
     </button>
         
-
     <style>
-        .tabs {
+        .mtabs {
             position: absolute;
             bottom: 0px;
             height:35px;
@@ -19,7 +18,7 @@
             display: flex;
             justify-content: flex-start;
         }
-        .tabs button {
+        .mtabs button {
             background: white;
             outline: none;
         }
@@ -43,4 +42,4 @@
         }
 
     </style>
-</tabs>
+</mtabs>

@@ -19,11 +19,12 @@
 
 <script>
 
+const route = require('riot-route')
 const store = require('../services/store')
 const actions = require('../services/actions/index.js')
 
 this.onLogin = ()=>{
-    riot.route('auth')
+    route('auth')
 }
 
 this.onLoginGuest = ()=>{

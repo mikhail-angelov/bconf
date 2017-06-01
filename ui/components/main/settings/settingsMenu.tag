@@ -1,4 +1,4 @@
-<useraccountinfo class="toflex account_info">
+<settingsMenu ccoutinfo class="toflex account_info">
      <div class='user-account-foto toflex'>
          <div class="account-foto" show={getAvatar()}><img src={getAvatar()}></img></div>
          <div class="account-foto" show={!getAvatar()}>{getInitials()}</div>
@@ -169,4 +169,4 @@
         }
 
     </style>
-</useraccountinfo>
+</settingsMenu>

@@ -1,4 +1,9 @@
 <chat class="toflex main-chat">
+
+    <chatmenu if={search} chats={chats} chatSearchOpen={chatSearchOpen} />
+
+    <chatsearch if={!search} chatSearchClose={chatSearchClose} searchMessage={searchMessage} />
+
     <div class="message_field" each={m in this.opts.messages.filtered}>
         <div class="check_selection">
             <i class="material-icons">check_circle</i>
@@ -18,6 +23,8 @@
             <i class="material-icons">star rate</i>
         </div>
     </div>
+
+    <chatinput user_name={auth.user} onsendMessage={sendMessage} />
 
     <script>
 

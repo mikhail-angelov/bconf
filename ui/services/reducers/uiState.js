@@ -1,4 +1,4 @@
-
+const route = require('riot-route')
 const actions = require('../actions')
 const storage = require('../storage')
 
@@ -30,14 +30,14 @@ function uiState(state = defaultState, action){
 }
 
 function toLogin(){
-    delay(()=>riot.route('auth'))
+    delay(()=>route('auth'))
     return{
         main: actions.uiState.main.LOGIN,
         sub: actions.uiState.AUTH.signIn
     }
 }
 function toMain(){
-    delay(()=>riot.route('main'))
+    delay(()=>route('main'))
     return{
         main: actions.uiState.main.MAIN,
         sub: actions.uiState.sub.CONTACTS
