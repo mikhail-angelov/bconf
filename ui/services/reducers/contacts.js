@@ -20,28 +20,29 @@ function contacts(state = {
             }
         }
         case actions.contact.CONTACT_LIST_UPLOAD: {
+            const contacts = formatContacts(action.list)
             return {
-                contacts: action.list,
-                filtered: action.list
+                contacts: contacts,
+                filtered: contacts
             }
         }
         case actions.contact.SEARCH: {
-            var filtred
+            var filtered
             if (action.contactName) {
-                filtred = _.filter(state.contacts, item => {
+                filtered = _.filter(state.contacts, item => {
                     return item.firstName.indexOf(action.contactName) >= 0;
                 })
             } else {
-                filtred = state.contacts
+                filtered = state.contacts
             }
             return {
-                contacts: state.contacts,
-                filtered: filtred
+                ...state,
+                filtered
             }
         }
         case actions.contact.SELECT_CONTACT: {
             return {
-                contacts: state.contacts,
+                ...state,
                 filtered:  state.filtered.map(item => {
                     if (item._id === action.contact._id) {
                         item.selected = true
@@ -55,7 +56,18 @@ function contacts(state = {
         default:
             return state
     }
+}
 
+function formatContacts(list){
+    return list.map(item=>{
+        item.initials = getInitials( item.name)
+        return item
+    })
+}
+
+function getInitials( name) {
+    const initials = (name||'').split(' ').map(item=>item?item[0].toUpperCase():'')
+    return (initials[0]|| '')+(initials[1]|| '')
 }
 
 module.exports = contacts

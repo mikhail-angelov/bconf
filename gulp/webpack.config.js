@@ -1,5 +1,7 @@
 var webpack = require('webpack');
- 
+
+process.env.NODE_ENV = 'development';
+
 module.exports = {
   entry: './ui/index.js',
   output: {

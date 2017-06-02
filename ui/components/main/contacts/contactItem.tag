@@ -2,8 +2,7 @@
 <div class='contact-item {contact-item-selected: opts.contact.selected}' onclick={opts.select_contact_item}>
     <div class="contact-item-avatar">
         <img class="contact-item-photo" if={opts.contact.photo} src={opts.contact.photo}>
-        <div class="contact-item-initials" if={!opts.contact.photo}>{getInitials(opts.contact.name)}
-        </div>
+        <div class="contact-item-initials" if={!opts.contact.photo}>{opts.contact.initials}</div>
     </div>
 
     <div class="contact-item-description">
@@ -11,12 +10,6 @@
         <div class="contact-item-sub">{opts.contact.sub}</div>
     </div>
 </div>
-<script>
-    this.getInitials = name=>{
-        const initilas = (name||'').split(' ').map(item=>item?item[0].toUpperCase():'')
-        return (initilas[0]|| '')+(initilas[1]|| '')
-    }
-</script>
 <style>
     .contact-item {
         display: flex;
@@ -53,7 +46,7 @@
     }
     .contact-item-name {
         font-weight: 800;
-        font-size: 18px;
+        font-size: 16px;
         overflow: hidden;
     }
     .contact-item-sub{
