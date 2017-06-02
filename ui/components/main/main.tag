@@ -1,15 +1,15 @@
 <main>
-    <div class='row'>
-        <div class='col-xs-2' style='height:100%; display: flex;'>
+    <div class='row' style='width: 100%;'>
+        <div class='col-xs-2 leftPannel'>
             <div style='flex:1'>
                 <settingsMenu if={isSettingsState()} user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
-                <contacts if={isContactsState()} removeContact={removeContact} contacts={contacts.filtered} choose_contact={chooseContact}  startChat={startChat} />
+                <contacts if={isContactsState()} contacts={contacts.filtered} select_contact={selectContact} />
                 <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
             </div>
             <mtabs changeTab={changeTab} activeTab={state.sub}/>
         </div>
 
-        <div class='col-xs-10' style='height:100%; display: flex;'>
+        <div class='col-xs-10' class='rightPannel'>
 
             <settings 
                 if={isSettingsState()}
@@ -19,7 +19,6 @@
             />
             <chat 
                 if={isChatsState()} 
-                class="chat"  
                 user={auth.user} 
                 messages={chats} 
                 contact={chats.contact} 
@@ -27,7 +26,6 @@
             />
             <contactinformation 
                 if={isContactsState()} 
-                class="contact_information" 
                 show={contactSelect} 
                 changeTab={changeTab} 
                 contact={selectedContact} 
@@ -128,10 +126,9 @@ this.searchContact = (searchText)=>{
 
 this.contactSelect = false;
 
-this.chooseContact = (contact)=>{
-    this.selectedContact = contact;
-    this.contactSelect = true;
-    this.update();
+this.selectContact = (contact)=>{
+    const action = actions.selectContact(contact)
+    store.dispatch(action)
 }
 
 this.onLogout = ()=>{
@@ -194,135 +191,18 @@ this.updatestatus = (newstatus)=>{
 
 </script>
 
-    <style>
-        body {
-            margin: 0;
-            border-left: 2px solid;
-            border-right: 2px solid;
-            border-bottom: 2px solid;
-            font-size: 12.5px;
-            font-weight: 400;
-            font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-            outline: none;
-        }
-        
-        textarea {
-            resize: none;
-        }
-        
-        textarea:focus {
-            outline: none;
-        }
-        
-        input:focus {
-            outline: none;
-        }
-        
-        .main {
-            display: flex;
-            flex-flow: column nowrap;
-            height: 100%;
-            width: 100%;
-            background-color: #edeef0;
-        }
-        
-        .main .row {
-            box-sizing: border-box;
-            display: -ms-flexbox;
-            display: -webkit-box;
-            display: flex;
-            -ms-flex: 0 1 auto;
-            -webkit-box-flex: 0;
-            flex: 0 1 100%;
-            -ms-flex-direction: row;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            flex-direction: row;
-            -ms-flex-wrap: wrap;
-            flex-wrap: nowrap;
-            margin: 0;
-        }
-        
-        .main .col-xs,
-        .col-xs-1,
-        .col-xs-10,
-        .col-xs-11,
-        .col-xs-12,
-        .col-xs-2,
-        .col-xs-3,
-        .col-xs-4,
-        .col-xs-5,
-        .col-xs-6,
-        .col-xs-7,
-        .col-xs-8,
-        .col-xs-9 {
-            flex-direction: column;
-            flex: 100%;
-        }
-        .position_relative {
-            position: relative;
-        }
-        .toflex {
-            display: flex;
-        }
+<style>
+    .leftPannel{
+        height:100%; 
+        display: flex; 
+        flex-direction: column;
+        border-right: 1px solid gainsboro;
+        padding-right: 0px;
+    }
 
-        .position_of_right_side{
-            margin-right: 10px;
-            padding: 0;
-            position: relative;
-        }
-        .position_of_left_side{
-             padding: 0px; 
-             margin: 0 10px; 
-             position: relative;
-             overflow-x: hidden;
-        }
-        
-        .contacts {
-            overflow-y: auto;
-            overflow-x: hidden;
-            flex-flow: column nowrap;
-            flex: 1 1 100%;
-            margin-bottom: 35px;
-        }
-        
-        .chat {
-            overflow: auto;
-            flex-flow: column nowrap;
-            flex: 1 1 100%;
-            padding: 0 15;
-            justify-content: flex-end;
-        }
-        
-        .chatinput material-button {
-            background: #cc0044;
-            margin: 0px 0px 0px 20px;
-        }
-        
-        .white {
-            background: #fff;
-            border-radius: 4px;
-            box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.27);
-        }
-        
-        .align_bottom {
-            justify-content: flex-end;
-        }
-        .contact_not_selected {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-        .contact_information {
-            display: flex;
-            height: 100%;
-            margin: 0 20px;
-        }
-        .font_size {
-            font-size: 100px;
-            color: #cc0044;
-        }
-    </style>
+    .rightPannel{
+        height:100%; 
+        display: flex;
+    }
+</style>
 </main>

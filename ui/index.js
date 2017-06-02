@@ -1,5 +1,5 @@
 require("./index.css")
-require("flexboxgrid/dist/flexboxgrid.css")
+require("flexboxgrid/dist/flexboxgrid.min.css")
 require("material-design-icons/iconfont/material-icons.css")
 require("riot-mui/build/styles/riot-mui.min.css")
 require('riot-mui/build/js/riot-mui.js')

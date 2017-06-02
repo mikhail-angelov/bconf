@@ -1,65 +1,66 @@
-<contact-item onclick={chatStarted} >
-<div class='contact-item {selected: this.selected}'>
-<div class="account-foto">
-    <a class="friend_photo" href="#">
-        <img class="account_photo_img" src={this.opts.contact.photo}>
-    </a>
-</div>
-
-<div class="account-name">{this.opts.contact.firstName}</br>
-    {this.opts.contact.status}</div>
-
-    <div class="removecontact">
-        <i class="material-icons" onclick={()=>this.opts.remove_contact_item(this.opts.contact.userId)}>delete forever</i>
+<contact-item>
+<div class='contact-item {contact-item-selected: opts.contact.selected}' onclick={opts.select_contact_item}>
+    <div class="contact-item-avatar">
+        <img class="contact-item-photo" if={opts.contact.photo} src={opts.contact.photo}>
+        <div class="contact-item-initials" if={!opts.contact.photo}>{getInitials(opts.contact.name)}
+        </div>
     </div>
 
+    <div class="contact-item-description">
+        <div class="contact-item-name">{opts.contact.name}</div>
+        <div class="contact-item-sub">{opts.contact.sub}</div>
+    </div>
 </div>
 <script>
-    this.setActiveChat = ()=> {
-        console.log('setactivechat')
-        const active = this.opts.contact.userId;
-        this.opts.set_active(active);
+    this.getInitials = name=>{
+        const initilas = (name||'').split(' ').map(item=>item?item[0].toUpperCase():'')
+        return (initilas[0]|| '')+(initilas[1]|| '')
     }
-
-    this.chatStarted = ()=>{
-        //- this.opts.chatwith(this.opts.contact);
-        this.opts.account_information(this.opts.contact);
-    }
-
-    this.selectAccount = ()=>{
-        this.opts.account_information(this.opts.contact);
-    }
-
 </script>
 <style>
     .contact-item {
         display: flex;
-        flex-flow: row nowrap;
         border-top: 1px solid #e7e8ec;
     }
     .contact-item:hover {
         cursor: pointer;
         background: #e9eaec;
     }
-    
-    .account_photo_img {
-        width: 36px;
-        height: 36px;
+    .contact-item-selected {
+        background: lavender;
+    }
+    .contact-item-name-photo{
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
         float: left;
         margin: 0 10;
     }
-    .account-name {
+    .contact-item-avatar{
+        background-color: cornflowerblue;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
         display: flex;
-        flex-flow: row wrap;
-        flex-basis: 100%;
-        justify-content: flex-start;
         align-items: center;
+        justify-content: center;
+        margin: 10px;
     }
-    .removecontact {
-        float: right;
-        width: 30;
-        padding: 28px 0px;
+    .contact-item-description{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
+    .contact-item-name {
+        font-weight: 800;
+        font-size: 18px;
+        overflow: hidden;
+    }
+    .contact-item-sub{
+        font-size: 13px;
+        font-style: italic;
+        overflow: hidden;
+    }
+
 </style>    
 </contact-item>

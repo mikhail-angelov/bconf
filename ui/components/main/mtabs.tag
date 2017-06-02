@@ -1,22 +1,19 @@
-<mtabs class='mtabs toflex'>
-    <button class="contact-list {selected: opts.activetab==='contacts'}" onclick={()=>opts.changetab('contacts')}>
-        <i class="material-icons">contacts</i>
-    </button>
-    <button class="chat-list {selected: opts.activetab==='chats'}" onclick={()=>opts.changetab('chats')}>
-        <i class="material-icons">chat</i>
-    </button>
-    <button class="account-infotmation-list {selected: opts.activetab==='settings'}" onclick={()=>opts.changetab('settings')}>
-        <i class="material-icons">account_circle</i>
-    </button>
+<mtabs>
+    <div class='mtabs'>
+        <button class="contact-list {selected: opts.activetab==='contacts'}" onclick={()=>opts.changetab('contacts')}>
+            <i class="material-icons">contacts</i>
+        </button>
+        <button class="chat-list {selected: opts.activetab==='chats'}" onclick={()=>opts.changetab('chats')}>
+            <i class="material-icons">chat</i>
+        </button>
+        <button class="account-infotmation-list {selected: opts.activetab==='settings'}" onclick={()=>opts.changetab('settings')}>
+            <i class="material-icons">account_circle</i>
+        </button>
+    </div>
         
     <style>
         .mtabs {
-            position: absolute;
-            bottom: 0px;
-            height:35px;
-            width: 100%;
             display: flex;
-            justify-content: flex-start;
         }
         .mtabs button {
             background: white;

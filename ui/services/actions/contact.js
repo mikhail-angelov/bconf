@@ -7,6 +7,7 @@ const props = {
     ADD: 'addContact',
     REMOVE: 'removeContact',
     SEARCH: 'searchContact',
+    SELECT_CONTACT: 'selectContact',
     CONTACT_LIST_UPLOAD: 'contactListUpload'
 }
 
@@ -49,11 +50,18 @@ function searchContact(contactName){
         contactName
     }
 }
+function selectContact(contact){
+    return {
+        type: props.SELECT_CONTACT,
+        contact
+    }
+}
 
 module.exports = {
     contact: props,
     setContactList,
     addContact,
     removeContact,
+    selectContact,
     searchContact
 }
