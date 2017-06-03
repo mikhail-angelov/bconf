@@ -1,32 +1,13 @@
-require("./index.css")
-require("flexboxgrid/dist/flexboxgrid.min.css")
-require("material-design-icons/iconfont/material-icons.css")
-require("riot-mui/build/styles/riot-mui.min.css")
-require('riot-mui/build/js/riot-mui.js')
+import './index.css'
+import 'flexboxgrid/dist/flexboxgrid.min.css'
+import 'material-design-icons/iconfont/material-icons.css'
+import 'riot-mui/build/styles/riot-mui.min.css'
+import 'riot-mui/build/js/riot-mui.js'
 
-require('./router')
-require('./services/eventBus')
-require('./services/connectionManager')
+import './router'
+import './services/eventBus'
+import './services/connectionManager'
 
-
-require('./components/welcome.tag')
-require('./components/common/material-input-with-error.tag')
-require('./components/auth/auth.tag')
-require('./components/auth/signup.tag')
-require('./components/auth/signin.tag')
-require('./components/auth/forget.tag')
-require('./components/main/main.tag')
-require('./components/main/mtabs.tag')
-require('./components/main/chats/chat.tag')
-require('./components/main/chats/chatmenu.tag')
-require('./components/main/chats/chatlist.tag')
-require('./components/main/chats/chat-item.tag')
-require('./components/main/chats/chatsearch.tag')
-require('./components/main/chats/chatinput.tag')
-require('./components/main/settings/settingsMenu.tag')
-require('./components/main/settings/settings.tag')
-require('./components/main/settings/useraccountsettings.tag')
-require('./components/main/searchbar.tag')
-require('./components/main/contacts/contacts.tag')
-require('./components/main/contacts/contactItem.tag')
-require('./components/main/contacts/contactinformation.tag')
+import './components/welcome.tag'
+import './components/auth/auth.tag'
+import './components/main/main.tag'

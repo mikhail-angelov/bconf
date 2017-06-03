@@ -1,3 +1,7 @@
+import './chatmenu.tag'
+import './chatsearch.tag'
+import './chatinput.tag'
+
 <chat class="toflex main-chat">
 
     <chatmenu if={search} chats={chats} chatSearchOpen={chatSearchOpen} />

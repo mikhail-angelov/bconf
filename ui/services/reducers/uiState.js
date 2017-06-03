@@ -2,11 +2,14 @@ const route = require('riot-route')
 const actions = require('../actions')
 const storage = require('../storage')
 
+let defaultState
 if (storage.getToken()) {
     defaultState = toMain()
 }else{
     defaultState = toLogin()
 }
+
+module.exports = uiState
 
 function uiState(state = defaultState, action){
     switch(action.type){
@@ -47,4 +50,4 @@ function delay(cb){
     setTimeout(cb)
 }
 
-module.exports = uiState
+

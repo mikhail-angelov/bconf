@@ -44,7 +44,7 @@ function connect(username) {
 
   const peer = new Peer(username, {
     host: '0.0.0.0',
-    port: 9000,
+    port: 9001,
     path: '/chat',
     serialization: 'json',
     debug: 3

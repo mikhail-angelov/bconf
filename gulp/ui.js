@@ -15,7 +15,7 @@ gulp.task('riot', () => {
   return gulp.src('ui/index.js')
     .pipe(plumber({ errorHandler: function(err) {
               notify.onError({
-                  title: "Gulp error in " + err.plugin,
+                  title: 'Gulp error in ' + err.plugin,
                   message:  err.toString()
               })(err);
           }}))
@@ -39,11 +39,12 @@ gulp.task('riot:watch', ()=>{
 gulp.task('connect', function() {
   connect.server({
     root: 'dist',
+    port: 9000,
     livereload: true,
     middleware: function(connect, opt) {
             return [
                 proxy(['/api/**', '/auth/**'], {
-                    target: 'http://localhost:9000',
+                    target: 'http://localhost:9002',
                     changeOrigin:true
                 })
             ]

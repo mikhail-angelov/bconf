@@ -1,3 +1,5 @@
+import './chat-item.tag'
+
 <chatlist>
     <chat-item each="{chatId, chat in this.opts.chats.chats}" chatid={chatId} chat={chat} active={isActive(chatId)} setActive={activeContact} />
 <script>

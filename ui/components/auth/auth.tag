@@ -1,3 +1,7 @@
+import './signin.tag'
+import './signup.tag'
+import './forget.tag'
+
 <auth>
 <div class='container'>
   <signin class="signin" if={state.sub==='signIn'} toSignUp={toSignUp} toForgetPassword={toForgetPassword} login={onLogin} http_error={error}/>

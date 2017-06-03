@@ -30,6 +30,7 @@
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "chai": "^3.5.0",
     "css-loader": "^0.26.1",
@@ -60,11 +61,6 @@
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.15.1",
     "webpack-stream": "^3.0.1"
-  },
-  "babel": {
-    "presets": [
-      "stage-3"
-    ]
   },
   "engines": {
     "node": "^4.2.3",

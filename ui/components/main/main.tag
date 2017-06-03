@@ -1,3 +1,11 @@
+import './contacts/contacts.tag'
+import './contacts/contactinformation.tag'
+import './chats/chatlist.tag'
+import './chats/chat.tag'
+import './settings/settingsMenu.tag'
+import './settings/settings.tag'
+import './mtabs.tag'
+
 <main>
     <div class='row' style='width: 100%;'>
         <div class='col-xs-2 leftPannel'>

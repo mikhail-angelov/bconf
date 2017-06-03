@@ -28,7 +28,7 @@ function start(dbUrl) {
 
         app.use('/auth', auth.router)
         app.use('/api/contact', contacts.router)
-        app.use('/', express.static(__dirname + '/../dist'));
+        app.use('/', express.static(__dirname + '/dist'));
 
         //cors
         app.use(function (req, res, next) {
