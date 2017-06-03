@@ -20,7 +20,7 @@ describe('contacts', () => {
     it('should add contacts', () => {
         return contacts.addContact("5554ba3324d05f4bc2cab3f1", "5554ba3324d05f4bc2cab3f0")
             .then(contacts => {
-                expect(contacts.length).to.equal(3)
+                expect(contacts.length).to.equal(2)
             })
     })
 
