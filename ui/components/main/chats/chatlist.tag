@@ -1,13 +1,12 @@
-import './chat-item.tag'
+import './chatItem.tag'
+import '../searchbar.tag'
 
 <chatlist>
-    <chat-item each="{chatId, chat in this.opts.chats.chats}" chatid={chatId} chat={chat} active={isActive(chatId)} setActive={activeContact} />
-<script>
-this.activeContact = (active)=>{
-    this.opts.setactivechat(active);
-}
-this.isActive = (chatId) => chatId == this.opts.chats.active;
-</script>
+<searchbar searchContact={searchContact} />
+<chat-item each="{chat in opts.chats}" chat={chat} setactive={parent.selectChat(chat)} />
 
+<script>
+    this.selectChat = chat => () => this.opts.setactivechat(chat)
+</script>
 
 </chatlist>

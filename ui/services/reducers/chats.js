@@ -3,13 +3,16 @@ const actions = require('../actions/index.js')
 const _ = require('lodash')
 
 const TEMP_INIT_STATE = {
-    active: 'test',
     filtered: [],
-    chats: {
+    list: {
        'test':{
-           contact: {"id":"test","firstName":"Vasya","secondName":"Vasin"},
+           contact: {"_id":"test","name":"Vasya Vasin"},
             unread:0,
-            messages:[]
+            messages:[{
+               type: 'IN',
+                text: 'test',
+                date: new Date(), 
+            }]
        } 
     }
 }
@@ -17,7 +20,6 @@ const TEMP_INIT_STATE = {
 function chats(state = TEMP_INIT_STATE, action) {
     switch (action.type) {
         case actions.chats.ADD_MESSAGE: {
-            //state.chats[state.active].messages = state.chats[state.active].messages || []
             const message = {
                 
                 type: action.message.type,
@@ -25,7 +27,7 @@ function chats(state = TEMP_INIT_STATE, action) {
                 date: action.message.date,
             }
             //state[userId].push(message)
-            state.chats[state.active].messages = [message].concat(state.chats[state.active].messages);
+            state.list[state.active].messages = [message].concat(state.list[state.active].messages);
             state.filtered = [message].concat(state.filtered);
 
             return Object.assign(state, {
@@ -39,12 +41,12 @@ function chats(state = TEMP_INIT_STATE, action) {
                 text: action.payload.content,
                 date: new Date(),
             }
-            const chat = state.chats[action.payload.author] || {
+            const chat = state.list[action.payload.author] || {
                 conatct: action.contact,
                 messages:[],
                 unread: 0
             }
-            chat.messages = [message].concat(state.chats[action.payload.author].messages)
+            chat.messages = [message].concat(state.list[action.payload.author].messages)
             if(state.active == action.payload.author){
                 state.filtered = [message].concat(state.filtered)
             }else{
@@ -52,10 +54,10 @@ function chats(state = TEMP_INIT_STATE, action) {
             }
 
 
-            state.chats[action.payload.author] = chat
+            state.list[action.payload.author] = chat
 
             return Object.assign(state, {
-                chats: state.chats,
+                list: state.list,
                 filtered: state.filtered
             })
         }
@@ -75,38 +77,38 @@ function chats(state = TEMP_INIT_STATE, action) {
             const text = action.messageText
             var filtred
             if (action.messageText != '') {
-                filtred = _.filter(state.chats[state.active].messages, item => {
+                filtred = _.filter(state.list[state.active].messages, item => {
                     return item.text.indexOf(text) >= 0;
                 })
             } else {
-                filtred = state.chats[state.active].messages
+                filtred = state.list[state.active].messages
             }
             return Object.assign(state, {
                 filtered: filtred
             })
         }
         case actions.chats.SET_ACTIVE: {
-            state.chats[action.active].unread = 0
+            state.list[action.active].unread = 0
             return Object.assign(state, {
                 active: action.active,
                 filtered: state.chats[action.active].messages,
-                chats: state.chats
+                list: state.list
             })
         }
         case actions.chats.START_CHAT:{
             var chat = {};
-            if(!state.chats[action.contact.userId]){
+            if(!state.list[action.contact.userId]){
                 chat[action.contact.userId] = {
                     contact: action.contact,
                     unread:0,
                     messages:[]
                 }
-                const chats = Object.assign(
-                    state.chats,
+                const list = Object.assign(
+                    state.list,
                     chat);
 
                 return Object.assign(state,{
-                    chats: chats
+                    list: list
                 })
             }else{
                 return state

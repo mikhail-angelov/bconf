@@ -1,12 +1,18 @@
 const props = {
     uiState: {
         SET: 'setUIState',
-        SET_SUB: 'setSubState',
+        SET_MENU: 'setMenuState',
+        SET_CONTENT: 'setContentState',
         main:{
             LOGIN: 'login',
             MAIN: 'main'
         },
-        sub:{
+        left:{
+            CONTACTS: 'contactsMenu',
+            CHATS: 'chatsMenu',
+            SETTINGS: 'settingsMenu'
+        },
+        right:{
             CONTACTS: 'contacts',
             CHATS: 'chats',
             SETTINGS: 'settings'
@@ -18,7 +24,8 @@ const props = {
         }
     },
     newState,
-    subState
+    subState,
+    contentState
 }
 
 function newState(state){
@@ -30,7 +37,14 @@ function newState(state){
 
 function subState(state){
     return {
-        type: props.uiState.SET_SUB,
+        type: props.uiState.SET_MENU,
+        state: state
+    }
+}
+
+function contentState(state){
+    return {
+        type: props.uiState.SET_CONTENT,
         state: state
     }
 }

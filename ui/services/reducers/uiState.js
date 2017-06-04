@@ -16,8 +16,18 @@ function uiState(state = defaultState, action){
         case actions.uiState.SET: {
             return action.state
         }
-        case actions.uiState.SET_SUB: {
-            return Object.assign(state,{sub:action.state})
+        case actions.uiState.SET_MENU: {
+            return {
+                ...state,
+                sub:action.state,
+                content:null
+            }
+        }
+        case actions.uiState.SET_CONTENT: {
+            return {
+                ...state,
+                content:action.state
+            }
         }
         case actions.auth.LOGOUT_COMPLETE:
         case actions.uiState.TO_LOGIN: {
@@ -43,7 +53,8 @@ function toMain(){
     delay(()=>route('main'))
     return{
         main: actions.uiState.main.MAIN,
-        sub: actions.uiState.sub.CONTACTS
+        sub: actions.uiState.left.CONTACTS,
+        content:null
     }
 }
 function delay(cb){

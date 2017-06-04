@@ -39,12 +39,12 @@ gulp.task('riot:watch', ()=>{
 gulp.task('connect', function() {
   connect.server({
     root: 'dist',
-    port: 9000,
+    port: 9002,
     livereload: true,
     middleware: function(connect, opt) {
             return [
                 proxy(['/api/**', '/auth/**'], {
-                    target: 'http://localhost:9002',
+                    target: 'http://localhost:9000',
                     changeOrigin:true
                 })
             ]

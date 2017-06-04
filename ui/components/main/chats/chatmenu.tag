@@ -4,8 +4,7 @@
             <i class="material-icons arrow-back">arrow_back</i>
         </div>
         <div class="chat-name">
-            {this.opts.chats.chats[this.opts.chats.active].contact.firstName} 
-            {this.opts.chats.chats[this.opts.chats.active].contact.secondName}
+            {this.opts.chats.chats[this.opts.chats.active].contact.name}
         </div>
         <div class="sub-menu-field" >
         <i class="material-icons sub-menu">more_horiz</i>
@@ -21,9 +20,7 @@
             <i class="material-icons msg-search">search</i>
         </div>
     </div>
-<script>
 
-</script>
 <style>
     .menu {
     display: flex;

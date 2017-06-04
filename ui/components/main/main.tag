@@ -12,7 +12,7 @@ import './mtabs.tag'
             <div style='flex:1'>
                 <settingsMenu if={isSettingsState()} user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
                 <contacts if={isContactsState()} contacts={contacts.filtered} select_contact={selectContact} />
-                <chatlist if={isChatsState()} chats={chats} setActiveChat={setActiveChat}/>
+                <chatlist if={isChatsState()} chats={chats.list} setActiveChat={setActiveChat}/>
             </div>
             <mtabs changeTab={changeTab} activeTab={state.sub}/>
         </div>
@@ -69,17 +69,14 @@ this.chats = store.getState().chats;
 this.auth = store.getState().auth;
 this.state = store.getState().uiState;
 
-const subUiState = localStorage.getItem('uiState') || actions.uiState.sub.CONTACTS;
 
-const newStateAction = actions.newState({main:actions.uiState.main.MAIN, sub:subUiState});
-store.dispatch(newStateAction);
 
 const initChats = actions.initChats(this.auth)
 store.dispatch(initChats)
 
-this.isContactsState = ()=>this.state.sub === actions.uiState.sub.CONTACTS;
-this.isChatsState = ()=>this.state.sub === actions.uiState.sub.CHATS;
-this.isSettingsState = ()=>this.state.sub === actions.uiState.sub.SETTINGS;
+this.isContactsState = ()=>this.state.sub === actions.uiState.left.CONTACTS;
+this.isChatsState = ()=>this.state.sub === actions.uiState.left.CHATS;
+this.isSettingsState = ()=>this.state.sub === actions.uiState.left.SETTINGS;
 
 this.changeTab = newState =>{
     const action = actions.subState(newState)
@@ -182,19 +179,19 @@ this.updatestatus = (newstatus)=>{
 
 
 
-        this.search = true;
-        console.log(this.search)
+this.search = true;
+console.log(this.search)
 
-        this.chatSearchOpen = ()=> {
-            this.search = false;
-            this.update();
-            console.log(this.search)
-        }
-        this.chatSearchClose = ()=> {
-            this.search = true;
-            this.update();
-            console.log(this.search)
-        }
+this.chatSearchOpen = ()=> {
+    this.search = false;
+    this.update();
+    console.log(this.search)
+}
+this.chatSearchClose = ()=> {
+    this.search = true;
+    this.update();
+    console.log(this.search)
+}
 
 
 </script>
