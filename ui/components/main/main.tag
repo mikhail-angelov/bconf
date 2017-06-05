@@ -6,6 +6,8 @@ import './settings/settingsMenu.tag'
 import './settings/settings.tag'
 import './mtabs.tag'
 
+import _ from 'lodash'
+
 <main>
     <div class='row' style='width: 100%;'>
         <div class='col-xs-2 leftPannel'>
@@ -19,25 +21,23 @@ import './mtabs.tag'
 
         <div class='col-xs-10' class='rightPannel'>
             <contact-information if={isContactsState()} contact={contacts.selected} />
-            <chat if={isChatsState()} store={store} />
+            <chat if={isChatsState()} store={store} action={action}/>
             <settings if={isSettingsState()} info={'not implemented yet'} />
         </div>
     </div>
 
-    <script>
+<script>
         
-
-const _ = require('lodash')
 const store = this.opts.store
-const actions = this.opts.action
+const action = this.opts.action
 
-const openSocketAction = actions.openWS('echo.websocket.org')
+const openSocketAction = action.openWS('echo.websocket.org')
 store.dispatch(openSocketAction);
 
-const contactList = actions.setContactList()
+const contactList = action.setContactList()
 store.dispatch(contactList);
 
-store.dispatch(actions.ensureUserInfo());
+store.dispatch(action.ensureUserInfo());
 
 this.getState = ()=>{
     this.contacts = store.getState().contacts;
@@ -58,39 +58,36 @@ this.settingsMenuVm ={
     getUserInfo: ()=>{console.log('getUserInfo')}
 }
 
-const initChats = actions.initChats(this.auth)
+const initChats = action.initChats(this.auth)
 store.dispatch(initChats)
 
-this.isContactsState = ()=>this.state.sub === actions.uiState.left.CONTACTS;
-this.isChatsState = ()=>this.state.sub === actions.uiState.left.CHATS;
-this.isSettingsState = ()=>this.state.sub === actions.uiState.left.SETTINGS;
+this.isContactsState = ()=>this.state.sub === action.uiState.left.CONTACTS;
+this.isChatsState = ()=>this.state.sub === action.uiState.left.CHATS;
+this.isSettingsState = ()=>this.state.sub === action.uiState.left.SETTINGS;
 
 this.changeTab = newState =>{
-    const action = actions.subState(newState)
-    store.dispatch(action)
+    store.dispatch(action.subState(newState))
 }
 
 this.setActiveChat = (chatId)=>{
-    const action = actions.setActiveChat(chatId);
-    store.dispatch(action);
+    store.dispatch(action.setActiveChat(chatId));
     this.update();
 }
 this.startChat = (contact)=>{
-    const newStateAction = actions.newState({sub:actions.uiState.sub.CHATS, main:actions.uiState.main.MAIN});
+    const newStateAction = action.newState({sub:action.uiState.sub.CHATS, main:action.uiState.main.MAIN});
     store.dispatch(newStateAction);
-    const action = actions.startChat(contact);
-    store.dispatch(action);
+    store.dispatch(action.startChat(contact));
     this.setActiveChat(contact.userId)
 }
 
 this.onLogout = ()=>{
     this.user = null
-    store.dispatch(actions.logout(this.user))
+    store.dispatch(action.logout(this.user))
     console.log('logout')
 }
 
 this.addContact = ()=>{
-    const action = actions.addContact({
+    const addContactAction = action.addContact({
                 userId: 'test' + Math.floor((Math.random() * 100) + 1),
                 firstName: 'name' + Math.floor((Math.random() * 100) + 1),
                 secondName: 'secondname',
@@ -100,36 +97,32 @@ this.addContact = ()=>{
                 city: 'California',
                 phoneNumber: '123456789'
             });
-    store.dispatch(action);
+    store.dispatch(addContactAction);
 }
 
 this.removeContact = (contactId)=>{
-    const action = actions.removeContact(contactId)
-    store.dispatch(action)
-    this.update()
+    store.dispatch(action.removeContact(contactId))
     console.log('contact removed')
 }
 
 this.searchContact = (searchText)=>{
-    const action = actions.searchContact(searchText)
-    store.dispatch(action)
+    store.dispatch(action.searchContact(searchText))
     this.update()
 }
 
 this.contactSelect = false;
 
 this.selectContact = (contact)=>{
-    const action = actions.selectContact(contact)
-    store.dispatch(action)
+    store.dispatch(action.selectContact(contact))
 }
 
 this.onLogout = ()=>{
-    store.dispatch(actions.logout());
+    store.dispatch(action.logout());
 }
 
 this.sendMessage = (value)=>{
         if (value) {
-            const action = actions.addMessage({
+            const addMessage = action.addMessage({
                 id:'any',
                 userId:'test',
                 text: value,
@@ -137,9 +130,9 @@ this.sendMessage = (value)=>{
                 from: 'me',
                 date: new Date()
             })
-            store.dispatch(action)
+            store.dispatch(addMessage)
 
-            const echo = actions.sendMessage({
+            const echo = action.sendMessage({
                 username:'test',
                 message: value
             });
@@ -149,9 +142,7 @@ this.sendMessage = (value)=>{
 }
 
 this.searchMessage = (text)=> {
-    const action = actions.searchMessage(text);
-    store.dispatch(action);
-    this.update();
+    store.dispatch(action.searchMessage(text));
     console.log('message searched')
 }
 

@@ -32,8 +32,8 @@ import './forget.tag'
 
 <script>
 
-const store = require('../../store')
-const actions = require('../../actions')
+const store = this.opts.store
+const actions = this.opts.action
 store.subscribe(()=>{
     this.state = store.getState().uiState
     this.auth = store.getState().auth

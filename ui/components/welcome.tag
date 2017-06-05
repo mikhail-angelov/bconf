@@ -1,3 +1,5 @@
+import route from 'riot-route'
+
 <welcome>
   <div class="welcome">
   
@@ -19,16 +21,12 @@
 
 <script>
 
-const route = require('riot-route')
-const store = require('../store')
-const actions = require('../actions')
-
 this.onLogin = ()=>{
     route('auth')
 }
 
 this.onLoginGuest = ()=>{
-    store.dispatch(actions.loginGuest())
+    this.opts.store.dispatch(this.opts.action.loginGuest())
 }
 </script>
 

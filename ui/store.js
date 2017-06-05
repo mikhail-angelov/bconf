@@ -14,5 +14,4 @@ const store = redux.createStore(
     redux.applyMiddleware(...middleware)
 )
 
-
-module.exports = store
+export default store
