@@ -1,5 +1,5 @@
 const config = require('../config')
-const http = require('../http')
+const http = require('../services/http')
 
 const actions = {
     auth: {

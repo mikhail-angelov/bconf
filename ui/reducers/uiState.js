@@ -1,6 +1,6 @@
 const route = require('riot-route')
 const actions = require('../actions')
-const storage = require('../storage')
+const storage = require('../services/storage')
 
 let defaultState
 if (storage.getToken()) {
@@ -53,7 +53,7 @@ function toMain(){
     delay(()=>route('main'))
     return{
         main: actions.uiState.main.MAIN,
-        sub: actions.uiState.left.CONTACTS,
+        sub: actions.uiState.left.CHATS,
         content:null
     }
 }

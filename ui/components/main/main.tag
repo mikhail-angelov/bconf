@@ -1,5 +1,5 @@
 import './contacts/contacts.tag'
-import './contacts/contactinformation.tag'
+import './contacts/contactInformation.tag'
 import './chats/chatlist.tag'
 import './chats/chat.tag'
 import './settings/settingsMenu.tag'
@@ -10,43 +10,26 @@ import './mtabs.tag'
     <div class='row' style='width: 100%;'>
         <div class='col-xs-2 leftPannel'>
             <div style='flex:1'>
-                <settingsMenu if={isSettingsState()} user={auth.user} status={getStatus()} updatestatus={updatestatus}/>
                 <contacts if={isContactsState()} contacts={contacts.filtered} select_contact={selectContact} />
                 <chatlist if={isChatsState()} chats={chats.list} setActiveChat={setActiveChat}/>
+                <settings-menu if={isSettingsState()} vm={settingsMenuVm}/>
             </div>
             <mtabs changeTab={changeTab} activeTab={state.sub}/>
         </div>
 
         <div class='col-xs-10' class='rightPannel'>
-
-            <settings 
-                if={isSettingsState()}
-                user={auth.user} 
-                status={getStatus()} 
-                updatestatus={updatestatus}
-            />
-            <chat 
-                if={isChatsState()} 
-                user={auth.user} 
-                messages={chats} 
-                contact={chats.contact} 
-                accountFoto={accountFoto} 
-            />
-            <contactinformation 
-                if={isContactsState()} 
-                show={contactSelect} 
-                changeTab={changeTab} 
-                contact={selectedContact} 
-                chatWith={startChat}
-            />
+            <contact-information if={isContactsState()} contact={contacts.selected} />
+            <chat if={isChatsState()} store={store} />
+            <settings if={isSettingsState()} info={'not implemented yet'} />
         </div>
     </div>
 
     <script>
         
-const store = require('../../services/store')
-const actions = require('../../services/actions/index.js')
+
 const _ = require('lodash')
+const store = this.opts.store
+const actions = this.opts.action
 
 const openSocketAction = actions.openWS('echo.websocket.org')
 store.dispatch(openSocketAction);
@@ -56,20 +39,24 @@ store.dispatch(contactList);
 
 store.dispatch(actions.ensureUserInfo());
 
-store.subscribe(()=>{
+this.getState = ()=>{
     this.contacts = store.getState().contacts;
     this.chats = store.getState().chats;
     this.state = store.getState().uiState;
     this.auth = store.getState().auth;
-    this.update();
+}
+
+store.subscribe(()=>{
+    this.getState()
+    this.update()
     console.log('===', store.getState())
 })
-this.contacts = store.getState().contacts;
-this.chats = store.getState().chats;
-this.auth = store.getState().auth;
-this.state = store.getState().uiState;
+this.getState()
 
-
+this.settingsMenuVm ={
+    getHostInfo: ()=>{console.log('getHostInfo')},
+    getUserInfo: ()=>{console.log('getUserInfo')}
+}
 
 const initChats = actions.initChats(this.auth)
 store.dispatch(initChats)

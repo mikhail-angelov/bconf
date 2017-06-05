@@ -1,5 +1,5 @@
 
-const webSocket = require('../webSocket')
+const webSocket = require('../services/webSocket')
 const actions = require('../actions')
 
 const sock = {

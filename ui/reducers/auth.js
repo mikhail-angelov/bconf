@@ -1,5 +1,5 @@
-const actions = require('../actions/index.js')
-const storage = require('../storage')
+const actions = require('../actions')
+const storage = require('../services/storage')
 
 function auth(state = {
     user: storage.getUser(),

@@ -1,13 +1,13 @@
 <mtabs>
     <div class='mtabs'>
-        <button class="contact-list {selected: opts.activetab==='contacts'}" onclick={()=>opts.changetab('contactsMenu')}>
-            <i class="material-icons">contacts</i>
+        <button class="contact-list {selected: opts.activetab==='contactsMenu'}" onclick={()=>opts.changetab('contactsMenu')}>
+            <i class="material-icons">account_circle</i>
         </button>
-        <button class="chat-list {selected: opts.activetab==='chats'}" onclick={()=>opts.changetab('chatsMenu')}>
+        <button class="chat-list {selected: opts.activetab==='chatsMenu'}" onclick={()=>opts.changetab('chatsMenu')}>
             <i class="material-icons">chat</i>
         </button>
-        <button class="account-infotmation-list {selected: opts.activetab==='settings'}" onclick={()=>opts.changetab('settingsMenu')}>
-            <i class="material-icons">account_circle</i>
+        <button class="account-infotmation-list {selected: opts.activetab==='settingsMenu'}" onclick={()=>opts.changetab('settingsMenu')}>
+            <i class="material-icons">settings</i>
         </button>
     </div>
         

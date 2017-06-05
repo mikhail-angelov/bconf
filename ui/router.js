@@ -1,6 +1,9 @@
 const riot = require('riot')
 const route = require('riot-route')
 
+const store = require('./store')
+const action = require('./actions')
+
 window.addEventListener("DOMContentLoaded",function load() {
   var currentPage = null;
   var currentSingup = null;
@@ -15,7 +18,7 @@ window.addEventListener("DOMContentLoaded",function load() {
       currentPage.unmount(true); //unmount and keep parent tag
     }
     
-    const mounted = riot.mount('div#content',page)
+    const mounted = riot.mount('div#content',page,{store, action})
     if(mounted){
       currentPage= mounted[0];
     }

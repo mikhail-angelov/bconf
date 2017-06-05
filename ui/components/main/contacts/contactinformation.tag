@@ -1,12 +1,8 @@
-<contactinformation>
-    <div class="row">
-        not implemented
+<contact-information>
+    <div if={!opts.contact} class="row">
+        select contact
     </div>
-    <script>
-   
-
-    </script>
-    <style>
-
-    </style>
-</contactinformation>
+    <div if={opts.contact} class="row">
+        {opts.contact.name}
+    </div>
+</contact-information>

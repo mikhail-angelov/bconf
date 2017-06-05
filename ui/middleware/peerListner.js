@@ -1,5 +1,5 @@
-const actions = require('../../services/actions/index.js')
-const peerManager = require('../peerManager')
+const actions = require('../actions')
+const peerManager = require('../services/peerManager')
 
 let peer;
 

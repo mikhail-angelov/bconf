@@ -4,7 +4,8 @@ const _ = require('lodash')
 
 function contacts(state = {
     contacts: [],
-    filtered: []
+    filtered: [],
+    selected: null
 }, action) {
     switch (action.type) {
         case actions.contact.ADD: {
@@ -50,7 +51,8 @@ function contacts(state = {
                         item.selected = false
                     }
                     return item
-                })
+                }),
+                selected: action.contact
             }
         }
         default:

@@ -9,13 +9,10 @@ const middleware = [
     peerListner.middleware,
     wsListener.middleware
 ]
-function configureStore() {
-    const store = redux.createStore(
-        reducers,
-        redux.applyMiddleware(...middleware)
-    );
+const store = redux.createStore(
+    reducers,
+    redux.applyMiddleware(...middleware)
+)
 
-    return store;
-}
 
-module.exports = configureStore()
+module.exports = store

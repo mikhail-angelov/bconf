@@ -20,8 +20,8 @@
 <script>
 
 const route = require('riot-route')
-const store = require('../services/store')
-const actions = require('../services/actions/index.js')
+const store = require('../store')
+const actions = require('../actions')
 
 this.onLogin = ()=>{
     route('auth')
