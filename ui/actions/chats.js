@@ -59,10 +59,10 @@ function searchMessage(messageText){
         messageText: messageText
     }
 }
-function setActiveChat(active){
+function setActiveChat(activeChat){
     return {
         type: props.SET_ACTIVE,
-        active: active
+        activeChat: activeChat
     }
 }
 function startChat(contact){

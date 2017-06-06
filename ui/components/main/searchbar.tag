@@ -3,9 +3,9 @@
 <div class='search-bar'>
     <input class='search-bar-input' placeholder='search'>
 
-    <button class='search-bar-button' onclick={addContact}>
+    <material-button class='icon-button' onclick={addContact}>
         <i class="material-icons">launch</i>
-    </button>
+    </material-button>
 </div>
 
 <script>
@@ -28,11 +28,6 @@
     border-radius: 7px;
     border: 1px solid gainsboro;
     padding: 4px;
-}
-.search-bar-button{
-    background: transparent;
-    border: 0;
-    color: gray;
 }
 
 </style>

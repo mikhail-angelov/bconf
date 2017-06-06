@@ -7,5 +7,3 @@ import 'riot-mui/build/js/riot-mui.js'
 import './app'
 import './services/eventBus'
 import './services/connectionManager'
-
-

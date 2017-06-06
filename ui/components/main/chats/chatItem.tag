@@ -1,5 +1,5 @@
 <chat-item>
-<div class='chat-item {chat-item-selected: opts.contact.selected}' onclick={opts.setactive}>
+<div class='chat-item {chat-item-selected: opts.chat.selected}' onclick={opts.setactive}>
     <div class="chat-item-avatar">
         <div class='tag {tag_hide: (opts.active || opts.chat.unread==0)}'>{opts.chat.unread}</div>
         <img class="chat-item-photo" if={opts.chat.contact.photo} src={opts.chat.contact.photo}>

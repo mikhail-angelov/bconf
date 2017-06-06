@@ -1,4 +1,4 @@
-<chatinput>
+<chat-input>
 <div class="fixed_to_bottom">
     <div class="account_chat">
         <div class='user-account-foto toflex'>
@@ -85,4 +85,4 @@ this.sendMessage = ()=>{
     }
 </style>
 
-</chatinput>
+</chat-input>

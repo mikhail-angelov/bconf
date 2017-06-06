@@ -1,6 +1,6 @@
 import './contacts/contacts.tag'
 import './contacts/contactInformation.tag'
-import './chats/chatlist.tag'
+import './chats/chatMenu.tag'
 import './chats/chat.tag'
 import './settings/settingsMenu.tag'
 import './settings/settings.tag'
@@ -13,7 +13,7 @@ import _ from 'lodash'
         <div class='col-xs-2 leftPannel'>
             <div style='flex:1'>
                 <contacts if={isContactsState()} contacts={contacts.filtered} select_contact={selectContact} />
-                <chatlist if={isChatsState()} chats={chats.list} setActiveChat={setActiveChat}/>
+                <chat-menu if={isChatsState()} chats={chats.list} setActiveChat={setActiveChat}/>
                 <settings-menu if={isSettingsState()} vm={settingsMenuVm}/>
             </div>
             <mtabs changeTab={changeTab} activeTab={state.sub}/>
@@ -21,7 +21,7 @@ import _ from 'lodash'
 
         <div class='col-xs-10' class='rightPannel'>
             <contact-information if={isContactsState()} contact={contacts.selected} />
-            <chat if={isChatsState()} store={store} action={action}/>
+            <chat if={isChatsState()} store={this.opts.store} action={this.opts.action}/>
             <settings if={isSettingsState()} info={'not implemented yet'} />
         </div>
     </div>
@@ -65,14 +65,10 @@ this.isContactsState = ()=>this.state.sub === action.uiState.left.CONTACTS;
 this.isChatsState = ()=>this.state.sub === action.uiState.left.CHATS;
 this.isSettingsState = ()=>this.state.sub === action.uiState.left.SETTINGS;
 
-this.changeTab = newState =>{
-    store.dispatch(action.subState(newState))
-}
+this.changeTab = newState =>store.dispatch(action.subState(newState))
 
-this.setActiveChat = (chatId)=>{
-    store.dispatch(action.setActiveChat(chatId));
-    this.update();
-}
+this.setActiveChat = (chatId)=>store.dispatch(action.setActiveChat(chatId))
+
 this.startChat = (contact)=>{
     const newStateAction = action.newState({sub:action.uiState.sub.CHATS, main:action.uiState.main.MAIN});
     store.dispatch(newStateAction);
@@ -116,9 +112,6 @@ this.selectContact = (contact)=>{
     store.dispatch(action.selectContact(contact))
 }
 
-this.onLogout = ()=>{
-    store.dispatch(action.logout());
-}
 
 this.sendMessage = (value)=>{
         if (value) {

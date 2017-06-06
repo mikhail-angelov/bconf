@@ -4,17 +4,23 @@ const _ = require('lodash')
 
 const TEMP_INIT_STATE = {
     filtered: [],
-    list: {
-       'test':{
+    list: [
+       {
+           _id: 'test',
            contact: {"_id":"test","name":"Vasya Vasin"},
             unread:0,
             messages:[{
                type: 'IN',
-                text: 'test',
+                text: '##test',
+                date: new Date(), 
+            },
+            {
+               type: 'OUT',
+                text: 'sent #test message',
                 date: new Date(), 
             }]
-       } 
-    }
+    }],
+    selected: null
 }
 
 function chats(state = TEMP_INIT_STATE, action) {
@@ -88,12 +94,15 @@ function chats(state = TEMP_INIT_STATE, action) {
             })
         }
         case actions.chats.SET_ACTIVE: {
-            state.list[action.active].unread = 0
-            return Object.assign(state, {
-                active: action.active,
-                filtered: state.chats[action.active].messages,
-                list: state.list
-            })
+            action.activeChat.unread = 0
+            return {
+                ...state,
+                list: state.list.map(item=>{
+                    item.selected = (item._id === action.activeChat._id)
+                    return item
+                }),
+                selected: action.activeChat
+            }
         }
         case actions.chats.START_CHAT:{
             var chat = {};
