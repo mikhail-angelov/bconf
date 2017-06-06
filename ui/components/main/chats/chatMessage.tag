@@ -1,5 +1,5 @@
 <chat-message class='{shift-right: opts.message.type==="IN"}'>
-<div class='chat-message col-xs-6 {chat-message-in: opts.message.type==="IN"}'>
+<div class='chat-message col-xs-8 {chat-message-in: opts.message.type==="IN"}'>
     {format(opts.message.text)}
 </div>
 <script>
@@ -16,7 +16,7 @@
         background-color: beige;
     }
     chat-message.shift-right{
-        justify-content: flex-end;
+        //justify-content: flex-end;
         display: flex;
     }
     .chat-message-in{

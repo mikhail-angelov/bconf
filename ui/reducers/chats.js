@@ -123,7 +123,20 @@ function chats(state = TEMP_INIT_STATE, action) {
                 return state
             }
         }
+        case actions.chats.SEND_MESSAGE:{
+            const selected = {
+                ...action.activeChat,
+                messages: action.activeChat.messages.concat({
+                    type: 'OUT',
+                    text: action.message
+                })
+            }
 
+            return {
+                ...state, 
+                selected
+            }
+        }
         default:
             return state
     }

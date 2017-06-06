@@ -1,11 +1,8 @@
 <chat-input>
 <div class="fixed_to_bottom">
     <div class="account_chat">
-        <div class='user-account-foto toflex'>
-             <div class="account-foto">{this.opts.user_name.firstName.substr(0,1).toUpperCase()}{this.opts.user_name.secondName.substr(0,1).toUpperCase()}</div>
-        </div>
-        <div class="textarea_emodji">
-            <textarea id='text' rows="4"  onkeyup={pressShiftEnter} placeholder="Введите сообщение" class="textarea"></textarea>
+         <div class="textarea_emodji">
+            <textarea ref='text' rows="4"  onkeyup={pressEnter} placeholder="type message" class="textarea"></textarea>
             <div class="emodji">
                 <i class="material-icons">insert_emoticon</i>
             </div>
@@ -20,17 +17,16 @@
 </div>
 <script>
 
-this.pressShiftEnter = (e)=>{
-    console.log(e.keyCode, e.shiftKey, e.ctrlKey)
-    if(e.keyCode=='13' && e.shiftKey){
+this.pressEnter = (e)=>{
+    if(e.keyCode=='13'){
         this.sendMessage()
     }
 }
 this.sendMessage = ()=>{
-    const value = this.text.value.trim()
-    this.opts.onsendmessage(value)
-    this.text.value = ''
-    this.update()
+        const value = this.refs.text.value.trim()
+        this.opts.vm.sendMessage(value)
+        this.refs.text.value = ''
+        this.update()
 }
 </script>
 <style>
@@ -54,6 +50,7 @@ this.sendMessage = ()=>{
         border-bottom: solid 1px #e4e6e9;
         text-decoration: none;
         transition: 0.7s;
+        font-size: 20px;
     }
     .textarea:focus {
         border-bottom: solid 1px #cc0044;

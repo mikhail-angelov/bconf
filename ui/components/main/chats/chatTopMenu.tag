@@ -9,14 +9,10 @@
         
         <div class="col-xs-1" >
             <material-button class="icon-button" onclick={toggleMenu}>
-                <i class="material-icons">more_horiz</i>
+                <i class="material-icons">more_vert</i>
             </material-button>
             <material-dropdown ref='subMenu'>
-                <a href="#">Menu 1</a>
-                <p>Menu 2</p>
-                <p>Menu 3</p>
-                <p>Menu 4</p>
-                <p>Menu 5</p>
+                <a href="#">Close</a>
             </material-dropdown>
         </div>
 

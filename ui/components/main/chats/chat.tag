@@ -3,9 +3,9 @@ import './chatMessages.tag'
 import './chatInput.tag'
 
 <chat>
-        <chat-top-menu vm={chatMenuVm()} />
-        <chat-messages messages={chatMessages()} />
-        <chat-input vm={chatInputVm} />
+    <chat-top-menu vm={chatMenuVm()} />
+    <chat-messages messages={chatMessages()} />
+    <chat-input vm={chatInputVm} />
 
 <script>
 
@@ -29,6 +29,7 @@ this.chatMessages = ()=>{
 this.chatInputVm = {
     sendMessage: text=>{
         console.log('senging', text)
+        store.dispatch(action.sendMessage(text))
     }
 }
 

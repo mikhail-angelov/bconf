@@ -40,9 +40,18 @@ function chatMessage(payload, contact) {
 }
 
 function sendMessage(message) {
-    return {
-        type: props.SEND_MESSAGE,
-        message
+    return function (dispatch, getState) {
+        const activeChat = getState().chats.selected
+        if(activeChat){
+            dispatch({
+                type: props.SEND_MESSAGE,
+                message,
+                activeChat
+            })
+            //todo: send to peer
+        }else{
+            //todo: pispatch error alert
+        }
     }
 }
 
@@ -56,7 +65,7 @@ function removeMessage(message){
 function searchMessage(messageText){
     return {
         type: props.SEARCH_MESSAGE,
-        messageText: messageText
+        messageText
     }
 }
 function setActiveChat(activeChat){
