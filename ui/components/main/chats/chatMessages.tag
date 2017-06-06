@@ -1,14 +1,14 @@
 import './chatMessage.tag'
 <chat-messages>
-    <div class="chatMessages">
-        <chat-message each="{message in opts.messages}" message={message}  />
-    </div>
+    <chat-message each="{message in opts.messages}" message={message}  />
+
 
 <style>
-    .chatMessages{
+    chat-messages{
         display: flex;
         flex: 1;
         flex-direction: column;
+        justify-content: flex-end;
     }
 </style>
 </chat-messages>

@@ -3,11 +3,10 @@ import './chatMessages.tag'
 import './chatInput.tag'
 
 <chat>
-    <div class='chat'>
         <chat-top-menu vm={chatMenuVm()} />
         <chat-messages messages={chatMessages()} />
         <chat-input vm={chatInputVm} />
-    </div>
+
 <script>
 
 const store = this.opts.store
@@ -36,7 +35,9 @@ this.chatInputVm = {
 </script>
 
 <style>
-    .chat {
+    chat {
+        display: flex;
+        flex-direction: column;
         height: 100%;
     }
 </style>
