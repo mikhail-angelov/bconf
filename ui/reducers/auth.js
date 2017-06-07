@@ -37,7 +37,7 @@ function auth(state = {
                 error: 'forgetComplete'
             })
         }
-        case actions.uiState.SET_SUB: {
+        case actions.ui.SET_MENU: {
             return Object.assign(state,{
                 error: null
             })

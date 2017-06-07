@@ -1,50 +1,44 @@
 const props = {
-    uiState: {
-        SET: 'setUIState',
-        SET_MENU: 'setMenuState',
+    ui: {
+        SET: 'seMainState',
+        SET_MENU: 'setSubState',
         SET_CONTENT: 'setContentState',
-        main:{
+        STATE:{
             LOGIN: 'login',
             MAIN: 'main'
         },
-        left:{
+        MAIN_SUB:{
             CONTACTS: 'contactsMenu',
             CHATS: 'chatsMenu',
             SETTINGS: 'settingsMenu'
         },
-        right:{
+        MAIN_CONTENT:{
             CONTACTS: 'contacts',
+            CONTACT_SEARCH: 'contactSearch',
+            ADD_CHANNEL: 'addChannel',
             CHATS: 'chats',
             SETTINGS: 'settings'
         },
         AUTH:{
-            signIn:'signIn',
-            signUp:'signUp',
-            forget:'forget'
+            SIGN_IN:'signIn',
+            SIGN_UP:'signUp',
+            FORGET:'forget'
         }
     },
-    newState,
-    subState,
-    contentState
+    setSubState,
+    setContentState
 }
 
-function newState(state){
+function setSubState(state){
     return {
-        type: props.uiState.SET,
+        type: props.ui.SET_MENU,
         state: state
     }
 }
 
-function subState(state){
+function setContentState(state){
     return {
-        type: props.uiState.SET_MENU,
-        state: state
-    }
-}
-
-function contentState(state){
-    return {
-        type: props.uiState.SET_CONTENT,
+        type: props.ui.SET_CONTENT,
         state: state
     }
 }

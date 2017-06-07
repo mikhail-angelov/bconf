@@ -4,9 +4,9 @@ import './forget.tag'
 
 <auth>
 <div class='container'>
-  <signin class="signin" if={state.sub==='signIn'} toSignUp={toSignUp} toForgetPassword={toForgetPassword} login={onLogin} http_error={error}/>
-  <signup class="signin" if={state.sub==='signUp'} back={onBack} onSignUp={onSignUp} http_error={error}/>
-  <forget class="signin" if={state.sub==='forget'} back={onBack} onForgetPassword={onForgetPassword} http_error={error}/>
+  <signin class="signin" if={state.sub===STATE.SIGN_IN} toSignUp={toSignUp} toForgetPassword={toForgetPassword} login={onLogin} http_error={error}/>
+  <signup class="signin" if={state.sub===STATE.SIGN_UP} back={onBack} onSignUp={onSignUp} http_error={error}/>
+  <forget class="signin" if={state.sub===STATE.FORGET} back={onBack} onForgetPassword={onForgetPassword} http_error={error}/>
   
   <div class="social">
     <material-button class="ui" shady="true" onclick={loginWith('/auth/google')}>
@@ -34,17 +34,18 @@ import './forget.tag'
 
 const store = this.opts.store
 const actions = this.opts.action
+this.STATE = actions.ui.AUTH
 store.subscribe(()=>{
     this.state = store.getState().uiState
     this.auth = store.getState().auth
     this.error = this.auth.error
     this.update();
 });
-store.dispatch(actions.subState(actions.uiState.AUTH.signIn));
+store.dispatch(actions.setSubState(actions.ui.AUTH.SIGN_IN));
 
-this.toSignUp = ()=>store.dispatch(actions.subState(actions.uiState.AUTH.signUp))
-this.onBack = ()=>store.dispatch(actions.subState(actions.uiState.AUTH.signIn))
-this.toForgetPassword = ()=>store.dispatch(actions.subState(actions.uiState.AUTH.forget))
+this.toSignUp = ()=>store.dispatch(actions.setSubState(this.STATE.SIGN_UP))
+this.onBack = ()=>store.dispatch(actions.setSubState(this.STATE.SIGN_IN))
+this.toForgetPassword = ()=>store.dispatch(actions.setSubState(this.STATE.FORGET))
 
 this.onLogin = (credentials, rememberMe)=>{
   store.dispatch(actions.login(credentials, rememberMe));

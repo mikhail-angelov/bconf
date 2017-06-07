@@ -1,8 +1,8 @@
 <mtabs>
     <div class='mtabs'>
-        <button class="contact-list {selected: opts.activetab==='contactsMenu'}" onclick={()=>opts.changetab('contactsMenu')}>
+        <!-- <button class="contact-list {selected: opts.activetab==='contactsMenu'}" onclick={()=>opts.changetab('contactsMenu')}>
             <i class="material-icons">account_circle</i>
-        </button>
+        </button> -->
         <button class="chat-list {selected: opts.activetab==='chatsMenu'}" onclick={()=>opts.changetab('chatsMenu')}>
             <i class="material-icons">chat</i>
         </button>

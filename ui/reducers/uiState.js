@@ -13,28 +13,26 @@ module.exports = uiState
 
 function uiState(state = defaultState, action){
     switch(action.type){
-        case actions.uiState.SET: {
+        case actions.ui.SET: {
             return action.state
         }
-        case actions.uiState.SET_MENU: {
+        case actions.ui.SET_MENU: {
             return {
                 ...state,
                 sub:action.state,
                 content:null
             }
         }
-        case actions.uiState.SET_CONTENT: {
+        case actions.ui.SET_CONTENT: {
             return {
                 ...state,
                 content:action.state
             }
         }
-        case actions.auth.LOGOUT_COMPLETE:
-        case actions.uiState.TO_LOGIN: {
+        case actions.auth.LOGOUT_COMPLETE: {
             return toLogin()
         }
-        case actions.auth.LOGIN_COMPLETE:
-        case actions.uiState.TO_MAIN: {
+        case actions.auth.LOGIN_COMPLETE:{
             return toMain()
         }
         default:
@@ -45,15 +43,15 @@ function uiState(state = defaultState, action){
 function toLogin(){
     delay(()=>route('auth'))
     return{
-        main: actions.uiState.main.LOGIN,
-        sub: actions.uiState.AUTH.signIn
+        main: actions.ui.STATE.LOGIN,
+        sub: actions.ui.AUTH.SIGN_IN
     }
 }
 function toMain(){
     delay(()=>route('main'))
     return{
-        main: actions.uiState.main.MAIN,
-        sub: actions.uiState.left.CHATS,
+        main: actions.ui.STATE.MAIN,
+        sub: actions.ui.MAIN_SUB.CHATS,
         content:null
     }
 }
