@@ -1,5 +1,5 @@
-const config = require('../config')
-const http = require('../services/http')
+import * as http from '../services/http'
+import config from '../config'
 
 const actions = {
     auth: {

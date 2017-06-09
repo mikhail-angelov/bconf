@@ -6,6 +6,8 @@ import './chats/chatMenu.tag'
 import './chats/chat.tag'
 import './settings/settingsMenu.tag'
 import './settings/settings.tag'
+import './channels/editChannel.tag'
+import './channels/viewChannel.tag'
 import './mtabs.tag'
 import './mainTopMenu.tag'
 
@@ -24,10 +26,12 @@ import _ from 'lodash'
 
         <div class='col-xs-10 rightPannel'>
             <main-top-menu vm={topMenuVm} />
-            <contact-information if={isContactsState()} store={this.opts.store} action={this.opts.action} />
-            <chat if={isChatsState()} store={this.opts.store} action={this.opts.action}/>
-            <contact-search if={isContactSearchState()} store={this.opts.store} action={this.opts.action} />
-            <add-channel if={isAddChannelState()} store={this.opts.store} action={this.opts.action} />
+            <contact-information if={isContactsState()} vm={baseVm} />
+            <chat if={isChatsState()} vm={baseVm}/>
+            <contact-search if={isContactSearchState()} vm={baseVm} />
+            <edit-channel if={isAddChannelState()} vm={addChannelVm} />
+            <edit-channel if={isEditChannelState()} vm={editChannelVm()} />
+            <view-channel if={isViewChannelState()} vm={viewChannelVm()} />
             <settings if={isSettingsState()} info={'not implemented yet'} />
         </div>
     </div>
@@ -59,6 +63,29 @@ store.subscribe(()=>{
 })
 this.updateState()
 
+this.baseVm = {
+    store: store,
+    action: action
+}
+
+this.addChannelVm = {
+    channel: {},
+    save: channel=>store.dispatch(action.addChannel(channel)),
+    cancel: ()=>store.dispatch(action.setContentState(action.ui.MAIN_CONTENT.CHATS))
+}
+this.editChannelVm = () => ({
+    channel: store.getState().channels.selected,
+    save: channel=>store.dispatch(action.saveChannel(channel)),
+    addContact: (channel, contact)=>store.dispatch(action.addContactToChannel(channel, contact)),
+    removeContact: (channel, contact)=>store.dispatch(action.removeContactFromChannel(channel, contact)),
+    remove: channelId=>store.dispatch(action.removeChannel(channelId)),
+    cancel: ()=>store.dispatch(action.setContentState(action.ui.MAIN_CONTENT.CHATS))
+})
+
+this.viewChannelVm = () => ({
+    channel: store.getState().channels.selected
+})
+
 this.settingsMenuVm ={
     getHostInfo: ()=>{console.log('getHostInfo')},
     getUserInfo: ()=>{console.log('getUserInfo')}
@@ -81,18 +108,20 @@ this.isContactsState = ()=>this.state.content === action.ui.MAIN_CONTENT.CONTACT
 this.isSettingsState = ()=>this.state.content === action.ui.MAIN_CONTENT.SETTINGS;
 this.isContactSearchState = ()=>this.state.content === action.ui.MAIN_CONTENT.CONTACT_SEARCH;
 this.isAddChannelState = ()=>this.state.content === action.ui.MAIN_CONTENT.ADD_CHANNEL;
+this.isEditChannelState = ()=>this.state.content === action.ui.MAIN_CONTENT.EDIT_CHANNEL;
+this.isViewChannelState = ()=>this.state.content === action.ui.MAIN_CONTENT.VIEW_CHANNEL;
 
 this.changeTab = subState =>store.dispatch(action.setSubState(subState))
 
 this.setActiveChat = (chatId)=>{
-    store.dispatch(action.setActiveChat(chatId))
+    store.dispatch(action.setActiveChat(chatId)),
     store.dispatch(action.setContentState(action.ui.MAIN_CONTENT.CHATS))
 }
 
 
 
 this.selectContact = (contact)=>{
-    store.dispatch(action.selectContact(contact)) //todo: create chat
+    store.dispatch(action.selectContact(contact)), //todo: create chat
     store.dispatch(action.setContentState(action.ui.MAIN_CONTENT.CHATS))
 }
 

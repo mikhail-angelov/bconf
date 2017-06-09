@@ -1,39 +1,23 @@
-
-
-module.exports ={
-    get,
-    post
+export function get(url, query){
+    return request(url, 'get')
 }
 
-function get(url, query){
-    return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', url);
-        addAuthHeader(xhr);
-        xhr.onload = function () {
-            if (this.status >= 200 && this.status < 300) {
-                resolve(parsToJson(xhr.response));
-            } else {
-                reject({
-                    status: this.status,
-                    statusText: xhr.statusText
-                });
-            }
-        };
-        xhr.onerror = function () {
-            reject({
-                status: this.status,
-                statusText: xhr.statusText
-            });
-        };
-        xhr.send();
-    });
+export function post(url, data){
+    return request(url, 'post', data)
 }
 
-function post(url, data){
+export function pul(url, data){
+    return request(url, 'put', data)
+}
+
+export function remove(url){
+    return request(url, 'delete')
+}
+
+function request(url, method, data){
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open('post', url);
+        xhr.open(method, url);
         addAuthHeader(xhr);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
@@ -52,8 +36,12 @@ function post(url, data){
                 statusText: xhr.statusText
             });
         };
-        const buffer = (typeof data == "object")?JSON.stringify(data):data;
-        xhr.send(buffer);
+        if(data){
+            const buffer = (typeof data == "object")?JSON.stringify(data):data;
+            xhr.send(buffer);
+        }else{
+            xhr.send();
+        }
     });
 }
 

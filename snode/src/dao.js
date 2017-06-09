@@ -1,3 +1,5 @@
+'use strict'
+
 const mongodb = require('mongodb')
 const mongo = mongodb.MongoClient
 const ObjectId = mongodb.ObjectId
@@ -57,6 +59,10 @@ function create(collection, entity) {
 function update(collection, query, data) {
     const col = getCllection(collection)
     return col.update(query, data)
+}
+function remove(collection, query, id) {
+    const col = getCllection(collection)
+    return col.remove( {_id: ObjectId(id)})
 }
 
 

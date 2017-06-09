@@ -16,6 +16,8 @@ const props = {
             CONTACTS: 'contacts',
             CONTACT_SEARCH: 'contactSearch',
             ADD_CHANNEL: 'addChannel',
+            EDIT_CHANNEL: 'editChannel',
+            VIEW_CHANNEL: 'viewChannel',
             CHATS: 'chats',
             SETTINGS: 'settings'
         },

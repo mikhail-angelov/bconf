@@ -3,11 +3,11 @@ import '../common/material-input-with-error.tag'
     <form class="position_relative">
   
     <!--<material-input-with-error error={error_user_name} name="user_name" value={userName} label="User Name"></material-input-with-error>  -->
-    <material-input error={opts.http_error} name="user_name" value={userName} label="User Name"></material-input>
+    <material-input error={opts.http_error} ref="user_name" value={userName} label="User Name"></material-input>
 
-    <material-input error={opts.http_error} type="password" name="user_password" value={userPassword} label="User Password"></material-input>
+    <material-input error={opts.http_error} type="password" ref="user_password" value={userPassword} label="User Password"></material-input>
 
-    <material-checkbox name="checker" checked=true>
+    <material-checkbox ref="checker" checked=true>
         Remember me
     </material-checkbox>
     
@@ -35,11 +35,11 @@ const localStorageCredentials = localStorage.getItem('credentials');
 this.onLogin = ()=>{
     
     const credentials = {
-        email: this.user_name.querySelector('input').value,
-        password: this.user_password.querySelector('input').value
+        email: this.refs.user_name.querySelector('input').value,
+        password: this.refs.user_password.querySelector('input').value
     }
-    const rememberMe = this.checker.querySelector('input').value == 'true';
-    console.log('checker',this.checker.querySelector('input').value);
+    const rememberMe = this.refs.checker.querySelector('input').value == 'true';
+    console.log('checker',this.refs.checker.querySelector('input').value);
 
     this.opts.login(credentials, rememberMe)
 }

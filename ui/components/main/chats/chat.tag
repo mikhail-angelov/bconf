@@ -7,8 +7,8 @@ import './chatInput.tag'
 
 <script>
 
-const store = this.opts.store
-const action = this.opts.action
+const store = this.opts.vm.store
+const action = this.opts.vm.action
 
 this.chatMessages = ()=>{
     const chat = store.getState().chats.selected
