@@ -1,24 +1,56 @@
 task list
 
+17/07/17
+
+use cases:
+- channel
+    - crud api
+    - edit view
+    - add button
+    - generate invitation url
+    - process invitation url -> route to chats with active chat given channel
+    - view channel information
+    - edit channel 
+        - invite contacts
+        - ban contact (for admin)
+        - remove channel
+- chat
+    -+ get chat list
+    - close chat
+    - join channel
+    - send message (ws)
+    - receive message(ws)
+
+- user information
+    - status
+    - avatar
+
+- p2p
+    - star chat
+    - p2p messages
+    - p2p calls
+
+
+
 8/5/17
 + update docker deployment
 
 25/01/17
 Ivan
 
-- create error notification
-- try to do user setting update on server
-- try to make feed main page
++ create error notification
++ try to do user setting update on server
++ try to make feed main page
 
 
 15/11
 
 Ivan 
-- create contacts view
-- change chats model
++ create contacts view
++ change chats model
 
 Mikhail
-- contact crud network api
++ contact crud network api
 
 11/11
 Ivan 
