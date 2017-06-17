@@ -8,6 +8,8 @@ const bodyParser = require('body-parser')
 const auth = require('./src/auth')
 const contacts = require('./src/contacts')
 const channels = require('./src/channels')
+const chats = require('./src/chats')
+const chatMessages = require('./src/chatMessages')
 
 const app = express()
 
@@ -30,6 +32,8 @@ function start(dbUrl) {
         app.use('/auth', auth.router)
         app.use('/api/contact', contacts.router)
         app.use('/api/channel', channels.router)
+        app.use('/api/chats', chats.router)
+        app.use('/api/chatMessages', chatMessages.router)
         app.use('/', express.static(__dirname + '/dist'));
 
         //cors

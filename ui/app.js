@@ -8,7 +8,9 @@ import './components/main/main.tag'
 import store from './store'
 import action from './actions'
 
-window.addEventListener("DOMContentLoaded", function load() {
+window.addEventListener("DOMContentLoaded", appStart, true)
+
+function appStart() {
   let currentPage = null
   let currentSingup = null
 
@@ -32,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function load() {
       currentPage = mounted[0];
     }
   }
-}, true)
+}
 
 function saveRedirectToken() {
   const redirectToken = getAuthRedirectToken()

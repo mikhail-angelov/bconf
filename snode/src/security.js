@@ -13,9 +13,7 @@ function encodeToken(user) {
     return jwt.sign({
         id: user._id,
         name: user.name
-    },
-        SECRET,
-        { expiresIn: '5d' })
+    }, SECRET, { expiresIn: '5d' })
 }
 
 function decodeToken(token) {

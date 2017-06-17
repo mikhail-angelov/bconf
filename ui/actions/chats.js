@@ -1,3 +1,6 @@
+import * as http from '../services/http'
+import config from '../config'
+
 const props = {
     INIT: 'initChats',
     LOAD_MESSAGES: 'loadMessages',
@@ -10,11 +13,8 @@ const props = {
     START_CHAT:'startChat'
 }
 
-function initChats(user){
-    return {
-        type: props.INIT,
-        user
-    }
+function loadChats(){
+    return http.get(config.host + 'api/chats')
 }
 
 function loadMessages(messages){
