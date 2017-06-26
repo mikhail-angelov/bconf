@@ -1,25 +1,19 @@
-'use strict';
+'use strict'
 
-import eventBusFactory  from '../eventBus/index.js';
+import eventBusFactory from '../eventBus/index.js'
 
 describe('EventBus', function () {
-
-  const testMessage = 'test';
-  var eventBus = new eventBusFactory();
+  const testMessage = 'test'
+  var eventBus = new eventBusFactory()
 
   it('should subscribe to event and get event', function (done) {
-
-
-    eventBus.once(testMessage, function ( message) {
+    eventBus.once(testMessage, function (message) {
       console.log('get message', message)
-      expect(message).to.be(testMessage);
+      expect(message).to.be(testMessage)
 
-      done();
-    });
+      done()
+    })
 
     eventBus.emit(testMessage, testMessage)
-  });
-
-
-
-});
+  })
+})

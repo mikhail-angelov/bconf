@@ -1,21 +1,21 @@
-module.exports = function createWebSocket(url, listner){
-    const service = {
-        close: close,
-        sendMessage: sendMessage
-    }
+module.exports = function createWebSocket (url, listner) {
+  const service = {
+    close: close,
+    sendMessage: sendMessage
+  }
 
-    const websocket = new WebSocket(`wss://${url}`);
-    websocket.onmessage = function (event) {
-      listner(event.data)
-    }
+  const websocket = new WebSocket(`wss://${url}`)
+  websocket.onmessage = function (event) {
+    listner(event.data)
+  }
 
-    function sendMessage(message){
-        websocket.send(message);
-    }
+  function sendMessage (message) {
+    websocket.send(message)
+  }
 
-    function close(){
-       websocket.close(); 
-    }
+  function close () {
+    websocket.close()
+  }
 
-    return service;
+  return service
 }

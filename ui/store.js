@@ -5,9 +5,9 @@ const wsListener = require('./middleware/wsListener')
 const peerListner = require('./middleware/peerListner')
 
 const middleware = [
-    thunk,
-    peerListner.middleware,
-    wsListener.middleware
+  thunk,
+  peerListner.middleware,
+  wsListener.middleware
 ]
 const store = redux.createStore(
     reducers,

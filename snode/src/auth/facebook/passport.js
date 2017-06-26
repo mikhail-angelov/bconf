@@ -14,7 +14,7 @@ module.exports = (auth, config) => {
     ]
   }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))
 
-  function authenticate(accessToken, refreshToken, profile, done) {
+  function authenticate (accessToken, refreshToken, profile, done) {
     console.log('login with facebook id', profile.id)
     const userQuery = {
       'facebook.id': profile.id
@@ -24,28 +24,28 @@ module.exports = (auth, config) => {
         if (!user) {
           console.log('facebook', profile)
           return createUser(userQuery, profile, accessToken, refreshToken)
-            .then(user=> done(null, user))
+            .then(user => done(null, user))
             .catch(err => {
               return done(err)
-            });
+            })
         } else {
           return done(null, user)
         }
       })
       .catch(err => {
         return done(err)
-      });
+      })
   }
 
-  function createUser(userQuery, profile, accessToken, refreshToken) {
+  function createUser (userQuery, profile, accessToken, refreshToken) {
     return auth.createUser({
-            name: profile.displayName,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            email: profile.emails[0].value+'.facebook',
-            role: 'user',
-            provider: 'facebook',
-            facebook: profile._json
-          }, userQuery)
+      name: profile.displayName,
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      email: profile.emails[0].value + '.facebook',
+      role: 'user',
+      provider: 'facebook',
+      facebook: profile._json
+    }, userQuery)
   }
 }

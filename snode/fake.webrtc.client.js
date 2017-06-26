@@ -1,4 +1,4 @@
-const webrtc = require('wrtc');
+const webrtc = require('wrtc')
 
 global.window = {
   RTCPeerConnection: webrtc.RTCPeerConnection,
@@ -13,11 +13,10 @@ global.WebSocket = require('websocket').w3cwebsocket
 global.Blob = Uint8Array
 global.FileReader = FR
 
-function FR() { }
+function FR () { }
 
-FR.prototype.readAsBinaryString = function(data) {
+FR.prototype.readAsBinaryString = function (data) {
   console.log('readAsBinaryString', data)
-
 
   this.onload({
     target: {
@@ -25,7 +24,7 @@ FR.prototype.readAsBinaryString = function(data) {
     }
   })
 }
-FR.prototype.readAsArrayBuffer = function(data) {
+FR.prototype.readAsArrayBuffer = function (data) {
   console.log('readAsArrayBuffer', data)
   this.onload({
     target: {
@@ -34,12 +33,11 @@ FR.prototype.readAsArrayBuffer = function(data) {
   })
 }
 
-
 module.exports = {
   connect
 }
 
-function connect(username) {
+function connect (username) {
   const Peer = require('../ui/services/peerjs/peer')
 
   const peer = new Peer(username, {
@@ -48,20 +46,20 @@ function connect(username) {
     path: '/chat',
     serialization: 'json',
     debug: 3
-  });
+  })
   peer.on('open', () => {
     console.log('open')
-  });
+  })
   peer.on('connection', (conn) => {
-    _registerPeer(conn.peer, conn);
-  });
+    _registerPeer(conn.peer, conn)
+  })
 
-  function _registerPeer(username, conn) {
-    console.log('Registering', username);
+  function _registerPeer (username, conn) {
+    console.log('Registering', username)
     conn.on('data', (msg) => {
-      console.log('Messaga received', msg);
-      console.log({ content: msg, author: username });
-      conn.send(msg + ' your self');
+      console.log('Messaga received', msg)
+      console.log({ content: msg, author: username })
+      conn.send(msg + ' your self')
     })
   }
 

@@ -57,6 +57,7 @@
     "riot-mui": "^0.1.0",
     "riot-route": "^3.1.1",
     "riotjs-loader": "^4.0.0",
+    "standard": "^10.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
@@ -68,10 +69,16 @@
     "npm": "^2.14.7"
   },
   "scripts": {
+    "lint": "standard --fix --env mocha",
     "test": "mocha ./snode/**/*.spec.js ./snode/**/**/*.spec.js ./snode/**/**/**/*.spec.js",
     "build": "gulp build",
     "release": "bash ./release.sh",
     "riot": "riot ui/components ui/dist/bundle.js",
     "test-ui": "time mocha --compilers js:test/compiler.js ui/**/*.spec.js"
+  },
+  "standard": {
+    "ignore": [
+      "**/services/peerjs/**"
+    ]
   }
 }

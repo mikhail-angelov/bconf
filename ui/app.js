@@ -8,9 +8,9 @@ import './components/main/main.tag'
 import store from './store'
 import action from './actions'
 
-window.addEventListener("DOMContentLoaded", appStart, true)
+window.addEventListener('DOMContentLoaded', appStart, true)
 
-function appStart() {
+function appStart () {
   let currentPage = null
   let currentSingup = null
 
@@ -23,27 +23,27 @@ function appStart() {
   route.start()
   route.exec(goTo)
 
-  function goTo(page) {
+  function goTo (page) {
     console.log('route', page)
     if (currentPage) {
-      currentPage.unmount(true); //unmount and keep parent tag
+      currentPage.unmount(true) // unmount and keep parent tag
     }
 
     const mounted = riot.mount('div#content', page, { store, action })
     if (mounted) {
-      currentPage = mounted[0];
+      currentPage = mounted[0]
     }
   }
 }
 
-function saveRedirectToken() {
+function saveRedirectToken () {
   const redirectToken = getAuthRedirectToken()
   if (redirectToken) {
     localStorage.setItem('token', redirectToken)
   }
 }
 
-function getAuthRedirectToken() {
+function getAuthRedirectToken () {
   if (document.location.hash && document.location.hash.indexOf('#auth-redirect=') === 0) {
     return document.location.hash.substr(15)
   } else {

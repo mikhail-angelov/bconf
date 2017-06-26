@@ -1,12 +1,13 @@
-var webpack = require('webpack');
+const webpack = require('webpack')
+const path = require('path')
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'development'
 
 module.exports = {
   cache: true,
   entry: './ui/index.js',
   output: {
-    path: __dirname + '/dist',
+    path: path.join(__dirname, '/dist'),
     filename: 'bundle.js'
   },
   plugins: [
@@ -20,15 +21,18 @@ module.exports = {
     ],
     loaders: [
       {
-        test: /\.es6|js|tag$/, exclude: /node_modules/, loader: 'babel-loader', query: {
+        test: /\.es6|js|tag$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
           presets: ['es2015', 'stage-3']
         }
       },
-      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?prefix=imglimit=10000&mimetype=application/octet-stream' },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' }
     ]
   }
-};
+}
