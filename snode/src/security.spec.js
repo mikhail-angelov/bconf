@@ -8,7 +8,7 @@ describe('security', () => {
   it('should encode token', () => {
     const user = {id: 'test', name: 'test'}
     const encodedToken = security.encodeToken(user)
-    expect(user).to.eql(encodedToken)
+    expect(encodedToken.length > 0).to.equal(true)
     expect(security.decodeToken(encodedToken).name).to.equal(user.name)
   })
 
