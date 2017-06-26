@@ -30,7 +30,7 @@ import './forget.tag'
    <material-spinner class="progressBar" if={auth.status == "progress"}></material-spinner>
 </div>
 
-<script>
+<script type="es6">
 
 const store = this.opts.store
 const actions = this.opts.action

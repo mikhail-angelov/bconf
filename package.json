@@ -36,6 +36,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "chai": "^3.5.0",
     "css-loader": "^0.26.1",
+    "eslint-plugin-riot": "^0.1.7",
     "file-loader": "^0.9.0",
     "flexboxgrid": "^6.3.1",
     "gulp": "^3.9.0",
@@ -69,7 +70,7 @@
     "npm": "^2.14.7"
   },
   "scripts": {
-    "lint": "standard --fix --env mocha",
+    "lint": "standard --fix --env mocha --plugin riot",
     "test": "mocha ./snode/**/*.spec.js ./snode/**/**/*.spec.js ./snode/**/**/**/*.spec.js",
     "build": "gulp build",
     "release": "bash ./release.sh",
