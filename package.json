@@ -66,8 +66,8 @@
     "webpack-stream": "^3.0.1"
   },
   "engines": {
-    "node": "^4.2.3",
-    "npm": "^2.14.7"
+    "node": "^6",
+    "npm": "^3"
   },
   "scripts": {
     "lint": "standard --fix --env mocha --plugin riot",
@@ -75,7 +75,10 @@
     "build": "gulp build",
     "release": "bash ./release.sh",
     "riot": "riot ui/components ui/dist/bundle.js",
-    "test-ui": "time mocha --compilers js:test/compiler.js ui/**/*.spec.js"
+    "test-ui": "time mocha --compilers js:test/compiler.js ui/**/*.spec.js",
+    "server:dev": "cd server; npm run dev",
+    "client:dev": "cd client; npm start",
+    "dev": "npm run server:dev & npm run client:dev"
   },
   "standard": {
     "ignore": [
