@@ -1,0 +1,133 @@
+
+@import "../../styles/variables.less";
+@import "../../styles/form-elements.less";
+@import "../../styles/buttons.less";
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: linear-gradient(45deg, #98E5E3, #7292EA, #4B3CF2), 
+              url('../../images/wave.svg');
+  background-size: cover;
+  background-blend-mode: screen;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &:before {
+    background-size: cover;
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    opacity: 0.5;
+    z-index: -10;
+  }
+
+  .login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-title {
+    font-family: @font-display;
+    font-size: 58px;
+    color: white;
+    font-stretch: expanded;
+    letter-spacing: 7px;
+  }
+
+  .login-subtitle {
+    font-family: @font-light;
+    font-size: 19px;
+    color: white;
+    line-height: 1;
+    font-stretch: extra-expanded;
+    letter-spacing: 17px;
+  }
+
+  .login-social-icons-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    padding: 8px 0;
+    margin-top: 16px;
+  }
+
+  .icon-button {
+    height: 25px;
+    width: 25px;
+    border: none;
+    background-color: transparent;
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    mix-blend-mode: multiply;
+
+    &:hover {
+      opacity: 0.5;
+      transition: all 0.5s ease;
+    }
+
+    &.linkedin {
+      background-image: url('../../images/linkedin.svg');
+    }
+    &.facebook {
+      background-image: url('../../images/facebook.svg');
+    }
+    &.github {
+      background-image: url('../../images/github.svg');
+    }
+
+  }
+
+
+  .email-input,
+  .password-input {
+    .input-field();
+    height: 38px;
+    min-width: 220px;
+    margin-top: 16px;
+    font-family: @font-normal;
+    font-size: 18px;
+    padding-left: 18px;
+    padding-top: 5px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 20px 25px;
+    padding-left: 40px;
+  }
+
+  .email-input {
+    background-image: url('../../images/email.svg');
+}
+  .password-input {
+    background-image: url('../../images/lock.svg');
+    background-size: 15px 25px;
+    background-position: 12px;
+  }
+
+  .login-error {
+    .error-text();
+    padding-top: 16px;
+  }
+  
+  .login-button {
+    .general-button();
+    margin-top: 16px;
+    width: 220px;
+    height: 48px;
+    font-size: 28px;
+    line-height: 2.1;
+  }
+}

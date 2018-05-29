@@ -5,8 +5,8 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducers from './reducers'
-import App from './App'
-import './index.css';
+import Root from './components/Root'
+import './styles/index.css'
 //import registerServiceWorker from './registerServiceWorker'
 import { unregister } from './registerServiceWorker';
 
@@ -16,6 +16,6 @@ const store = createStore(
   applyMiddleware(thunk, createLogger())
 )
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'))
+ReactDOM.render(<Provider store={store}><Root /></Provider>, document.getElementById('root'))
 // registerServiceWorker()
 unregister()
