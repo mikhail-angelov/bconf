@@ -6,7 +6,7 @@ function getUser(id) {
 }
 
 function validUserData(data) {
-  return data.email && data.name && data.password
+  return data.email && data.password
 }
 function createUser(data) {
   if (validUserData(data)) {

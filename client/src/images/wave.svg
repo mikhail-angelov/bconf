@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 570.5 756.89">
+  <defs>
+    <style>
+      .fd5ab686-f64e-427e-9bc6-4ed544fcc860 {
+        isolation: isolate;
+      }
+
+      .ba0dd997-25ba-4e89-a57b-b8581ce280f2 {
+        opacity: 0.2;
+        mix-blend-mode: lighten;
+        fill: url(#3722b78c-9555-4b4d-aaf4-942dc623a186);
+      }
+
+      .\32 fa090ef-47f4-4152-89ee-7a352bd265b0 {
+        opacity: 0.1;
+        mix-blend-mode: screen;
+        fill: url(#d5ad2e16-a44e-4f7e-bf7c-15d51ef8ebef);
+      }
+    </style>
+    <linearGradient id="3722b78c-9555-4b4d-aaf4-942dc623a186" data-name="White, Black" x1="549.61" y1="0.19" x2="84.41" y2="805.93" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1"/>
+    </linearGradient>
+    <linearGradient id="d5ad2e16-a44e-4f7e-bf7c-15d51ef8ebef" x1="569.97" y1="12.33" x2="212.52" y2="631.44" xlink:href="#3722b78c-9555-4b4d-aaf4-942dc623a186"/>
+  </defs>
+  <title>wave</title>
+  <g class="fd5ab686-f64e-427e-9bc6-4ed544fcc860">
+    <g id="b789daf6-7b1e-4d4e-8efd-5146b514b1db" data-name="Layer 1">
+      <path class="ba0dd997-25ba-4e89-a57b-b8581ce280f2" d="M482.81,67.92A344.13,344.13,0,0,1,308.75,130.4c-59.93,4.27-120.8-7.22-179.94,3.36C74.6,143.45,24.76,173-11.5,214.14V734.32A28.24,28.24,0,0,0,16.81,762.5H530.69A28.24,28.24,0,0,0,559,734.32V5.61C533.61,26.23,509.22,49.11,482.81,67.92Z" transform="translate(11.5 -5.61)"/>
+      <path class="2fa090ef-47f4-4152-89ee-7a352bd265b0" d="M382.6,83.2C256.38,93.24,126.69,135.29,42,229.12,18.67,255,2.7,282.76-11,312V733.82A28.23,28.23,0,0,0,17.28,762H530.72A28.23,28.23,0,0,0,559,733.82V68.07q-2.84.58-5.67,1.12C497.18,79.79,439.56,78.66,382.6,83.2Z" transform="translate(11.5 -5.61)"/>
+    </g>
+  </g>
+</svg>
