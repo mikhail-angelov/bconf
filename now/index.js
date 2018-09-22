@@ -1,9 +1,9 @@
 const micro = require('micro');
 const { router, get, post } = require('microrouter');
-const cors = require('micro-cors')({ allowMethods: ['GET','POST'] });
+const cors = require('micro-cors')({ allowMethods: ['GET', 'POST'] });
 const fs = require('fs');
 const path = require('path');
-//const db = require('./db')
+const auth = require('./auth')
 
 const document = path.join(__dirname, 'main.html');
 const html = fs.readFileSync(document);
@@ -16,21 +16,37 @@ const server = micro(
         res.end(html);
       }),
       post('/auth/login', async (req, res) => {
-        const body = await micro.json(req)
-        if(body.username === 'anton'){
-          micro.send(res, 400, {error:'incorrect password'});
-        }else{
-          micro.send(res, 200, {token:'token',user:'Valera'});
+        try {
+          const body = await micro.json(req)
+          const response = await auth.login(body)
+          micro.send(res, 200, response);
+        } catch (e) {
+          console.error('login error: ', e)
+          micro.send(res, 400, { error: 'incorrect password' });
         }
       }),
       post('/auth/check', (req, res) => {
-        micro.send(res, 200, {token:'token',user:'Valera'});
+        try {
+          const body = await micro.json(req)
+          const response = await auth.check(body.token)
+          micro.send(res, 200, response);
+        } catch (e) {
+          console.error('check error: ', e)
+          micro.send(res, 400, { error: 'incorrect token' });
+        }
       }),
-      post('/auth/register',(req, res) => {
-        micro.send(res, 200, {token:'token',user:'Valera'});
+      post('/auth/register', (req, res) => {
+        try {
+          const body = await micro.json(req)
+          const response = await auth.register(body)
+          micro.send(res, 200, response);
+        } catch (e) {
+          console.error('register error: ', e)
+          micro.send(res, 400, { error: 'incorrect params' });
+        }
       }),
-      post('/auth/forget-password',(req, res) => {
-        micro.send(res, 200, {status: 'new password is sent to your email'});
+      post('/auth/forget-password', (req, res) => {
+        micro.send(res, 200, { status: 'new password is sent to your email' });
       })
     )
   )
