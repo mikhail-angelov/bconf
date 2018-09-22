@@ -13,7 +13,7 @@ function generateToken(user) {
   }, secret)
 }
 
-function checkToken(token) {
+function decodeToken(token) {
   return decode(token, secret)
 }
 
@@ -68,7 +68,7 @@ async function check(token) {
   if (!token) {
     return Promise.reject('invalid token')
   }
-  const userId = _.get(checkToken(token), '_id')
+  const userId = _.get(decodeToken(token), '_id')
   if (!userId) {
     return Promise.reject('invalid token')
   }
@@ -81,4 +81,5 @@ module.exports = {
   login,
   register,
   check,
+  decodeToken,
 }
