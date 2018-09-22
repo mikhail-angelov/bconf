@@ -3,6 +3,7 @@ const { router, get, post } = require('microrouter');
 const cors = require('micro-cors')({ allowMethods: ['GET','POST'] });
 const fs = require('fs');
 const path = require('path');
+//const db = require('./db')
 
 const document = path.join(__dirname, 'main.html');
 const html = fs.readFileSync(document);
@@ -15,7 +16,7 @@ const server = micro(
         res.end(html);
       }),
       post('/auth/login', async (req, res) => {
-        const body = await json(req)
+        const body = await micro.json(req)
         if(body.username === 'anton'){
           micro.send(res, 400, {error:'incorrect password'});
         }else{

@@ -1,0 +1,8 @@
+{
+  "name": "bconf",
+  "alias": "bconf.xyz",
+  "env": {
+    "DATABASE_URL": "@db-url"
+  },
+  "public": true
+}
