@@ -1,6 +1,7 @@
 const { compareSync, hashSync } = require('bcrypt')
 const { sign, decode } = require('jsonwebtoken')
 const _ = require('lodash')
+const shortid = require('shortid')
 const database = require('./db')
 const secret = 'todo: move to secrete'
 const USERS = 'users'
@@ -54,7 +55,7 @@ async function register(request) {
   }
   const db = await database.db()
   const response = await db.collection(USERS).insertOne({
-    email, name, password: generatePasswordHash(password)
+    _id: shortid.generate(), email, name, password: generatePasswordHash(password)
   })
   const userId = _.get(response, 'insertedId')
   if (!userId) {
@@ -68,13 +69,25 @@ async function check(token) {
   if (!token) {
     return Promise.reject('invalid token')
   }
-  const userId = _.get(decodeToken(token), '_id')
+  const decoded = decodeToken(token)
+  console.log('decoded', decodeToken(token))
+  const userId = decoded._id
   if (!userId) {
     return Promise.reject('invalid token')
   }
   const db = await database.db()
-  const user = await db.collection(USERS).findOne({ _id: userId })
+  const user = await db.collection(USERS).findOne({ _id: userId }) //todo: update it
   return { token: generateToken(user), user: userInfo(user) }
+}
+
+async function findUsers({ user, text }) {
+  if (!text) {
+    return Promise.reject('invalid token')
+  }
+  const db = await database.db()
+  const users = await db.collection(USERS).find({ name: { $regex: text, $options: 'i' } }).toArray()
+  const results = _.filter(users, item => item._id !== user._id)
+  return results
 }
 
 module.exports = {
@@ -82,4 +95,5 @@ module.exports = {
   register,
   check,
   decodeToken,
+  findUsers,
 }

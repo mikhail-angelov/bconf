@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const nanoid = require('nanoid')
+const shortid = require('shortid')
 const auth = require('./auth')
 const database = require('./db')
 const USER_CHATS = 'userChats'
@@ -7,18 +7,23 @@ const MESSAGES = 'messages'
 const online = {}
 
 function init(server) {
-  const io = require('socket.io')(server);
+  const io = require('socket.io')(server)
+  io.use((socket, next) => {
+    console.log('io socket handshake: ')
+    if (socket.handshake.query && socket.handshake.query.token) {
+      const decoded = auth.decodeToken(socket.handshake.query.token)
+      socket.decoded = decoded;
+      next();
+    } else {
+      next(new Error('Authentication error'));
+    }
+  })
   io.on('connection', onConnection)
 }
 
 function onConnection(socket) {
-  console.log('onConnection socket', socket)
-  const token = socket.headers['authorization']
-  if (!token) {
-    socket.disconnect()
-    return 'invalid token'
-  }
-  const user = auth.decodeToken(token)
+  console.log('onConnection socket: ', socket.decoded)
+  const user = socket.decoded
   if (!user) {
     socket.disconnect()
     return 'invalid token'
@@ -38,10 +43,24 @@ function onConnection(socket) {
 
 async function processMessage({ user, data, online }) {
   console.log('data', data)
-  //todo: temp common broadcast
-  _.each(online, socket => {
-    socket.send(data)
-  })
+  try {
+    const parsed = JSON.parse(data)
+    const db = await database.db()
+    const message = {
+      _id: shortid.generate(),
+      chatId: parsed.chatId,
+      text: parsed.text,
+      author: user,
+      timestamp: Date.now(),
+    }
+    await db.collection(MESSAGES).insertOne(message)
+    //todo: temp common broadcast
+    _.each(online, socket => {
+      socket && socket.send(message)
+    })
+  } catch (e) {
+    console.error('cannot send message, ', e)
+  }
 }
 
 async function getChat(chatId) {
@@ -62,14 +81,14 @@ async function getChats(user) {
 
 async function createChat({ user, request }) {
   const { users, name } = request
-  const chatId = nanoid()
+  const chatId = shortid.generate()
   const db = await database.db()
   await db.collection(USER_CHATS).insertOne({
     chatId, chatName: name,
     userId: user._id, userName: user.name
   })
-  if(_.get(users,'length')>0){
-    for(let contact of users){
+  if (_.get(users, 'length') > 0) {
+    for (let contact of users) {
       await db.collection(USER_CHATS).insertOne({
         chatId, chatName: name,
         userId: contact._id, userName: contact.name
@@ -92,6 +111,25 @@ async function updateChatName({ user, request }) {
   }
   return getChat(_id)
 }
+async function addUser({ user, request }) {
+  const { chat } = request
+  const newUser = request.user
+  if(!chat || !newUser){
+    return Promise.reject('invalid params')
+  }
+  const db = await database.db()
+  const response = await db.collection(USER_CHATS)
+    .find({ chatId: chat._id, userId: newUser._id }).toArray()
+  if (response.length > 0) {
+    return Promise.reject('user already added')
+  }
+  await db.collection(USER_CHATS).insertOne({
+    chatId: chat._id, chatName: chat.name,
+    userId: newUser._id, userName: newUser.name
+  })
+  //todo: notify this user
+  return {ok:'success'}
+}
 
 async function getMessages({ user, chatId }) {
   const db = await database.db()
@@ -105,5 +143,6 @@ module.exports = {
   getChats,
   createChat,
   updateChatName,
+  addUser,
   getMessages,
 }

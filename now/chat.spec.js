@@ -35,10 +35,21 @@ describe('chat', () => {
     })
     expect(response.name).eql('test')
   })
+  it('should add user to chat', async () => {
+    await chat.addUser({
+      user: {},
+      request: {
+        user: { _id: '5ba6532c43c528a283a86f56' },
+        chat: { _id: CHAT_ID, name: 'test' }
+      }
+    })
+    const response = await chat.getChat(CHAT_ID)
+    expect(response.users.length).eql(3)
+  })
 
   it('should get all chat messages', async () => {
     const messages = await chat.getMessages({
-      user:{ _id: USER_ID },
+      user: { _id: USER_ID },
       chatId: CHAT_ID
     })
     expect(messages.length).eql(2)

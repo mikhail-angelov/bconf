@@ -1,6 +1,6 @@
 const micro = require('micro');
-const { router, get, post } = require('microrouter');
-const cors = require('micro-cors')({ allowMethods: ['GET', 'POST'] });
+const { router, get, post, put } = require('microrouter');
+const cors = require('micro-cors')({ allowMethods: ['GET', 'POST', 'PUT'] });
 const fs = require('fs');
 const path = require('path');
 const auth = require('./auth')
@@ -26,7 +26,7 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect password' })
         }
       }),
-      post('/auth/check', (req, res) => {
+      post('/auth/check', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const response = await auth.check(token)
@@ -36,11 +36,11 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect token' })
         }
       }),
-      post('/auth/register', (req, res) => {
+      post('/auth/register', async (req, res) => {
         try {
           const body = await micro.json(req)
           const response = await auth.register(body)
-          micro.send(res, 200, response);
+          micro.send(res, 200, response)
         } catch (e) {
           console.error('register error: ', e)
           micro.send(res, 400, { error: 'incorrect params' })
@@ -49,7 +49,18 @@ const server = micro(
       post('/auth/forget-password', (req, res) => {
         micro.send(res, 200, { status: 'new password is sent to your email' })
       }),
-      get('/chat', (req, res) => {
+      get('/users/search/:text', async (req, res) => {
+        try {
+          const token = req.headers['authorization']
+          const user = auth.decodeToken(token)
+          const response = await auth.findUsers({user, text:req.params.text})
+          micro.send(res, 200, response)
+        } catch (e) {
+          console.error('search error: ', e)
+          micro.send(res, 400, { error: 'incorrect params' })
+        }
+      }),
+      get('/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -60,7 +71,7 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
-      get('/chat/:chatId', (req, res) => {
+      get('/chat/:chatId', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -71,35 +82,47 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
-      post('/chat', (req, res) => {
+      post('/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
-          const chat = await micro.json(req)
-          const response = await chat.createChat({user, chat})
+          const body = await micro.json(req)
+          const response = await chat.createChat({ user, request: body })
           micro.send(res, 200, response);
         } catch (e) {
           console.error('create chat error: ', e)
           micro.send(res, 400, { error: 'create chat error' })
         }
       }),
-      put('/chat', (req, res) => {
+      put('/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
-          const chat = await micro.json(req)
-          const response = await chat.updateChat({user, chat})
+          const body = await micro.json(req)
+          const response = await chat.updateChat({ user, request: body })
           micro.send(res, 200, response);
         } catch (e) {
           console.error('update chat error: ', e)
           micro.send(res, 400, { error: 'update chat error' })
         }
       }),
-      get('/messages/:chatId', (req, res) => {
+      post('/chat/addUser', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
-          const response = await chat.getMessages(user, req.params.chatId)
+          const body = await micro.json(req)
+          const response = await chat.addUser({ user, request: body })
+          micro.send(res, 200, response);
+        } catch (e) {
+          console.error('create chat error: ', e)
+          micro.send(res, 400, { error: 'create chat error' })
+        }
+      }),
+      get('/messages/:chatId', async (req, res) => {
+        try {
+          const token = req.headers['authorization']
+          const user = auth.decodeToken(token)
+          const response = await chat.getMessages({ user, chatId: req.params.chatId })
           micro.send(res, 200, response);
         } catch (e) {
           console.error('get messages error: ', e)

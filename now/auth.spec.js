@@ -24,6 +24,9 @@ describe('auth', () => {
     const response = await auth.check(token)
     expect(!!response.token).eql(true)
   })
-
+  it('should find users', async () => {
+    const response = await auth.findUsers({user:{ _id: '5ba6532c43c528a283a86f54'}, text:'st'})
+    expect(response.length).eql(2)
+  })
   
 })
