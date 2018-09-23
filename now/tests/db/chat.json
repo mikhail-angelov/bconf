@@ -22,31 +22,15 @@
   "userChats": [
     {
       "userId": "5ba6532c43c528a283a86f54",
-      "chats": [
-        {
-          "_id":"5ba6532c43c528a283a86f57"
-        }
-      ]
+      "userName": "test1",
+      "chatId": "5ba6532c43c528a283a86f57",
+      "chatName": "test1"
     },
     {
       "userId": "5ba6532c43c528a283a86f55",
-      "chats": []
-    }
-  ],
-  "chats": [
-    {
-      "_id": "5ba6532c43c528a283a86f57",
-      "name": "any",
-      "users": [
-        {
-          "_id": "5ba6532c43c528a283a86f54",
-          "name": "test1"
-        },
-        {
-          "_id": "5ba6532c43c528a283a86f55",
-          "name": "test2"
-        }
-      ]
+      "userName": "test2",
+      "chatId": "5ba6532c43c528a283a86f57",
+      "chatName": "test1"
     }
   ],
   "messages": [

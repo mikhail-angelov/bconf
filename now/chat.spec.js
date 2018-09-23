@@ -10,6 +10,11 @@ describe('chat', () => {
   afterEach(() => mongoUnit.drop())
 
 
+  it('should get chat', async () => {
+    const response = await chat.getChat(CHAT_ID)
+    expect(response.users.length).eql(2)
+  })
+
   it('should get all chats', async () => {
     const response = await chat.getChats({ _id: USER_ID })
     expect(response.length).eql(1)
@@ -24,7 +29,7 @@ describe('chat', () => {
   })
 
   it('should update chat', async () => {
-    const response = await chat.updateChat({
+    const response = await chat.updateChatName({
       user: { _id: USER_ID },
       request: { _id: CHAT_ID, name: 'test' }
     })

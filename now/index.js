@@ -60,6 +60,17 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
+      get('/chat/:chatId', (req, res) => {
+        try {
+          const token = req.headers['authorization']
+          const user = auth.decodeToken(token)
+          const response = await chat.getChat(req.params.chatId)
+          micro.send(res, 200, response);
+        } catch (e) {
+          console.error('get chats error: ', e)
+          micro.send(res, 400, { error: 'get chats error' })
+        }
+      }),
       post('/chat', (req, res) => {
         try {
           const token = req.headers['authorization']
