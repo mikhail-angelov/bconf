@@ -225,7 +225,7 @@
 			}
 			function onMessage(data) {
 				try {
-					const msg = JSON.parse(data)
+					const msg = typeof data === 'string' ? JSON.parse(data) : data
 					if (msg.chatId === chatId) {
 						$('#messages').append($('<li>').text(msg.text))
 					}

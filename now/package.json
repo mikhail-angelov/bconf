@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./*.spec.js --delay",
-    "start": "export DATABASE_URL='mongodb://localhost:27017/test'; node .",
-    "deploy": "now -e DATABASE_URL=@db-url --public"
+    "start": "node .",
+    "dev": "export DATABASE_URL='mongodb://localhost:27017/test'; node .",
+    "deploy": "now rm bconf -y; now; now alias"
   },
   "keywords": [],
   "author": "",
