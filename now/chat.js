@@ -114,7 +114,7 @@ async function updateChatName({ user, request }) {
 async function addUser({ user, request }) {
   const { chat } = request
   const newUser = request.user
-  if(!chat || !newUser){
+  if (!chat || !newUser) {
     return Promise.reject('invalid params')
   }
   const db = await database.db()
@@ -128,13 +128,17 @@ async function addUser({ user, request }) {
     userId: newUser._id, userName: newUser.name
   })
   //todo: notify this user
-  return {ok:'success'}
+  return { ok: 'success' }
 }
 
 async function getMessages({ user, chatId }) {
-  const db = await database.db()
-  const messages = await db.collection(MESSAGES).find({ chatId }).toArray()
-  return messages
+  if (chatId) {
+    const db = await database.db()
+    const messages = await db.collection(MESSAGES).find({ chatId }).toArray()
+    return messages
+  } else {
+    return Promise.reject('Invalid param')
+  }
 }
 
 module.exports = {

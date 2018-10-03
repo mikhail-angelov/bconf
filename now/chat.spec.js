@@ -47,6 +47,14 @@ describe('chat', () => {
     expect(response.users.length).eql(3)
   })
 
+  it('should fail on get chat messages if chatId blank', async () => {
+    return chat.getMessages({
+      user: { _id: USER_ID },
+      chatId: null
+    })
+      .catch(err => expect(err).eql('Invalid param'))
+  })
+
   it('should get all chat messages', async () => {
     const messages = await chat.getMessages({
       user: { _id: USER_ID },
