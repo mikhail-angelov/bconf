@@ -53,7 +53,17 @@ async function processMessage({ user, data, online }) {
       author: user,
       timestamp: Date.now(),
     }
+    const chatId = parsed.chatId
     await db.collection(MESSAGES).insertOne(message)
+    await db.collection(USER_CHATS).updateMany({ chatId }, {
+      $set: {
+        lastMessage: {
+          text: message.text,
+          author: user.name,
+          timestamp: message.timestamp
+        }
+      }
+    })
     //todo: temp common broadcast
     _.each(online, socket => {
       socket && socket.send(message)
@@ -76,7 +86,7 @@ async function getChat(chatId) {
 async function getChats(user) {
   const db = await database.db()
   const userChats = await db.collection(USER_CHATS).find({ userId: user._id }).toArray()
-  return _.map(userChats, item => ({ _id: item.chatId, name: item.chatName }))
+  return _.map(userChats, item => ({ _id: item.chatId, name: item.chatName, lastMessage: item.lastMessage }))
 }
 
 async function createChat({ user, request }) {
@@ -101,10 +111,9 @@ async function createChat({ user, request }) {
 async function updateChatName({ user, request }) {
   const { _id, name } = request
   const db = await database.db()
-  const response = await db.collection(USER_CHATS).update(
+  const response = await db.collection(USER_CHATS).updateMany(
     { chatId: _id },
     { $set: { chatName: name } },
-    { multy: true }
   )
   if (!response.result.ok) {
     return Promise.reject('invalid params')
@@ -143,6 +152,7 @@ async function getMessages({ user, chatId }) {
 
 module.exports = {
   init,
+  processMessage,
   getChat,
   getChats,
   createChat,

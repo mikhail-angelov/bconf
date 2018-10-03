@@ -24,13 +24,39 @@
       "userId": "5ba6532c43c528a283a86f54",
       "userName": "test1",
       "chatId": "5ba6532c43c528a283a86f57",
-      "chatName": "test1"
+      "chatName": "test1",
+      "lastMessage": {
+        "_id": "message1",
+        "chatId": "5ba6532c43c528a283a86f57",
+        "text": "last message",
+        "author": {
+          "email": "Kkk@kkk.kkk",
+          "exp": "1538066503",
+          "iat": "1538037703",
+          "name": "kkk",
+          "_id": "bn_t1uD_r"
+        },
+        "timestamp": "1538038661271"
+      }
     },
     {
       "userId": "5ba6532c43c528a283a86f55",
       "userName": "test2",
       "chatId": "5ba6532c43c528a283a86f57",
-      "chatName": "test1"
+      "chatName": "test1",
+      "lastMessage": {
+        "_id": "message1",
+        "chatId": "5ba6532c43c528a283a86f57",
+        "text": "last44 message",
+        "author": {
+          "email": "Kkk@kkk.kkk",
+          "exp": "1538066503",
+          "iat": "1538037703",
+          "name": "kkk",
+          "_id": "bn_t1uD_r"
+        },
+        "timestamp": "1538038661271"
+      }
     }
   ],
   "messages": [
