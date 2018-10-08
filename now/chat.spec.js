@@ -62,4 +62,21 @@ describe('chat', () => {
     })
     expect(messages.length).eql(2)
   })
+
+  it('should change last message in chat', async () => {
+    
+    await chat.processMessage({
+      user: {
+        _id: USER_ID,
+        name: "kkk"
+      }, 
+      data:JSON.stringify({
+        chatId: "5ba6532c43c528a283a86f57",
+        text: "new message"}
+      )
+    })
+    const response = await chat.getChats({ _id: USER_ID })
+    console.log(response)
+    expect(response[0].lastMessageText).eql("new message")
+  })
 })
