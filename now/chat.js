@@ -57,9 +57,11 @@ async function processMessage({ user, data, online }) {
     await db.collection(MESSAGES).insertOne(message)
     await db.collection(USER_CHATS).updateMany({ chatId }, {
       $set: {
-          lastMessageText: message.text,
-          lastMessageAuthor: user.name,
-          lastMessageTimestamp: message.timestamp
+        lastMessageText: message.text,
+        lastMessageId: message._id,
+        lastMessageAuthor: user.name,
+        lastMessageAuthorId: user._id,
+        lastMessageTimestamp: message.timestamp
       }
     })
     //todo: temp common broadcast
@@ -84,7 +86,14 @@ async function getChat(chatId) {
 async function getChats(user) {
   const db = await database.db()
   const userChats = await db.collection(USER_CHATS).find({ userId: user._id }).toArray()
-  return _.map(userChats, item => ({ _id: item.chatId, name: item.chatName, lastMessageText: item.lastMessageText, lastMessageAuthor: item.lastMessageAuthor, lastMessageTimestamp: item.lastMessageTimestamp }))
+  return _.map(userChats, item => ({
+    _id: item.chatId, name: item.chatName,
+    lastMessageText: item.lastMessageText,
+    lastMessageAuthor: item.lastMessageAuthor,
+    lastMessageTimestamp: item.lastMessageTimestamp,
+    lastMessageId: item.lastMessageId,
+    lastMessageAuthorId: item.lastMessageAuthorId,
+  }))
 }
 
 async function createChat({ user, request }) {
@@ -150,11 +159,13 @@ async function getMessages({ user, chatId }) {
 
 module.exports = {
   init,
-  processMessage,
   getChat,
   getChats,
   createChat,
   updateChatName,
   addUser,
   getMessages,
+
+  //private method only
+  processMessage,
 }
