@@ -57,11 +57,9 @@ async function processMessage({ user, data, online }) {
     await db.collection(MESSAGES).insertOne(message)
     await db.collection(USER_CHATS).updateMany({ chatId }, {
       $set: {
-        lastMessage: {
-          text: message.text,
-          author: user.name,
-          timestamp: message.timestamp
-        }
+          lastMessageText: message.text,
+          lastMessageAuthor: user.name,
+          lastMessageTimestamp: message.timestamp
       }
     })
     //todo: temp common broadcast
@@ -86,7 +84,7 @@ async function getChat(chatId) {
 async function getChats(user) {
   const db = await database.db()
   const userChats = await db.collection(USER_CHATS).find({ userId: user._id }).toArray()
-  return _.map(userChats, item => ({ _id: item.chatId, name: item.chatName, lastMessage: item.lastMessage }))
+  return _.map(userChats, item => ({ _id: item.chatId, name: item.chatName, lastMessageText: item.lastMessageText, lastMessageAuthor: item.lastMessageAuthor, lastMessageTimestamp: item.lastMessageTimestamp }))
 }
 
 async function createChat({ user, request }) {

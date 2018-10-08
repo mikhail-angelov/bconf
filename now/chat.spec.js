@@ -77,6 +77,6 @@ describe('chat', () => {
     })
     const response = await chat.getChats({ _id: USER_ID })
     console.log(response)
-    expect(response[0].lastMessage.text).eql("new message")
+    expect(response[0].lastMessageText).eql("new message")
   })
 })
