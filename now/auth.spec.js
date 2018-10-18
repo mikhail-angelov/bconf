@@ -25,8 +25,15 @@ describe('auth', () => {
     expect(!!response.token).eql(true)
   })
   it('should find users', async () => {
-    const response = await auth.findUsers({user:{ _id: '5ba6532c43c528a283a86f54'}, text:'st'})
+    const response = await auth.findUsers({ user: { _id: '5ba6532c43c528a283a86f54' }, text: 'st' })
     expect(response.length).eql(2)
   })
-  
+
+  it('should check update user settigs', async () => {
+    const _id = '5ba6532c43c528a283a86f54'
+    const response = await auth.changeSettings(_id, { name: 'kkk23', email: "Kkk@kkk.kkk23", srcAvatar: "user ava src!" })
+    expect(response.username).eql('kkk23')
+    expect(response.email).eql('Kkk@kkk.kkk23')
+    expect(response.srcAvatar).eql('user ava src!')
+  })
 })
