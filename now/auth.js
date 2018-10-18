@@ -65,6 +65,22 @@ async function register(request) {
   return { token: generateToken(user), user: userInfo(user) }
 }
 
+async function changeSettings(userId, request) {
+  const { name, email, srcAvatar } = request
+  if (!name || !email) {
+    return Promise.reject('invalid params')
+  }
+  console.log(userId)
+  const db = await database.db()
+  const user = await db.collection(USERS).updateOne({ _id: userId },
+    { $set: { name, email, srcAvatar } })
+  if (!user) {
+    return Promise.reject('invalid params')
+  }
+  const result = await db.collection(USERS).findOne({ _id: userId })
+  return { username: result.name, email: result.email, srcAvatar: result.srcAvatar }
+}
+
 async function check(token) {
   if (!token) {
     return Promise.reject('invalid token')
@@ -96,4 +112,5 @@ module.exports = {
   check,
   decodeToken,
   findUsers,
+  changeSettings
 }
