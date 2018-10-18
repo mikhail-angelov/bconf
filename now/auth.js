@@ -27,8 +27,8 @@ function checkPassword(candidate, hash) {
 }
 
 function userInfo(user) {
-  const { _id, name, email } = user
-  return { _id, name, email }
+  const { _id, name, email, srcAvatar } = user
+  return { _id, name, email, srcAvatar }
 }
 
 async function login(credentials) {
