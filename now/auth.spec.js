@@ -1,6 +1,7 @@
 const expect = require('chai').expect
 const mongoUnit = require('mongo-unit')
 const auth = require('./auth')
+const USER_ID = '5ba6532c43c528a283a86f54'
 const data = require('./tests/db/auth.json')
 
 
@@ -35,5 +36,12 @@ describe('auth', () => {
     expect(response.username).eql('kkk23')
     expect(response.email).eql('Kkk@kkk.kkk23')
     expect(response.srcAvatar).eql('user ava src!')
+  })
+
+  it('should get all users', async () => {
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Mzc2NTYxNDIsIl9pZCI6IjViYTY1MzJjNDNjNTI4YTI4M2E4NmY1NCIsIm5hbWUiOiJ0ZXN0MSIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE1Mzc2MjczNDJ9.z63m_Yu89FcpGdzTe9PRUxkSq0iN-jZMqzS1sdX_FUE'
+    const response = await auth.getUsers({ _id: USER_ID, token })
+    console.log(response)
+    expect(response.length).eql(2)
   })
 })

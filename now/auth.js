@@ -106,11 +106,22 @@ async function findUsers({ user, text }) {
   return results
 }
 
+async function getUsers(user) {
+  if (!user.token) {
+    return Promise.reject('invalid token')
+  }
+  const db = await database.db()
+  const users = await db.collection(USERS).find().toArray()
+  const results = _.filter(users, item => item._id !== user._id)
+  return results
+}
+
 module.exports = {
   login,
   register,
   check,
   decodeToken,
   findUsers,
-  changeSettings
+  changeSettings,
+  getUsers
 }
