@@ -26,7 +26,8 @@ describe('auth', () => {
     expect(!!response.token).eql(true)
   })
   it('should find users', async () => {
-    const response = await auth.findUsers({ user: { _id: '5ba6532c43c528a283a86f54' }, text: 'st' })
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Mzc2NTYxNDIsIl9pZCI6IjViYTY1MzJjNDNjNTI4YTI4M2E4NmY1NCIsIm5hbWUiOiJ0ZXN0MSIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE1Mzc2MjczNDJ9.z63m_Yu89FcpGdzTe9PRUxkSq0iN-jZMqzS1sdX_FUE'
+    const response = await auth.findUsers({ user: { _id: '5ba6532c43c528a283a86f54', token }, text: 'st' })
     expect(response.length).eql(2)
   })
 
@@ -40,7 +41,7 @@ describe('auth', () => {
 
   it('should get all users', async () => {
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1Mzc2NTYxNDIsIl9pZCI6IjViYTY1MzJjNDNjNTI4YTI4M2E4NmY1NCIsIm5hbWUiOiJ0ZXN0MSIsImVtYWlsIjoidGVzdDFAdGVzdC5jb20iLCJpYXQiOjE1Mzc2MjczNDJ9.z63m_Yu89FcpGdzTe9PRUxkSq0iN-jZMqzS1sdX_FUE'
-    const response = await auth.getUsers({ _id: USER_ID, token })
+    const response = await auth.findUsers({ user: { _id: USER_ID, token } })
     expect(response.length).eql(2)
   })
 })

@@ -94,17 +94,6 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
-      get('/users', async (req, res) => {
-        try {
-          const token = req.headers['authorization']
-          const user = auth.decodeToken(token)
-          const response = await auth.getUsers(user)
-          micro.send(res, 200, response)
-        } catch (e) {
-          console.error('search error: ', e)
-          micro.send(res, 400, { error: 'incorrect params' })
-        }
-      }),
       post('/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']

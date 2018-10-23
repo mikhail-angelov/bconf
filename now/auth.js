@@ -97,25 +97,19 @@ async function check(token) {
 }
 
 async function findUsers({ user, text }) {
-  if (!text) {
-    return Promise.reject('invalid token')
-  }
-  const db = await database.db()
-  const users = await db.collection(USERS).find({ name: { $regex: text, $options: 'i' } }).toArray()
-  const results = _.filter(users, item => item._id !== user._id)
-  return results
-}
-
-async function getUsers(user) {
   if (!user.token) {
     return Promise.reject('invalid token')
   }
   const db = await database.db()
-  const users = await db.collection(USERS).find().toArray()
+  let users
+  if (text) {
+    users = await db.collection(USERS).find({ name: { $regex: text, $options: 'i' } }).toArray()
+  } else {
+    users = await db.collection(USERS).find().toArray()
+  }
   const results = _.filter(users, item => item._id !== user._id)
   return results
 }
-
 
 module.exports = {
   login,
@@ -124,5 +118,4 @@ module.exports = {
   decodeToken,
   findUsers,
   changeSettings,
-  getUsers
 }
