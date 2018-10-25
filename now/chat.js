@@ -86,15 +86,7 @@ async function getChat(chatId) {
 async function getChats(user) {
   const db = await database.db()
   const userChats = await db.collection(USER_CHATS).find({ userId: user._id }).toArray()
-  return _.map(userChats, item => ({
-    chatId: item.chatId, 
-    name: item.chatName,
-    lastMessageText: item.lastMessageText,
-    lastMessageAuthor: item.lastMessageAuthor,
-    lastMessageTimestamp: item.lastMessageTimestamp,
-    lastMessageId: item.lastMessageId,
-    lastMessageAuthorId: item.lastMessageAuthorId,
-  }))
+  return userChats
 }
 
 async function createChat({ user, request }) {
@@ -120,7 +112,7 @@ async function updateChatName({ user, request }) {
   const { chatId, name } = request
   const db = await database.db()
   const response = await db.collection(USER_CHATS).updateMany(
-    { chatId: chatId },
+    { chatId },
     { $set: { chatName: name } },
   )
   if (!response.result.ok) {
