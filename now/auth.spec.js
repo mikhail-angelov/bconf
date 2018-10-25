@@ -32,7 +32,7 @@ describe('auth', () => {
   it('should check update user settigs', async () => {
     const _id = '5ba6532c43c528a283a86f54'
     const response = await auth.changeSettings(_id, { name: 'kkk23', email: "Kkk@kkk.kkk23", srcAvatar: "user ava src!" })
-    expect(response.username).eql('kkk23')
+    expect(response.name).eql('kkk23')
     expect(response.email).eql('Kkk@kkk.kkk23')
     expect(response.srcAvatar).eql('user ava src!')
   })

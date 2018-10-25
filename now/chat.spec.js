@@ -31,7 +31,7 @@ describe('chat', () => {
   it('should update chat', async () => {
     const response = await chat.updateChatName({
       user: { _id: USER_ID },
-      request: { _id: CHAT_ID, name: 'test' }
+      request: { chatId: CHAT_ID, name: 'test' }
     })
     expect(response.name).eql('test')
   })
@@ -40,7 +40,7 @@ describe('chat', () => {
       user: {},
       request: {
         user: { _id: '5ba6532c43c528a283a86f56' },
-        chat: { _id: CHAT_ID, name: 'test' }
+        chat: { chatId: CHAT_ID, name: 'test' }
       }
     })
     const response = await chat.getChat(CHAT_ID)
