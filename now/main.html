@@ -188,11 +188,11 @@
 						console.log('chats: ', chats)
 						$('#chats').empty()
 						for (let chat of chats) {
-							if (chat._id) {
-								$('#chats').append($(`<li id=${chat._id}>${chat.name}</il>`))
+							if (chat.chatId) {
+								$('#chats').append($(`<li id=${chat.chatId}>${chat.name}</il>`))
 							}
 						}
-						chatId = chatId || chats.length > 0 ? chats[0]._id : null
+						chatId = chatId || chats.length > 0 ? chats[0].chatId : null
 						loadMessages(chatId)
 						loadChat(chatId)
 					}, e => alert('cannot get chats: ' + JSON.stringify(e)))
