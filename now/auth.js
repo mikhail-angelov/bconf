@@ -78,7 +78,7 @@ async function changeSettings(userId, request) {
     return Promise.reject('invalid params')
   }
   const result = await db.collection(USERS).findOne({ _id: userId })
-  return { username: result.name, email: result.email, srcAvatar: result.srcAvatar }
+  return { name: result.name, email: result.email, srcAvatar: result.srcAvatar }
 }
 
 async function check(token) {

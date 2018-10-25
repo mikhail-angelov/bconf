@@ -77,7 +77,7 @@ async function getChat(chatId) {
   const db = await database.db()
   const userChats = await db.collection(USER_CHATS).find({ chatId }).toArray()
   return {
-    _id: _.get(userChats, '0.chatId'),
+    chatId: _.get(userChats, '0.chatId'),
     name: _.get(userChats, '0.chatName'),
     users: _.map(userChats, item => ({ _id: item.userId, name: item.userName }))
   }
@@ -87,7 +87,8 @@ async function getChats(user) {
   const db = await database.db()
   const userChats = await db.collection(USER_CHATS).find({ userId: user._id }).toArray()
   return _.map(userChats, item => ({
-    _id: item.chatId, name: item.chatName,
+    chatId: item.chatId, 
+    name: item.chatName,
     lastMessageText: item.lastMessageText,
     lastMessageAuthor: item.lastMessageAuthor,
     lastMessageTimestamp: item.lastMessageTimestamp,
@@ -116,16 +117,16 @@ async function createChat({ user, request }) {
 }
 
 async function updateChatName({ user, request }) {
-  const { _id, name } = request
+  const { chatId, name } = request
   const db = await database.db()
   const response = await db.collection(USER_CHATS).updateMany(
-    { chatId: _id },
+    { chatId: chatId },
     { $set: { chatName: name } },
   )
   if (!response.result.ok) {
     return Promise.reject('invalid params')
   }
-  return getChat(_id)
+  return getChat(chatId)
 }
 async function addUser({ user, request }) {
   const { chat } = request
@@ -135,12 +136,12 @@ async function addUser({ user, request }) {
   }
   const db = await database.db()
   const response = await db.collection(USER_CHATS)
-    .find({ chatId: chat._id, userId: newUser._id }).toArray()
+    .find({ chatId: chat.chatId, userId: newUser._id }).toArray()
   if (response.length > 0) {
     return Promise.reject('user already added')
   }
   await db.collection(USER_CHATS).insertOne({
-    chatId: chat._id, chatName: chat.name,
+    chatId: chat.chatId, chatName: chat.name,
     userId: newUser._id, userName: newUser.name
   })
   //todo: notify this user
