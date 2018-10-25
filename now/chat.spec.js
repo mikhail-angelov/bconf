@@ -23,24 +23,24 @@ describe('chat', () => {
   it('should create new chat', async () => {
     const response = await chat.createChat({
       user: { _id: USER_ID },
-      request: { name: 'test' }
+      request: { chatName: 'test' }
     })
-    expect(response.name).eql('test')
+    expect(response.chatName).eql('test')
   })
 
   it('should update chat', async () => {
     const response = await chat.updateChatName({
       user: { _id: USER_ID },
-      request: { chatId: CHAT_ID, name: 'test' }
+      request: { chatId: CHAT_ID, chatName: 'test' }
     })
-    expect(response.name).eql('test')
+    expect(response.chatName).eql('test')
   })
   it('should add user to chat', async () => {
     await chat.addUser({
       user: {},
       request: {
         user: { _id: '5ba6532c43c528a283a86f56' },
-        chat: { chatId: CHAT_ID, name: 'test' }
+        chat: { chatId: CHAT_ID, chatName: 'test' }
       }
     })
     const response = await chat.getChat(CHAT_ID)
@@ -76,7 +76,6 @@ describe('chat', () => {
       )
     })
     const response = await chat.getChats({ _id: USER_ID })
-    console.log(response)
     expect(response[0].lastMessageText).eql("new message")
   })
 })

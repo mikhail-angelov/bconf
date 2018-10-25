@@ -189,7 +189,7 @@
 						$('#chats').empty()
 						for (let chat of chats) {
 							if (chat.chatId) {
-								$('#chats').append($(`<li id=${chat.chatId}>${chat.name}</il>`))
+								$('#chats').append($(`<li id=${chat.chatId}>${chat.chatName}</il>`))
 							}
 						}
 						chatId = chatId || chats.length > 0 ? chats[0].chatId : null
