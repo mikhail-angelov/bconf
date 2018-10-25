@@ -78,7 +78,7 @@ async function getChat(chatId) {
   const userChats = await db.collection(USER_CHATS).find({ chatId }).toArray()
   return {
     chatId: _.get(userChats, '0.chatId'),
-    name: _.get(userChats, '0.chatName'),
+    chatName: _.get(userChats, '0.chatName'),
     users: _.map(userChats, item => ({ _id: item.userId, name: item.userName }))
   }
 }
@@ -90,17 +90,17 @@ async function getChats(user) {
 }
 
 async function createChat({ user, request }) {
-  const { users, name } = request
+  const { users, chatName } = request
   const chatId = shortid.generate()
   const db = await database.db()
   await db.collection(USER_CHATS).insertOne({
-    chatId, chatName: name,
+    chatId, chatName,
     userId: user._id, userName: user.name
   })
   if (_.get(users, 'length') > 0) {
     for (let contact of users) {
       await db.collection(USER_CHATS).insertOne({
-        chatId, chatName: name,
+        chatId, chatName,
         userId: contact._id, userName: contact.name
       })
     }
@@ -109,11 +109,11 @@ async function createChat({ user, request }) {
 }
 
 async function updateChatName({ user, request }) {
-  const { chatId, name } = request
+  const { chatId, chatName } = request
   const db = await database.db()
   const response = await db.collection(USER_CHATS).updateMany(
     { chatId },
-    { $set: { chatName: name } },
+    { $set: { chatName } },
   )
   if (!response.result.ok) {
     return Promise.reject('invalid params')
@@ -133,7 +133,7 @@ async function addUser({ user, request }) {
     return Promise.reject('user already added')
   }
   await db.collection(USER_CHATS).insertOne({
-    chatId: chat.chatId, chatName: chat.name,
+    chatId: chat.chatId, chatName: chat.chatName,
     userId: newUser._id, userName: newUser.name
   })
   //todo: notify this user
