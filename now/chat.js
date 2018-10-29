@@ -79,6 +79,7 @@ async function getChat(chatId) {
   return {
     chatId: _.get(userChats, '0.chatId'),
     chatName: _.get(userChats, '0.chatName'),
+    chatImage: _.get(userChats, '0.chatImage'),
     users: _.map(userChats, item => ({ _id: item.userId, name: item.userName }))
   }
 }
@@ -108,18 +109,23 @@ async function createChat({ user, request }) {
   return getChat(chatId)
 }
 
-async function updateChatName({ user, request }) {
-  const { chatId, chatName } = request
+async function updateChat({ user, request }) {
+  const { chatId, chatName, chatImage } = request
+  let response
   const db = await database.db()
-  const response = await db.collection(USER_CHATS).updateMany(
-    { chatId },
-    { $set: { chatName } },
-  )
+  const isUserInChat = await db.collection(USER_CHATS).find({ userId: user._id, chatId }).toArray()
+  if(isUserInChat.length > 0){
+    response = await db.collection(USER_CHATS).updateMany(
+      { chatId },
+      { $set: { chatName, chatImage } },
+    )
+  }
   if (!response.result.ok) {
     return Promise.reject('invalid params')
   }
   return getChat(chatId)
 }
+
 async function addUser({ user, request }) {
   const { chat } = request
   const newUser = request.user
@@ -155,7 +161,7 @@ module.exports = {
   getChat,
   getChats,
   createChat,
-  updateChatName,
+  updateChat,
   addUser,
   getMessages,
 

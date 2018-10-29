@@ -29,11 +29,12 @@ describe('chat', () => {
   })
 
   it('should update chat', async () => {
-    const response = await chat.updateChatName({
+    const response = await chat.updateChat({
       user: { _id: USER_ID },
-      request: { chatId: CHAT_ID, chatName: 'test' }
+      request: { chatId: CHAT_ID, chatName: 'test', chatImage: "src-to-pic" }
     })
     expect(response.chatName).eql('test')
+    expect(response.chatImage).eql("src-to-pic")
   })
   it('should add user to chat', async () => {
     await chat.addUser({
@@ -64,15 +65,16 @@ describe('chat', () => {
   })
 
   it('should change last message in chat', async () => {
-    
+
     await chat.processMessage({
       user: {
         _id: USER_ID,
         name: "kkk"
-      }, 
-      data:JSON.stringify({
+      },
+      data: JSON.stringify({
         chatId: "5ba6532c43c528a283a86f57",
-        text: "new message"}
+        text: "new message"
+      }
       )
     })
     const response = await chat.getChats({ _id: USER_ID })
