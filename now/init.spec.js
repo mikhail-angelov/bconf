@@ -7,9 +7,9 @@ mongoUnit.start()
     run()
   })
 
-  after(()=>{
-    const database = require('./db')
-    console.log('stop')
-    database.close()
-    return mongoUnit.stop()
-  })
+after(() => {
+  const database = require('./db')
+  console.log('stop')
+  database.close()
+  return mongoUnit.stop()
+})

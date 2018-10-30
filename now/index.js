@@ -3,8 +3,10 @@ const { router, get, post, put } = require('microrouter');
 const cors = require('micro-cors')({ allowMethods: ['GET', 'POST', 'PUT'] });
 const fs = require('fs');
 const path = require('path');
+const { upload } = require('micro-upload')
 const auth = require('./auth')
 const chat = require('./chat')
+const uploader = require('./uploader')
 
 const document = path.join(__dirname, 'main.html')
 const html = fs.readFileSync(document)
@@ -12,10 +14,6 @@ const html = fs.readFileSync(document)
 const server = micro(
   cors(
     router(
-      get('/index.html', async (req, res) => {
-        console.log('Serving index.html')
-        res.end(html)
-      }),
       post('/auth/login', async (req, res) => {
         try {
           const body = await micro.json(req)
@@ -140,7 +138,24 @@ const server = micro(
           console.error('get messages error: ', e)
           micro.send(res, 400, { error: 'get messages error' })
         }
-      })
+      }),
+      post('/upload', upload(async (req, res) => {
+        try {
+          const respose = await uploader.upload(req.files)
+          micro.send(res, 200, respose)
+        } catch (e) {
+          console.error('create chat error: ', e)
+          micro.send(res, 400, { error: 'create chat error' })
+        }
+      })),
+      get('/index.html', async (req, res) => {
+        console.log('Serving index.html')
+        res.end(html)
+      }),
+      get('/', async (req, res) => {
+        console.log('Serving / index.html')
+        res.end(html)
+      }),
     )
   )
 )

@@ -2,7 +2,9 @@
   "name": "bconf",
   "alias": "bconf.xyz",
   "env": {
-    "DATABASE_URL": "@db-url"
+    "DATABASE_URL": "@db-url",
+    "YANDEX_CLOUD_SECRET": "@yc-secret",
+    "YANDEX_CLOUD_ID": "@yc-id"
   },
   "public": true
 }
