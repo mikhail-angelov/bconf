@@ -44,6 +44,16 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect params' })
         }
       }),
+      post('/auth/login-profile', async (req, res) => {
+        try {
+          const body = await micro.json(req)
+          const response = await auth.loginViaProvider(body)
+          micro.send(res, 200, response);
+        } catch (e) {
+          console.error('login error: ', e)
+          micro.send(res, 400, { error: 'incorrect password' })
+        }
+      }),
       post('/auth/changeSettings', async (req, res) => {
         try {
           const token = req.headers['authorization']

@@ -3,6 +3,7 @@ const { sign, decode } = require('jsonwebtoken')
 const _ = require('lodash')
 const shortid = require('shortid')
 const database = require('./db')
+const { uploadUrl } = require('./uploader')
 const secret = 'todo: move to secrete'
 const USERS = 'users'
 
@@ -26,8 +27,7 @@ function checkPassword(candidate, hash) {
   return compareSync(hash, candidate)
 }
 
-function userInfo(user) {
-  const { _id, name, email, srcAvatar } = user
+function userInfo({ _id, name, email, srcAvatar }) {
   return { _id, name, email, srcAvatar }
 }
 
@@ -48,20 +48,23 @@ async function login(credentials) {
   }
 }
 
-async function register(request) {
-  const { email, name, password } = request
+async function createUser({ email, name, password, srcAvatar, profile }) {
   if (!email || !name || !password) {
     return Promise.reject('invalid params')
   }
   const db = await database.db()
   const response = await db.collection(USERS).insertOne({
-    _id: shortid.generate(), email, name, password: generatePasswordHash(password)
+    _id: shortid.generate(), email, name, srcAvatar, profile, password: generatePasswordHash(password)
   })
   const userId = _.get(response, 'insertedId')
   if (!userId) {
     return Promise.reject('invalid params')
   }
-  const user = await db.collection(USERS).findOne({ _id: userId })
+  return await db.collection(USERS).findOne({ _id: userId })
+}
+
+async function register({ email, name, password }) {
+  const user = await createUser({ email, name, password, profile: { provider: 'local' } })
   return { token: generateToken(user), user: userInfo(user) }
 }
 
@@ -86,7 +89,7 @@ async function check(token) {
     return Promise.reject('invalid token')
   }
   const decoded = decodeToken(token)
-  console.log('decoded', decodeToken(token))
+  console.log('decoded:', decoded)
   const userId = decoded._id
   if (!userId) {
     return Promise.reject('invalid token')
@@ -106,11 +109,44 @@ async function findUsers({ user, text }) {
   return results
 }
 
+async function createNewUserFromProviderData(profile) {
+  if (profile.providerId === 'firebase' && profile.providerData[0].providerId === 'facebook.com') {
+    const srcAvatar = await uploadUrl(profile.photoURL)
+    return createUser({
+      email: profile.email,
+      name: profile.displayName,
+      password: profile.uid,
+      srcAvatar,
+      profile,
+    })
+  } else {
+    //todo add other providers
+    return Promise.reject('unknown provider')
+  }
+}
+
+async function loginViaProvider(profile) {
+  if (!_.isObject(profile)) {
+    return Promise.reject('invalid profile')
+  }
+  const email = _.get(profile, 'email', '').toLowerCase()
+  const db = await database.db()
+  const user = await db.collection(USERS).findOne({ email })
+  if (user) {
+    //todo: check provider data
+    return { token: generateToken(user), user: userInfo(user) }
+  } else {
+    const newUser = await createNewUserFromProviderData(profile)
+    return { token: generateToken(newUser), user: userInfo(newUser) }
+  }
+}
+
 module.exports = {
   login,
   register,
   check,
   decodeToken,
   findUsers,
-  changeSettings
+  changeSettings,
+  loginViaProvider,
 }

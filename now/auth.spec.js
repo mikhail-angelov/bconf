@@ -36,4 +36,11 @@ describe('auth', () => {
     expect(response.email).eql('Kkk@kkk.kkk23')
     expect(response.srcAvatar).eql('user ava src!')
   })
+
+  it('should create user and login via provider', async () => {
+    const { user, token } = await auth.loginViaProvider({ displayName: 'fb', email: "fb@test.com", uid: 'any', providerId: 'firebase', providerData: [{ providerId: 'facebook.com' }] })
+    expect(user.name).eql('fb')
+    expect(user.email).eql('fb@test.com')
+    expect(!!token).eql(true)
+  })
 })
