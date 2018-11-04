@@ -110,14 +110,14 @@ async function createChat({ user, request }) {
 }
 
 async function updateChat({ user, request }) {
-  const { chatId, chatName, chatImage } = request
+  const { chatId, chatName } = request
   let response
   const db = await database.db()
   const isUserInChat = await db.collection(USER_CHATS).find({ userId: user._id, chatId }).toArray()
   if(isUserInChat.length > 0){
     response = await db.collection(USER_CHATS).updateMany(
       { chatId },
-      { $set: { chatName, chatImage } },
+      { $set: { chatName } },
     )
   }
   if (!response.result.ok) {
