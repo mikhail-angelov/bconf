@@ -31,9 +31,10 @@ describe('chat', () => {
   it('should update chat', async () => {
     const response = await chat.updateChat({
       user: { _id: USER_ID },
-      request: { chatId: CHAT_ID, chatName: 'test' }
+      request: { chatId: CHAT_ID, chatName: 'test', chatImage: "src-to-pic" }
     })
     expect(response.chatName).eql('test')
+    expect(response.chatImage).eql("src-to-pic")
   })
   it('should add user to chat', async () => {
     await chat.addUser({
