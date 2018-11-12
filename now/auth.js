@@ -129,14 +129,14 @@ async function loginViaProvider(profile) {
   if (!_.isObject(profile)) {
     return Promise.reject('invalid profile: ', JSON.stringify(profile))
   }
-  const email = _.get(profile, 'email', '').toLowerCase()
+  const email = (_.get(profile, 'email') || _.get(profile, 'uid', '')).toLowerCase()
   const db = await database.db()
   const user = await db.collection(USERS).findOne({ email })
   if (user) {
     //todo: check provider data
     return { token: generateToken(user), user: userInfo(user) }
   } else {
-    const newUser = await createNewUserFromProviderData(profile)
+    const newUser = await createNewUserFromProviderData({ ...profile, email })
     return { token: generateToken(newUser), user: userInfo(newUser) }
   }
 }
