@@ -110,7 +110,7 @@ async function findUsers({ user, text }) {
 }
 
 async function createNewUserFromProviderData(profile) {
-  if (profile.providerId === 'firebase' && profile.providerData[0].providerId === 'facebook.com') {
+  if (profile.providerId === 'firebase') {
     const srcAvatar = await uploadUrl(profile.photoURL)
     return createUser({
       email: profile.email,
@@ -127,7 +127,7 @@ async function createNewUserFromProviderData(profile) {
 
 async function loginViaProvider(profile) {
   if (!_.isObject(profile)) {
-    return Promise.reject('invalid profile')
+    return Promise.reject('invalid profile: ', JSON.stringify(profile))
   }
   const email = _.get(profile, 'email', '').toLowerCase()
   const db = await database.db()
