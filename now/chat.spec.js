@@ -73,13 +73,35 @@ describe('chat', () => {
       data: JSON.stringify({
         chatId: "5ba6532c43c528a283a86f57",
         message: {
-          text: "new message",
-          pictures: ["pic1", "pic2"]
+          text: "new message"
         }
       }
       )
     })
     const response = await chat.getChats({ _id: USER_ID })
     expect(response[0].lastMessageText).eql("new message")
+  })
+
+  it('should send file in chat', async () => {
+    await chat.processMessage({
+      user: {
+        _id: USER_ID,
+        name: "kkk"
+      },
+      data: JSON.stringify({
+        chatId: "5ba6532c43c528a283a86f57",
+        message: {
+          text: "new message",
+          links: ["pic1", "pic2"]
+        }
+      }
+      )
+    })
+    const response = await chat.getMessages({
+      user: { _id: USER_ID },
+      chatId: CHAT_ID
+    })
+    console.log(response)
+    expect(response[2].links.length).eql(2)
   })
 })

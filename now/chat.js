@@ -50,7 +50,7 @@ async function processMessage({ user, data, online }) {
       _id: shortid.generate(),
       chatId: parsed.chatId,
       text: parsed.message.text,
-      pictures: parsed.message.pictures,
+      links: parsed.message.links,
       author: user,
       timestamp: Date.now(),
     }
