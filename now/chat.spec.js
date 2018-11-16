@@ -65,7 +65,6 @@ describe('chat', () => {
   })
 
   it('should change last message in chat', async () => {
-
     await chat.processMessage({
       user: {
         _id: USER_ID,
@@ -73,7 +72,10 @@ describe('chat', () => {
       },
       data: JSON.stringify({
         chatId: "5ba6532c43c528a283a86f57",
-        text: "new message"
+        message: {
+          text: "new message",
+          pictures: ["pic1", "pic2"]
+        }
       }
       )
     })
