@@ -49,7 +49,8 @@ async function processMessage({ user, data, online }) {
     const message = {
       _id: shortid.generate(),
       chatId: parsed.chatId,
-      text: parsed.text,
+      text: parsed.message.text,
+      links: parsed.message.links,
       author: user,
       timestamp: Date.now(),
     }

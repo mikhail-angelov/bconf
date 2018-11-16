@@ -57,6 +57,25 @@
         },
         "timestamp": "1538038661271"
       }
+    },
+    {
+      "userId": "5ba6532c43c528a283a86f56",
+      "userName": "test3",
+      "chatId": "5ba6532c43c528a283a86f58",
+      "chatName": "test3",
+      "lastMessage": {
+        "_id": "message3",
+        "chatId": "5ba6532c43c528a283a86f58",
+        "text": "last44 message",
+        "author": {
+          "email": "Kkk@kkk.kkk",
+          "exp": "1538066503",
+          "iat": "1538037703",
+          "name": "kkk",
+          "_id": "bn_t1uD_r"
+        },
+        "timestamp": "1538038661271"
+      }
     }
   ],
   "messages": [

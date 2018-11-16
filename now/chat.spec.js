@@ -3,7 +3,9 @@ const mongoUnit = require('mongo-unit')
 const chat = require('./chat')
 const data = require('./tests/db/chat.json')
 const USER_ID = '5ba6532c43c528a283a86f54'
+const USER_ID2 = '5ba6532c43c528a283a86f56'
 const CHAT_ID = '5ba6532c43c528a283a86f57'
+const CHAT_ID2 = '5ba6532c43c528a283a86f58'
 
 describe('chat', () => {
   beforeEach(() => mongoUnit.load(data))
@@ -65,7 +67,6 @@ describe('chat', () => {
   })
 
   it('should change last message in chat', async () => {
-
     await chat.processMessage({
       user: {
         _id: USER_ID,
@@ -73,11 +74,36 @@ describe('chat', () => {
       },
       data: JSON.stringify({
         chatId: "5ba6532c43c528a283a86f57",
-        text: "new message"
+        message: {
+          text: "new message"
+        }
       }
       )
     })
     const response = await chat.getChats({ _id: USER_ID })
     expect(response[0].lastMessageText).eql("new message")
+  })
+
+  it('should send file in chat', async () => {
+    await chat.processMessage({
+      user: {
+        _id: USER_ID2,
+        name: "kkk"
+      },
+      data: JSON.stringify({
+        chatId: "5ba6532c43c528a283a86f58",
+        message: {
+          text: "new message",
+          links: ["pic1", "pic2"]
+        }
+      }
+      )
+    })
+    const response = await chat.getMessages({
+      user: { _id: USER_ID2 },
+      chatId: CHAT_ID2
+    })
+    console.log(response)
+    expect(response[0].links.length).eql(2)
   })
 })

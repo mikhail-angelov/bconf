@@ -223,7 +223,9 @@
 			function sendMessage() {
 				socket && socket.emit('message', JSON.stringify({
 					chatId,
-					text: $('#m').val()
+					message: {
+						text: $('#m').val()
+					}
 				}))
 				$('#m').val('')
 			}
@@ -231,7 +233,7 @@
 				try {
 					const msg = typeof data === 'string' ? JSON.parse(data) : data
 					if (msg.chatId === chatId) {
-						$('#messages').append($('<li>').text(msg.text))
+						$('#messages').append($('<li>').text(msg.message.text))
 					}
 				} catch (e) {
 					console.log('cannot parse input message: ', data)
