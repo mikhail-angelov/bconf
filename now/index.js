@@ -102,17 +102,6 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
-      get('/chat/:chatId/messagesdelta', async (req, res) => {
-        try {
-          const token = req.headers['authorization']
-          const user = auth.decodeToken(token);
-          const response = await chat.getMessagesDelta(user, req.params.chatId, req.lastMessageTimestamp);
-          micro.send(res, 200, response);
-        } catch (e) {
-          console.error('get chat delta error: ', e)
-          micro.send(res, 400, { error: 'get chat delta error' })
-        }
-      }),
       post('/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
@@ -153,7 +142,7 @@ const server = micro(
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
-          const response = await chat.getMessages({ user, chatId: req.params.chatId })
+          const response = await chat.getMessages({ user, chatId: req.params.chatId, timestamp: req.query.timestamp });
           micro.send(res, 200, response);
         } catch (e) {
           console.error('get messages error: ', e)
