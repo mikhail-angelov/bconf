@@ -157,6 +157,21 @@ async function getMessages({ user, chatId }) {
   }
 }
 
+async function getMessagesDelta({ user, chatId, lastMessageTimestamp }) {
+  if (chatId && lastMessageTimestamp) {
+    const db = await database.db();
+    const lastMessage = await db.collection(USER_CHATS).find({ userId: user._id, chatId }).toArray();
+    const lastMessageTimestampBE = lastMessage[0].lastMessage.timestamp ? lastMessage[0].lastMessage.timestamp : null;
+    if (lastMessageTimestampBE > lastMessageTimestamp) {
+      const messagesDelta = await db.collection(MESSAGES).find({ chatId, timestamp: { $gt: lastMessageTimestamp } }).toArray();
+      return messagesDelta;
+    }
+    return [];
+  } else {
+    return Promise.reject('Invalid params')
+  }
+}
+
 module.exports = {
   init,
   getChat,
@@ -165,7 +180,7 @@ module.exports = {
   updateChat,
   addUser,
   getMessages,
-
+  getMessagesDelta,
   //private method only
   processMessage,
 }
