@@ -1,6 +1,6 @@
 import {
   AUTH_USER, DEAUTH_USER,
-} from './constants'
+} from '../constants/actions'
 import { LOGIN_URL, REGISTER_URL, doAuthRequest, setAuth, doJsonRequest } from './helper'
 
 export const login = ({ email, password }) => {
@@ -38,5 +38,11 @@ export const register = ({ email, password }) => {
         console.log('register error', e)
         return dispatch({ type: DEAUTH_USER, payload: e })
       })
+  }
+}
+
+export const resetPassword = (email) => {
+  return (dispatch) => {
+    // todo: add reset url
   }
 }

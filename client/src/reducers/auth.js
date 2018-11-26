@@ -1,7 +1,7 @@
 import {
   AUTH_USER,
   DEAUTH_USER,
-} from '../actions/constants'
+} from '../constants/actions'
 
 const initialState = {
   bootstrapped: false,
