@@ -141,9 +141,14 @@ const server = micro(
       get('/messages/:chatId', async (req, res) => {
         try {
           const token = req.headers['authorization']
-          const user = auth.decodeToken(token)
-          const response = await chat.getMessages({ user, ...req });
-          micro.send(res, 200, response);
+          const user = auth.decodeToken(token);
+          if (req.params.chatId) {
+            const query = { timestamp: +_.get(req.query, 'timestamp', 0) };
+            const response = await chat.getMessages({ user, chatId: req.params.chatId, query });
+            micro.send(res, 200, response);
+          } else {
+            throw 'no chat id provided'
+          }
         } catch (e) {
           console.error('get messages error: ', e)
           micro.send(res, 400, { error: 'get messages error' })

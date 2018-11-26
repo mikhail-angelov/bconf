@@ -147,11 +147,10 @@ async function addUser({ user, request }) {
   return { ok: 'success' }
 }
 
-async function getMessages({ user, chatId, timestamp }) {
+async function getMessages({ user, chatId, query }) {
   if (chatId && user) {
     const db = await database.db()
-    const query = timestamp ? { chatId, timestamp: { $gt: timestamp } } : { chatId };
-    const messages = await db.collection(MESSAGES).find(query).toArray()
+    const messages = await db.collection(MESSAGES).find({ chatId, timestamp: { $gt: query.timestamp } }).toArray()
     return messages
   } else {
     return Promise.reject('Invalid param')
