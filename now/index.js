@@ -143,7 +143,8 @@ const server = micro(
           const token = req.headers['authorization']
           const user = auth.decodeToken(token);
           if (req.params.chatId) {
-            const query = { timestamp: +_.get(req.query, 'timestamp', 0) };
+            const query = { timestamp: +_.get(req, 'query.timestamp', 0) };
+            console.log('Query for messages is:', query);
             const response = await chat.getMessages({ user, chatId: req.params.chatId, query });
             micro.send(res, 200, response);
           } else {
