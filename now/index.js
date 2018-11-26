@@ -142,7 +142,7 @@ const server = micro(
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
-          const response = await chat.getMessages({ user, chatId: req.params.chatId, timestamp: req.query.timestamp });
+          const response = await chat.getMessages({ user, ...req });
           micro.send(res, 200, response);
         } catch (e) {
           console.error('get messages error: ', e)
