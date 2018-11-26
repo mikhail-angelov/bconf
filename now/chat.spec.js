@@ -61,7 +61,8 @@ describe('chat', () => {
   it('should get all chat messages', async () => {
     const messages = await chat.getMessages({
       user: { _id: USER_ID },
-      chatId: CHAT_ID
+      chatId: CHAT_ID,
+      query: { timestamp: 0 }
     })
     expect(messages.length).eql(2)
   })
@@ -101,9 +102,36 @@ describe('chat', () => {
     })
     const response = await chat.getMessages({
       user: { _id: USER_ID2 },
-      chatId: CHAT_ID2
+      chatId: CHAT_ID2,
+      query: { timestamp: 0 }
     })
-    console.log(response)
     expect(response[0].links.length).eql(2)
+  })
+
+  it('should send messages delta', async () => {
+    const messagesDelta = await chat.getMessages(
+      {
+        user: {
+          _id: USER_ID,
+          name: "kkk"
+        },
+        chatId: "5ba6532c43c528a283a86f57",
+        query: { timestamp: 1538038661171 }
+
+      })
+    expect(messagesDelta.length).eql(2);
+  })
+
+  it('should send messages delta (empty case)', async () => {
+    const messagesDelta = await chat.getMessages(
+      {
+        user: {
+          _id: USER_ID,
+          name: "kkk"
+        },
+        chatId: "5ba6532c43c528a283a86f57",
+        query: { timestamp: 1538038665571 }
+      })
+    expect(messagesDelta.length).eql(0);
   })
 })

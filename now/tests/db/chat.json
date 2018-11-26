@@ -36,7 +36,7 @@
           "name": "kkk",
           "_id": "bn_t1uD_r"
         },
-        "timestamp": "1538038661271"
+        "timestamp": 1538038661271
       }
     },
     {
@@ -55,7 +55,7 @@
           "name": "kkk",
           "_id": "bn_t1uD_r"
         },
-        "timestamp": "1538038661271"
+        "timestamp": 1538038661271
       }
     },
     {
@@ -74,7 +74,7 @@
           "name": "kkk",
           "_id": "bn_t1uD_r"
         },
-        "timestamp": "1538038661271"
+        "timestamp": 1538038661271
       }
     }
   ],
@@ -88,7 +88,8 @@
           "name": "test1"
         }
       ],
-      "text": "test"
+      "text": "test",
+      "timestamp": 1538038661271
     },
     {
       "_id": "5ba6532c43c528a283a86f59",
@@ -99,7 +100,8 @@
           "name": "test1"
         }
       ],
-      "text": "test2"
+      "text": "test2",
+      "timestamp": 1538038661371
     }
   ]
 }

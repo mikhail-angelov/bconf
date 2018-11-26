@@ -115,7 +115,7 @@ async function updateChat({ user, request }) {
   let response
   const db = await database.db()
   const isUserInChat = await db.collection(USER_CHATS).find({ userId: user._id, chatId }).toArray()
-  if(isUserInChat.length > 0){
+  if (isUserInChat.length > 0) {
     response = await db.collection(USER_CHATS).updateMany(
       { chatId },
       { $set: { chatName, chatImage } },
@@ -147,10 +147,10 @@ async function addUser({ user, request }) {
   return { ok: 'success' }
 }
 
-async function getMessages({ user, chatId }) {
-  if (chatId) {
+async function getMessages({ user, chatId, query }) {
+  if (chatId && user) {
     const db = await database.db()
-    const messages = await db.collection(MESSAGES).find({ chatId }).toArray()
+    const messages = await db.collection(MESSAGES).find({ chatId, timestamp: { $gt: query.timestamp } }).toArray()
     return messages
   } else {
     return Promise.reject('Invalid param')
@@ -165,7 +165,6 @@ module.exports = {
   updateChat,
   addUser,
   getMessages,
-
   //private method only
   processMessage,
 }
