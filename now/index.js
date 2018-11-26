@@ -7,6 +7,7 @@ const { upload } = require('micro-upload')
 const auth = require('./auth')
 const chat = require('./chat')
 const uploader = require('./uploader')
+const _ = require('lodash');
 
 const document = path.join(__dirname, 'main.html')
 const html = fs.readFileSync(document)
