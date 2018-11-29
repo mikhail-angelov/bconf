@@ -6,6 +6,28 @@ const database = require('./db')
 const { uploadUrl } = require('./uploader')
 const secret = 'todo: move to secrete'
 const USERS = 'users'
+const admin = require('firebase-admin')
+
+initializeFirebaseAdminApp(process.env.FIREBASE_ACCOUNT_KEY, process.env.FIREBASE_DB_NAME);
+
+async function initializeFirebaseAdminApp(accountKey, dbName) {
+  try {
+    const parsedAccountKey = JSON.parse(accountKey);
+
+    if (!dbName || !parsedAccountKey) {
+      console.log("Firebase admin app hasn't been initialized, an error occured")
+      trow("Firebase admin app hasn't been initialized, an error occured")
+    }
+
+    await admin.initializeApp({
+      credential: admin.credential.cert(parsedAccountKey),
+      databaseURL: dbName
+    })
+  } catch (e) {
+    console.log("Firebase admin app hasn't been initialized, an error occured", e)
+  }
+}
+
 
 function generateToken(user) {
   const { _id, name, email } = user
@@ -60,11 +82,22 @@ async function createUser({ email, name, password, srcAvatar, profile }) {
   if (!userId) {
     return Promise.reject('invalid params')
   }
+
+  const firebaseRecord = await admin.auth().createUser({ id: userId, email, name, srcAvatar, profile })
+
+  console.log('firebase record', firebaseRecord)
+  const firebaseUid = _.get(firebaseRecord, 'uid')
+  if (!firebaseUid) {
+    return Promise.reject('Error creating new user in firebase')
+  } else {
+    console.log('Successfully, created user in firebase', firebaseUid)
+  }
+
   return await db.collection(USERS).findOne({ _id: userId })
 }
 
 async function register({ email, name, password }) {
-  const user = await createUser({ email, name, password, profile: { provider: 'local' } })
+  const user = await createUser({ email, name, password, profile: null })
   return { token: generateToken(user), user: userInfo(user) }
 }
 
