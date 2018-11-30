@@ -55,18 +55,6 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect password' })
         }
       }),
-      post('/auth/changeSettings', async (req, res) => {
-        try {
-          const token = req.headers['authorization']
-          const user = auth.decodeToken(token)
-          const body = await micro.json(req)
-          const response = await auth.changeSettings(user._id, body)
-          micro.send(res, 200, response)
-        } catch (e) {
-          console.error('changeSettings error: ', e)
-          micro.send(res, 400, { error: 'incorrect params' })
-        }
-      }),
       post('/auth/updateUser', async (req, res) => {
         try {
           const token = req.headers['authorization']
