@@ -84,6 +84,21 @@ async function changeSettings(userId, request) {
   return { name: result.name, email: result.email, srcAvatar: result.srcAvatar }
 }
 
+async function updateUser(userId, request) {
+  const { firebaseMsgToken } = request
+  if (!firebaseMsgToken || !userId) {
+    return Promise.reject('invalid params')
+  }
+  const db = await database.db()
+  const user = await db.collection(USERS).updateOne({ _id: userId },
+    { $set: { firebaseMsgToken } })
+  if (!user) {
+    return Promise.reject('invalid params')
+  }
+  const user = await db.collection(USERS).findOne({ _id: userId })
+  return { user: userInfo(user) }
+}
+
 async function check(token) {
   if (!token) {
     return Promise.reject('invalid token')
@@ -149,4 +164,5 @@ module.exports = {
   findUsers,
   changeSettings,
   loginViaProvider,
+  updateUser
 }
