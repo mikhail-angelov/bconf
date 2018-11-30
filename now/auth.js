@@ -72,10 +72,10 @@ async function updateUser(userId, request) {
   try {
     const updateRequest = _.pick(request, ['firebaseMsgToken', 'name', 'email', 'srcAvatar'])
     const db = await database.db()
-    const user = await db.collection(USERS).updateOne({ _id: userId },
+    await db.collection(USERS).updateOne({ _id: userId },
       { $set: updateRequest })
-    const user = await db.collection(USERS).findOne({ _id: userId })
-    return { user: userInfo(user) }
+    const updatedUser = await db.collection(USERS).findOne({ _id: userId })
+    return { user: userInfo(updatedUser) }
   } catch (e) {
     console.log('user update error', e)
     return Promise.reject('user update error')

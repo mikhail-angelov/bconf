@@ -29,12 +29,18 @@ describe('auth', () => {
     expect(response.length).eql(2)
   })
 
-  it('should check update user settigs', async () => {
+  it('should update user settigs', async () => {
     const _id = '5ba6532c43c528a283a86f54'
-    const response = await auth.changeSettings(_id, { name: 'kkk23', email: "Kkk@kkk.kkk23", srcAvatar: "user ava src!" })
-    expect(response.name).eql('kkk23')
-    expect(response.email).eql('Kkk@kkk.kkk23')
-    expect(response.srcAvatar).eql('user ava src!')
+    const response = await auth.updateUser(_id, { name: 'kkk23', email: "Kkk@kkk.kkk23", srcAvatar: "user ava src!" })
+    expect(response.user.name).eql('kkk23')
+    expect(response.user.email).eql('Kkk@kkk.kkk23')
+    expect(response.user.srcAvatar).eql('user ava src!')
+  })
+
+  it('should update firebase token', async () => {
+    const _id = '5ba6532c43c528a283a86f54'
+    const response = await auth.updateUser(_id, { firebaseMsgToken: "123123123131312" })
+    expect(response.user.name).eql('test1')
   })
 
   it('should create user and login via provider', async () => {
