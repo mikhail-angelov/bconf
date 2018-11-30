@@ -27,8 +27,8 @@ function checkPassword(candidate, hash) {
   return compareSync(hash, candidate)
 }
 
-function userInfo({ _id, name, email, srcAvatar }) {
-  return { _id, name, email, srcAvatar }
+function userInfo({ _id, name, email, srcAvatar, firebaseMsgToken }) {
+  return { _id, name, email, srcAvatar, firebaseMsgToken }
 }
 
 async function login(credentials) {

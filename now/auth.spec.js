@@ -40,7 +40,7 @@ describe('auth', () => {
   it('should update firebase token', async () => {
     const _id = '5ba6532c43c528a283a86f54'
     const response = await auth.updateUser(_id, { firebaseMsgToken: "123123123131312" })
-    expect(response.user.name).eql('test1')
+    expect(response.user.firebaseMsgToken).eql('123123123131312')
   })
 
   it('should create user and login via provider', async () => {
