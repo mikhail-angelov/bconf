@@ -68,20 +68,18 @@ async function register({ email, name, password }) {
   return { token: generateToken(user), user: userInfo(user) }
 }
 
-async function changeSettings(userId, request) {
-  const { name, email, srcAvatar } = request
-  if (!name || !email) {
-    return Promise.reject('invalid params')
+async function updateUser(userId, request) {
+  try {
+    const updateRequest = _.pick(request, ['firebaseMsgToken', 'name', 'email', 'srcAvatar'])
+    const db = await database.db()
+    await db.collection(USERS).updateOne({ _id: userId },
+      { $set: updateRequest })
+    const updatedUser = await db.collection(USERS).findOne({ _id: userId })
+    return { user: userInfo(updatedUser) }
+  } catch (e) {
+    console.log('user update error', e)
+    return Promise.reject('user update error')
   }
-  console.log(userId)
-  const db = await database.db()
-  const user = await db.collection(USERS).updateOne({ _id: userId },
-    { $set: { name, email, srcAvatar } })
-  if (!user) {
-    return Promise.reject('invalid params')
-  }
-  const result = await db.collection(USERS).findOne({ _id: userId })
-  return { name: result.name, email: result.email, srcAvatar: result.srcAvatar }
 }
 
 async function check(token) {
@@ -147,6 +145,6 @@ module.exports = {
   check,
   decodeToken,
   findUsers,
-  changeSettings,
   loginViaProvider,
+  updateUser
 }
