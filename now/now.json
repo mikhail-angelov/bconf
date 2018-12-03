@@ -4,7 +4,9 @@
   "env": {
     "DATABASE_URL": "@db-url",
     "YANDEX_CLOUD_SECRET": "@yc-secret",
-    "YANDEX_CLOUD_ID": "@yc-id"
+    "YANDEX_CLOUD_ID": "@yc-id",
+    "FIREBASE_DB_NAME": "@firebase-db-name",
+    "FIREBASE_ACCOUNT_KEY": "@firebase-account-key"
   },
   "public": true
 }
