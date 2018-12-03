@@ -16,6 +16,7 @@
     "aws-sdk": "^2.344.0",
     "bcrypt": "^3.0.1",
     "file-type": "^10.4.0",
+    "firebase-admin": "^6.3.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
     "micro": "^9.3.3",

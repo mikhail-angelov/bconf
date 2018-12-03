@@ -6,6 +6,28 @@ const database = require('./db')
 const { uploadUrl } = require('./uploader')
 const secret = 'todo: move to secrete'
 const USERS = 'users'
+const admin = require('firebase-admin')
+
+initializeFirebaseAdminApp(process.env.FIREBASE_ACCOUNT_KEY, process.env.FIREBASE_DB_NAME);
+
+async function initializeFirebaseAdminApp(accountKey, dbName) {
+  try {
+    const parsedAccountKey = JSON.parse(accountKey);
+
+    if (!dbName || !parsedAccountKey) {
+      console.log("Firebase admin app hasn't been initialized, an error occured")
+      trow("Firebase admin app hasn't been initialized, an error occured")
+    }
+
+    await admin.initializeApp({
+      credential: admin.credential.cert(parsedAccountKey),
+      databaseURL: dbName
+    })
+  } catch (e) {
+    console.log("Firebase admin app hasn't been initialized, an error occured", e)
+  }
+}
+
 
 function generateToken(user) {
   const { _id, name, email } = user
@@ -60,17 +82,31 @@ async function createUser({ email, name, password, srcAvatar, profile }) {
   if (!userId) {
     return Promise.reject('invalid params')
   }
+
+  await createUserInFirebase({ userId, email, name, srcAvatar, profile })
+
   return await db.collection(USERS).findOne({ _id: userId })
 }
 
+async function createUserInFirebase({ userId, email, name, srcAvatar, profile }) {
+  try {
+    const firebaseUser = await admin.auth().createUser({ id: userId, email, name, srcAvatar, profile })
+    const firebaseUserUid = _.get(firebaseUser, 'uid')
+    await updateUser(userId, { firebaseUserUid })
+  }
+  catch (e) {
+    console.log("Error creating user in firebase", e)
+  }
+}
+
 async function register({ email, name, password }) {
-  const user = await createUser({ email, name, password, profile: { provider: 'local' } })
+  const user = await createUser({ email, name, password, profile: null })
   return { token: generateToken(user), user: userInfo(user) }
 }
 
 async function updateUser(userId, request) {
   try {
-    const updateRequest = _.pick(request, ['firebaseMsgToken', 'name', 'email', 'srcAvatar'])
+    const updateRequest = _.pick(request, ['firebaseMsgToken', 'name', 'email', 'srcAvatar', 'firebaseUserUid'])
     const db = await database.db()
     await db.collection(USERS).updateOne({ _id: userId },
       { $set: updateRequest })
