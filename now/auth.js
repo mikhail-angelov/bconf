@@ -92,14 +92,7 @@ async function createUserInFirebase({ userId, email, name, srcAvatar, profile })
   try {
     const firebaseUser = await admin.auth().createUser({ id: userId, email, name, srcAvatar, profile })
     const firebaseUserUid = _.get(firebaseUser, 'uid')
-
-    if (!firebaseUserUid) {
-      const db = await database.db()
-      await db.collection(USERS).deleteOne({ _id: userId })
-      Promise.reject('Error creating new user in firebase')
-    } else {
-      await updateUser(userId, { firebaseUserUid })
-    }
+    await updateUser(userId, { firebaseUserUid })
   }
   catch (e) {
     console.log("Error creating user in firebase", e)
