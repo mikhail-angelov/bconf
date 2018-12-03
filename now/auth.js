@@ -83,17 +83,27 @@ async function createUser({ email, name, password, srcAvatar, profile }) {
     return Promise.reject('invalid params')
   }
 
-  const firebaseRecord = await admin.auth().createUser({ id: userId, email, name, srcAvatar, profile })
-
-  console.log('firebase record', firebaseRecord)
-  const firebaseUid = _.get(firebaseRecord, 'uid')
-  if (!firebaseUid) {
-    return Promise.reject('Error creating new user in firebase')
-  } else {
-    console.log('Successfully, created user in firebase', firebaseUid)
-  }
+  await createUserInFirebase({ userId, email, name, srcAvatar, profile })
 
   return await db.collection(USERS).findOne({ _id: userId })
+}
+
+async function createUserInFirebase({ userId, email, name, srcAvatar, profile }) {
+  try {
+    const firebaseUser = await admin.auth().createUser({ id: userId, email, name, srcAvatar, profile })
+    const firebaseUserUid = _.get(firebaseUser, 'uid')
+
+    if (!firebaseUserUid) {
+      const db = await database.db()
+      await db.collection(USERS).deleteOne({ _id: userId })
+      Promise.reject('Error creating new user in firebase')
+    } else {
+      await updateUser(userId, { firebaseUserUid })
+    }
+  }
+  catch (e) {
+    console.log("Error creating user in firebase", e)
+  }
 }
 
 async function register({ email, name, password }) {
@@ -103,7 +113,7 @@ async function register({ email, name, password }) {
 
 async function updateUser(userId, request) {
   try {
-    const updateRequest = _.pick(request, ['firebaseMsgToken', 'name', 'email', 'srcAvatar'])
+    const updateRequest = _.pick(request, ['firebaseMsgToken', 'name', 'email', 'srcAvatar', 'firebaseUserUid'])
     const db = await database.db()
     await db.collection(USERS).updateOne({ _id: userId },
       { $set: updateRequest })
