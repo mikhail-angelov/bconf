@@ -5,6 +5,8 @@ const database = require('./db')
 const USER_CHATS = 'userChats'
 const MESSAGES = 'messages'
 const online = {}
+const pushNotification = require('./pushNotification')
+
 
 function init(server) {
   const io = require('socket.io')(server)
@@ -65,6 +67,8 @@ async function processMessage({ user, data, online }) {
         lastMessageTimestamp: message.timestamp
       }
     })
+    await pushNotification.send({ text, chatId })
+
     //todo: temp common broadcast
     _.each(online, socket => {
       socket && socket.send(message)
