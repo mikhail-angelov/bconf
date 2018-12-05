@@ -178,5 +178,6 @@ const server = micro(
 )
 
 chat.init(server)
+auth.initializeFirebaseAdminApp(process.env.FIREBASE_ACCOUNT_KEY, process.env.FIREBASE_DB_NAME);
 
 server.listen(4000, () => console.log('Listening on localhost:4000'))

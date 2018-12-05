@@ -1,8 +1,15 @@
 const expect = require('chai').expect
 const mongoUnit = require('mongo-unit')
-const auth = require('./auth')
 const data = require('./tests/db/auth.json')
+var proxyquire = require('proxyquire')
 
+const auth = proxyquire('./auth', {
+  'firebase-admin': {
+    auth: () => ({
+      createUser: () => Promise.resolve("Ok!"),
+    }),
+  }
+})
 
 describe('auth', () => {
   beforeEach(() => mongoUnit.load(data))
