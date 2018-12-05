@@ -8,8 +8,6 @@ const secret = 'todo: move to secrete'
 const USERS = 'users'
 const admin = require('firebase-admin')
 
-initializeFirebaseAdminApp(process.env.FIREBASE_ACCOUNT_KEY, process.env.FIREBASE_DB_NAME);
-
 async function initializeFirebaseAdminApp(accountKey, dbName) {
   try {
     const parsedAccountKey = JSON.parse(accountKey);
@@ -182,5 +180,6 @@ module.exports = {
   decodeToken,
   findUsers,
   loginViaProvider,
-  updateUser
+  updateUser,
+  initializeFirebaseAdminApp
 }
