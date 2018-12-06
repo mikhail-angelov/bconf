@@ -53,6 +53,7 @@ async function processMessage({ user, data, online }) {
       chatId: parsed.chatId,
       text: parsed.message.text,
       links: parsed.message.links,
+      audioLinks: parsed.message.audioLinks,
       author: user,
       timestamp: Date.now(),
     }
