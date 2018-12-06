@@ -13,8 +13,14 @@ async function send({ text, chatId }) {
             const user = usersInChat[i]
             if (user.firebaseMsgToken) {
                 const pushMessage = {
-                    data: {
-                        text: text
+                    notification: {
+                        title: 'New chat message:',
+                        body: text,
+                    },
+                    android: {
+                        notification: {
+                            priority: 'high',
+                        },
                     },
                     token: user.firebaseMsgToken
                 }
