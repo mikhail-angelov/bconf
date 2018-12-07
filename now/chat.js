@@ -6,45 +6,44 @@ const USER_CHATS = 'userChats'
 const MESSAGES = 'messages'
 const online = {}
 const pushNotification = require('./pushNotification')
+const WebSocketServer = require('websocket').server;
 
 
 function init(server) {
-  const io = require('socket.io')(server)
-  io.use((socket, next) => {
-    console.log('io socket handshake: ')
-    if (socket.handshake.query && socket.handshake.query.token) {
-      const decoded = auth.decodeToken(socket.handshake.query.token)
-      socket.decoded = decoded;
-      next();
+  wsServer = new WebSocketServer({
+    httpServer: server
+  });
+  wsServer.on('request', function (request) {
+    console.log((new Date()) + ' Connection from origin ' + request.origin + '.');
+    let connection
+    if (request.resourceURL.query && request.resourceURL.query.token) {
+
+      const user = auth.decodeToken(request.resourceURL.query.token)
+
+      connection = request.accept(null, request.origin)
+
+      online[user._id] = connection
+
+      connection.on('message', function (message) {
+        console.info(`message:send  data, ${JSON.stringify(message)}`)
+        if (message.type === 'utf8') {
+          processMessage({ user, data: message.utf8Data, online })
+        }
+      });
+
+      connection.on('close', function (connection) {
+        online[user._id] = null
+      });
+
     } else {
-      next(new Error('Authentication error'));
+      request.reject();
+      console.log("Connection to websocket rejected. Auth error.")
     }
-  })
-  io.on('connection', onConnection)
-}
 
-function onConnection(socket) {
-  console.log('onConnection socket: ', socket.decoded)
-  const user = socket.decoded
-  if (!user) {
-    socket.disconnect()
-    return 'invalid token'
-  }
-  online[user._id] = socket
-
-  socket.on('disconnect', () => {
-    console.info('user disconnected:', user._id)
-    online[user._id] = null
-  })
-
-  socket.on('message', (data) => {
-    console.info(`message:send  data, ${JSON.stringify(data)}`)
-    processMessage({ user, data, online })
-  })
+  });
 }
 
 async function processMessage({ user, data, online }) {
-  console.log('data', data)
   try {
     const parsed = JSON.parse(data)
     const db = await database.db()
@@ -68,12 +67,15 @@ async function processMessage({ user, data, online }) {
         lastMessageTimestamp: message.timestamp
       }
     })
+
     await pushNotification.send({ text: parsed.message.text, chatId })
 
     //todo: temp common broadcast
-    _.each(online, socket => {
-      socket && socket.send(message)
+    _.forEach(online, connection => {
+      connection && connection.sendUTF(
+        JSON.stringify(message));
     })
+
   } catch (e) {
     console.error('cannot send message, ', e)
   }
