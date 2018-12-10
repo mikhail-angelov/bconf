@@ -17,11 +17,6 @@ async function send({ text, chatId }) {
                         title: 'New chat message:',
                         body: text,
                     },
-                    android: {
-                        notification: {
-                            priority: 'high',
-                        },
-                    },
                     token: user.firebaseMsgToken
                 }
                 await admin.messaging().send(pushMessage)

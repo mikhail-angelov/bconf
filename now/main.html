@@ -71,7 +71,6 @@
 		</div>
 	</div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
 
@@ -221,7 +220,7 @@
 			}
 
 			function sendMessage() {
-				socket && socket.emit('message', JSON.stringify({
+				socket && socket.send(JSON.stringify({
 					chatId,
 					message: {
 						text: $('#m').val()
@@ -229,22 +228,25 @@
 				}))
 				$('#m').val('')
 			}
-			function onMessage(data) {
-				try {
-					const msg = typeof data === 'string' ? JSON.parse(data) : data
-					if (msg.chatId === chatId) {
-						$('#messages').append($('<li>').text(msg.message.text))
-					}
-				} catch (e) {
-					console.log('cannot parse input message: ', data)
-				}
-			}
 
 			function connect() {
-				socket = io.connect('/', {
-					query: { token: token }
-				})
-				socket.on('message', onMessage)
+				socket = new WebSocket(`ws://${window.location.host}/?token=${token}`);
+
+				socket.onopen = () => {
+					console.log("connected websocket")
+				};
+				socket.onmessage = (e) => {
+					const data = e.data;
+					console.log("data", data)
+					try {
+						const msg = typeof data === 'string' ? JSON.parse(data) : data
+						if (msg.chatId === chatId) {
+							$('#messages').append($('<li>').text(msg.text))
+						}
+					} catch (e) {
+						console.log('cannot parse input message: ', data)
+					}
+				}
 			}
 
 			function openSearch() {
