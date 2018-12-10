@@ -26,7 +26,7 @@
     "mongodb": "^3.1.6",
     "node-fetch": "^2.2.0",
     "shortid": "^2.2.13",
-    "socket.io": "^2.1.1"
+    "websocket": "^1.0.28"
   },
   "devDependencies": {
     "chai": "^4.1.2",
