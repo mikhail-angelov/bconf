@@ -1,4 +1,4 @@
-const { compareSync, hashSync } = require('bcrypt')
+const { compareSync, hashSync } = require('bcrypt-nodejs')
 const { sign, decode } = require('jsonwebtoken')
 const _ = require('lodash')
 const shortid = require('shortid')
@@ -40,7 +40,7 @@ function decodeToken(token) {
 }
 
 function generatePasswordHash(password) {
-  return hashSync(password, 2)
+  return hashSync(password)
 }
 
 function checkPassword(candidate, hash) {

@@ -1,16 +1,16 @@
-FROM node:6.10.2-alpine
+FROM node:8.14.0-alpine
 
 MAINTAINER Mikhail.Angelov (@MikhailAngelov)
 
-RUN mkdir -p /opt/bconf
+RUN mkdir -p /opt/bconf/server
 WORKDIR /opt/bconf
 
 RUN export TERM=xterm
 RUN npm install forever -g
 
 COPY ./package.json ./
-COPY ./yarn.lock ./
-RUN yarn install --production
+COPY ./server/package.json ./
+RUN npm install --production
 
-COPY ./dist dist
-COPY ./snode snode
+#COPY ./dist dist
+COPY ./server server

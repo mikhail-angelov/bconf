@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "name": "bconf",
   "alias": "bconf.xyz",
   "env": {
@@ -8,5 +9,8 @@
     "FIREBASE_DB_NAME": "@firebase-db-name",
     "FIREBASE_ACCOUNT_KEY": "@firebase-account-key"
   },
+  "builds": [{
+    "src": "./index.js", "use": "@now/node-server"
+  }],
   "public": true
 }
