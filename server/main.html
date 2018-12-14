@@ -230,7 +230,7 @@
 			}
 
 			function connect() {
-				socket = new WebSocket(`ws://${window.location.host}/?token=${token}`);
+				socket = new WebSocket(`wss://${window.location.host}/?token=${token}`);
 
 				socket.onopen = () => {
 					console.log("connected websocket")
