@@ -18,7 +18,7 @@ describe('push notification', () => {
     afterEach(() => mongoUnit.drop())
 
     it('should send notifications', async () => {
-        const sentNotification = await pushNotification.send({ text: 'test text', chatId: '5ba6532c43c528a283a86f57' })
+        const sentNotification = await pushNotification.send({ text: 'test text', chatId: '5ba6532c43c528a283a86f57', authorId: "5ba6532c43c528a283a86f54" })
         expect(sentNotification).eql(1)
     })
     it('should send 0 notifications to wrong chatId', async () => {
