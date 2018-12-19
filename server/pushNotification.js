@@ -5,11 +5,12 @@ const database = require('./db')
 const _ = require('lodash')
 
 
-async function send({ text, chatId, authorId }) {
-    const usersInChat = await getUsersFirebaseTokens(chatId, authorId);
+async function send({ text, chatId, authorId, online }) {
+    const usersInChat = await getUsersFirebaseTokens(chatId, authorId)
+    const usersInChatOffline = _.filter(usersInChat, user => !online[user._id])
     try {
         let messageCounter = 0
-        for (let i = 0; i < usersInChat.length; i++) {
+        for (let i = 0; i < usersInChatOffline.length; i++) {
             const user = usersInChat[i]
             if (user.firebaseMsgToken) {
                 const pushMessage = {

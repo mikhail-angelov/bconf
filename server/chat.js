@@ -68,7 +68,7 @@ async function processMessage({ user, data, online }) {
       }
     })
 
-    await pushNotification.send({ text: parsed.message.text, chatId, authorId: user._id })
+    await pushNotification.send({ text: parsed.message.text, chatId, authorId: user._id, online })
 
     //todo: temp common broadcast
     _.forEach(online, connection => {
