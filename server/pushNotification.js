@@ -6,9 +6,8 @@ const _ = require('lodash')
 
 
 async function send({ text, chatId, authorId, online }) {
-    const usersInChat = await getUsersFirebaseTokens(chatId, authorId);
-    const usersOnline = Object.keys(online);
-    const usersInChatOffline = _.filter(usersInChat, user => usersOnline.indexOf(user._id))
+    const usersInChat = await getUsersFirebaseTokens(chatId, authorId)
+    const usersInChatOffline = _.filter(usersInChat, user => !online[user._id])
     try {
         let messageCounter = 0
         for (let i = 0; i < usersInChatOffline.length; i++) {
