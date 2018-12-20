@@ -16,14 +16,12 @@
     "npm": "^5"
   },
   "scripts": {
-    "install": "cd server; npm install",
+    "install": "cd server; npm install; cd ../client;  npm install",
     "lint": "standard --fix --env mocha --plugin riot",
     "test": "mocha ./server/*.spec.js --delay",
     "now": "cd server; npm run deploy",
     "build": "gulp build",
     "release": "bash ./release.sh",
-    "riot": "riot ui/components ui/dist/bundle.js",
-    "test-ui": "time mocha --compilers js:test/compiler.js ui/**/*.spec.js",
     "server:dev": "cd server; npm run dev",
     "client:dev": "cd client; npm start",
     "dev": "export DATABASE_URL='mongodb://localhost:27017/test'; node ./server"
