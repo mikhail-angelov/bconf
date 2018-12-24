@@ -116,9 +116,7 @@ async function getChats(user) {
     )
 
     const userChatsWithUsers = _.map(userChats, chat => ({
-        chatId: _.get(chat, 'chatId'),
-        chatName: _.get(chat, 'chatName'),
-        chatImage: _.get(chat, 'chatImage'),
+        ...chat,
         users: _.get(chatsWithUsersMap, chat.chatId),
     }))
     return userChatsWithUsers
