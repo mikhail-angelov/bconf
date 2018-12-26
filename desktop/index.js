@@ -13,18 +13,21 @@ let mainWindow;
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 800, height: 600});
+    mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
-    const startUrl = process.env.ELECTRON_START_URL || url.format({
-        pathname: path.join(__dirname, '/../client/build/index.html'),
-        protocol: 'file:',
-        slashes: true
-    });
-    // and load the index.html of the app.
-    mainWindow.loadURL('http://localhost:3000');
-
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    if (process.env.ELECTRON_START_URL) {
+        //development mode
+        mainWindow.loadURL(process.env.ELECTRON_START_URL);
+        // Open the DevTools.
+        mainWindow.webContents.openDevTools();
+    } else {
+        const startUrl = url.format({
+            pathname: path.join(__dirname, '../client/build/index.html'),
+            protocol: 'file:',
+            slashes: true
+        });
+        mainWindow.loadURL(startUrl);
+    }
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
