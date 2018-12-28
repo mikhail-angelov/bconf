@@ -1,27 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { logout } from '../../actions/auth'
+import { observer, inject } from "mobx-react"
 
+@inject('authStore')
+@observer
 class Main extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-
   render() {
-    const { user } = this.props
+    const { authStore } = this.props
 
     return (
       <div className="Main">
-        <div>You've successfully logged in with {user.name} email</div>
-        <button onClick={() => this.props.logout()}>Logout</button>
+        <div>You've successfully logged in with {authStore.user} email</div>
+        <button onClick={() => authStore.logout()}>Logout</button>
       </div>
-    );
+    )
   }
 }
-
-const mapStateToProps = ({ auth }) => auth
-const mapDispatchToProps = {
-  logout,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+export default Main

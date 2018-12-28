@@ -28,7 +28,7 @@
     "client:dev": "cd client; npm start",
     "dev": "DATABASE_URL='mongodb://localhost:27017/test' node ./server",
     "desktop": "ELECTRON_START_URL='http://localhost:3000' electron ./desktop/index.js",
-    "build:mac": "electron-builder --dir"    
+    "build:mac": "electron-builder --dir"
   },
   "main": "./desktop/index.js"
 }

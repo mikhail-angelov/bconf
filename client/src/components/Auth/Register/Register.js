@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-
-import { register } from '../../../actions/auth'
-import { setUiState } from '../../../actions/ui'
-
+import { observer, inject } from "mobx-react"
 import { LOGIN } from '../../../constants/applicationState'
-
 import './Register.css'
 
+@inject('authStore', 'uiStore')
+@observer
 class Register extends Component {
   constructor(props) {
     super(props)
@@ -23,6 +20,7 @@ class Register extends Component {
 
   render() {
     const { email, password } = this.state
+    const { authStore, uiStore} = this.props
 
     return (
       <div className="register">
@@ -36,9 +34,9 @@ class Register extends Component {
           </div>
           <input className="email-input" value={email} onChange={this.onChange('email')} />
           <input type="password" className="password-input" value={password} onChange={this.onChange('password')} />
-          <button className="register-button" onClick={() => this.props.register({ email, password })}>Register</button>
+          <button className="register-button" onClick={() => authStore.register({ email, password })}>Register</button>
           <div className="text-buttons-wrapper">
-            <button className="text-button" onClick={() => this.props.setUiState(LOGIN)}>Already a memeber? Sign in!</button>
+            <button className="text-button" onClick={() => uiStore.setUiState(LOGIN)}>Already a memeber? Sign in!</button>
           </div>
         </div>
       </div>
@@ -46,9 +44,4 @@ class Register extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => auth
-const mapDispatchToProps = {
-  register,
-  setUiState,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default Register
