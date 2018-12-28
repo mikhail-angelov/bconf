@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-
-import { login, register } from '../../../actions/auth'
-import { setUiState } from '../../../actions/ui'
+import { observer, inject } from "mobx-react"
 
 import { REGISTER, RESET_PASSWORD } from '../../../constants/applicationState'
-
 import './Login.css'
 
+@inject('authStore', 'uiStore')
+@observer
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -23,6 +21,7 @@ class Login extends Component {
 
   render() {
     const { email, password } = this.state
+    const { authStore, uiStore} = this.props
 
     return (
       <div className="login">
@@ -39,21 +38,15 @@ class Login extends Component {
           <div className="login-error">
             Incorrect password. Try again.
           </div>
-          <button className="login-button" onClick={() => this.props.login({ email, password })}>Sign In</button>
+          <button className="login-button" onClick={() => authStore.login({ email, password })}>Sign In</button>
         </div >
         <div className="text-buttons-wrapper">
-          <button className="text-button" onClick={() => this.props.setUiState(RESET_PASSWORD)}>Forgot password?</button>
-          <button className="text-button" onClick={() => this.props.setUiState(REGISTER)}>Register</button>
+          <button className="text-button" onClick={() => uiStore.setUiState(RESET_PASSWORD)}>Forgot password?</button>
+          <button className="text-button" onClick={() => uiStore.setUiState(REGISTER)}>Register</button>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ auth }) => auth
-const mapDispatchToProps = {
-  login,
-  register,
-  setUiState,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login

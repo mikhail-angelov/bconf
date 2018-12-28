@@ -1,21 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { createLogger } from 'redux-logger'
-import reducers from './reducers'
+import { Provider } from 'mobx-react'
+import Auth from './stores/auth'
+import Ui from './stores/ui'
 import Root from './components/Root'
 import './styles/index.css'
-//import registerServiceWorker from './registerServiceWorker'
-import { unregister } from './registerServiceWorker';
 
+// import registerServiceWorker from './registerServiceWorker'
+// import { unregister } from './registerServiceWorker';
+const stores = { 
+  authStore: new Auth(),
+  uiStore: new Ui()
+}
 
-const store = createStore(
-  reducers,
-  applyMiddleware(thunk, createLogger())
-)
-
-ReactDOM.render(<Provider store={store}><Root /></Provider>, document.getElementById('root'))
+ReactDOM.render(<Provider {...stores}><Root /></Provider>, document.getElementById('root'))
 // registerServiceWorker()
-unregister()
+// unregister()
