@@ -11,11 +11,25 @@ class Register extends Component {
         this.state = {
             email: '',
             password: '',
+            strongPassword: true,
         }
+    }
+    validatePassword(password) {
+        const passwordRegexp = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/)
+        console.log(password.length > 8 && passwordRegexp.test(password))
+        password.length > 8 && passwordRegexp.test(password)
+            ? this.setState({ strongPassword: true, password })
+            : this.setState({ strongPassword: false, password })
     }
 
     onChange(field) {
-        return e => this.setState({ [field]: e.target.value })
+        return e => {
+            if (field === 'password') {
+                this.validatePassword(e.target.value)
+            } else {
+                this.setState({ [field]: e.target.value })
+            }
+        }
     }
 
     render() {
@@ -42,7 +56,17 @@ class Register extends Component {
                         value={password}
                         onChange={this.onChange('password')}
                     />
-                    <button className="register-button" onClick={() => authStore.register({ email, password })}>
+                    {!this.state.strongPassword && (
+                        <div className="register-error">
+                            Password must contain at least one number, one lowercase and one uppercase letter and be at
+                            least six characters
+                        </div>
+                    )}
+                    <button
+                        className="register-button"
+                        onClick={() => authStore.register({ email, password })}
+                        disabled={!(this.state.password.length > 0 && this.state.strongPassword)}
+                    >
                         Register
                     </button>
                     <div className="text-buttons-wrapper">

@@ -43,7 +43,7 @@ class Login extends Component {
                         value={password}
                         onChange={this.onChange('password')}
                     />
-                    <div className="login-error">Incorrect password. Try again.</div>
+                    {this.props.passwordError && <div className="login-error">Incorrect password. Try again.</div>}
                     <button className="login-button" onClick={() => authStore.login({ email, password })}>
                         Sign In
                     </button>
