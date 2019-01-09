@@ -8,11 +8,16 @@ import './styles/index.css'
 
 // import registerServiceWorker from './registerServiceWorker'
 // import { unregister } from './registerServiceWorker';
-const stores = { 
-  authStore: new Auth(),
-  uiStore: new Ui()
+const stores = {
+    authStore: new Auth(),
+    uiStore: new Ui(),
 }
 
-ReactDOM.render(<Provider {...stores}><Root /></Provider>, document.getElementById('root'))
+ReactDOM.render(
+    <Provider {...stores}>
+        <Root />
+    </Provider>,
+    document.getElementById('root')
+)
 // registerServiceWorker()
 // unregister()
