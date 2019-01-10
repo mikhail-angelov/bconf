@@ -1,13 +1,12 @@
-@import "../../../styles/variables.less";
-@import "../../../styles/form-elements.less";
-@import "../../../styles/buttons.less";
+@import '../../../styles/variables.less';
+@import '../../../styles/form-elements.less';
+@import '../../../styles/buttons.less';
 
 .login {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: linear-gradient(45deg, #98E5E3, #7292EA, #4B3CF2), 
-              url('../../../images/wave.svg');
+  background: linear-gradient(45deg, #98e5e3, #7292ea, #4b3cf2), url('../../../images/wave.svg');
   background-size: cover;
   background-blend-mode: screen;
   opacity: 1;
@@ -86,9 +85,7 @@
     &.github {
       background-image: url('../../../images/github.svg');
     }
-
   }
-
 
   .email-input,
   .password-input {
@@ -109,7 +106,7 @@
 
   .email-input {
     background-image: url('../../../images/email.svg');
-}
+  }
   .password-input {
     background-image: url('../../../images/lock.svg');
     background-size: 15px 25px;
@@ -120,7 +117,7 @@
     .error-text();
     padding-top: 16px;
   }
-  
+
   .login-button {
     .general-button();
     margin-top: 16px;
@@ -136,7 +133,6 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-
   }
 
   .text-button {
@@ -154,6 +150,5 @@
     &:active {
       text-shadow: 0px 0px 2px rgba(255, 255, 255, 1);
     }
-
   }
 }
