@@ -18,6 +18,7 @@ export default class Auth {
       this.authenticated = true
       this.user = data.user
       this.state = 'done'
+      localStorage.setItem('bconf', JSON.stringify({ user: data.user, token: data.token }))
       setAuth(data)
     } catch (err) {
       console.log('auth error', err)
@@ -26,23 +27,31 @@ export default class Auth {
   })
 
   @action
+  relogin = userData => {
+    this.authenticated = true
+    this.user = userData.user
+    this.state = 'done'
+    setAuth(userData)
+  }
   logout = () => {
     setAuth({})
     this.authenticated = false
+    localStorage.removeItem('bconf')
   }
 
-  register = flow(function*({ email, password }) {
+  register = flow(function*({ email, name, password }) {
     this.state = 'pending'
     try {
       const data = yield doJsonRequest({
         url: REGISTER_URL,
         method: 'POST',
-        data: { email, password },
+        data: { email, name, password },
       })
       console.log('--', data)
       this.authenticated = true
       this.user = data.user
       this.state = 'done'
+      console.log(data)
       setAuth(data)
     } catch (err) {
       console.log('auth error', err)

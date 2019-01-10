@@ -10,13 +10,13 @@ class Register extends Component {
     super(props)
     this.state = {
       email: '',
+      name: '',
       password: '',
       strongPassword: true,
     }
   }
   validatePassword(password) {
     const passwordRegexp = new RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/)
-    console.log(password.length > 8 && passwordRegexp.test(password))
     password.length > 8 && passwordRegexp.test(password)
       ? this.setState({ strongPassword: true, password })
       : this.setState({ strongPassword: false, password })
@@ -33,7 +33,7 @@ class Register extends Component {
   }
 
   render() {
-    const { email, password } = this.state
+    const { email, name, password } = this.state
     const { authStore, uiStore } = this.props
 
     return (
@@ -47,6 +47,7 @@ class Register extends Component {
             <button className="icon-button github" />
           </div>
           <input className="email-input" value={email} onChange={this.onChange('email')} />
+          <input className="name-input" value={name} onChange={this.onChange('name')} />
           <input type="password" className="password-input" value={password} onChange={this.onChange('password')} />
           {!this.state.strongPassword && (
             <div className="register-error">
@@ -56,7 +57,7 @@ class Register extends Component {
           )}
           <button
             className="register-button"
-            onClick={() => authStore.register({ email, password })}
+            onClick={() => authStore.register({ email, name, password })}
             disabled={!(this.state.password.length > 0 && this.state.strongPassword)}
           >
             Register

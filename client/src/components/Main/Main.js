@@ -9,7 +9,7 @@ class Main extends Component {
 
     return (
       <div className="Main">
-        <div>You've successfully logged in with {authStore.user} email</div>
+        <div>You've successfully logged in with {authStore.user.email} email</div>
         <button onClick={() => authStore.logout()}>Logout</button>
       </div>
     )

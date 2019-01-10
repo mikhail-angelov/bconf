@@ -15,7 +15,7 @@ const html = fs.readFileSync(document)
 const server = micro(
   cors(
     router(
-      post('/auth/login', async (req, res) => {
+      post('/api/auth/login', async (req, res) => {
         try {
           const body = await micro.json(req)
           const response = await auth.login(body)
@@ -25,7 +25,7 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect password' })
         }
       }),
-      post('/auth/check', async (req, res) => {
+      post('/api/auth/check', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const response = await auth.check(token)
@@ -35,7 +35,7 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect token' })
         }
       }),
-      post('/auth/register', async (req, res) => {
+      post('/api/auth/register', async (req, res) => {
         try {
           const body = await micro.json(req)
           const response = await auth.register(body)
@@ -45,7 +45,7 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect params' })
         }
       }),
-      post('/auth/login-profile', async (req, res) => {
+      post('/api/auth/login-profile', async (req, res) => {
         try {
           const body = await micro.json(req)
           const response = await auth.loginViaProvider(body)
@@ -55,7 +55,7 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect password' })
         }
       }),
-      post('/auth/updateUser', async (req, res) => {
+      post('/api/auth/updateUser', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -67,10 +67,10 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect params' })
         }
       }),
-      post('/auth/forget-password', (req, res) => {
+      post('/api/auth/forget-password', (req, res) => {
         micro.send(res, 200, { status: 'new password is sent to your email' })
       }),
-      get('/users/search/:text', async (req, res) => {
+      get('/api/users/search/:text', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -81,7 +81,7 @@ const server = micro(
           micro.send(res, 400, { error: 'incorrect params' })
         }
       }),
-      get('/chat', async (req, res) => {
+      get('/api/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -92,7 +92,7 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
-      get('/chat/:chatId', async (req, res) => {
+      get('/api/chat/:chatId', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -103,7 +103,7 @@ const server = micro(
           micro.send(res, 400, { error: 'get chats error' })
         }
       }),
-      post('/chat', async (req, res) => {
+      post('/api/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -115,7 +115,7 @@ const server = micro(
           micro.send(res, 400, { error: 'create chat error' })
         }
       }),
-      put('/chat', async (req, res) => {
+      put('/api/chat', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -127,7 +127,7 @@ const server = micro(
           micro.send(res, 400, { error: 'update chat error' })
         }
       }),
-      post('/chat/addUser', async (req, res) => {
+      post('/api/chat/addUser', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -139,7 +139,7 @@ const server = micro(
           micro.send(res, 400, { error: 'create chat error' })
         }
       }),
-      get('/messages/:chatId', async (req, res) => {
+      get('/api/messages/:chatId', async (req, res) => {
         try {
           const token = req.headers['authorization']
           const user = auth.decodeToken(token)
@@ -157,7 +157,7 @@ const server = micro(
         }
       }),
       post(
-        '/upload',
+        '/api/upload',
         upload(async (req, res) => {
           try {
             const respose = await uploader.upload(req.files)

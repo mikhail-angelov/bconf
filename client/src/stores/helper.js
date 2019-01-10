@@ -10,7 +10,7 @@ export const setAuth = ({ username, password }) => {
   auth.password = password
 }
 
-export const doAuthRequest = opts => axios(opts).then(response => 'ok')
+export const doAuthRequest = opts => axios(opts).then(response => response.data)
 
 export const doJsonGetRequest = (url, opts = {}) => {
   return axios.get(url).then(response => response.data)

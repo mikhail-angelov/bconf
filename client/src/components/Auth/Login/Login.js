@@ -35,7 +35,7 @@ class Login extends Component {
           </div>
           <input className="email-input" value={email} onChange={this.onChange('email')} />
           <input className="password-input" type="password" value={password} onChange={this.onChange('password')} />
-          {this.props.passwordError && <div className="login-error">Incorrect password. Try again.</div>}
+          {authStore.state === 'error' && <div className="login-error">Incorrect password. Try again.</div>}
           <button className="login-button" onClick={() => authStore.login({ email, password })}>
             Sign In
           </button>
