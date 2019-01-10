@@ -17,31 +17,33 @@ passport.serializeUser((user, done) => done(null, user))
 passport.deserializeUser((obj, done) => done(null, obj))
 
 module.exports = {
-  start
+  start,
 }
 
-function start (dbUrl) {
-  return dao.init({
-    url: dbUrl
-  }).then(() => {
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json())
-    app.use(passport.initialize())
-    app.use(passport.session())
-
-    app.use('/auth', auth.router)
-    app.use('/api/contact', contacts.router)
-    app.use('/api/channel', channels.router)
-    app.use('/api/chats', chats.router)
-    app.use('/api/chatMessages', chatMessages.router)
-    app.use('/', express.static(path.join(__dirname, '/dist')))
-
-        // cors
-    app.use(function (req, res, next) {
-      res.header('Access-Control-Allow-Origin', '*')
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token')
-      next()
+function start(dbUrl) {
+  return dao
+    .init({
+      url: dbUrl,
     })
-    return app
-  })
+    .then(() => {
+      app.use(bodyParser.urlencoded({ extended: true }))
+      app.use(bodyParser.json())
+      app.use(passport.initialize())
+      app.use(passport.session())
+
+      app.use('/auth', auth.router)
+      app.use('/api/contact', contacts.router)
+      app.use('/api/channel', channels.router)
+      app.use('/api/chats', chats.router)
+      app.use('/api/chatMessages', chatMessages.router)
+      app.use('/', express.static(path.join(__dirname, '/dist')))
+
+      // cors
+      app.use(function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*')
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token')
+        next()
+      })
+      return app
+    })
 }

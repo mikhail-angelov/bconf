@@ -3,32 +3,32 @@ var User = require('../../api/user/user.model.js')
 var _ = require('lodash')
 var connectionManager = null
 
-function init (cm) {
+function init(cm) {
   connectionManager = cm
 }
 
-function peerConnected (clientId) {
+function peerConnected(clientId) {
   // logger.info('client ' + clientId + ' is online');
-  var message = {type: 'PRESENCE', payload: {userId: clientId, status: 'online'}}
+  var message = { type: 'PRESENCE', payload: { userId: clientId, status: 'online' } }
   _broadcastPresence(clientId, message)
 }
 
-function peerDisconnected (clientId) {
+function peerDisconnected(clientId) {
   // logger.info('client ' + clientId + ' is offline');
-  var message = {type: 'PRESENCE', payload: {userId: clientId, status: 'offline'}}
+  var message = { type: 'PRESENCE', payload: { userId: clientId, status: 'offline' } }
   _broadcastPresence(clientId, message)
 }
 
-function _broadcastPresence (clientId, message) {
-  User.getFriends(clientId).then(function (friends) {
+function _broadcastPresence(clientId, message) {
+  User.getFriends(clientId).then(function(friends) {
     var activeFriends = []
-    friends.forEach(function (friend) {
+    friends.forEach(function(friend) {
       var client = connectionManager.getClient(friend.id)
       if (client) {
         activeFriends.push(client)
       }
     })
-    activeFriends.forEach(function (friend) {
+    activeFriends.forEach(function(friend) {
       console.log('try to send form ' + clientId + ' to ' + friend.id)
       friend.sendMessage(JSON.stringify(message))
     })
@@ -38,5 +38,5 @@ function _broadcastPresence (clientId, message) {
 module.exports = {
   init: init,
   peerConnected: peerConnected,
-  peerDisconnected: peerDisconnected
+  peerDisconnected: peerDisconnected,
 }

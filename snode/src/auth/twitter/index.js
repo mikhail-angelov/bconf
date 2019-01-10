@@ -8,15 +8,22 @@ module.exports = (auth, config) => {
   passportConfig(auth, config)
 
   router
-    .get('/', passport.authenticate('twitter', {
-      failureRedirect: '/#login'
-    }))
+    .get(
+      '/',
+      passport.authenticate('twitter', {
+        failureRedirect: '/#login',
+      })
+    )
 
-    .get('/callback', passport.authenticate('twitter', {
-      failureRedirect: '/#login'
-    }), auth.setTokenCookie)
+    .get(
+      '/callback',
+      passport.authenticate('twitter', {
+        failureRedirect: '/#login',
+      }),
+      auth.setTokenCookie
+    )
 
   return {
-    router
+    router,
   }
 }

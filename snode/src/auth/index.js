@@ -21,5 +21,5 @@ router.use('/google', google(auth, config.google).router)
 router.use('/yandex', yandex(auth, config.yandex).router)
 
 module.exports = {
-  router
+  router,
 }

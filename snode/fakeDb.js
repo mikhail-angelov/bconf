@@ -16,7 +16,7 @@ module.exports = {
       phoneNumber: '123456789',
       birthday: '1 march 1994',
       sex: 'male',
-      date: new Date()
+      date: new Date(),
     },
     {
       _id: ObjectId('5554ba3324d05f4bc2cab3f1'),
@@ -33,7 +33,7 @@ module.exports = {
       birthday: '1 march 1994',
       sex: 'male',
       date: new Date(),
-      contacts: [ObjectId('5554ba3324d05f4bc2cab3f2'), ObjectId('5554ba3324d05f4bc2cab3f3')]
+      contacts: [ObjectId('5554ba3324d05f4bc2cab3f2'), ObjectId('5554ba3324d05f4bc2cab3f3')],
     },
     {
       _id: ObjectId('5554ba3324d05f4bc2cab3f2'),
@@ -49,8 +49,9 @@ module.exports = {
       phoneNumber: '123456789',
       birthday: '1 march 1994',
       sex: 'male',
-      date: new Date()
-    }, {
+      date: new Date(),
+    },
+    {
       _id: ObjectId('5554ba3324d05f4bc2cab3f3'),
       firstName: 'Petya',
       secondName: 'Petin',
@@ -64,7 +65,7 @@ module.exports = {
       phoneNumber: '123456789',
       birthday: '1 march 1994',
       sex: 'male',
-      date: new Date()
-    }
-  ]
+      date: new Date(),
+    },
+  ],
 }

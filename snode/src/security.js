@@ -6,17 +6,21 @@ module.exports = {
   decodeToken,
   encodePassword,
   validatePassword,
-  authRequired
+  authRequired,
 }
 
-function encodeToken (user) {
-  return jwt.sign({
-    id: user._id,
-    name: user.name
-  }, SECRET, { expiresIn: '5d' })
+function encodeToken(user) {
+  return jwt.sign(
+    {
+      id: user._id,
+      name: user.name,
+    },
+    SECRET,
+    { expiresIn: '5d' }
+  )
 }
 
-function decodeToken (token) {
+function decodeToken(token) {
   try {
     return jwt.verify(token, SECRET)
   } catch (e) {
@@ -24,15 +28,15 @@ function decodeToken (token) {
   }
 }
 
-function encodePassword (password) {
+function encodePassword(password) {
   return password
 }
 
-function validatePassword (password, encodedPassword) {
+function validatePassword(password, encodedPassword) {
   return encodePassword(password) === encodedPassword
 }
 
-function authRequired (req, res, next) {
+function authRequired(req, res, next) {
   const token = req.headers ? req.headers['x-access-token'] : ''
   const decoded = decodeToken(token)
   if (decoded) {

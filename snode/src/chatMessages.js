@@ -1,4 +1,3 @@
-
 'use strict'
 
 const router = require('express').Router()
@@ -8,20 +7,20 @@ const dao = require('./dao')
 
 router.get('/:chatId', security.authRequired, (req, res) => {
   getMessages(req.params.chatId)
-        .then(messages => res.json(messages))
-        .catch(err => {
-          log.error('get messages error', err)
-          res.status(400).end('get messages error')
-        })
+    .then(messages => res.json(messages))
+    .catch(err => {
+      log.error('get messages error', err)
+      res.status(400).end('get messages error')
+    })
 })
 
-function getMessages (chatId) {
+function getMessages(chatId) {
   return dao.find('chatMessages', {
-    chatId
+    chatId,
   })
 }
 
 module.exports = {
   router,
-  getMessages
+  getMessages,
 }

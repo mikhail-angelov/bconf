@@ -3,7 +3,7 @@ import echoFactory from './echo.js'
 import yaTranslatorFactory from './yaTranslator.js'
 
 class RobotManager {
-  constructor (bus) {
+  constructor(bus) {
     this.bots = {}
     this.eventBus = bus
     this.eventBus.on(this.eventBus.SOCKET_MESSAGE, (client, message) => this.dispatch(client, message))
@@ -12,11 +12,11 @@ class RobotManager {
     let yatr = new yaTranslatorFactory(this)
   }
 
-  register (bot) {
+  register(bot) {
     this.bots[bot.id] = bot
   }
 
-  dispatch (client, data) {
+  dispatch(client, data) {
     try {
       console.log(data)
       var message = JSON.parse(data)
@@ -31,17 +31,17 @@ class RobotManager {
     }
   }
 
-  send (client, message) {
+  send(client, message) {
     this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, message)
   }
 
-  getAll () {
-    return _.map(this.bots, (bot) => {
+  getAll() {
+    return _.map(this.bots, bot => {
       return {
         type: bot.type,
         id: bot.id,
         name: bot.name,
-        avatar: bot.avatar
+        avatar: bot.avatar,
       }
     })
   }

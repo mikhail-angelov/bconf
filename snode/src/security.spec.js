@@ -6,7 +6,7 @@ describe('security', () => {
   const security = require('./security')
 
   it('should encode token', () => {
-    const user = {id: 'test', name: 'test'}
+    const user = { id: 'test', name: 'test' }
     const encodedToken = security.encodeToken(user)
     expect(encodedToken.length > 0).to.equal(true)
     expect(security.decodeToken(encodedToken).name).to.equal(user.name)

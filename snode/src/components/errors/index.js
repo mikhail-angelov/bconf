@@ -1,14 +1,14 @@
 'use strict'
 
-module.exports[404] = function pageNotFound (req, res) {
+module.exports[404] = function pageNotFound(req, res) {
   var viewFilePath = '404'
   var statusCode = 404
   var result = {
-    status: statusCode
+    status: statusCode,
   }
 
   res.status(result.status)
-  res.render(viewFilePath, {}, function (err, html) {
+  res.render(viewFilePath, {}, function(err, html) {
     if (err) {
       return res.json(result, result.status)
     }

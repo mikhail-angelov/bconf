@@ -1,4 +1,3 @@
-
 'use strict'
 
 const router = require('express').Router()
@@ -9,13 +8,13 @@ const _ = require('lodash')
 
 router.get('/', security.authRequired, (req, res) => {
   getChats(req.decoded.id)
-        .then(channel => res.json(channel))
-        .catch(err => res.status(400).end('get chats error'))
+    .then(channel => res.json(channel))
+    .catch(err => res.status(400).end('get chats error'))
 })
 router.post('/', security.authRequired, (req, res) => {
-    // todo: validate params
+  // todo: validate params
   const contact = req.body
-  co(function * () {
+  co(function*() {
     yield addChatWithContact(req.decoded.id, contact)
     const chats = getChats(req.decoded.id)
     res.json(chats)
@@ -24,33 +23,33 @@ router.post('/', security.authRequired, (req, res) => {
 
 router.delete('/:id', security.authRequired, (req, res) => {
   removeChat(req.params.id)
-        .then(() => res.json({success: 'ok'}))
-        .catch(err => res.status(400).end('remove chat error'))
+    .then(() => res.json({ success: 'ok' }))
+    .catch(err => res.status(400).end('remove chat error'))
 })
 
-function getChats (userId) {
+function getChats(userId) {
   return dao.find('chats', {
-    userId
+    userId,
   })
 }
 
-function addChatWithChannel (userId, channel) {
+function addChatWithChannel(userId, channel) {
   return dao.create('chats', {
     userId,
     type: 'channel',
-    contactId: channel._id
+    contactId: channel._id,
   })
 }
 
-function addChatWithContact (userId, contact) {
+function addChatWithContact(userId, contact) {
   return dao.create('chats', {
     userId,
     type: 'contact',
-    contactId: contact._id
+    contactId: contact._id,
   })
 }
 
-function removeChat (chatId) {
+function removeChat(chatId) {
   return dao.remove('chats', chatId)
 }
 
@@ -59,5 +58,5 @@ module.exports = {
   getChats,
   addChatWithChannel,
   addChatWithContact,
-  removeChat
+  removeChat,
 }

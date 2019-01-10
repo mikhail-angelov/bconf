@@ -12,22 +12,32 @@ describe('auth', () => {
   afterEach(() => mongoUnit.drop())
 
   it('should create new user', () => {
-    return auth.createUser({
-      email: 'new mail',
-      password: 'test',
-      firstName: 'NewUser'
-    }, {email: 'new mail'}).then(user => {
-      expect(!!user.token).to.equal(true)
-      expect(user.firstName).to.equal('NewUser')
-    })
+    return auth
+      .createUser(
+        {
+          email: 'new mail',
+          password: 'test',
+          firstName: 'NewUser',
+        },
+        { email: 'new mail' }
+      )
+      .then(user => {
+        expect(!!user.token).to.equal(true)
+        expect(user.firstName).to.equal('NewUser')
+      })
   })
 
   it('should fail create user if mail exist', () => {
-    return auth.createUser({
-      email: 'test',
-      password: 'test'
-    }, {email: 'test'}).catch(err => {
-      expect(err).to.equal('The user with this email is already exist.')
-    })
+    return auth
+      .createUser(
+        {
+          email: 'test',
+          password: 'test',
+        },
+        { email: 'test' }
+      )
+      .catch(err => {
+        expect(err).to.equal('The user with this email is already exist.')
+      })
   })
 })

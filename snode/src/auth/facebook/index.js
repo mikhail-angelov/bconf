@@ -8,21 +8,25 @@ module.exports = (auth, config) => {
   passportConfig(auth, config)
 
   router
-    .get('/', passport.authenticate('facebook', {
-      failureRedirect: '/#login',
-      scope: [
-        'user_about_me',
-        'email'
-      ],
-      session: false
-    }))
+    .get(
+      '/',
+      passport.authenticate('facebook', {
+        failureRedirect: '/#login',
+        scope: ['user_about_me', 'email'],
+        session: false,
+      })
+    )
 
-    .get('/callback', passport.authenticate('facebook', {
-      failureRedirect: '/#login',
-      session: false
-    }), auth.setTokenCookie)
+    .get(
+      '/callback',
+      passport.authenticate('facebook', {
+        failureRedirect: '/#login',
+        session: false,
+      }),
+      auth.setTokenCookie
+    )
 
   return {
-    router
+    router,
   }
 }

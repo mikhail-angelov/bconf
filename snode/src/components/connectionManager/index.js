@@ -1,8 +1,7 @@
-
 var url = require('url')
 
 class ConnectionManager {
-  constructor (wss, bus) {
+  constructor(wss, bus) {
     wss.on('connection', client => this.onConnect(client))
     this.eventBus = bus
     this.sockets = {}
@@ -12,11 +11,11 @@ class ConnectionManager {
     this.eventBus.on(this.eventBus.SEND_MESSAGE, (client, message) => this.onSendMessage(client, message))
   }
 
-  _getSocket (id) {
+  _getSocket(id) {
     return this.sockets[id]
   }
 
-  onSendMessage (client, message) {
+  onSendMessage(client, message) {
     if (client && this._getSocket(client.id)) {
       try {
         this._getSocket(client.id).send(JSON.stringify(message))
@@ -25,7 +24,7 @@ class ConnectionManager {
       }
     }
   }
-  _getConnectionParams (socket) {
+  _getConnectionParams(socket) {
     let param = {}
     if (socket && socket.upgradeReq && socket.upgradeReq.url) {
       var query = url.parse(socket.upgradeReq.url, true).query
@@ -34,18 +33,20 @@ class ConnectionManager {
           id: query.id,
           token: query.token,
           key: query.key,
-          ip: socket.upgradeReq.socket ? socket.upgradeReq.socket.remoteAddress : null
+          ip: socket.upgradeReq.socket ? socket.upgradeReq.socket.remoteAddress : null,
         }
       }
     }
     return param
   }
-  onConnect (socket) {
+  onConnect(socket) {
     var connectionParam = this._getConnectionParams(socket)
     console.log('onConnect ', connectionParam)
 
     if (!connectionParam.id || !connectionParam.token || !connectionParam.key) {
-      socket.send(JSON.stringify({type: 'ERROR', payload: {msg: 'No id, token, or key supplied to websocket server'}}))
+      socket.send(
+        JSON.stringify({ type: 'ERROR', payload: { msg: 'No id, token, or key supplied to websocket server' } })
+      )
       socket.close()
       return
     }
@@ -54,19 +55,19 @@ class ConnectionManager {
     this.eventBus.emit(this.eventBus.NEW_CONNECTION, client)
   }
 
-  onAcceptClient (client) {
+  onAcceptClient(client) {
     console.log('accept connection')
     let socket = this._getSocket(client.id)
-    socket.send(JSON.stringify({type: 'OPEN'}))
+    socket.send(JSON.stringify({ type: 'OPEN' }))
     socket.on('close', () => this.eventBus.emit(this.eventBus.SOCKET_CLOSED, client))
-    socket.on('error', (err) => this.eventBus.emit(this.eventBus.SOCKET_ERROR, client, err))
-    socket.on('message', (data) => this.eventBus.emit(this.eventBus.SOCKET_MESSAGE, client, data))
-  };
+    socket.on('error', err => this.eventBus.emit(this.eventBus.SOCKET_ERROR, client, err))
+    socket.on('message', data => this.eventBus.emit(this.eventBus.SOCKET_MESSAGE, client, data))
+  }
 
-  onDisconnectClient (client) {
+  onDisconnectClient(client) {
     this._getSocket(client.id).close()
     this.sockets[client.id] = null
-  };
+  }
 }
 
 export default ConnectionManager

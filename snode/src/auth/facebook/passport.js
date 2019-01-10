@@ -4,22 +4,25 @@ const passport = require('passport')
 const Strategy = require('passport-facebook').Strategy
 
 module.exports = (auth, config) => {
-  passport.use(new Strategy({
-    clientID: config.clientID,
-    clientSecret: config.clientSecret,
-    callbackURL: config.callbackURL,
-    profileFields: [
-      'displayName',
-      'emails'
-    ]
-  }, (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)))
+  passport.use(
+    new Strategy(
+      {
+        clientID: config.clientID,
+        clientSecret: config.clientSecret,
+        callbackURL: config.callbackURL,
+        profileFields: ['displayName', 'emails'],
+      },
+      (accessToken, refreshToken, profile, done) => authenticate(accessToken, refreshToken, profile, done)
+    )
+  )
 
-  function authenticate (accessToken, refreshToken, profile, done) {
+  function authenticate(accessToken, refreshToken, profile, done) {
     console.log('login with facebook id', profile.id)
     const userQuery = {
-      'facebook.id': profile.id
+      'facebook.id': profile.id,
     }
-    return auth.findUser(userQuery)
+    return auth
+      .findUser(userQuery)
       .then(user => {
         if (!user) {
           console.log('facebook', profile)
@@ -37,15 +40,18 @@ module.exports = (auth, config) => {
       })
   }
 
-  function createUser (userQuery, profile, accessToken, refreshToken) {
-    return auth.createUser({
-      name: profile.displayName,
-      firstName: profile.name.givenName,
-      lastName: profile.name.familyName,
-      email: profile.emails[0].value + '.facebook',
-      role: 'user',
-      provider: 'facebook',
-      facebook: profile._json
-    }, userQuery)
+  function createUser(userQuery, profile, accessToken, refreshToken) {
+    return auth.createUser(
+      {
+        name: profile.displayName,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: profile.emails[0].value + '.facebook',
+        role: 'user',
+        provider: 'facebook',
+        facebook: profile._json,
+      },
+      userQuery
+    )
   }
 }

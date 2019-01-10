@@ -3,7 +3,7 @@
 // origin server code is here https://github.com/peers/peerjs-server.git
 
 class PeerJs {
-  constructor (bus, session, User) {
+  constructor(bus, session, User) {
     this.session = session
     this.eventBus = bus
     this.user = User
@@ -14,11 +14,11 @@ class PeerJs {
     this.eventBus.on(this.eventBus.NEW_CONNECTION, client => this.onNewConnection(client))
   }
 
-  onNewConnection (client) {
+  onNewConnection(client) {
     if (this.session.getById(client.id)) {
       // ID-taken, invalid token
       console.log('ID-taken', client.id)
-      this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, {type: 'ID-TAKEN', payload: {msg: 'ID is taken'}})
+      this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, { type: 'ID-TAKEN', payload: { msg: 'ID is taken' } })
       this.eventBus.emit(this.eventBus.DISCONNECT_CLIENT, client)
     } else {
       // check auth
@@ -29,24 +29,24 @@ class PeerJs {
         console.log('user credentials are invalid', client.id, client.token)
         this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, {
           type: 'INCORRECT-TOKEN',
-          payload: {msg: 'incorrect token'}
+          payload: { msg: 'incorrect token' },
         })
         this.eventBus.emit(this.eventBus.DISCONNECT_CLIENT, client)
       }
     }
   }
 
-  onClose (client) {
+  onClose(client) {
     console.log('client Socket closed:', client.id)
     this.session.delete(client)
   }
 
-  onError (client, err) {
+  onError(client, err) {
     console.log('client Socket error:', client.id, err)
-    this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, {type: 'ERROR', payload: {msg: err}})
+    this.eventBus.emit(this.eventBus.SEND_MESSAGE, client, { type: 'ERROR', payload: { msg: err } })
   }
 
-  onMessage (client, data) {
+  onMessage(client, data) {
     try {
       console.log(data)
       var message = JSON.parse(data)
