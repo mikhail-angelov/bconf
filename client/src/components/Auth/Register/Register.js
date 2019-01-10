@@ -46,9 +46,15 @@ class Register extends Component {
             <button className="icon-button facebook" />
             <button className="icon-button github" />
           </div>
-          <input className="email-input" value={email} onChange={this.onChange('email')} />
-          <input className="name-input" value={name} onChange={this.onChange('name')} />
-          <input type="password" className="password-input" value={password} onChange={this.onChange('password')} />
+          <input className="email-input" value={email} onChange={this.onChange('email')} placeholder="Email" />
+          <input className="name-input" value={name} onChange={this.onChange('name')} placeholder="Name" />
+          <input
+            type="password"
+            className="password-input"
+            value={password}
+            onChange={this.onChange('password')}
+            placeholder="Password"
+          />
           {!this.state.strongPassword && (
             <div className="register-error">
               Password must contain at least one number, one lowercase and one uppercase letter and be at least six
