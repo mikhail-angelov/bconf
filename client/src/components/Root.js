@@ -14,16 +14,16 @@ authComponents[RESET_PASSWORD] = <ResetPassword />
 @inject('authStore', 'uiStore')
 @observer
 export default class Root extends Component {
-    render() {
-        const { authStore, uiStore } = this.props
-        const localAuthItem = localStorage.getItem('bconf')
-        if (localAuthItem) {
-            authStore.relogin(JSON.parse(localAuthItem))
-        }
-        if (!authStore.authenticated) {
-            return authComponents[uiStore.state]
-        } else {
-            return <Main />
-        }
+  render() {
+    const { authStore, uiStore } = this.props
+    const localAuthItem = localStorage.getItem('bconf')
+    if (localAuthItem) {
+      authStore.relogin(JSON.parse(localAuthItem))
     }
+    if (!authStore.authenticated) {
+      return authComponents[uiStore.state]
+    } else {
+      return <Main />
+    }
+  }
 }

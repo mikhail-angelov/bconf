@@ -10,18 +10,18 @@ import DevTools from 'mobx-react-devtools'
 // import registerServiceWorker from './registerServiceWorker'
 // import { unregister } from './registerServiceWorker';
 const stores = {
-    authStore: new Auth(),
-    uiStore: new Ui(),
+  authStore: new Auth(),
+  uiStore: new Ui(),
 }
 
 ReactDOM.render(
-    <React.Fragment>
-        <DevTools />
-        <Provider {...stores}>
-            <Root />
-        </Provider>
-    </React.Fragment>,
-    document.getElementById('root')
+  <React.Fragment>
+    <DevTools />
+    <Provider {...stores}>
+      <Root />
+    </Provider>
+  </React.Fragment>,
+  document.getElementById('root')
 )
 // registerServiceWorker()
 // unregister()
