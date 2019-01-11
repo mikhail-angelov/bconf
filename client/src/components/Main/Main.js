@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-
-@inject('authStore')
+import Chat from '../Chat'
+import ChatList from '../ChatList'
+import './Main.css'
+@inject('authStore', 'chatsStore')
 @observer
 class Main extends Component {
+  componentWillMount() {
+    console.log(this.props)
+    this.props.chatsStore.getChats()
+  }
   render() {
     const { authStore } = this.props
 
     return (
-      <div className="Main">
-        <div>You've successfully logged in with {authStore.user.email} email</div>
-        <button onClick={() => authStore.logout()}>Logout</button>
+      <div className="main">
+        <ChatList />
+        <Chat />
       </div>
     )
   }

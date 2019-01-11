@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'mobx-react'
 import Auth from './stores/auth'
 import Ui from './stores/ui'
+import ChatsStore from './stores/chats'
 import Root from './components/Root'
 import './styles/index.css'
 import DevTools from 'mobx-react-devtools'
@@ -12,6 +13,7 @@ import DevTools from 'mobx-react-devtools'
 const stores = {
   authStore: new Auth(),
   uiStore: new Ui(),
+  chatsStore: new ChatsStore(),
 }
 
 ReactDOM.render(
