@@ -12,6 +12,7 @@ export default class ChatList extends React.Component {
     this.state = {
       showUsersSearchModal: false,
     }
+    this.toggleShowUsersSearch = this.toggleShowUsersSearch.bind(this)
   }
 
   toggleShowUsersSearch() {
@@ -34,7 +35,7 @@ export default class ChatList extends React.Component {
         )}
         <div className="chat-list-header">
           <input className="chat-list-search-input" type="text" placeholder="Search" />
-          <button onClick={this.toggleShowUsersSearch.bind(this)}>+</button>
+          <button onClick={this.toggleShowUsersSearch}>+</button>
         </div>
         {_.map(chatsStore.chats, chat => {
           return (

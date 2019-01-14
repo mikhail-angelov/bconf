@@ -3,16 +3,23 @@ import { observer, inject } from 'mobx-react'
 import Chat from '../Chat'
 import ChatList from '../ChatList'
 import './Main.css'
+import { when } from 'mobx'
+
 @inject('authStore', 'chatsStore')
 @observer
 class Main extends Component {
-  componentWillMount() {
-    console.log(this.props)
-    this.props.chatsStore.getChats()
+  constructor() {
+    super()
+    when(
+      () => {
+        console.log(this.props)
+        return this.props.authStore.authenticated
+      },
+      () => this.props.chatsStore.getChats()
+    )
   }
-  render() {
-    const { authStore } = this.props
 
+  render() {
     return (
       <div className="main">
         <ChatList />
