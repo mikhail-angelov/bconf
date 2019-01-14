@@ -1,10 +1,11 @@
 import { observable, flow, action } from 'mobx'
-import { CHAT_URL, doJsonAuthRequest } from './helper'
+import { CHAT_URL, doJsonAuthRequest, FIND_USERS_URL } from './helper'
 import _ from 'lodash'
 import chatsStore from './chats'
 
 export default class Chats {
   @observable chats = []
+  @observable users = []
 
   getChats = flow(function*() {
     try {
@@ -20,6 +21,22 @@ export default class Chats {
       console.log('Get chats error:', e)
     }
   })
+
+  findUsers = flow(function*(username) {
+    try {
+      const users = yield doJsonAuthRequest({
+        url: FIND_USERS_URL + username,
+        method: 'get',
+        data: { username },
+      })
+      this.users = users
+    } catch (e) {
+      console.log('Error :' + e)
+    }
+  })
+  @action clearSearchUsers = () => {
+    this.users = []
+  }
 }
 
 function getRandomColor(chatId) {
