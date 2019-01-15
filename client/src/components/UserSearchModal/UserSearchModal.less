@@ -1,3 +1,5 @@
+@import '../../styles/buttons.less';
+
 .search-modal {
   width: 100%;
   height: 100%;
@@ -10,7 +12,6 @@
   .search-block {
     background-color: #ffffff;
     width: 300px;
-    height: 90%;
     padding: 10px;
   }
 
@@ -23,11 +24,126 @@
     font-size: 16px;
     padding: 5px;
   }
+  .search-results-wrapper {
+    height: 0;
+    transition: height 200ms ease;
+  }
+  .uncollapsed {
+    height: 300px;
+    overflow-y: auto;
+  }
   .search-result-item {
     height: 40px;
     padding: 10px 20px;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: flex-start;
+  }
+  .create-chat-button-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .create-chat-button {
+    .general-button();
+    height: 40px;
+    width: 200px;
+    font-size: 16px;
+    line-height: 45px;
+  }
+  .label__checkbox {
+    display: none;
+  }
+
+  .label__check {
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    color: white;
+    vertical-align: middle;
+    margin-right: 20px;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border 0.3s ease;
+
+    i.icon {
+      opacity: 0.2;
+      font-size: ~'calc(1rem + 1vw)';
+      color: transparent;
+      transition: opacity 0.3s 0.1s ease;
+      -webkit-text-stroke: 3px rgba(0, 0, 0, 0.5);
+    }
+
+    &:hover {
+      border: 2px solid rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .label__checkbox:checked + .label__text .label__check {
+    animation: check 0.5s cubic-bezier(0.895, 0.03, 0.685, 0.22) forwards;
+
+    .icon {
+      opacity: 1;
+      transform: scale(0);
+      color: white;
+      -webkit-text-stroke: 0;
+      animation: icon 0.3s cubic-bezier(1, 0.008, 0.565, 1.65) 0.1s 1 forwards;
+    }
+  }
+
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes icon {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes check {
+    0% {
+      width: 2em;
+      height: 2em;
+      border-width: 5px;
+    }
+    10% {
+      width: 2em;
+      height: 2em;
+      opacity: 0.1;
+      background: rgba(0, 0, 0, 0.2);
+      border-width: 15px;
+    }
+    12% {
+      width: 2em;
+      height: 2em;
+      opacity: 0.4;
+      background: rgba(0, 0, 0, 0.1);
+      border-width: 0;
+    }
+    50% {
+      width: 2em;
+      height: 2em;
+      background: #00d478;
+      border: 0;
+      opacity: 0.6;
+    }
+    100% {
+      width: 2em;
+      height: 2em;
+      background: #00d478;
+      border: 0;
+      opacity: 1;
+    }
   }
 }

@@ -1,3 +1,5 @@
+@import '../../styles/buttons.less';
+
 .chat-list {
   border-collapse: collapse;
   flex: 1;
@@ -26,10 +28,21 @@
   }
   .chat-list-search-input {
     border: none;
-    background-color: #e9e7e7;
+    background-color: #f3f3f3;
     border-radius: 5px;
     padding: 3px;
     flex: 1;
     margin-right: 5px;
+    height: 34px;
+    font-size: 14px;
+  }
+  .add-chat-button {
+    .general-button();
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 36px;
+    font-weight: bold;
   }
 }

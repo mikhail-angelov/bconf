@@ -35,12 +35,14 @@ export default class ChatList extends React.Component {
         {this.state.showUsersSearchModal && <UserSearchModal closeModal={this.handleCloseModal} />}
         <div className="chat-list-header">
           <input className="chat-list-search-input" type="text" placeholder="Search" />
-          <button onClick={this.toggleShowUsersSearch}>+</button>
+          <button className="add-chat-button" onClick={this.toggleShowUsersSearch}>
+            +
+          </button>
         </div>
         {_.map(chatsStore.chats, chat => {
           return (
-            <div key={chat._id} className="chat-item">
-              {chat.name || 'noname'}
+            <div key={chat.chatId} className="chat-item">
+              {chat.chatName || 'noname'}
             </div>
           )
         })}

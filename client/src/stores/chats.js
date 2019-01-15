@@ -34,6 +34,30 @@ export default class Chats {
       console.log('Error :' + e)
     }
   })
+
+  createNewChat = flow(function*(users) {
+    let newChatName = ''
+    const fistFourUsers = _.take(users, 4)
+    _.map(fistFourUsers, user => {
+      newChatName += user.name + ' '
+    })
+    try {
+      const newChat = yield doJsonAuthRequest({
+        url: CHAT_URL,
+        method: 'post',
+        data: { users, chatName: newChatName },
+      })
+      const chatColor = getRandomColor(newChat.chatId)
+      const newChatWithColorAndImage = {
+        ...newChat,
+        chatColor,
+      }
+      this.chats = [...this.chats, newChatWithColorAndImage]
+    } catch (e) {
+      console.log('Error :' + e)
+    }
+  })
+
   @action clearSearchUsers = () => {
     this.users = []
   }
