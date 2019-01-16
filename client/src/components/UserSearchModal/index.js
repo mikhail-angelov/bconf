@@ -5,6 +5,7 @@ import _ from 'lodash'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { SearchResults } from './SearchResults'
 
 @inject('chatsStore')
 @observer
@@ -64,24 +65,11 @@ export default class UserSearchModal extends React.Component {
           <div
             className={classNames('search-results-wrapper', { uncollapsed: this.props.chatsStore.users.length !== 0 })}
           >
-            {_.map(this.props.chatsStore.users, user => (
-              <div key={user._id} className="search-result-item">
-                <label className="label">
-                  <input
-                    className="label__checkbox"
-                    type="checkbox"
-                    value={JSON.stringify(user)}
-                    onChange={this.handleCheckboxChange}
-                  />
-                  <span className="label__text">
-                    <span className="label__check">
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                  </span>
-                </label>
-                <div className="label__name">{user.name}</div>
-              </div>
-            ))}
+            <SearchResults
+              users={this.props.chatsStore.users}
+              handleCheckboxChange={this.handleCheckboxChange}
+              searchPhrase={this.state.searchPhrase}
+            />
           </div>
 
           <button
