@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import _ from 'lodash'
 import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 @inject('chatsStore')
 @observer
@@ -52,6 +52,9 @@ export default class UserSearchModal extends React.Component {
     return (
       <div className="search-modal" onClick={this.handleModalClose}>
         <div className="search-block" onClick={e => e.stopPropagation()}>
+          <div className="search-block-close" onClick={this.handleModalClose}>
+            <FontAwesomeIcon icon={faTimes} color="#d0d0d0" size="1x" />
+          </div>
           <input
             placeholder="Search users"
             className="search-input"
@@ -76,19 +79,18 @@ export default class UserSearchModal extends React.Component {
                     </span>
                   </span>
                 </label>
-                <div>{user.name}</div>
+                <div className="label__name">{user.name}</div>
               </div>
             ))}
           </div>
-          <div className="create-chat-button-wrapper">
-            <button
-              className="create-chat-button"
-              onClick={this.handleCreateChat}
-              disabled={this.state.group.length === 0}
-            >
-              Create New Chat
-            </button>
-          </div>
+
+          <button
+            className="create-chat-button"
+            onClick={this.handleCreateChat}
+            disabled={this.state.group.length === 0}
+          >
+            Create New Chat
+          </button>
         </div>
       </div>
     )

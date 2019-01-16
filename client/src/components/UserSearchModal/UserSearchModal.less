@@ -11,48 +11,80 @@
 
   .search-block {
     background-color: #ffffff;
-    width: 300px;
-    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(12, 24px);
+    grid-template-rows: repeat(16, 24px);
+    position: relative;
+  }
+
+  .search-block-close {
+    position: absolute;
+    top: 4px;
+    right: 7px;
+  }
+
+  .search-block-close svg:hover {
+    color: #b3b3b3;
   }
 
   .search-input {
     width: 100%;
-    height: 40px;
     border-radius: 5px;
     border: none;
     background-color: #eeeeee;
     font-size: 16px;
     padding: 5px;
+    grid-column-start: 2;
+    grid-column-end: 12;
+    grid-row-start: 2;
+    grid-row-end: 4;
+    padding-left: 24px;
   }
   .search-results-wrapper {
-    height: 0;
-    transition: height 200ms ease;
+    grid-column-start: 2;
+    grid-column-end: 12;
+    grid-row-start: 5;
+    grid-row-end: 13;
+    display: flex;
+    flex-direction: column;
   }
   .uncollapsed {
-    height: 300px;
     overflow-y: auto;
   }
   .search-result-item {
-    height: 40px;
-    padding: 10px 20px;
+    height: 48px;
+    margin-bottom: 12px;
     display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
+    flex: none;
   }
-  .create-chat-button-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-  }
+
   .create-chat-button {
     .general-button();
-    height: 40px;
-    width: 200px;
+
     font-size: 16px;
-    line-height: 45px;
+    line-height: 52px;
+    grid-column-start: 2;
+    grid-column-end: 12;
+    grid-row-start: 14;
+    grid-row-end: 16;
+  }
+
+  .label {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
   .label__checkbox {
     display: none;
+  }
+
+  .label__name {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .label__check {
@@ -62,8 +94,8 @@
     color: white;
     vertical-align: middle;
     margin-right: 20px;
-    width: 2em;
-    height: 2em;
+    width: 48px;
+    height: 48px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -113,34 +145,24 @@
 
   @keyframes check {
     0% {
-      width: 2em;
-      height: 2em;
       border-width: 5px;
     }
     10% {
-      width: 2em;
-      height: 2em;
       opacity: 0.1;
       background: rgba(0, 0, 0, 0.2);
       border-width: 15px;
     }
     12% {
-      width: 2em;
-      height: 2em;
       opacity: 0.4;
       background: rgba(0, 0, 0, 0.1);
       border-width: 0;
     }
     50% {
-      width: 2em;
-      height: 2em;
       background: #00d478;
       border: 0;
       opacity: 0.6;
     }
     100% {
-      width: 2em;
-      height: 2em;
       background: #00d478;
       border: 0;
       opacity: 1;
