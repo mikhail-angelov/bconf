@@ -39,13 +39,15 @@ export default class ChatList extends React.Component {
             +
           </button>
         </div>
-        {_.map(chatsStore.chats, chat => {
-          return (
-            <div key={chat.chatId} className="chat-item">
-              {chat.chatName || 'noname'}
-            </div>
-          )
-        })}
+        <div className="chat-list-items-wrapper">
+          {_.map(chatsStore.chats, chat => {
+            return (
+              <div key={chat.chatId} className="chat-item">
+                {chat.chatName || 'noname'}
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }

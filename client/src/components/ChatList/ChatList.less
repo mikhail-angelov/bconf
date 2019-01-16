@@ -3,13 +3,21 @@
 .chat-list {
   border-collapse: collapse;
   flex: 1;
+  max-width: 300px;
 
   .chat-list-header {
-    height: 50px;
+    height: 48px;
     border: 1px solid #eeeeee;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 6px 12px 6px 24px;
+    box-sizing: content-box;
+  }
+
+  .chat-list-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
 
   .chat-item {
@@ -17,7 +25,8 @@
     border-bottom: 1px solid #eeeeee;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0 24px;
+
     &:hover {
       background-color: #eeeeee;
       transition: 100ms all ease-out;
@@ -30,11 +39,12 @@
     border: none;
     background-color: #f3f3f3;
     border-radius: 5px;
-    padding: 3px;
+    padding-left: 12px;
     flex: 1;
-    margin-right: 5px;
+    margin-right: 12px;
     height: 34px;
     font-size: 14px;
+    box-shadow: inset 0px 3px 7px 0px #79797952;
   }
   .add-chat-button {
     .general-button();
