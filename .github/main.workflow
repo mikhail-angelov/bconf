@@ -15,11 +15,11 @@ action "Install server" {
 
 action "Install client" {
   uses = "actions/npm@master"
-  args = "install --prefix ./server"
+  args = "install --prefix ./client"
 }
 
 action "Test" {
   uses = "actions/npm@master"
-  needs = ["Install","Install server","Install client"]
+  needs = ["Install","Install server"]
   args = "test"
 }
