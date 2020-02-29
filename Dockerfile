@@ -1,4 +1,4 @@
-FROM node:8.14.0-alpine
+FROM node:12-alpine
 
 MAINTAINER Mikhail.Angelov (@MikhailAngelov)
 

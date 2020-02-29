@@ -19,7 +19,6 @@
         "npm": "^5"
     },
     "scripts": {
-        "postinstall": "electron-builder install-app-deps",
         "install": "cd server; npm install; cd ../client;  npm install",
         "lint": "standard --fix --env mocha --plugin riot",
         "test": "mocha ./server/*.spec.js --delay",
