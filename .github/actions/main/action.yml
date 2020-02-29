@@ -1,13 +1,28 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  image_name:
+    description: name of the image.  Example - myContainer
+    require: true
+  build_context:
+    description: the path in your repo that will serve as the build context
+    require: true
+    default: './'
+  dockerfile_path:
+    description: the full path (including the filename) to the dockerfile that you want to build
+    require: true
+    default: ./Dockerfile
+  branch_tag:
+      description: use branch name as tag
+      require: false
+      default: false
+  cache:
+    description: attempt to use last image as the cache
+    require: false
+    default: false
+  tag:
+    description: custom tag you want to assign to the image.  
+    require: false
 outputs:
   IMAGE_SHA_NAME:
     description: name of the Docker Image including the tag
