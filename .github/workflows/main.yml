@@ -24,8 +24,7 @@ jobs:
       uses: machine-learning-apps/gpr-docker-publish@master
       id: docker
       with:
-        IMAGE_NAME: 'test-docker-action'
-        TAG: 'my-optional-tag-name'
+        IMAGE_NAME: 'bconf'
         DOCKERFILE_PATH: 'Dockerfile'
         BUILD_CONTEXT: '.'
       env:
