@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  nginx:
+    image: umputun/nginx-le:latest
+    container_name: nginx
+    hostname: nginx
+    restart: unless-stopped
+    network_mode: host
+    logging: &default_logging
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    volumes:
+      - ./ssl:/etc/nginx/ssl
+      - ./services.conf:/etc/nginx/services.conf
+    ports:
+      - "80:80"
+      - '443:443'
+    depends_on:
+      - main
+    environment:
+      - TZ=UTC
+      - LETSENCRYPT=true
+      - LE_EMAIL=mikhail.angelov@gmail.com
+      - LE_FQDN=bconf.com
+
+  main:
+    container_name: main
+    image: mangelov/bconf-ms:latest
+    restart: unless-stopped
+    logging: *default_logging
+    ports:
+      - 8000:8000
+    environment:
+      POST: 8000
+    volumes:
+      - ./ssl:/opt/app/ssl
+    network_mode: host
+

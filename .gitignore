@@ -23,3 +23,5 @@ build/Release
 dist
 build
 secrets.env
+lib
+lib-commonjs
