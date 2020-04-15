@@ -1,11 +1,9 @@
 import React from 'react';
-import { TextField, ImageIcon, PrimaryButton, IButtonStyles } from 'office-ui-fabric-react';
-import Speaker from "../../../assets/speaker-icon.svg"
-import "./startConference.scss";
+import { TextField, PrimaryButton, IButtonStyles } from 'office-ui-fabric-react';
+import "./login.scss";
 
 interface Props {
     toHome: () => void;
-    toLogin: () => void;
 };
 
 const primaryButtonStyle: IButtonStyles = {
@@ -13,6 +11,7 @@ const primaryButtonStyle: IButtonStyles = {
         height: "32px",
         background: "#0078D4",
         borderRadius: "2px",
+        marginRight: "7px",
     },
     label: {
         fontWeight: 500,
@@ -40,10 +39,14 @@ const cancelButtonStyle: IButtonStyles = {
     }
 };
 
-export const StartConference = ({ toHome, toLogin }: Props) => {
+export const Login = ({ toHome }: Props) => {
     return (
-        <div className="start-conference-content">
+        <div className="login-content">
             <div className="fields">
+                <TextField
+                    label="name"
+                    placeholder="Placeholder"
+                />
                 <TextField
                     label="email"
                     type="email"
@@ -55,19 +58,7 @@ export const StartConference = ({ toHome, toLogin }: Props) => {
                     placeholder="Placeholder"
                 />
             </div>
-            <div className="icons">
-                <ImageIcon imageProps={{ src: Speaker }} />
-                <ImageIcon imageProps={{ src: Speaker }} />
-                <ImageIcon imageProps={{ src: Speaker }} />
-                <ImageIcon imageProps={{ src: Speaker }} />
-            </div>
             <div className="buttons">
-                <div className="forgetPassword">Forget password</div>
-                <PrimaryButton
-                    text="Login"
-                    styles={primaryButtonStyle}
-                    onClick={toLogin}
-                />
                 <PrimaryButton
                     text="SignUp"
                     styles={primaryButtonStyle}
@@ -78,7 +69,6 @@ export const StartConference = ({ toHome, toLogin }: Props) => {
                     onClick={toHome}
                 />
             </div>
-
         </div>
     );
 };

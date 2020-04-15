@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PrimaryButton, IButtonStyles } from 'office-ui-fabric-react';
-import { StartConference } from "../StartConference/StartConference"
+import { StartConference } from "../StartConference/StartConference";
+import { Login } from "../Login/Login";
 import "./home.scss";
 
 
@@ -24,6 +25,11 @@ export const Home = (props: HomeProps) => {
     const [isStartConference, setIsStartConference] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
+    const setLogin = () => {
+        setIsStartConference(false);
+        setIsLogin(true)
+    }
+
     return (
         <div className="home-container">
             <div className="home-inner-container">
@@ -31,11 +37,14 @@ export const Home = (props: HomeProps) => {
                     BConf - the Best Conference
                 </div>
                 {isStartConference ?
-                    <StartConference 
-                    toHome={() => setIsStartConference(false)}
+                    <StartConference
+                        toHome={() => setIsStartConference(false)}
+                        toLogin={() => setLogin()}
                     /> :
-                    /*isLogin ?
-                        <Login /> :*/
+                    isLogin ?
+                        <Login
+                            toHome={() => setIsLogin(false)}
+                        /> :
                         <div className="home-content">
                             <div className="home-main-text">
                                 room: 1basdq3s
