@@ -38,7 +38,8 @@ username="$(echo ${user} | tr "[:upper:]" "[:lower:]")"
 echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u "${username}" --password-stdin 
 
 # Set Local Variables, lowering case to make it work
-shortSHA=$(echo "${GITHUB_SHA}" | cut -c1-12)
+# shortSHA=$(echo "${GITHUB_SHA}" | cut -c1-12)
+shortSHA=latest
 tag="$(echo ${GITHUB_REPOSITORY} | tr "[:upper:]" "[:lower:]")"
 BASE_NAME="docker.pkg.github.com/${tag}/${INPUT_IMAGE_NAME}"
 SHA_NAME="${BASE_NAME}:${shortSHA}"

@@ -28,7 +28,7 @@ services:
 
   main:
     container_name: main
-    image: mangelov/bconf-ms:latest
+    image: docker.pkg.github.com/mikhail-angelov/bconf/bconf-ms:latest
     restart: unless-stopped
     logging: *default_logging
     ports:
@@ -38,4 +38,5 @@ services:
     volumes:
       - ./ssl:/opt/app/ssl
     network_mode: host
+    command: npm run
 
