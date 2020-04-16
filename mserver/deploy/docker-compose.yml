@@ -34,9 +34,11 @@ services:
     ports:
       - 8000:8000
     environment:
-      POST: 8000
+      - POST=8000
+      - NODE_ENV=production
+      - MINI=true
     volumes:
       - ./ssl:/opt/app/ssl
     network_mode: host
-    command: npm run
+    command: npm start
 

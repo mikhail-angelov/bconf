@@ -25,7 +25,7 @@ const socketio = require('socket.io')
 export const sockets = (webServer) => {
   // --- socket.io server ---
   const io = socketio(webServer)
-  console.log('socket.io server start. port=' + webServer.address())
+  console.log('socket.io server starting...')
 
   io.on('connection', function (socket) {
     console.log('client connected. socket id=' + getId(socket) + '  , total clients=' + getClientCount())

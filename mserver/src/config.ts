@@ -9,6 +9,7 @@ export let serverOptions = {
   useHttps,
   httpsKeyFile,
   httpsCertFile,
+  isMini: !!process.env.MINI
 }
 
 export let listenIps =
