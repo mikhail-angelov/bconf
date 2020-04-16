@@ -13,13 +13,30 @@
     "gen": "npx plop"
   },
   "dependencies": {
-    "mediasoup-client": "^3.6.5",
+    "@types/history": "^4.7.5",
+    "@types/react-redux": "^7.1.7",
+    "@types/react-router": "^5.1.5",
+    "axios": "^0.19.2",
+    "connected-react-router": "^6.8.0",
+    "history": "^4.10.1",
     "office-ui-fabric-react": "^7.0.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.2.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "mediasoup-client": "^3.6.5"
   },
   "devDependencies": {
+    "just-scripts": "^0.27.0",
     "just-stack-react": "^1.0.0",
-    "just-scripts": "^0.27.0"
+    "node-sass": "^4.13.1",
+    "redux-devtools": "^3.5.0",
+    "sass-loader": "^8.0.2",
+    "webpack": "^4.42.1"
   }
 }
+
