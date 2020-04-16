@@ -8,9 +8,9 @@ RUN cd mserver \
     && npm ci \
     && rm -rf node_modules/clang-tools-prebuilt node_modules/mediasoup/worker/out/Release/*.a node_modules/mediasoup/worker/out/Release/obj.target
 
-COPY ./mserver/src/* ./mserver/src/
+COPY ./mserver/src ./mserver/src
 COPY ./mserver/tsconfig.json ./mserver/
-COPY ./mini/src/* ./mini/src/
+COPY ./mini/src ./mini/src
 
 WORKDIR /opt/app/mserver
 
