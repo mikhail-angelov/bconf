@@ -1,0 +1,7 @@
+{
+  "name": "mini",
+  "short_name": "mini",
+  "description": "mini bconf",
+  "start_url": "/",
+  "display": "standalone"
+}
