@@ -1,31 +1,33 @@
-name: build and publish Docker image to GitHub Package Registry
+name: ci
 on: push
 jobs:
   build:
     runs-on: ubuntu-latest 
     steps:
-
     - name: Copy Repo Files
       uses: actions/checkout@v2
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - run: npm install
-    - run: npm --prefix ./server install
-    - run: npm --prefix ./client install
-    - run: npm run build --if-present
-    - run: npm test
-      env:
-        CI: true
+    - name: build web
+      run: |
+        cd mini
+        npm ci
+        npm run build
+        mkdir -p src/lib
+        cp -r ./node_modules/lit-html ./src/lib/lit-html
+        cp -r ./node_modules/@fortawesome/fontawesome-free ./src/lib/fontawesome
+
      #This Action Emits 2 Variables, IMAGE_SHA_NAME and IMAGE_URL 
      #which you can reference in subsequent steps
     - name: Publish Docker Image to GPR
-      uses: machine-learning-apps/gpr-docker-publish@master
+      uses: ./.github/actions/main
       id: docker
       with:
-        IMAGE_NAME: 'bconf'
-        DOCKERFILE_PATH: 'Dockerfile'
+        TAG: 'latest'
+        IMAGE_NAME: 'bconf-ms'
+        DOCKERFILE_PATH: 'mserver/deploy/Dockerfile'
         BUILD_CONTEXT: '.'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

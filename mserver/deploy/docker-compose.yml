@@ -28,14 +28,17 @@ services:
 
   main:
     container_name: main
-    image: mangelov/bconf-ms:latest
+    image: docker.pkg.github.com/mikhail-angelov/bconf/bconf-ms:latest
     restart: unless-stopped
     logging: *default_logging
     ports:
       - 8000:8000
     environment:
-      POST: 8000
+      - POST=8000
+      - NODE_ENV=production
+      - MINI=true
     volumes:
-      - ./ssl:/opt/app/ssl
+      - ./ssl:/opt/app/mserver/ssl
     network_mode: host
+    command: npm start
 
