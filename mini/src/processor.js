@@ -33,6 +33,7 @@ export const processor = (store) => {
   let audioConsumers = {}
   let audioDevices = {}
   let webcams = {}
+  let muted = false
 
   store.onStart = async () => {
     await startMedia()
@@ -43,10 +44,12 @@ export const processor = (store) => {
     disconnect()
   }
   store.toggleMute = () => {
-    if (audioProducer) {
-      disableMic()
+    if (muted) {
+      unmuteMic()
+      muted = false
     } else {
-      enableMic()
+      muteMic()
+      muted = true
     }
   }
   store.toggleCamera = () => {
@@ -153,16 +156,37 @@ export const processor = (store) => {
     }
   }
 
+  function timeoutCallback(callback) {
+    let called = false
+
+    const interval = setTimeout(() => {
+      if (called) return
+      called = true
+      callback(new Error('Request timeout.'))
+    }, 300000)
+
+    return (...args) => {
+      if (called) return
+      called = true
+      clearTimeout(interval)
+
+      callback(...args)
+    }
+  }
+
   function sendRequest(type, data) {
     return new Promise((resolve, reject) => {
-      socket.emit(type, data, (err, response) => {
-        if (!err) {
-          // Success response, so pass the mediasoup response to the local Room.
-          resolve(response)
-        } else {
-          reject(err)
-        }
-      })
+      socket.emit(
+        type,
+        data,
+        timeoutCallback((err, response) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(response)
+          }
+        })
+      )
     })
   }
 
@@ -710,6 +734,58 @@ export const processor = (store) => {
       // }
     } catch (error) {
       console.error('_getAudioDeviceId() failed:%o', error)
+    }
+  }
+
+  async function muteMic() {
+    console.log('muteMic()')
+
+    audioProducer.pause()
+
+    try {
+      await sendRequest('pauseProducer', { kind: 'audio' })
+
+      // store.dispatch(
+      // 	producerActions.setProducerPaused(this._micProducer.id));
+    } catch (error) {
+      console.error('muteMic() | failed: %o', error)
+
+      // store.dispatch(requestActions.notify(
+      // 	{
+      // 		type : 'error',
+      // 		text : intl.formatMessage({
+      // 			id             : 'devices.microphoneMuteError',
+      // 			defaultMessage : 'Unable to mute your microphone'
+      // 		})
+      // 	}));
+    }
+  }
+
+  async function unmuteMic() {
+    console.log('unmuteMic()')
+
+    if (!audioProducer) {
+      enableMic()
+    } else {
+      audioProducer.resume()
+
+      try {
+        sendRequest('resumeProducer', { kind: 'audio' })
+
+        // store.dispatch(
+        // 	producerActions.setProducerResumed(this._micProducer.id));
+      } catch (error) {
+        console.error('unmuteMic() | failed: %o', error)
+
+        // store.dispatch(requestActions.notify(
+        // 	{
+        // 		type : 'error',
+        // 		text : intl.formatMessage({
+        // 			id             : 'devices.microphoneUnMuteError',
+        // 			defaultMessage : 'Unable to unmute your microphone'
+        // 		})
+        // 	}));
+      }
     }
   }
 

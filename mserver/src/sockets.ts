@@ -103,12 +103,65 @@ export const sockets = (webServer) => {
       const roomName = getRoomname()
       const { kind } = data
       console.log('-- closeProducer  ---room=%s', roomName, kind)
-      const audioProducer = getProducer(roomName, getId(socket), kind)
-      if (!audioProducer) throw new Error(`producer with id "${kind}" not found`)
+      const producer = getProducer(roomName, getId(socket), kind)
+      if (!producer) throw new Error(`producer with id "${kind}" not found`)
 
-      audioProducer.close()
+      producer.close()
 
       removeProducer(roomName, getId(socket), kind)
+      sendResponse({}, callback)
+    })
+
+    socket.on('pauseProducer', async (data, callback) => {
+      const roomName = getRoomname()
+      const { kind } = data
+      console.log('-- closeProducer  ---room=%s', roomName, kind)
+      const producer = getProducer(roomName, getId(socket), kind)
+      if (!producer) throw new Error(`producer with id "${kind}" not found`)
+
+      await producer.pause()
+      sendResponse({}, callback)
+    })
+
+    socket.on('resumeProducer', async (data, callback) => {
+      const roomName = getRoomname()
+      const { kind } = data
+      console.log('-- closeProducer  ---room=%s', roomName, kind)
+      const producer = getProducer(roomName, getId(socket), kind)
+      if (!producer) throw new Error(`producer with id "${kind}" not found`)
+
+      await producer.resume()
+    })
+
+    socket.on('pauseConsumer', async (data, callback) => {
+      const roomName = getRoomname()
+      const localId = getId(socket)
+      const remoteId = data.remoteId
+      const kind = data.kind
+      console.log('-- resumeAdd localId=%s remoteId=%s kind=%s', localId, remoteId, kind)
+      let consumer = getConsumer(roomName, localId, remoteId, kind)
+      if (!consumer) {
+        console.error('consumer NOT EXIST for remoteId=' + remoteId)
+        return
+      }
+
+      await consumer.pause()
+      sendResponse({}, callback)
+    })
+
+    socket.on('pauseProducer', async (data, callback) => {
+      const roomName = getRoomname()
+      const localId = getId(socket)
+      const remoteId = data.remoteId
+      const kind = data.kind
+      console.log('-- resumeAdd localId=%s remoteId=%s kind=%s', localId, remoteId, kind)
+      let consumer = getConsumer(roomName, localId, remoteId, kind)
+      if (!consumer) {
+        console.error('consumer NOT EXIST for remoteId=' + remoteId)
+        return
+      }
+
+      await consumer.resume()
       sendResponse({}, callback)
     })
 
