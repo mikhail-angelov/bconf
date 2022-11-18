@@ -5,7 +5,7 @@
     "devDependencies": {
         "node-less-chokidar": "^0.3.1",
         "react-app-rewired": "^1.6.2",
-        "react-scripts": "^1.1.4"
+        "react-scripts": "^5.0.1"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.12",
