@@ -19,7 +19,7 @@
     "event-stream": "^4.0.1",
     "file-type": "^10.4.0",
     "firebase-admin": "^6.3.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.11",
     "micro": "^9.3.3",
     "micro-cors": "^0.1.0",
